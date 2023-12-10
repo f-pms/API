@@ -16,6 +16,12 @@ server:
       max: 600
       min-spare: 100
 
+hbc:
+  plc:
+    url: hbc-plc.ohtgo.me
+    publisher:
+      enabled: true
+
 ---
 spring.config.activate.on-profile: local
 
