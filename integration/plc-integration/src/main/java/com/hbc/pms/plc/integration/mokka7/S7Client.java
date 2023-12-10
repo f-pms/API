@@ -46,12 +46,15 @@ import com.hbc.pms.plc.integration.mokka7.util.ReturnCode;
 import com.hbc.pms.plc.integration.mokka7.util.S7;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Dave Nardella
  * @author comtel
  */
+
+@Component
 public class S7Client implements Client, ReturnCode {
 
     private static final Logger logger = LoggerFactory.getLogger(S7Client.class);

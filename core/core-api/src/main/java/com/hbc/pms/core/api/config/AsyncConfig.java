@@ -19,7 +19,7 @@ public class AsyncConfig implements AsyncConfigurer {
         executor.setQueueCapacity(10000);
         executor.setWaitForTasksToCompleteOnShutdown(true);
         executor.setAwaitTerminationSeconds(10);
-    executor.initialize();
+        executor.initialize();
         return executor;
     }
 
