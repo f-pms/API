@@ -53,7 +53,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Dave Nardella
  * @author comtel
  */
-@Component
 public class S7Client implements Client, ReturnCode {
 
     private static final Logger logger = LoggerFactory.getLogger(S7Client.class);

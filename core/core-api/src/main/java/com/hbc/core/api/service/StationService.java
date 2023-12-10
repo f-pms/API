@@ -13,8 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class StationService {
 
-  @Autowired
-  private S7Client plcClient;
+  private final S7Client plcClient = new S7Client();
   private static final String PLC_URL = "hbc-plc.ohtgo.me";
 
   // TODO: add retries in case the PLC connection is interrupted
