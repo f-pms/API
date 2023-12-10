@@ -5,7 +5,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'spring-boot-java-template'
+rootProject.name = 'pms'
 
 include 'core:core-enum'
 include 'core:core-api'
