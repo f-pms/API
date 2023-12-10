@@ -16,6 +16,11 @@ server:
       max: 600
       min-spare: 100
 
+hbc:
+  plc:
+    publisher:
+      enabled: true
+
 ---
 spring.config.activate.on-profile: local
 
