@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PlcService {
+public class StationService {
 
   @Autowired
   private S7Client plcClient;
