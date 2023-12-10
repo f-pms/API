@@ -4,7 +4,8 @@ jar.enabled = false
 dependencies {
     implementation project(":core:core-enum")
     implementation project(":support:logging")
-    implementation project(":storage:db-core")
+    implementation project(":integration:db-core")
+    implementation project(":integration:plc-integration")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
