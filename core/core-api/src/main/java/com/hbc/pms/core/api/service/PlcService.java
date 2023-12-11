@@ -12,14 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class PlcService {
 
-  private final S7Client plcClient;
+  private final S7Client plcClient = new S7Client();
 
   @Value("${hbc.plc.url}")
   private String plcUrl;
-
-  public PlcService(S7Client plcClient) {
-    this.plcClient = plcClient;
-  }
 
   // TODO: add retries in case the PLC connection is interrupted
   @PostConstruct
