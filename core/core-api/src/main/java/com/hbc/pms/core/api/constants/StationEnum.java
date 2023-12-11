@@ -12,6 +12,6 @@ public enum StationEnum {
 
   TR32("tr32");
 
-  private String name;
+  private final String name;
 
 }

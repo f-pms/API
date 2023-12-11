@@ -1,18 +1,19 @@
 package com.hbc.pms.core.api.support.json;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-import java.util.HashMap;
-import java.util.Map;
 
-@Getter
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PlcCoordinates {
+  @JsonProperty("isConnected")
+  private Coordinate isConnected;
 
-  @JsonAnyGetter
-  private final Map<String, Coordinate> properties;
+  @JsonProperty("temperature")
+  private Coordinate temperature;
 
-  public PlcCoordinates() {
-    properties = new HashMap<>();
-  }
+  @JsonProperty("voltage")
+  private Coordinate voltage;
 }
