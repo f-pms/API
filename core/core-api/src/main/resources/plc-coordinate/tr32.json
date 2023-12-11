@@ -1,0 +1,17 @@
+{
+  "isConnected": {
+    "type": "boolean",
+    "db": 3,
+    "startByte": 4
+  },
+  "temperature": {
+    "type": "float",
+    "db": 3,
+    "startByte": 6
+  },
+  "voltage": {
+    "type": "int",
+    "db": 3,
+    "startByte": 6
+  }
+}
