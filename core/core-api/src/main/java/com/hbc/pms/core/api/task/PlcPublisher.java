@@ -1,7 +1,7 @@
 package com.hbc.pms.core.api.task;
 
 import com.hbc.pms.core.api.controller.v1.SampleWebSocketController;
-import com.hbc.pms.core.api.constants.StationEnum;
+import com.hbc.pms.core.enums.StationEnum;
 import com.hbc.pms.core.api.service.StationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,6 +20,8 @@ public class PlcPublisher {
 
   @Scheduled(fixedRate = 2000)
   public void refreshStationGeneralState() {
+    long startTime = System.currentTimeMillis();
+
     var tr30State = stationService.getGeneralState(StationEnum.TR30);
     log.info("Station TR30 general state:");
     log.info("isConnected: " + tr30State.isConnected());
@@ -38,6 +40,15 @@ public class PlcPublisher {
 //    log.info("isConnected: " + tr32State.isConnected());
 //    log.info("temperature: " + tr32State.temperature());
 //    log.info("voltage: " + tr32State.voltage());
+    log.info("Station TR32 general state:");
+    log.info("isConnected: " + tr32State.isConnected());
+    log.info("temperature: " + tr32State.temperature());
+    log.info("voltage: " + tr32State.voltage());
+
+    long endTime = System.currentTimeMillis();
+    long duration = (endTime - startTime);
+    log.info("Execution time: " + duration + " milliseconds");
+    log.info("============================");
   }
 
 }

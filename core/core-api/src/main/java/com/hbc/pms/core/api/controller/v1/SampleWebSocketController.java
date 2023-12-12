@@ -1,6 +1,6 @@
 package com.hbc.pms.core.api.controller.v1;
 
-import com.hbc.pms.core.api.service.dto.StationGeneralStateDto;
+import com.hbc.pms.core.model.StationGeneralStateDto;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;

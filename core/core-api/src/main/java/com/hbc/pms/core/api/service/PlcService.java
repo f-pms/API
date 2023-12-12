@@ -1,18 +1,16 @@
 package com.hbc.pms.core.api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hbc.pms.core.api.constants.StationEnum;
+import com.hbc.pms.core.enums.PlcTypeEnum;
+import com.hbc.pms.core.enums.StationEnum;
 import com.hbc.pms.core.api.support.json.Coordinate;
 import com.hbc.pms.core.api.support.json.PlcCoordinates;
 import com.hbc.pms.plc.integration.mokka7.S7Client;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
 import com.hbc.pms.plc.integration.mokka7.type.AreaType;
-import com.hbc.pms.plc.integration.mokka7.type.DataType;
-import com.hbc.pms.plc.integration.mokka7.util.S7;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -23,9 +21,9 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
+@Slf4j
 public class PlcService {
 
-  private final Logger log = LoggerFactory.getLogger(getClass());
   private final S7Client plcClient = new S7Client();
 
   @Getter
@@ -60,20 +58,18 @@ public class PlcService {
   }
 
   public boolean readBoolean(Coordinate coordinate) throws S7Exception {
-    validateType(coordinate, "boolean");
+    validateType(coordinate, PlcTypeEnum.BOOL.getName());
     return plcClient.readBit(AreaType.DB, coordinate.getDb(), coordinate.getStartByte(), 0);
   }
 
   public int readInt(Coordinate coordinate) throws S7Exception {
-    validateType(coordinate, "int");
+    validateType(coordinate, PlcTypeEnum.DINT.getName());
     return plcClient.readInt(AreaType.DB, coordinate.getDb(), coordinate.getStartByte());
   }
 
   public float readFloat(Coordinate coordinate) throws S7Exception {
-    validateType(coordinate, "float");
-    final byte[] buffer = new byte[1024];
-    plcClient.readArea(AreaType.DB, coordinate.getDb(), coordinate.getStartByte(), 1, DataType.REAL, buffer);
-    return S7.getFloatAt(buffer, 0);
+    validateType(coordinate, PlcTypeEnum.REAL.getName());
+    return plcClient.readFloat(AreaType.DB, coordinate.getDb(), coordinate.getStartByte());
   }
 
   private void validateType(Coordinate coordinate, String type) {
