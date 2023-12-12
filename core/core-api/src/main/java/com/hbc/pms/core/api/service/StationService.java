@@ -1,8 +1,10 @@
 package com.hbc.pms.core.api.service;
 
+import com.hbc.pms.core.api.constants.StationEnum;
 import com.hbc.pms.core.api.service.dto.StationGeneralStateDto;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class StationService {
@@ -13,12 +15,15 @@ public class StationService {
     this.plcService = plcService;
   }
 
-  public StationGeneralStateDto getGeneralState() {
+  // create a sample Enum in Java
+
+  public StationGeneralStateDto getGeneralState(StationEnum station) {
+    var stationPlcCoordinate = plcService.getPlcCoordinatesOfStations().get(station.getName());
+
     try {
-      // TODO: move the dbNumber, startByte and Java Type to a JSON file
-      var isConnected = plcService.readBoolean(1, 4);
-      var temperature = plcService.readFloat(1, 6);
-      var voltage = plcService.readInt(1, 10);
+      var isConnected = plcService.readBoolean(stationPlcCoordinate.getIsConnected());
+      var temperature = plcService.readFloat(stationPlcCoordinate.getTemperature());
+      var voltage = plcService.readInt(stationPlcCoordinate.getVoltage());
       return new StationGeneralStateDto(isConnected, temperature, voltage);
     } catch (S7Exception e) {
       throw new RuntimeException(e);
