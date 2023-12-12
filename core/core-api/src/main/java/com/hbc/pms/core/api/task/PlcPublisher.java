@@ -18,6 +18,8 @@ public class PlcPublisher {
 
   @Scheduled(fixedRate = 1000)
   public void refreshStationGeneralState() {
+    long startTime = System.currentTimeMillis();
+
     var tr30State = stationService.getGeneralState(StationEnum.TR30);
     log.info("Station TR30 general state:");
     log.info("isConnected: " + tr30State.isConnected());
@@ -35,6 +37,11 @@ public class PlcPublisher {
     log.info("isConnected: " + tr32State.isConnected());
     log.info("temperature: " + tr32State.temperature());
     log.info("voltage: " + tr32State.voltage());
+
+    long endTime = System.currentTimeMillis();
+    long duration = (endTime - startTime);
+    log.info("Execution time: " + duration + " milliseconds");
+    log.info("============================");
   }
 
 }
