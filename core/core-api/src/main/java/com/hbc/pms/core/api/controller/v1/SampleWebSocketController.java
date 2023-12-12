@@ -18,7 +18,7 @@ public class SampleWebSocketController {
         return stateDto;
     }
 
-    public void fireSenTR30StationState(StationGeneralStateDto stateDto) {
+    public void fireSendTR30StationState(StationGeneralStateDto stateDto) {
         this.template.convertAndSend("/topic/tr30", stateDto);
     }
 }

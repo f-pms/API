@@ -27,7 +27,7 @@ public class PlcPublisher {
     log.info("isConnected: " + tr30State.isConnected());
     log.info("temperature: " + tr30State.temperature());
     log.info("voltage: " + tr30State.voltage());
-    sampleWebSocketController.fireSenTR30StationState(tr30State);
+    sampleWebSocketController.fireSendTR30StationState(tr30State);
 
     var tr31State = stationService.getGeneralState(StationEnum.TR31);
 //    log.info("Station TR31 general state:");
