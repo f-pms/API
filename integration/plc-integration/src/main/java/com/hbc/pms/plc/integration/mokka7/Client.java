@@ -510,6 +510,12 @@ public interface Client {
         return null;
     }
 
+    default Float readFloat(AreaType area, int db, int start) throws S7Exception {
+        final byte[] buffer = new byte[1024];
+        readArea(AreaType.DB, db, start, 1, DataType.REAL, buffer);
+        return S7.getFloatAt(buffer, 0);
+    }
+
     default String readString(AreaType area, int db, int start, int length) throws S7Exception {
         return readString(area, db, start, length, StandardCharsets.UTF_8, buffer);
     }

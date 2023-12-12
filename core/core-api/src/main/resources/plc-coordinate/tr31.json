@@ -1,16 +1,16 @@
 {
   "isConnected": {
-    "type": "boolean",
+    "type": "Bool",
     "db": 2,
     "startByte": 4
   },
   "temperature": {
-    "type": "float",
+    "type": "Real",
     "db": 2,
     "startByte": 6
   },
   "voltage": {
-    "type": "int",
+    "type": "Dint",
     "db": 2,
     "startByte": 6
   }
