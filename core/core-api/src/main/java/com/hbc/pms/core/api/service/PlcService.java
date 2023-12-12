@@ -24,6 +24,8 @@ import java.util.Objects;
 @Slf4j
 public class PlcService {
 
+  private final ObjectMapper objectMapper;
+
   private final S7Client plcClient = new S7Client();
 
   @Getter
@@ -32,22 +34,13 @@ public class PlcService {
   @Value("${hbc.plc.url}")
   private String plcUrl;
 
+  public PlcService(ObjectMapper objectMapper) {
+    this.objectMapper = objectMapper;
+  }
+
   @PostConstruct
   public void postConstruct() {
-    try {
-      ObjectMapper mapper = new ObjectMapper();
-      PlcCoordinates plcCoordinates;
-      for (StationEnum stationName : StationEnum.values()) {
-        plcCoordinates = mapper.readValue(
-            new ClassPathResource(String.format("plc-coordinate/%s.json", stationName.getName())).getInputStream(),
-            PlcCoordinates.class
-        );
-        plcCoordinatesOfStations.put(stationName.getName(), plcCoordinates);
-        log.info(mapper.writeValueAsString(plcCoordinates));
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    constructPlcCoordinatesOfStations();
 
     // TODO: add retries in case the PLC connection is interrupted
     try {
@@ -75,6 +68,22 @@ public class PlcService {
   private void validateType(Coordinate coordinate, String type) {
     if (!Objects.equals(coordinate.getType(), type)) {
       throw new RuntimeException(String.format("Read value type is not expected to be a %s value", type));
+    }
+  }
+
+  private void constructPlcCoordinatesOfStations() {
+    try {
+      PlcCoordinates plcCoordinates;
+      for (StationEnum stationName : StationEnum.values()) {
+        plcCoordinates = objectMapper.readValue(
+            new ClassPathResource(String.format("plc-coordinate/%s.json", stationName.getName())).getInputStream(),
+            PlcCoordinates.class
+        );
+        plcCoordinatesOfStations.put(stationName.getName(), plcCoordinates);
+        log.info(objectMapper.writeValueAsString(plcCoordinates));
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
