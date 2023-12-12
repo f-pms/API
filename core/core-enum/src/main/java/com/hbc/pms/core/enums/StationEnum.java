@@ -1,4 +1,4 @@
-package com.hbc.pms.core.api.constants;
+package com.hbc.pms.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

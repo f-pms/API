@@ -1,6 +1,6 @@
 package com.hbc.pms.core.api.task;
 
-import com.hbc.pms.core.api.constants.StationEnum;
+import com.hbc.pms.core.enums.StationEnum;
 import com.hbc.pms.core.api.service.StationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

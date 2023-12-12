@@ -1,7 +1,7 @@
 package com.hbc.pms.core.api.service;
 
-import com.hbc.pms.core.api.constants.StationEnum;
-import com.hbc.pms.core.api.service.dto.StationGeneralStateDto;
+import com.hbc.pms.core.enums.StationEnum;
+import com.hbc.pms.core.model.StationGeneralStateDto;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
 import org.springframework.stereotype.Service;
 

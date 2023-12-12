@@ -3,6 +3,7 @@ jar.enabled = false
 
 dependencies {
     implementation project(":core:core-enum")
+    implementation project(":core:core-model")
     implementation project(":support:logging")
     implementation project(":integration:db-core")
     implementation project(":integration:plc-integration")
