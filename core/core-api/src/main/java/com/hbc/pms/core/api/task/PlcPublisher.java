@@ -3,15 +3,13 @@ package com.hbc.pms.core.api.task;
 import com.hbc.pms.core.api.controller.v1.SampleWebSocketController;
 import com.hbc.pms.core.api.constants.StationEnum;
 import com.hbc.pms.core.api.service.StationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class PlcPublisher {
-
-    private final Logger log = LoggerFactory.getLogger(getClass());
     private final StationService stationService;
     private final SampleWebSocketController sampleWebSocketController;
 
