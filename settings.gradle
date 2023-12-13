@@ -8,7 +8,7 @@ pluginManagement {
 rootProject.name = 'PMS'
 
 include 'core:core-api'
-include 'core:core-enum'
+include 'core:core-enums'
 include 'core:core-model'
 include 'integration:db-core'
 include 'support:logging'
