@@ -1,47 +1,26 @@
 package com.hbc.pms.core.api.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hbc.pms.core.enums.PlcTypeEnum;
-import com.hbc.pms.core.enums.StationEnum;
-import com.hbc.pms.core.api.support.json.Coordinate;
-import com.hbc.pms.core.api.support.json.PlcCoordinates;
+import com.hbc.pms.core.model.enums.PlcTypeEnum;
 import com.hbc.pms.plc.integration.mokka7.S7Client;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
 import com.hbc.pms.plc.integration.mokka7.type.AreaType;
+import com.hbc.pms.plc.io.Coordinate;
 import jakarta.annotation.PostConstruct;
-import lombok.Getter;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 @Service
 @Slf4j
 public class PlcService {
 
-  private final ObjectMapper objectMapper;
-
   private final S7Client plcClient = new S7Client();
-
-  @Getter
-  public final Map<String, PlcCoordinates> plcCoordinatesOfStations = new HashMap<>();
-
   @Value("${hbc.plc.url}")
   private String plcUrl;
 
-  public PlcService(ObjectMapper objectMapper) {
-    this.objectMapper = objectMapper;
-  }
-
   @PostConstruct
   public void postConstruct() {
-    constructPlcCoordinatesOfStations();
-
     // TODO: add retries in case the PLC connection is interrupted
     try {
       plcClient.connect(plcUrl, 0, 1);
@@ -71,20 +50,5 @@ public class PlcService {
     }
   }
 
-  private void constructPlcCoordinatesOfStations() {
-    try {
-      PlcCoordinates plcCoordinates;
-      for (StationEnum stationName : StationEnum.values()) {
-        plcCoordinates = objectMapper.readValue(
-            new ClassPathResource(String.format("plc-coordinate/%s.json", stationName.getName())).getInputStream(),
-            PlcCoordinates.class
-        );
-        plcCoordinatesOfStations.put(stationName.getName(), plcCoordinates);
-        log.info(objectMapper.writeValueAsString(plcCoordinates));
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
 
 }
