@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class PlcPublisher {
+public class PlcScheduler {
 
   private final StationService stationService;
 
-  public PlcPublisher(StationService stationService) {
+  public PlcScheduler(StationService stationService) {
     this.stationService = stationService;
   }
 
