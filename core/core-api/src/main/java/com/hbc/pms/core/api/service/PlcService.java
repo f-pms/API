@@ -58,7 +58,7 @@ public class PlcService {
     }
   }
 
-  @Scheduled(fixedRate = 250)
+//  @Scheduled(fixedRate = 250)
   public void testMultiVars() throws S7Exception {
     var s7Items = new S7DataItem[100];
     s7Items[0] = new S7DataItem(AreaType.DB, DataType.BIT, 1, 4, 1);
@@ -159,7 +159,7 @@ public class PlcService {
     s7Items[95] = new S7DataItem(AreaType.DB, DataType.REAL, 1, 382, 1);
     s7Items[96] = new S7DataItem(AreaType.DB, DataType.REAL, 1, 386, 1);
     s7Items[97] = new S7DataItem(AreaType.DB, DataType.REAL, 1, 390, 1);
-    plcClient.readMultiVars(Arrays.copyOfRange(s7Items, 0, 17) , 16);
+    plcClient.readMultiVars(Arrays.copyOfRange(s7Items, 0, 11) , 10);
     log.info("item: {}", S7.getFloatAt(s7Items[1].data,0));
   }
 

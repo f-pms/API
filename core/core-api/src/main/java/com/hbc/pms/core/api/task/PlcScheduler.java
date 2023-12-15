@@ -4,6 +4,7 @@ import com.hbc.pms.core.api.controller.v1.SampleWebSocketController;
 import com.hbc.pms.core.api.service.StationService;
 import com.hbc.pms.core.model.enums.StationEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,7 +18,7 @@ public class PlcScheduler {
         this.sampleWebSocketController = sampleWebSocketController;
     }
 
-//  @Scheduled(fixedRate = 1000)
+  @Scheduled(fixedRate = 1000)
   public void refreshStationGeneralState() {
     long startTime = System.currentTimeMillis();
 
