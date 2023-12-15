@@ -1,5 +1,7 @@
 package com.hbc.pms.core.api.service;
 
+import com.hbc.pms.plc.integration.huykka7.PlcConnectionConfiguration;
+import com.hbc.pms.plc.integration.huykka7.S7Connector;
 import com.hbc.pms.plc.integration.mokka7.S7Client;
 import com.hbc.pms.plc.integration.mokka7.block.S7DataItem;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
@@ -8,11 +10,9 @@ import com.hbc.pms.plc.integration.mokka7.type.DataType;
 import com.hbc.pms.plc.integration.mokka7.util.S7;
 import com.hbc.pms.plc.io.Coordinate;
 import jakarta.annotation.PostConstruct;
-
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class PlcService {
 
   private final S7Client plcClient = new S7Client();
+  private S7Connector s7Connector;
   @Value("${hbc.plc.url}")
   private String plcUrl;
 
@@ -30,6 +31,15 @@ public class PlcService {
   public void postConstruct() {
     // TODO: add retries in case the PLC connection is interrupted
     try {
+      PlcConnectionConfiguration plcConnectionConfiguration =
+          PlcConnectionConfiguration.builder()
+              .ipAddress(plcUrl)
+              .rack(0)
+              .cpuMpiAddress(1)
+              .build();
+
+      s7Connector = new S7Connector(plcConnectionConfiguration);
+      s7Connector.connect();
       plcClient.connect(plcUrl, 0, 1);
     } catch (S7Exception e) {
       throw new RuntimeException(e);
@@ -159,8 +169,10 @@ public class PlcService {
     s7Items[95] = new S7DataItem(AreaType.DB, DataType.REAL, 1, 382, 1);
     s7Items[96] = new S7DataItem(AreaType.DB, DataType.REAL, 1, 386, 1);
     s7Items[97] = new S7DataItem(AreaType.DB, DataType.REAL, 1, 390, 1);
-    plcClient.readMultiVars(Arrays.copyOfRange(s7Items, 0, 17) , 16);
-    log.info("item: {}", S7.getFloatAt(s7Items[1].data,0));
+//    plcClient.readMultiVars(Arrays.copyOfRange(s7Items, 0, 12), 11);
+
+    var map = s7Connector.executeMultiVarRequest(Arrays.asList("DB1.DINT330", "DB1.DINT334", "DB1.D390","DB1.D386", "DB1.D382", "DB1.D374"));
+    log.info("item: {}", S7.getFloatAt(map.get("DB1.D390"), 0));
   }
 
 }
