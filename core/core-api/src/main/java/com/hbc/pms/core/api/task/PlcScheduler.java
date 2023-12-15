@@ -1,24 +1,23 @@
 package com.hbc.pms.core.api.task;
 
 import com.hbc.pms.core.api.controller.v1.SampleWebSocketController;
-import com.hbc.pms.core.enums.StationEnum;
 import com.hbc.pms.core.api.service.StationService;
+import com.hbc.pms.core.model.enums.StationEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class PlcPublisher {
+public class PlcScheduler {
     private final StationService stationService;
     private final SampleWebSocketController sampleWebSocketController;
 
-    public PlcPublisher(StationService stationService, SampleWebSocketController sampleWebSocketController) {
+    public PlcScheduler(StationService stationService, SampleWebSocketController sampleWebSocketController) {
         this.stationService = stationService;
         this.sampleWebSocketController = sampleWebSocketController;
     }
 
-  @Scheduled(fixedRate = 2000)
+//  @Scheduled(fixedRate = 1000)
   public void refreshStationGeneralState() {
     long startTime = System.currentTimeMillis();
 
@@ -40,10 +39,6 @@ public class PlcPublisher {
 //    log.info("isConnected: " + tr32State.isConnected());
 //    log.info("temperature: " + tr32State.temperature());
 //    log.info("voltage: " + tr32State.voltage());
-    log.info("Station TR32 general state:");
-    log.info("isConnected: " + tr32State.isConnected());
-    log.info("temperature: " + tr32State.temperature());
-    log.info("voltage: " + tr32State.voltage());
 
     long endTime = System.currentTimeMillis();
     long duration = (endTime - startTime);

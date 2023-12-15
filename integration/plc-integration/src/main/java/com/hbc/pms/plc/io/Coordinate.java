@@ -1,4 +1,4 @@
-package com.hbc.pms.core.api.support.json;
+package com.hbc.pms.plc.io;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

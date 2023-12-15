@@ -1,6 +1,6 @@
 package com.hbc.pms.core.api.controller.v1;
 
-import com.hbc.pms.core.model.StationGeneralStateDto;
+import com.hbc.pms.core.model.StationGeneralState;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -14,11 +14,11 @@ public class SampleWebSocketController {
     }
 
     @SendTo("/topic/tr30")
-    public StationGeneralStateDto sendTR30StationState(StationGeneralStateDto stateDto) {
+    public StationGeneralState sendTR30StationState(StationGeneralState stateDto) {
         return stateDto;
     }
 
-    public void fireSendTR30StationState(StationGeneralStateDto stateDto) {
+    public void fireSendTR30StationState(StationGeneralState stateDto) {
         this.template.convertAndSend("/topic/tr30", stateDto);
     }
 }
