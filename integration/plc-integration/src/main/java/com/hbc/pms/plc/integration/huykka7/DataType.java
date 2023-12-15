@@ -7,5 +7,6 @@ public enum DataType {
     DOUBLE,
     INTEGER,
     D_INTEGER,
-    U_LONG
+    U_LONG;
+
 }

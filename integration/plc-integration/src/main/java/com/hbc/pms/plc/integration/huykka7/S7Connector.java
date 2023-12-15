@@ -1,5 +1,7 @@
 package com.hbc.pms.plc.integration.huykka7;
 
+import static com.hbc.pms.plc.integration.mokka7.Client.MAX_VARS;
+
 import com.hbc.pms.plc.integration.mokka7.S7Client;
 import com.hbc.pms.plc.integration.mokka7.S7MultiVar;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
@@ -11,7 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -44,10 +49,30 @@ public class S7Connector {
     return false;
   }
 
-  public Map<String, byte[]> executeMultiVarRequest(List<String> variableNames) throws S7Exception {
+  public Map<String, IoResponse> executeMultiVarRequest(List<String> variableNames)
+      throws S7Exception {
     if (variableNames.isEmpty()) {
       return new HashMap<>();
     }
+    List<List<String>> batchesList = batches(variableNames, MAX_VARS).toList();
+    Map<String, IoResponse> result = new HashMap<>();
+    for (List<String> strings : batchesList) {
+      result.putAll(getStringIoResponseMap(strings));
+    }
+    return result;
+  }
+
+  public static <T> Stream<List<T>> batches(List<T> source, int length) {
+    if (length <= 0) throw new IllegalArgumentException("length = " + length);
+    int size = source.size();
+    if (size <= 0) return Stream.empty();
+    int fullChunks = (size - 1) / length;
+    return IntStream.range(0, fullChunks + 1)
+        .mapToObj(n -> source.subList(n * length, n == fullChunks ? size : (n + 1) * length));
+  }
+
+  private Map<String, IoResponse> getStringIoResponseMap(List<String> variableNames)
+      throws S7Exception {
     try(S7MultiVar s7MultiVar = new S7MultiVar(s7Client)){
 
       List<Map.Entry<String, byte[]>> buffers =
@@ -75,7 +100,14 @@ public class S7Connector {
         throw new IllegalStateException(
             "Error in MultiVar request for variables: " + String.join(",", variableNames));
       }
-      return buffers.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+      return buffers.stream()
+          .map(this::mapToIo)
+          .collect(Collectors.toMap(IoResponse::getVariableName, Function.identity()));
     }
+  }
+
+  private IoResponse mapToIo(Map.Entry<String, byte[]> entry) {
+    return new IoResponse(
+        entry.getKey(), variableNameParser.parse(entry.getKey()).getType(), entry.getValue());
   }
 }

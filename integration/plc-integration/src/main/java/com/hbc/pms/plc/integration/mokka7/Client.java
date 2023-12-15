@@ -47,7 +47,7 @@ public interface Client {
     final byte[] buffer = new byte[1024];
 
     /** Max number of vars (multiread/write) -> max PDU size */
-    public static final int MAX_VARS = 20;
+    public static final int MAX_VARS = 15;
 
     /** Result transport size */
     static final byte TS_RESBIT = 0x03;
