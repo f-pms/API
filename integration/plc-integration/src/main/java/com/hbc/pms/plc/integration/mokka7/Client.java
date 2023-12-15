@@ -575,6 +575,4 @@ public interface Client {
 
     public boolean writeArea(AreaType area, int db, int start, int amount, DataType type, byte[] buffer) throws S7Exception;
 
-
-
 }

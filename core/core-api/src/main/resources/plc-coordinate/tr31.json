@@ -12,6 +12,6 @@
   "voltage": {
     "type": "dint",
     "db": 2,
-    "startByte": 6
+    "startByte": 10
   }
 }

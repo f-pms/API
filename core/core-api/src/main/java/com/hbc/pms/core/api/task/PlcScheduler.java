@@ -16,7 +16,7 @@ public class PlcScheduler {
     this.stationService = stationService;
   }
 
-  @Scheduled(fixedRate = 1000)
+//  @Scheduled(fixedRate = 1000)
   public void refreshStationGeneralState() {
     long startTime = System.currentTimeMillis();
 
