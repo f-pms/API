@@ -18,8 +18,6 @@ public class StationService {
     this.ioDetailsService = ioDetailsService;
   }
 
-  // create a sample Enum in Java
-
   public StationGeneralState getGeneralState(StationEnum station) {
     var stationPlcCoordinate =
         ioDetailsService.getIoCoordinatesById(station.getName()).getPmsCoordinate();
