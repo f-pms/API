@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.service;
 
+import com.hbc.pms.core.api.support.json.TempSerializer;
 import com.hbc.pms.plc.integration.huykka7.PlcConnectionConfiguration;
 import com.hbc.pms.plc.integration.huykka7.S7Connector;
 import com.hbc.pms.plc.integration.mokka7.S7Client;
@@ -12,10 +13,10 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StopWatch;
 
 @Service
 @Slf4j
@@ -148,6 +149,7 @@ public class PlcService {
                 "DB1.D302"));
     long endTime = System.currentTimeMillis();
     long duration = (endTime - startTime);
+    log.info(TempSerializer.serialize(map));
     log.info("Execution time: " + duration + " milliseconds");
   }
 
