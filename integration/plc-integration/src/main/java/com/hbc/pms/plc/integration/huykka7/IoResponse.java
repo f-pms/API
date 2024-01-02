@@ -11,12 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class IoResponse {
   private String variableName;
-  private DataType dateType;
+  private DataType dataType;
   private byte[] rawData;
 
-  public <T> T getValue(Class<T> type) throws S7Exception {
+  public <T> T getValue(/*Class<T> type*/) throws S7Exception {
     Object value = null;
-    switch (this.dateType){
+    switch (this.dataType){
       case BIT -> value = S7.getBitAt(rawData[0],0);
       case D_INTEGER -> value = S7.getDIntAt(rawData, 0);
       case DOUBLE -> value = S7.getFloatAt(rawData, 0);
