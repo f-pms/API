@@ -67,7 +67,7 @@ public class PlcService {
         }
     }
 
-    public Map<String, IoResponse> readMultiVar(List<String> addresses) throws S7Exception {
+    public Map<String, IoResponse> getMultiVars(List<String> addresses) throws S7Exception {
         return s7Connector.executeMultiVarRequest(addresses);
     }
 

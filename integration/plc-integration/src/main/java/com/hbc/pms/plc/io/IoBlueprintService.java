@@ -1,10 +1,13 @@
 package com.hbc.pms.plc.io;
 
+import java.util.List;
+
 public interface IoBlueprintService {
   Type getType();
 
-  Blueprint getBlueprintById(String id);
+  Blueprint getById(String id);
 
+  List<Blueprint> getAll();
   enum Type {
     STATIC,
     DYNAMIC
