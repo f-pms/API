@@ -71,7 +71,7 @@ public class PlcService {
         return s7Connector.executeMultiVarRequest(addresses);
     }
 
-    @Scheduled(fixedRate = 1500)
+//    @Scheduled(fixedRate = 1500)
     public void testMultiVars() throws S7Exception {
         long startTime = System.currentTimeMillis();
         var map =
