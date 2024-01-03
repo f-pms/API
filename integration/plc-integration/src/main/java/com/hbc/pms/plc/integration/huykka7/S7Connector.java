@@ -38,6 +38,7 @@ public class S7Connector {
     try {
       s7Client.connect(
           plcConnectionConfiguration.getIpAddress(),
+          plcConnectionConfiguration.getPort(),
           plcConnectionConfiguration.getRack(),
           plcConnectionConfiguration.getCpuMpiAddress());
       return true;

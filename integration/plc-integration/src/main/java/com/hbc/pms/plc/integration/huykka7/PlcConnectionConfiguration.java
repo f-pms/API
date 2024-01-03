@@ -9,5 +9,7 @@ public class PlcConnectionConfiguration {
   private String ipAddress;
   private int rack;
   private int cpuMpiAddress;
-  private int port;
+
+  @Builder.Default
+  private int port = 102;
 }
