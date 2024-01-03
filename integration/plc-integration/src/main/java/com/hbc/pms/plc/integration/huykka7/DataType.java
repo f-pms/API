@@ -8,5 +8,4 @@ public enum DataType {
     INTEGER,
     D_INTEGER,
     U_LONG;
-
 }

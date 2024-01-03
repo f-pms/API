@@ -32,8 +32,10 @@ public class S7VariableNameParser {
           "^(?<operand>db)(?<dbNr>\\d{1,4})\\.(?<type>dbx|x|s|string|b|dbb|d|int|dbw|w|dint|dul|dulint|dulong|)(?<start>\\d+)(\\.(?<bitOrLength>\\d+))?$",
           Pattern.CASE_INSENSITIVE);
 
+
   public S7VariableAddress parse(String input) {
     Matcher match = regex.matcher(input);
+    var bitOrLengthStr = "bitOrLength";
     if (match.find()) {
       AreaType areaType = AreaType.valueOf(match.group("operand").toUpperCase());
       short dbNr = Short.parseShort(match.group("dbNr"));
@@ -48,13 +50,13 @@ public class S7VariableNameParser {
 
       if (type == DataType.BIT) {
         s7VariableAddress.setLength(1);
-        s7VariableAddress.setBit(Byte.parseByte(match.group("bitOrLength")));
+        s7VariableAddress.setBit(Byte.parseByte(match.group(bitOrLengthStr)));
       } else if (type == DataType.BYTE) {
         s7VariableAddress.setLength(
-            match.group("bitOrLength") != null ? Short.parseShort(match.group("bitOrLength")) : 1);
+            match.group(bitOrLengthStr) != null ? Short.parseShort(match.group(bitOrLengthStr)) : 1);
       } else if (type == DataType.STRING) {
         s7VariableAddress.setLength(
-            match.group("bitOrLength") != null ? Short.parseShort(match.group("bitOrLength")) : 0);
+            match.group(bitOrLengthStr) != null ? Short.parseShort(match.group(bitOrLengthStr)) : 0);
       } else if (type == DataType.INTEGER) {
         s7VariableAddress.setLength(2);
       } else if (type == DataType.D_INTEGER) {
