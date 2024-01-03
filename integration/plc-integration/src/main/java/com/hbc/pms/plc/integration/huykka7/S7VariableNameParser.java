@@ -32,6 +32,7 @@ public class S7VariableNameParser {
           "^(?<operand>db)(?<dbNr>\\d{1,4})\\.(?<type>dbx|x|s|string|b|dbb|d|int|dbw|w|dint|dul|dulint|dulong|)(?<start>\\d+)(\\.(?<bitOrLength>\\d+))?$",
           Pattern.CASE_INSENSITIVE);
 
+
   public S7VariableAddress parse(String input) {
     Matcher match = regex.matcher(input);
     if (match.find()) {

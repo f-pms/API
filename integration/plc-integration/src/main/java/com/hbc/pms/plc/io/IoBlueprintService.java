@@ -1,9 +1,9 @@
 package com.hbc.pms.plc.io;
 
-public interface IoDetailsService {
+public interface IoBlueprintService {
   Type getType();
 
-  IoCoordinates getIoCoordinatesById(String id);
+  Blueprint getBlueprintById(String id);
 
   enum Type {
     STATIC,

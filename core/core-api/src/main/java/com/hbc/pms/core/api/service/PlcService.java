@@ -6,6 +6,7 @@ import com.hbc.pms.plc.integration.mokka7.S7Client;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
 import com.hbc.pms.plc.integration.mokka7.type.AreaType;
 import com.hbc.pms.plc.integration.mokka7.type.DataType;
+import com.hbc.pms.plc.io.Blueprint;
 import com.hbc.pms.plc.io.Coordinate;
 import jakarta.annotation.PostConstruct;
 import java.util.Arrays;
@@ -15,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StopWatch;
 
 @Service
 @Slf4j
@@ -45,24 +45,24 @@ public class PlcService {
     }
   }
 
-  public boolean readBoolean(Coordinate coordinate) throws S7Exception {
-    validateType(coordinate, DataType.BIT);
-    return plcClient.readBit(AreaType.DB, coordinate.getDb(), coordinate.getStartByte(), 0);
+  public boolean readBoolean(Blueprint.SensorConfiguration sensorConfiguration) throws S7Exception {
+    validateType(sensorConfiguration, DataType.BIT);
+    return plcClient.readBit(AreaType.DB, sensorConfiguration.getDataBlockNumber(), sensorConfiguration.getOffset(), 0);
   }
 
-  public int readInt(Coordinate coordinate) throws S7Exception {
-    validateType(coordinate, DataType.DINT);
-    return plcClient.readInt(AreaType.DB, coordinate.getDb(), coordinate.getStartByte());
+  public int readInt(Blueprint.SensorConfiguration sensorConfiguration) throws S7Exception {
+    validateType(sensorConfiguration, DataType.DINT);
+    return plcClient.readInt(AreaType.DB, sensorConfiguration.getDataBlockNumber(), sensorConfiguration.getOffset());
   }
 
-  public float readFloat(Coordinate coordinate) throws S7Exception {
+  public float readFloat(Blueprint.SensorConfiguration coordinate) throws S7Exception {
     validateType(coordinate, DataType.REAL);
-    return plcClient.readFloat(AreaType.DB, coordinate.getDb(), coordinate.getStartByte());
+    return plcClient.readFloat(AreaType.DB, coordinate.getDataBlockNumber(), coordinate.getOffset());
   }
 
-  private void validateType(Coordinate coordinate, DataType type) {
+  private void validateType(Blueprint.SensorConfiguration sensorConfiguration, DataType type) {
     var typeAsString = type.name().toLowerCase(Locale.ENGLISH);
-    if (!Objects.equals(coordinate.getType(), typeAsString)) {
+    if (!Objects.equals(sensorConfiguration.getDataType(), typeAsString)) {
       throw new RuntimeException(String.format("Read value type is not expected to be a %s value", typeAsString));
     }
   }
