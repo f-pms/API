@@ -21,7 +21,7 @@ public class BlueprintManager {
     }
 
     @PostConstruct
-    public void loadBlueprints() throws IOException {
+    public void loadBlueprints() {
         blueprints = ioBlueprintService.getAll();
     }
 }

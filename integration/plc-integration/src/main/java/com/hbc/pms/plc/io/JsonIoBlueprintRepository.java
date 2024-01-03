@@ -46,7 +46,6 @@ public class JsonIoBlueprintRepository implements IoBlueprintRepository {
                 new ClassPathResource(String.format("blueprints/%s.json", stationName.getName()))
                     .getInputStream(), Blueprint.class);
             blueprintsMap.put(blueprint.getId(), blueprint);
-            log.info(objectMapper.writeValueAsString(blueprint));
         }
     }
 }
