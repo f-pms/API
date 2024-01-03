@@ -1,9 +1,11 @@
 package com.hbc.pms.plc.integration.mokka7;
 
 import com.hbc.pms.plc.integration.mokka7.type.ConnectionType;
+import lombok.Getter;
 
 public class S7Config {
     private ConnectionType type;
+    @Getter
     private String host;
     private int port;
     private int slot;
@@ -32,10 +34,6 @@ public class S7Config {
      */
     public void setType(ConnectionType type) {
         this.type = type;
-    }
-
-    public String getHost() {
-        return host;
     }
 
     public void setHost(String host) {

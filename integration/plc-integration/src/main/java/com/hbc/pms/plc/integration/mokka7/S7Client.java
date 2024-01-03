@@ -52,6 +52,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Nardella
  * @author comtel
  */
+
 public class S7Client implements Client, ReturnCode {
 
     private static final Logger logger = LoggerFactory.getLogger(S7Client.class);

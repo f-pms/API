@@ -47,7 +47,7 @@ public interface Client {
     final byte[] buffer = new byte[1024];
 
     /** Max number of vars (multiread/write) -> max PDU size */
-    public static final int MAX_VARS = 20;
+    public static final int MAX_VARS = 15;
 
     /** Result transport size */
     static final byte TS_RESBIT = 0x03;
@@ -510,6 +510,12 @@ public interface Client {
         return null;
     }
 
+    default Float readFloat(AreaType area, int db, int start) throws S7Exception {
+        final byte[] theBuffer = new byte[1024];
+        readArea(AreaType.DB, db, start, 1, DataType.REAL, theBuffer);
+        return S7.getFloatAt(theBuffer, 0);
+    }
+
     default String readString(AreaType area, int db, int start, int length) throws S7Exception {
         return readString(area, db, start, length, StandardCharsets.UTF_8, buffer);
     }
@@ -568,7 +574,5 @@ public interface Client {
     public int readArea(AreaType area, int db, int start, int amount, DataType wordLen, byte[] buffer) throws S7Exception;
 
     public boolean writeArea(AreaType area, int db, int start, int amount, DataType type, byte[] buffer) throws S7Exception;
-
-
 
 }
