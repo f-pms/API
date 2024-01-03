@@ -43,8 +43,6 @@ public class S7Connector {
       return true;
     } catch (S7Exception e) {
       log.error(e.getMessage(), e);
-      //      throw e;
-      //      return false;
     }
     return false;
   }
@@ -84,13 +82,13 @@ public class S7Connector {
                           s7VariableAddresses.computeIfAbsent(key, variableNameParser::parse)))
               .map(
                   x -> {
-                    byte[] buffer = new byte[x.getValue().length];
+                    byte[] buffer = new byte[x.getValue().getLength()];
                     s7MultiVar.add(
                         AreaType.DB,
                         DataType.BYTE,
-                        x.getValue().dbNr,
-                        x.getValue().start,
-                        x.getValue().length,
+                        x.getValue().getDbNr(),
+                        x.getValue().getStart(),
+                        x.getValue().getLength(),
                         buffer);
                     return new AbstractMap.SimpleEntry<>(x.getKey(), buffer);
                   })

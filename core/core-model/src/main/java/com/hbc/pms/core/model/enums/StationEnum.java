@@ -7,9 +7,6 @@ import lombok.Getter;
 @Getter
 public enum StationEnum {
   MAIN("main");
-//  TR30("tr30"),
-//  TR31("tr31"),
-//  TR32("tr32");
 
   private final String name;
 

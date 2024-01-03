@@ -14,7 +14,7 @@ public class IoResponse {
   private DataType dateType;
   private byte[] rawData;
 
-  public <T> T getValue(Class<T> type) throws S7Exception {
+  public <T> T getValue() throws S7Exception {
     Object value = null;
     switch (this.dateType){
       case BIT -> value = S7.getBitAt(rawData[0],0);
