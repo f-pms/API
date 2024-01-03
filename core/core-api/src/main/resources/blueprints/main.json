@@ -1,5 +1,5 @@
 {
-  "blueprintId": "main",
+  "id": "main",
   "name": "Main Station",
   "description": "Production parameters of Main Station",
   "sensorConfigurations": [
