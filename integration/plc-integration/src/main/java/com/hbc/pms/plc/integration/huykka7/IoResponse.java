@@ -21,7 +21,7 @@ public class IoResponse {
       case D_INTEGER -> value = S7.getDIntAt(rawData, 0);
       case DOUBLE -> value = S7.getFloatAt(rawData, 0);
       default -> throw new S7Exception(-1, "Not supported data type");
-    };
+    }
     return (T) value;
   }
 }

@@ -13,7 +13,6 @@ public class DataProcessor {
         Map<String, String> flattenedData = new HashMap<>();
 
         for (Map.Entry<String, IoResponse> entry : rawData.entrySet()) {
-            var entryValue = entry.getValue();
             flattenedData.put(entry.getKey(), entry.getValue().getValue().toString());
         }
         return flattenedData;

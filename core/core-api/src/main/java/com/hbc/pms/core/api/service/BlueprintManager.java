@@ -5,7 +5,6 @@ import com.hbc.pms.core.api.domain.Blueprint;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -21,8 +20,8 @@ public class BlueprintManager {
     @PostConstruct
     public void loadBlueprints() throws IOException {
         blueprints = new ArrayList<>();
-        String BLUEPRINTS_DIR = "\\core\\core-api\\src\\main\\resources\\blueprints";
-        String blueprintsPath = new FileSystemResource("").getFile().getAbsolutePath() + BLUEPRINTS_DIR;
+        final String blueprintDir = "\\core\\core-api\\src\\main\\resources\\blueprints";
+        String blueprintsPath = new FileSystemResource("").getFile().getAbsolutePath() + blueprintDir;
         File[] blueprintsDir = new File(blueprintsPath).listFiles();
 
         if (blueprintsDir == null) {
