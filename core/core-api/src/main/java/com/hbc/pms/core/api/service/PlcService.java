@@ -44,22 +44,22 @@ public class PlcService {
         }
     }
 
-    public boolean readBoolean(Blueprint.SensorConfiguration.Figure figure) throws S7Exception {
+    public boolean readBoolean(Blueprint.Figure figure) throws S7Exception {
         validateType(figure, DataType.BIT);
         return plcClient.readBit(AreaType.DB, figure.getDataBlockNumber(), figure.getOffset(), 0);
     }
 
-    public int readInt(Blueprint.SensorConfiguration.Figure figure) throws S7Exception {
+    public int readInt(Blueprint.Figure figure) throws S7Exception {
         validateType(figure, DataType.DINT);
         return plcClient.readInt(AreaType.DB, figure.getDataBlockNumber(), figure.getOffset());
     }
 
-    public float readFloat(Blueprint.SensorConfiguration.Figure figure) throws S7Exception {
+    public float readFloat(Blueprint.Figure figure) throws S7Exception {
         validateType(figure, DataType.REAL);
         return plcClient.readFloat(AreaType.DB, figure.getDataBlockNumber(), figure.getOffset());
     }
 
-    private void validateType(Blueprint.SensorConfiguration.Figure figure, DataType type) {
+    private void validateType(Blueprint.Figure figure, DataType type) {
         var typeAsString = type.name().toLowerCase(Locale.ENGLISH);
         if (!Objects.equals(figure.getDataType(), typeAsString)) {
             throw new UnsupportedOperationException(String.format("Read value type is not expected to be a %s value", typeAsString));

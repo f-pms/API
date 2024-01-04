@@ -21,24 +21,20 @@ public class Blueprint {
         private String groupId;
         private List<Figure> figures;
 
-        @Getter
-        public static class Figure {
-            private String id;
-            // TODO: auto calculate these 3 fields based on address
-            private String dataType;
-            private int offset;
-            private int dataBlockNumber;
-            @Setter
-            private Point displayCoordinates;
-            @Setter
-            private String address; //For ex: "DB9.D2060.0", "DB9.D2064.0"
-        }
-
-        public List<String> getAddresses() {
-            return figures.stream().map(Figure::getAddress).toList();
-        }
     }
 
+    @Getter
+    public static class Figure {
+        private String id;
+        // TODO: auto calculate these 3 fields based on address
+        private String dataType;
+        private int offset;
+        private int dataBlockNumber;
+        @Setter
+        private Point displayCoordinates;
+        @Setter
+        private String address; //For ex: "DB9.D2060.0", "DB9.D2064.0"
+    }
 
     @Getter
     @Setter
@@ -48,8 +44,9 @@ public class Blueprint {
     }
 
     public List<String> getAddresses() {
-        return sensorConfigurations.stream().flatMap(
-            sensorConfiguration -> sensorConfiguration.getAddresses().stream()
-        ).toList();
+        return sensorConfigurations.stream()
+            .flatMap(sensorConfiguration -> sensorConfiguration.figures.stream())
+            .map(Figure::getAddress)
+            .collect(Collectors.toList());
     }
 }
