@@ -15,7 +15,6 @@ import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,24 +44,24 @@ public class PlcService {
         }
     }
 
-    public boolean readBoolean(Blueprint.SensorConfiguration sensorConfiguration) throws S7Exception {
-        validateType(sensorConfiguration, DataType.BIT);
-        return plcClient.readBit(AreaType.DB, sensorConfiguration.getDataBlockNumber(), sensorConfiguration.getOffset(), 0);
+    public boolean readBoolean(Blueprint.SensorConfiguration.Figure figure) throws S7Exception {
+        validateType(figure, DataType.BIT);
+        return plcClient.readBit(AreaType.DB, figure.getDataBlockNumber(), figure.getOffset(), 0);
     }
 
-    public int readInt(Blueprint.SensorConfiguration sensorConfiguration) throws S7Exception {
-        validateType(sensorConfiguration, DataType.DINT);
-        return plcClient.readInt(AreaType.DB, sensorConfiguration.getDataBlockNumber(), sensorConfiguration.getOffset());
+    public int readInt(Blueprint.SensorConfiguration.Figure figure) throws S7Exception {
+        validateType(figure, DataType.DINT);
+        return plcClient.readInt(AreaType.DB, figure.getDataBlockNumber(), figure.getOffset());
     }
 
-    public float readFloat(Blueprint.SensorConfiguration sensorConfiguration) throws S7Exception {
-        validateType(sensorConfiguration, DataType.REAL);
-        return plcClient.readFloat(AreaType.DB, sensorConfiguration.getDataBlockNumber(), sensorConfiguration.getOffset());
+    public float readFloat(Blueprint.SensorConfiguration.Figure figure) throws S7Exception {
+        validateType(figure, DataType.REAL);
+        return plcClient.readFloat(AreaType.DB, figure.getDataBlockNumber(), figure.getOffset());
     }
 
-    private void validateType(Blueprint.SensorConfiguration sensorConfiguration, DataType type) {
+    private void validateType(Blueprint.SensorConfiguration.Figure figure, DataType type) {
         var typeAsString = type.name().toLowerCase(Locale.ENGLISH);
-        if (!Objects.equals(sensorConfiguration.getDataType(), typeAsString)) {
+        if (!Objects.equals(figure.getDataType(), typeAsString)) {
             throw new UnsupportedOperationException(String.format("Read value type is not expected to be a %s value", typeAsString));
         }
     }

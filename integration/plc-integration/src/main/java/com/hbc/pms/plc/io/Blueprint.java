@@ -1,21 +1,15 @@
 package com.hbc.pms.plc.io;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.hbc.pms.plc.integration.huykka7.DataType;
-import com.hbc.pms.plc.integration.huykka7.S7VariableAddress;
-import com.hbc.pms.plc.integration.mokka7.type.AreaType;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
-@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Blueprint {
     private String id;
     private String name;
@@ -24,16 +18,27 @@ public class Blueprint {
 
     @Getter
     public static class SensorConfiguration {
-        // TODO: auto calculate these 3 fields based on address
-        private String dataType;
-        private int offset;
-        private int dataBlockNumber;
+        private String groupId;
+        private List<Figure> figures;
 
-        @Setter
-        private Point displayCoordinates;
-        @Setter
-        private String address; //For ex: "DB9.D2060.0", "DB9.D2064.0"
+        @Getter
+        public static class Figure {
+            private String id;
+            // TODO: auto calculate these 3 fields based on address
+            private String dataType;
+            private int offset;
+            private int dataBlockNumber;
+            @Setter
+            private Point displayCoordinates;
+            @Setter
+            private String address; //For ex: "DB9.D2060.0", "DB9.D2064.0"
+        }
+
+        public List<String> getAddresses() {
+            return figures.stream().map(Figure::getAddress).toList();
+        }
     }
+
 
     @Getter
     @Setter
@@ -43,6 +48,8 @@ public class Blueprint {
     }
 
     public List<String> getAddresses() {
-        return sensorConfigurations.stream().map(SensorConfiguration::getAddress).toList();
+        return sensorConfigurations.stream().flatMap(
+            sensorConfiguration -> sensorConfiguration.getAddresses().stream()
+        ).toList();
     }
 }
