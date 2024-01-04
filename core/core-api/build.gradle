@@ -8,7 +8,9 @@ dependencies {
     implementation project(":support:logging")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.apache.commons:commons-lang3'
 
     testImplementation "org.testcontainers:testcontainers:${testContainerVersion}"
     testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"

@@ -67,11 +67,11 @@ public class PlcService {
         }
     }
 
-    public Map<String, IoResponse> readMultiVar(List<String> addresses) throws S7Exception {
+    public Map<String, IoResponse> getMultiVars(List<String> addresses) throws S7Exception {
         return s7Connector.executeMultiVarRequest(addresses);
     }
 
-    @Scheduled(fixedRate = 1500)
+//    @Scheduled(fixedRate = 1500)
     public void testMultiVars() throws S7Exception {
         long startTime = System.currentTimeMillis();
         var map =
