@@ -6,10 +6,10 @@ import lombok.Setter;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-@Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
 public class Blueprint {
     private String id;
     private String name;

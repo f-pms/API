@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RestControllerExceptionHandler {
     @ResponseBody
     @ExceptionHandler({CoreApiException.class})
-    public ApiResponse<?> handleException(CoreApiException ex) {
+    public ApiResponse<RuntimeException> handleException(CoreApiException ex) {
         return ApiResponse.error(ex.getErrorType(), ex.getData());
     }
 }
