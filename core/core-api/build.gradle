@@ -9,4 +9,12 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    testImplementation "org.testcontainers:testcontainers:${testContainerVersion}"
+    testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter:${jUnitVersion}"
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
 }
