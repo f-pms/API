@@ -21,6 +21,7 @@ hbc:
     url: hbc-plc.ohtgo.me
     publisher:
       enabled: true
+  origins: http://localhost:5173
 
 ---
 spring.config.activate.on-profile: local
