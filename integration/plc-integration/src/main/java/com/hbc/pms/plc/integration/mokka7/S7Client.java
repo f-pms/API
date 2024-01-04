@@ -138,8 +138,9 @@ public class S7Client implements Client, ReturnCode {
     }
 
     @Override
-    public boolean connect(String address, int rack, int slot) throws S7Exception {
+    public boolean connect(String address, int port, int rack, int slot) throws S7Exception {
         config.setHost(address);
+        config.setPort(port);
         config.setRack(rack);
         config.setSlot(slot);
         config.setRemoteTSAP((config.getType().getValue() << 8) + (rack * 0x20) + slot);

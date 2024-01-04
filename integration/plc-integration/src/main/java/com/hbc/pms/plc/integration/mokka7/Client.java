@@ -294,11 +294,10 @@ public interface Client {
     boolean clearSessionPassword() throws S7Exception;
 
     /**
-     * Connects the client to the hardware at (IP, Rack, Slot) Coordinates. Connects the client to
+     * Connects the client to the hardware at (IP, Port, Rack, Slot) Coordinates. Connects the client to
      * the PLC with the parameters specified in the previous call of
-     * {@link #setConnectionParams(String, int, int)}.
      *
-     * @see #connect(String, int, int)
+     * @see #connect(String, int, int, int)
      * @return succeed
      * @throws S7Exception ex
      */
@@ -365,7 +364,7 @@ public interface Client {
      * @return succeed
      * @throws S7Exception ex
      */
-    boolean connect(String address, int rack, int slot) throws S7Exception;
+    boolean connect(String address, int port, int rack, int slot) throws S7Exception;
 
     /**
      * Read an entire DB from the PLC without the need of specifying its size. As output will
