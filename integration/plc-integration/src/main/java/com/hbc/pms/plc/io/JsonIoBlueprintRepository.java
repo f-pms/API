@@ -30,7 +30,7 @@ public class JsonIoBlueprintRepository implements IoBlueprintRepository {
 
     @Override
     public Blueprint get(String id) {
-        return blueprintsMap.get(id);
+        return blueprintsMap.getOrDefault(id, null);
     }
 
     @Override

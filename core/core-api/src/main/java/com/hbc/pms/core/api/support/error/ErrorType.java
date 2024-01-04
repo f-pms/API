@@ -4,9 +4,9 @@ import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.HttpStatus;
 
 public enum ErrorType {
-
+    NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, ErrorCode.E404, "Resource not found", LogLevel.WARN),
     DEFAULT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.E500, "An unexpected error has occurred.",
-            LogLevel.ERROR);
+        LogLevel.ERROR);
 
     private final HttpStatus status;
 

@@ -29,7 +29,7 @@ public class ApiResponse<S> {
         return new ApiResponse<>(ResultType.ERROR, null, new ErrorMessage(error));
     }
 
-    public static ApiResponse<?> error(ErrorType error, Object errorData) {
+    public static ApiResponse<RuntimeException> error(ErrorType error, Object errorData) {
         return new ApiResponse<>(ResultType.ERROR, null, new ErrorMessage(error, errorData));
     }
 
