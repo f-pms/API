@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -41,6 +44,15 @@ public class Blueprint {
     public static class Point {
         private double x;
         private double y;
+    }
+
+    public Map<String, List<String>> getAddressToFiguresMap() {
+        var flattenedMap =sensorConfigurations.stream()
+            .flatMap(sensorConfiguration -> sensorConfiguration.figures.stream());
+        var result = new HashMap<String, List<String>>();
+        flattenedMap.forEach(figure -> result.computeIfAbsent(figure.getAddress(), k -> new ArrayList<>()).add(figure.getId()));
+
+        return result;
     }
 
     public List<String> getAddresses() {
