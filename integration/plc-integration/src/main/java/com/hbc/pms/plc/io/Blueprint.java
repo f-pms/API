@@ -31,7 +31,7 @@ public class Blueprint {
         private int offset;
         private int dataBlockNumber;
         @Setter
-        private Point displayCoordinates;
+        private Point displayCoordinate;
         @Setter
         private String address; //For ex: "DB9.D2060.0", "DB9.D2064.0"
     }
