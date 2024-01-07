@@ -1,4 +1,4 @@
-package com.hbc.pms.storage.db.core.config;
+package com.hbc.pms.integration.db.config;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;
@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EntityScan(basePackages = "com.hbc.pms.storage.db.core")
-@EnableJpaRepositories(basePackages = "com.hbc.pms.storage.db.core")
+@EntityScan(basePackages = "com.hbc.pms.integration.db")
+@EnableJpaRepositories(basePackages = "com.hbc.pms.integration.db")
 class CoreJpaConfig {
 
 }

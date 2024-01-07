@@ -21,7 +21,7 @@ spring:
     console:
       enabled: true
 
-storage:
+integration:
   datasource:
     core:
       driver-class-name: org.h2.Driver
@@ -42,7 +42,7 @@ spring:
         format_sql: true
     show-sql: true
 
-storage:
+integration:
   datasource:
     core:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -71,7 +71,7 @@ storage:
 ---
 spring.config.activate.on-profile: dev
 
-storage:
+integration:
   datasource:
     core:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -100,7 +100,7 @@ storage:
 ---
 spring.config.activate.on-profile: staging
 
-storage:
+integration:
   datasource:
     core:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -129,7 +129,7 @@ storage:
 ---
 spring.config.activate.on-profile: live
 
-storage:
+integration:
   datasource:
     core:
       driver-class-name: com.mysql.cj.jdbc.Driver
