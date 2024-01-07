@@ -27,7 +27,7 @@ integration:
       driver-class-name: org.h2.Driver
       jdbc-url: jdbc:h2:mem:core;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
       username: sa
-      pool-name: core-db-pool
+      pool-name: db-pool
       data-source-properties:
         rewriteBatchedStatements: true
 
@@ -54,7 +54,7 @@ integration:
       keepalive-time: 30000
       validation-timeout: 1000
       max-lifetime: 600000
-      pool-name: core-db-pool
+      pool-name: db-pool
       data-source-properties:
         socketTimeout: 3000
         cachePrepStmts: true
@@ -83,7 +83,7 @@ integration:
       keepalive-time: 30000
       validation-timeout: 1000
       max-lifetime: 600000
-      pool-name: core-db-pool
+      pool-name: db-pool
       data-source-properties:
         socketTimeout: 3000
         cachePrepStmts: true
@@ -112,7 +112,7 @@ integration:
       keepalive-time: 30000
       validation-timeout: 1000
       max-lifetime: 600000
-      pool-name: core-db-pool
+      pool-name: db-pool
       data-source-properties:
         socketTimeout: 3000
         cachePrepStmts: true
@@ -141,7 +141,7 @@ integration:
       keepalive-time: 30000
       validation-timeout: 1000
       max-lifetime: 600000
-      pool-name: core-db-pool
+      pool-name: db-pool
       data-source-properties:
         socketTimeout: 3000
         cachePrepStmts: true
