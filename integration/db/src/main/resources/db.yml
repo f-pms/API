@@ -31,126 +31,126 @@ integration:
       data-source-properties:
         rewriteBatchedStatements: true
 
----
-spring.config.activate.on-profile: local-dev
-
-spring:
-  jpa:
-    properties:
-      hibernate:
-        show_log: true
-        format_sql: true
-    show-sql: true
-
-integration:
-  datasource:
-    core:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://${storage.database.core-db.url}
-      username: ${storage.database.core-db.username}
-      password: ${storage.database.core-db.password}
-      maximum-pool-size: 5
-      connection-timeout: 1100
-      keepalive-time: 30000
-      validation-timeout: 1000
-      max-lifetime: 600000
-      pool-name: db-pool
-      data-source-properties:
-        socketTimeout: 3000
-        cachePrepStmts: true
-        prepStmtCacheSize: 250
-        prepStmtCacheSqlLimit: 2048
-        useServerPrepStmts: true
-        useLocalSessionState: true
-        rewriteBatchedStatements: true
-        cacheResultSetMetadata: true
-        cacheServerConfiguration: true
-        elideSetAutoCommits: true
-        maintainTimeStats: false
-
----
-spring.config.activate.on-profile: dev
-
-integration:
-  datasource:
-    core:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://${storage.database.core-db.url}
-      username: ${storage.database.core-db.username}
-      password: ${storage.database.core-db.password}
-      maximum-pool-size: 5
-      connection-timeout: 1100
-      keepalive-time: 30000
-      validation-timeout: 1000
-      max-lifetime: 600000
-      pool-name: db-pool
-      data-source-properties:
-        socketTimeout: 3000
-        cachePrepStmts: true
-        prepStmtCacheSize: 250
-        prepStmtCacheSqlLimit: 2048
-        useServerPrepStmts: true
-        useLocalSessionState: true
-        rewriteBatchedStatements: true
-        cacheResultSetMetadata: true
-        cacheServerConfiguration: true
-        elideSetAutoCommits: true
-        maintainTimeStats: false
-
----
-spring.config.activate.on-profile: staging
-
-integration:
-  datasource:
-    core:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://${storage.database.core-db.url}
-      username: ${storage.database.core-db.username}
-      password: ${storage.database.core-db.password}
-      maximum-pool-size: 5
-      connection-timeout: 1100
-      keepalive-time: 30000
-      validation-timeout: 1000
-      max-lifetime: 600000
-      pool-name: db-pool
-      data-source-properties:
-        socketTimeout: 3000
-        cachePrepStmts: true
-        prepStmtCacheSize: 250
-        prepStmtCacheSqlLimit: 2048
-        useServerPrepStmts: true
-        useLocalSessionState: true
-        rewriteBatchedStatements: true
-        cacheResultSetMetadata: true
-        cacheServerConfiguration: true
-        elideSetAutoCommits: true
-        maintainTimeStats: false
-
----
-spring.config.activate.on-profile: live
-
-integration:
-  datasource:
-    core:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://${storage.database.core-db.url}
-      username: ${storage.database.core-db.username}
-      password: ${storage.database.core-db.password}
-      maximum-pool-size: 25
-      connection-timeout: 1100
-      keepalive-time: 30000
-      validation-timeout: 1000
-      max-lifetime: 600000
-      pool-name: db-pool
-      data-source-properties:
-        socketTimeout: 3000
-        cachePrepStmts: true
-        prepStmtCacheSize: 250
-        prepStmtCacheSqlLimit: 2048
-        useServerPrepStmts: true
-        useLocalSessionState: true
-        rewriteBatchedStatements: true
-        cacheResultSetMetadata: true
-        cacheServerConfiguration: true
-        elideSetAutoCommits: true
-        maintainTimeStats: false
+#---
+#spring.config.activate.on-profile: local-dev
+#
+#spring:
+#  jpa:
+#    properties:
+#      hibernate:
+#        show_log: true
+#        format_sql: true
+#    show-sql: true
+#
+#integration:
+#  datasource:
+#    core:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      jdbc-url: jdbc:mysql://${storage.database.core-db.url}
+#      username: ${storage.database.core-db.username}
+#      password: ${storage.database.core-db.password}
+#      maximum-pool-size: 5
+#      connection-timeout: 1100
+#      keepalive-time: 30000
+#      validation-timeout: 1000
+#      max-lifetime: 600000
+#      pool-name: db-pool
+#      data-source-properties:
+#        socketTimeout: 3000
+#        cachePrepStmts: true
+#        prepStmtCacheSize: 250
+#        prepStmtCacheSqlLimit: 2048
+#        useServerPrepStmts: true
+#        useLocalSessionState: true
+#        rewriteBatchedStatements: true
+#        cacheResultSetMetadata: true
+#        cacheServerConfiguration: true
+#        elideSetAutoCommits: true
+#        maintainTimeStats: false
+#
+#---
+#spring.config.activate.on-profile: dev
+#
+#integration:
+#  datasource:
+#    core:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      jdbc-url: jdbc:mysql://${storage.database.core-db.url}
+#      username: ${storage.database.core-db.username}
+#      password: ${storage.database.core-db.password}
+#      maximum-pool-size: 5
+#      connection-timeout: 1100
+#      keepalive-time: 30000
+#      validation-timeout: 1000
+#      max-lifetime: 600000
+#      pool-name: db-pool
+#      data-source-properties:
+#        socketTimeout: 3000
+#        cachePrepStmts: true
+#        prepStmtCacheSize: 250
+#        prepStmtCacheSqlLimit: 2048
+#        useServerPrepStmts: true
+#        useLocalSessionState: true
+#        rewriteBatchedStatements: true
+#        cacheResultSetMetadata: true
+#        cacheServerConfiguration: true
+#        elideSetAutoCommits: true
+#        maintainTimeStats: false
+#
+#---
+#spring.config.activate.on-profile: staging
+#
+#integration:
+#  datasource:
+#    core:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      jdbc-url: jdbc:mysql://${storage.database.core-db.url}
+#      username: ${storage.database.core-db.username}
+#      password: ${storage.database.core-db.password}
+#      maximum-pool-size: 5
+#      connection-timeout: 1100
+#      keepalive-time: 30000
+#      validation-timeout: 1000
+#      max-lifetime: 600000
+#      pool-name: db-pool
+#      data-source-properties:
+#        socketTimeout: 3000
+#        cachePrepStmts: true
+#        prepStmtCacheSize: 250
+#        prepStmtCacheSqlLimit: 2048
+#        useServerPrepStmts: true
+#        useLocalSessionState: true
+#        rewriteBatchedStatements: true
+#        cacheResultSetMetadata: true
+#        cacheServerConfiguration: true
+#        elideSetAutoCommits: true
+#        maintainTimeStats: false
+#
+#---
+#spring.config.activate.on-profile: live
+#
+#integration:
+#  datasource:
+#    core:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      jdbc-url: jdbc:mysql://${storage.database.core-db.url}
+#      username: ${storage.database.core-db.username}
+#      password: ${storage.database.core-db.password}
+#      maximum-pool-size: 25
+#      connection-timeout: 1100
+#      keepalive-time: 30000
+#      validation-timeout: 1000
+#      max-lifetime: 600000
+#      pool-name: db-pool
+#      data-source-properties:
+#        socketTimeout: 3000
+#        cachePrepStmts: true
+#        prepStmtCacheSize: 250
+#        prepStmtCacheSqlLimit: 2048
+#        useServerPrepStmts: true
+#        useLocalSessionState: true
+#        rewriteBatchedStatements: true
+#        cacheResultSetMetadata: true
+#        cacheServerConfiguration: true
+#        elideSetAutoCommits: true
+#        maintainTimeStats: false
