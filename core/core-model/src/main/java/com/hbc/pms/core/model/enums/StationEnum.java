@@ -6,7 +6,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum StationEnum {
-  MAIN("main");
+  MAIN("main"),
+  TR11("tr11");
 
   private final String name;
 
