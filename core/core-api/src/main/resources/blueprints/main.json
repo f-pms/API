@@ -4,7 +4,7 @@
   "description": "Production parameters of Main Station",
   "sensorConfigurations": [
     {
-      "groupId": "TubuTR30",
+      "groupId": "TubuTR30Table",
       "figures": [
         {
           "id": "figure0",
@@ -12,9 +12,9 @@
           "dataBlockNumber": 9,
           "offset": 13540,
           "address": "DB9.D13540.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 302.14,
+            "y": 1158.13
           }
         },
         {
@@ -23,9 +23,9 @@
           "dataBlockNumber": 9,
           "offset": 13544,
           "address": "DB9.D13544.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 354.64,
+            "y": 1158.13
           }
         },
         {
@@ -34,9 +34,9 @@
           "dataBlockNumber": 9,
           "offset": 13548,
           "address": "DB9.D13548.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 407.13,
+            "y": 1158.13
           }
         },
         {
@@ -45,9 +45,9 @@
           "dataBlockNumber": 18,
           "offset": 192,
           "address": "DB18.D192.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 302.14,
+            "y": 1184.38
           }
         },
         {
@@ -56,9 +56,9 @@
           "dataBlockNumber": 18,
           "offset": 196,
           "address": "DB18.D196.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 354.64,
+            "y": 1184.38
           }
         },
         {
@@ -67,9 +67,9 @@
           "dataBlockNumber": 18,
           "offset": 200,
           "address": "DB18.D200.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 407.13,
+            "y": 1184.38
           }
         },
         {
@@ -78,15 +78,15 @@
           "dataBlockNumber": 9,
           "offset": 13644,
           "address": "DB9.D13644.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 356.45,
+            "y": 1210.73
           }
         }
       ]
     },
     {
-      "groupId": "TR30",
+      "groupId": "Tr30Table",
       "figures": [
         {
           "id": "figure7",
@@ -94,9 +94,9 @@
           "dataBlockNumber": 9,
           "offset": 13540,
           "address": "DB9.D13540.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 527.96,
+            "y": 916.19
           }
         },
         {
@@ -105,9 +105,9 @@
           "dataBlockNumber": 9,
           "offset": 13544,
           "address": "DB9.D13544.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 580.45,
+            "y": 916.19
           }
         },
         {
@@ -116,9 +116,9 @@
           "dataBlockNumber": 9,
           "offset": 13548,
           "address": "DB9.D13548.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 632.95,
+            "y": 916.19
           }
         },
         {
@@ -127,9 +127,9 @@
           "dataBlockNumber": 9,
           "offset": 13440,
           "address": "DB9.D13440.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 527.96,
+            "y": 942.44
           }
         },
         {
@@ -138,9 +138,9 @@
           "dataBlockNumber": 9,
           "offset": 13444,
           "address": "DB9.D13444.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 580.45,
+            "y": 942.44
           }
         },
         {
@@ -149,9 +149,9 @@
           "dataBlockNumber": 9,
           "offset": 13448,
           "address": "DB9.D13448.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 632.95,
+            "y": 942.44
           }
         },
         {
@@ -160,9 +160,9 @@
           "dataBlockNumber": 9,
           "offset": 13644,
           "address": "DB9.D13644.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 582.27,
+            "y": 968.78
           }
         },
         {
@@ -171,9 +171,9 @@
           "dataBlockNumber": 9,
           "offset": 13580,
           "address": "DB9.D13580.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 582.27,
+            "y": 995.03
           }
         },
         {
@@ -182,9 +182,9 @@
           "dataBlockNumber": 9,
           "offset": 13612,
           "address": "DB9.D13612.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 582.27,
+            "y": 1021.28
           }
         },
         {
@@ -193,15 +193,15 @@
           "dataBlockNumber": 9,
           "offset": 13376,
           "address": "DB9.D13376.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 582.27,
+            "y": 1047.52
           }
         }
       ]
     },
     {
-      "groupId": "LV11",
+      "groupId": "Lv11Table",
       "figures": [
         {
           "id": "figure17",
@@ -209,9 +209,9 @@
           "dataBlockNumber": 9,
           "offset": 6016,
           "address": "DB9.D6016.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 752.42,
+            "y": 914.81
           }
         },
         {
@@ -220,9 +220,9 @@
           "dataBlockNumber": 9,
           "offset": 6020,
           "address": "DB9.D6020.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 804.91,
+            "y": 914.81
           }
         },
         {
@@ -231,9 +231,9 @@
           "dataBlockNumber": 9,
           "offset": 6024,
           "address": "DB9.D6024.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 857.41,
+            "y": 914.81
           }
         },
         {
@@ -242,9 +242,9 @@
           "dataBlockNumber": 9,
           "offset": 5952,
           "address": "DB9.D5952.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 752.42,
+            "y": 941.06
           }
         },
         {
@@ -253,9 +253,9 @@
           "dataBlockNumber": 9,
           "offset": 5956,
           "address": "DB9.D5956.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 804.91,
+            "y": 941.06
           }
         },
         {
@@ -264,9 +264,9 @@
           "dataBlockNumber": 9,
           "offset": 5960,
           "address": "DB9.D5960.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 857.41,
+            "y": 941.06
           }
         },
         {
@@ -275,9 +275,9 @@
           "dataBlockNumber": 9,
           "offset": 6156,
           "address": "DB9.D6156.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 806.72,
+            "y": 967.4
           }
         },
         {
@@ -286,9 +286,9 @@
           "dataBlockNumber": 9,
           "offset": 6092,
           "address": "DB9.D6092.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 806.72,
+            "y": 993.65
           }
         },
         {
@@ -297,9 +297,9 @@
           "dataBlockNumber": 9,
           "offset": 6124,
           "address": "DB9.D6124.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 806.72,
+            "y": 1019.9
           }
         },
         {
@@ -308,15 +308,15 @@
           "dataBlockNumber": 9,
           "offset": 5888,
           "address": "DB9.D5888.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 806.72,
+            "y": 1046.15
           }
         }
       ]
     },
     {
-      "groupId": "LV12",
+      "groupId": "Lv12Table",
       "figures": [
         {
           "id": "figure27",
@@ -324,9 +324,9 @@
           "dataBlockNumber": 9,
           "offset": 6592,
           "address": "DB9.D6592.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 976.88,
+            "y": 914.81
           }
         },
         {
@@ -335,9 +335,9 @@
           "dataBlockNumber": 9,
           "offset": 6596,
           "address": "DB9.D6596.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1029.37,
+            "y": 914.81
           }
         },
         {
@@ -346,9 +346,9 @@
           "dataBlockNumber": 9,
           "offset": 6600,
           "address": "DB9.D6600.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1081.86,
+            "y": 914.81
           }
         },
         {
@@ -357,9 +357,9 @@
           "dataBlockNumber": 9,
           "offset": 6528,
           "address": "DB9.D6528.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 976.88,
+            "y": 941.06
           }
         },
         {
@@ -368,9 +368,9 @@
           "dataBlockNumber": 9,
           "offset": 6532,
           "address": "DB9.D6532.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1029.37,
+            "y": 941.06
           }
         },
         {
@@ -379,9 +379,9 @@
           "dataBlockNumber": 9,
           "offset": 6536,
           "address": "DB9.D6536.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1081.86,
+            "y": 941.06
           }
         },
         {
@@ -390,9 +390,9 @@
           "dataBlockNumber": 9,
           "offset": 6732,
           "address": "DB9.D6732.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1031.18,
+            "y": 967.4
           }
         },
         {
@@ -401,9 +401,9 @@
           "dataBlockNumber": 9,
           "offset": 6668,
           "address": "DB9.D6668.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1031.18,
+            "y": 993.65
           }
         },
         {
@@ -412,9 +412,9 @@
           "dataBlockNumber": 9,
           "offset": 6700,
           "address": "DB9.D6700.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1031.18,
+            "y": 1019.9
           }
         },
         {
@@ -423,15 +423,15 @@
           "dataBlockNumber": 9,
           "offset": 6464,
           "address": "DB9.D6464.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1031.18,
+            "y": 1046.15
           }
         }
       ]
     },
     {
-      "groupId": "LV42",
+      "groupId": "Lv42Table",
       "figures": [
         {
           "id": "figure37",
@@ -439,9 +439,9 @@
           "dataBlockNumber": 9,
           "offset": 4864,
           "address": "DB9.D4864.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1203.49,
+            "y": 914.81
           }
         },
         {
@@ -450,9 +450,9 @@
           "dataBlockNumber": 9,
           "offset": 4868,
           "address": "DB9.D4868.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1255.98,
+            "y": 914.81
           }
         },
         {
@@ -461,9 +461,9 @@
           "dataBlockNumber": 9,
           "offset": 4872,
           "address": "DB9.D4872.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1308.47,
+            "y": 914.81
           }
         },
         {
@@ -472,9 +472,9 @@
           "dataBlockNumber": 9,
           "offset": 4800,
           "address": "DB9.D4800.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1203.49,
+            "y": 941.06
           }
         },
         {
@@ -483,9 +483,9 @@
           "dataBlockNumber": 9,
           "offset": 4804,
           "address": "DB9.D4804.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1255.98,
+            "y": 941.06
           }
         },
         {
@@ -494,9 +494,9 @@
           "dataBlockNumber": 9,
           "offset": 4808,
           "address": "DB9.D4808.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1308.47,
+            "y": 941.06
           }
         },
         {
@@ -505,9 +505,9 @@
           "dataBlockNumber": 9,
           "offset": 5004,
           "address": "DB9.D5004.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1257.79,
+            "y": 967.4
           }
         },
         {
@@ -516,9 +516,9 @@
           "dataBlockNumber": 9,
           "offset": 4940,
           "address": "DB9.D4940.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1257.79,
+            "y": 993.65
           }
         },
         {
@@ -527,9 +527,9 @@
           "dataBlockNumber": 9,
           "offset": 4972,
           "address": "DB9.D4972.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1257.79,
+            "y": 1019.9
           }
         },
         {
@@ -538,15 +538,15 @@
           "dataBlockNumber": 9,
           "offset": 4736,
           "address": "DB9.D4736.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1257.79,
+            "y": 1046.15
           }
         }
       ]
     },
     {
-      "groupId": "TUYENNGUONDT477PB01090028955",
+      "groupId": "TuyenNguonDt477Pb01090028955Table",
       "figures": [
         {
           "id": "figure47",
@@ -554,9 +554,9 @@
           "dataBlockNumber": 9,
           "offset": 12388,
           "address": "DB9.D12388.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1191.96,
+            "y": 1165.06
           }
         },
         {
@@ -565,9 +565,9 @@
           "dataBlockNumber": 9,
           "offset": 12392,
           "address": "DB9.D12392.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1244.46,
+            "y": 1165.06
           }
         },
         {
@@ -576,9 +576,9 @@
           "dataBlockNumber": 9,
           "offset": 12396,
           "address": "DB9.D12396.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1296.95,
+            "y": 1165.06
           }
         },
         {
@@ -587,9 +587,9 @@
           "dataBlockNumber": 9,
           "offset": 12288,
           "address": "DB9.D12288.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1191.96,
+            "y": 1191.3
           }
         },
         {
@@ -598,9 +598,9 @@
           "dataBlockNumber": 9,
           "offset": 12292,
           "address": "DB9.D12292.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1244.46,
+            "y": 1191.3
           }
         },
         {
@@ -609,9 +609,9 @@
           "dataBlockNumber": 9,
           "offset": 12296,
           "address": "DB9.D12296.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1296.95,
+            "y": 1191.3
           }
         },
         {
@@ -620,9 +620,9 @@
           "dataBlockNumber": 9,
           "offset": 12492,
           "address": "DB9.D12492.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1246.27,
+            "y": 1217.65
           }
         },
         {
@@ -631,9 +631,9 @@
           "dataBlockNumber": 9,
           "offset": 12428,
           "address": "DB9.D12428.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1246.27,
+            "y": 1243.89
           }
         },
         {
@@ -642,9 +642,9 @@
           "dataBlockNumber": 9,
           "offset": 12460,
           "address": "DB9.D12460.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1246.27,
+            "y": 1270.14
           }
         },
         {
@@ -653,15 +653,15 @@
           "dataBlockNumber": 9,
           "offset": 12224,
           "address": "DB9.D12224.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1246.27,
+            "y": 1296.39
           }
         }
       ]
     },
     {
-      "groupId": "LV72",
+      "groupId": "Lv72Table",
       "figures": [
         {
           "id": "figure57",
@@ -669,9 +669,9 @@
           "dataBlockNumber": 9,
           "offset": 3136,
           "address": "DB9.D3136.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1505.54,
+            "y": 915.01
           }
         },
         {
@@ -680,9 +680,9 @@
           "dataBlockNumber": 9,
           "offset": 3140,
           "address": "DB9.D3140.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1558.04,
+            "y": 915.01
           }
         },
         {
@@ -691,9 +691,9 @@
           "dataBlockNumber": 9,
           "offset": 3144,
           "address": "DB9.D3144.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1610.53,
+            "y": 915.01
           }
         },
         {
@@ -702,9 +702,9 @@
           "dataBlockNumber": 9,
           "offset": 3072,
           "address": "DB9.D3072.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1505.54,
+            "y": 941.26
           }
         },
         {
@@ -713,9 +713,9 @@
           "dataBlockNumber": 9,
           "offset": 3076,
           "address": "DB9.D3076.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1558.04,
+            "y": 941.26
           }
         },
         {
@@ -724,9 +724,9 @@
           "dataBlockNumber": 9,
           "offset": 3080,
           "address": "DB9.D3080.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1610.53,
+            "y": 941.26
           }
         },
         {
@@ -735,9 +735,9 @@
           "dataBlockNumber": 9,
           "offset": 3276,
           "address": "DB9.D3276.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1559.85,
+            "y": 967.6
           }
         },
         {
@@ -746,9 +746,9 @@
           "dataBlockNumber": 9,
           "offset": 3212,
           "address": "DB9.D3212.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1559.85,
+            "y": 993.85
           }
         },
         {
@@ -757,9 +757,9 @@
           "dataBlockNumber": 9,
           "offset": 3244,
           "address": "DB9.D3244.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1559.85,
+            "y": 1020.09
           }
         },
         {
@@ -768,15 +768,15 @@
           "dataBlockNumber": 9,
           "offset": 3008,
           "address": "DB9.D3008.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1559.85,
+            "y": 1046.34
           }
         }
       ]
     },
     {
-      "groupId": "LV52",
+      "groupId": "Lv52Table",
       "figures": [
         {
           "id": "figure67",
@@ -784,9 +784,9 @@
           "dataBlockNumber": 9,
           "offset": 3712,
           "address": "DB9.D3712.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1732.7,
+            "y": 914.37
           }
         },
         {
@@ -795,9 +795,9 @@
           "dataBlockNumber": 9,
           "offset": 3716,
           "address": "DB9.D3716.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1785.2,
+            "y": 914.37
           }
         },
         {
@@ -806,9 +806,9 @@
           "dataBlockNumber": 9,
           "offset": 3720,
           "address": "DB9.D3720.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1837.69,
+            "y": 914.37
           }
         },
         {
@@ -817,9 +817,9 @@
           "dataBlockNumber": 9,
           "offset": 3648,
           "address": "DB9.D3648.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1732.7,
+            "y": 940.62
           }
         },
         {
@@ -828,9 +828,9 @@
           "dataBlockNumber": 9,
           "offset": 3652,
           "address": "DB9.D3652.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1785.2,
+            "y": 940.62
           }
         },
         {
@@ -839,9 +839,9 @@
           "dataBlockNumber": 9,
           "offset": 3656,
           "address": "DB9.D3656.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1837.69,
+            "y": 940.62
           }
         },
         {
@@ -850,9 +850,9 @@
           "dataBlockNumber": 9,
           "offset": 3852,
           "address": "DB9.D3852.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1787.01,
+            "y": 966.96
           }
         },
         {
@@ -861,9 +861,9 @@
           "dataBlockNumber": 9,
           "offset": 3788,
           "address": "DB9.D3788.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1787.01,
+            "y": 993.21
           }
         },
         {
@@ -872,9 +872,9 @@
           "dataBlockNumber": 9,
           "offset": 3820,
           "address": "DB9.D3820.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1787.01,
+            "y": 1019.45
           }
         },
         {
@@ -883,15 +883,15 @@
           "dataBlockNumber": 9,
           "offset": 3584,
           "address": "DB9.D3584.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1787.01,
+            "y": 1045.7
           }
         }
       ]
     },
     {
-      "groupId": "LV31",
+      "groupId": "Lv31Table",
       "figures": [
         {
           "id": "figure77",
@@ -899,9 +899,9 @@
           "dataBlockNumber": 9,
           "offset": 256,
           "address": "DB9.D256.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1960.36,
+            "y": 914.1
           }
         },
         {
@@ -910,9 +910,9 @@
           "dataBlockNumber": 9,
           "offset": 260,
           "address": "DB9.D260.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2012.85,
+            "y": 914.1
           }
         },
         {
@@ -921,9 +921,9 @@
           "dataBlockNumber": 9,
           "offset": 264,
           "address": "DB9.D264.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2065.34,
+            "y": 914.1
           }
         },
         {
@@ -932,9 +932,9 @@
           "dataBlockNumber": 9,
           "offset": 192,
           "address": "DB9.D192.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1960.36,
+            "y": 940.35
           }
         },
         {
@@ -943,9 +943,9 @@
           "dataBlockNumber": 9,
           "offset": 196,
           "address": "DB9.D196.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2012.85,
+            "y": 940.35
           }
         },
         {
@@ -954,9 +954,9 @@
           "dataBlockNumber": 9,
           "offset": 200,
           "address": "DB9.D200.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2065.34,
+            "y": 940.35
           }
         },
         {
@@ -965,9 +965,9 @@
           "dataBlockNumber": 9,
           "offset": 396,
           "address": "DB9.D396.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2014.66,
+            "y": 966.69
           }
         },
         {
@@ -976,9 +976,9 @@
           "dataBlockNumber": 9,
           "offset": 332,
           "address": "DB9.D332.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2014.66,
+            "y": 992.94
           }
         },
         {
@@ -987,9 +987,9 @@
           "dataBlockNumber": 9,
           "offset": 364,
           "address": "DB9.D364.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2014.66,
+            "y": 1019.19
           }
         },
         {
@@ -998,15 +998,15 @@
           "dataBlockNumber": 9,
           "offset": 128,
           "address": "DB9.D128.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2014.66,
+            "y": 1045.43
           }
         }
       ]
     },
     {
-      "groupId": "LV32",
+      "groupId": "Lv32Table",
       "figures": [
         {
           "id": "figure87",
@@ -1014,9 +1014,9 @@
           "dataBlockNumber": 9,
           "offset": 1408,
           "address": "DB9.D1408.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2184.81,
+            "y": 914.1
           }
         },
         {
@@ -1025,9 +1025,9 @@
           "dataBlockNumber": 9,
           "offset": 1412,
           "address": "DB9.D1412.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2237.31,
+            "y": 914.1
           }
         },
         {
@@ -1036,9 +1036,9 @@
           "dataBlockNumber": 9,
           "offset": 1416,
           "address": "DB9.D1416.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2289.8,
+            "y": 914.1
           }
         },
         {
@@ -1047,9 +1047,9 @@
           "dataBlockNumber": 9,
           "offset": 1344,
           "address": "DB9.D1344.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2184.81,
+            "y": 940.35
           }
         },
         {
@@ -1058,9 +1058,9 @@
           "dataBlockNumber": 9,
           "offset": 1348,
           "address": "DB9.D1348.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2237.31,
+            "y": 940.35
           }
         },
         {
@@ -1069,9 +1069,9 @@
           "dataBlockNumber": 9,
           "offset": 1352,
           "address": "DB9.D1352.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2289.8,
+            "y": 940.35
           }
         },
         {
@@ -1080,9 +1080,9 @@
           "dataBlockNumber": 9,
           "offset": 1548,
           "address": "DB9.D1548.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2239.12,
+            "y": 966.69
           }
         },
         {
@@ -1091,9 +1091,9 @@
           "dataBlockNumber": 9,
           "offset": 1484,
           "address": "DB9.D1484.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2239.12,
+            "y": 992.94
           }
         },
         {
@@ -1102,9 +1102,9 @@
           "dataBlockNumber": 9,
           "offset": 1516,
           "address": "DB9.D1516.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2239.12,
+            "y": 1019.19
           }
         },
         {
@@ -1113,15 +1113,15 @@
           "dataBlockNumber": 9,
           "offset": 1280,
           "address": "DB9.D1280.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2239.12,
+            "y": 1045.43
           }
         }
       ]
     },
     {
-      "groupId": "LV33",
+      "groupId": "Lv33Table",
       "figures": [
         {
           "id": "figure97",
@@ -1129,9 +1129,9 @@
           "dataBlockNumber": 9,
           "offset": 832,
           "address": "DB9.D832.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2411.42,
+            "y": 914.1
           }
         },
         {
@@ -1140,9 +1140,9 @@
           "dataBlockNumber": 9,
           "offset": 836,
           "address": "DB9.D836.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2463.92,
+            "y": 914.1
           }
         },
         {
@@ -1151,9 +1151,9 @@
           "dataBlockNumber": 9,
           "offset": 840,
           "address": "DB9.D840.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2516.41,
+            "y": 914.1
           }
         },
         {
@@ -1162,9 +1162,9 @@
           "dataBlockNumber": 9,
           "offset": 768,
           "address": "DB9.D768.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2411.42,
+            "y": 940.35
           }
         },
         {
@@ -1173,9 +1173,9 @@
           "dataBlockNumber": 9,
           "offset": 772,
           "address": "DB9.D772.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2463.92,
+            "y": 940.35
           }
         },
         {
@@ -1184,9 +1184,9 @@
           "dataBlockNumber": 9,
           "offset": 776,
           "address": "DB9.D776.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2516.41,
+            "y": 940.35
           }
         },
         {
@@ -1195,9 +1195,9 @@
           "dataBlockNumber": 9,
           "offset": 972,
           "address": "DB9.D972.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2465.73,
+            "y": 966.69
           }
         },
         {
@@ -1206,9 +1206,9 @@
           "dataBlockNumber": 9,
           "offset": 908,
           "address": "DB9.D908.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2465.73,
+            "y": 992.94
           }
         },
         {
@@ -1217,9 +1217,9 @@
           "dataBlockNumber": 9,
           "offset": 940,
           "address": "DB9.D940.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2465.73,
+            "y": 1019.19
           }
         },
         {
@@ -1228,15 +1228,15 @@
           "dataBlockNumber": 9,
           "offset": 704,
           "address": "DB9.D704.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2465.73,
+            "y": 1045.43
           }
         }
       ]
     },
     {
-      "groupId": "LV34-2",
+      "groupId": "Lv34_2Table",
       "figures": [
         {
           "id": "figure107",
@@ -1244,9 +1244,9 @@
           "dataBlockNumber": 9,
           "offset": 2560,
           "address": "DB9.D2560.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2411.74,
+            "y": 1166.44
           }
         },
         {
@@ -1255,9 +1255,9 @@
           "dataBlockNumber": 9,
           "offset": 2564,
           "address": "DB9.D2564.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2464.24,
+            "y": 1166.44
           }
         },
         {
@@ -1266,9 +1266,9 @@
           "dataBlockNumber": 9,
           "offset": 2568,
           "address": "DB9.D2568.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2516.73,
+            "y": 1166.44
           }
         },
         {
@@ -1277,9 +1277,9 @@
           "dataBlockNumber": 9,
           "offset": 2496,
           "address": "DB9.D2496.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2411.74,
+            "y": 1192.69
           }
         },
         {
@@ -1288,9 +1288,9 @@
           "dataBlockNumber": 9,
           "offset": 2500,
           "address": "DB9.D2500.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2464.24,
+            "y": 1192.69
           }
         },
         {
@@ -1299,9 +1299,9 @@
           "dataBlockNumber": 9,
           "offset": 2504,
           "address": "DB9.D2504.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2516.73,
+            "y": 1192.69
           }
         },
         {
@@ -1310,9 +1310,9 @@
           "dataBlockNumber": 9,
           "offset": 2700,
           "address": "DB9.D2700.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2466.05,
+            "y": 1219.03
           }
         },
         {
@@ -1321,9 +1321,9 @@
           "dataBlockNumber": 9,
           "offset": 2636,
           "address": "DB9.D2636.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2466.05,
+            "y": 1245.28
           }
         },
         {
@@ -1332,9 +1332,9 @@
           "dataBlockNumber": 9,
           "offset": 2668,
           "address": "DB9.D2668.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2466.05,
+            "y": 1271.52
           }
         },
         {
@@ -1343,15 +1343,15 @@
           "dataBlockNumber": 9,
           "offset": 2432,
           "address": "DB9.D2432.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2466.05,
+            "y": 1297.77
           }
         }
       ]
     },
     {
-      "groupId": "LV34-1",
+      "groupId": "Lv34_1Table",
       "figures": [
         {
           "id": "figure117",
@@ -1359,9 +1359,9 @@
           "dataBlockNumber": 9,
           "offset": 1984,
           "address": "DB9.D1984.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2185.13,
+            "y": 1166.44
           }
         },
         {
@@ -1370,9 +1370,9 @@
           "dataBlockNumber": 9,
           "offset": 1988,
           "address": "DB9.D1988.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2237.63,
+            "y": 1166.44
           }
         },
         {
@@ -1381,9 +1381,9 @@
           "dataBlockNumber": 9,
           "offset": 1992,
           "address": "DB9.D1992.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2290.12,
+            "y": 1166.44
           }
         },
         {
@@ -1392,9 +1392,9 @@
           "dataBlockNumber": 9,
           "offset": 1920,
           "address": "DB9.D1920.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2185.13,
+            "y": 1192.69
           }
         },
         {
@@ -1403,9 +1403,9 @@
           "dataBlockNumber": 9,
           "offset": 1924,
           "address": "DB9.D1924.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2237.63,
+            "y": 1192.69
           }
         },
         {
@@ -1414,9 +1414,9 @@
           "dataBlockNumber": 9,
           "offset": 1928,
           "address": "DB9.D1928.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2290.12,
+            "y": 1192.69
           }
         },
         {
@@ -1425,9 +1425,9 @@
           "dataBlockNumber": 9,
           "offset": 2124,
           "address": "DB9.D2124.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2239.44,
+            "y": 1219.03
           }
         },
         {
@@ -1436,9 +1436,9 @@
           "dataBlockNumber": 9,
           "offset": 2060,
           "address": "DB9.D2060.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2239.44,
+            "y": 1245.28
           }
         },
         {
@@ -1447,9 +1447,9 @@
           "dataBlockNumber": 9,
           "offset": 2092,
           "address": "DB9.D2092.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2239.44,
+            "y": 1271.52
           }
         },
         {
@@ -1458,15 +1458,15 @@
           "dataBlockNumber": 9,
           "offset": 1856,
           "address": "DB9.D1856.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2239.44,
+            "y": 1297.77
           }
         }
       ]
     },
     {
-      "groupId": "TUYENNGUONNHAKEOTR82",
+      "groupId": "TuyenNguonNhaKeoTr82Table",
       "figures": [
         {
           "id": "figure127",
@@ -1474,9 +1474,9 @@
           "dataBlockNumber": 9,
           "offset": 14080,
           "address": "DB9.D14080.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1960.68,
+            "y": 1166.44
           }
         },
         {
@@ -1485,9 +1485,9 @@
           "dataBlockNumber": 9,
           "offset": 14084,
           "address": "DB9.D14084.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2013.17,
+            "y": 1166.44
           }
         },
         {
@@ -1496,9 +1496,9 @@
           "dataBlockNumber": 9,
           "offset": 14088,
           "address": "DB9.D14088.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2065.66,
+            "y": 1166.44
           }
         },
         {
@@ -1507,9 +1507,9 @@
           "dataBlockNumber": 9,
           "offset": 14016,
           "address": "DB9.D14016.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1960.68,
+            "y": 1192.69
           }
         },
         {
@@ -1518,9 +1518,9 @@
           "dataBlockNumber": 9,
           "offset": 14020,
           "address": "DB9.D14020.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2013.17,
+            "y": 1192.69
           }
         },
         {
@@ -1529,9 +1529,9 @@
           "dataBlockNumber": 9,
           "offset": 14024,
           "address": "DB9.D14024.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2065.66,
+            "y": 1192.69
           }
         },
         {
@@ -1540,9 +1540,9 @@
           "dataBlockNumber": 9,
           "offset": 14220,
           "address": "DB9.D14220.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2014.98,
+            "y": 1219.03
           }
         },
         {
@@ -1551,9 +1551,9 @@
           "dataBlockNumber": 9,
           "offset": 14156,
           "address": "DB9.D14156.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2014.98,
+            "y": 1245.28
           }
         },
         {
@@ -1562,9 +1562,9 @@
           "dataBlockNumber": 9,
           "offset": 14188,
           "address": "DB9.D14188.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2014.98,
+            "y": 1271.52
           }
         },
         {
@@ -1573,15 +1573,15 @@
           "dataBlockNumber": 9,
           "offset": 13952,
           "address": "DB9.D13952.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 2014.98,
+            "y": 1297.77
           }
         }
       ]
     },
     {
-      "groupId": "TUYENNGUONDT477PB01090028954",
+      "groupId": "TuyenNguonDt475Pb01090028954Table",
       "figures": [
         {
           "id": "figure137",
@@ -1589,9 +1589,9 @@
           "dataBlockNumber": 9,
           "offset": 11812,
           "address": "DB9.D11812.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1505.19,
+            "y": 1165.06
           }
         },
         {
@@ -1600,9 +1600,9 @@
           "dataBlockNumber": 9,
           "offset": 11816,
           "address": "DB9.D11816.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1557.69,
+            "y": 1165.06
           }
         },
         {
@@ -1611,9 +1611,9 @@
           "dataBlockNumber": 9,
           "offset": 11820,
           "address": "DB9.D11820.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1610.18,
+            "y": 1165.06
           }
         },
         {
@@ -1622,9 +1622,9 @@
           "dataBlockNumber": 9,
           "offset": 11712,
           "address": "DB9.D11712.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1505.19,
+            "y": 1191.3
           }
         },
         {
@@ -1633,9 +1633,9 @@
           "dataBlockNumber": 9,
           "offset": 11716,
           "address": "DB9.D11716.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1557.69,
+            "y": 1191.3
           }
         },
         {
@@ -1644,9 +1644,9 @@
           "dataBlockNumber": 9,
           "offset": 11720,
           "address": "DB9.D11720.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1610.18,
+            "y": 1191.3
           }
         },
         {
@@ -1655,9 +1655,9 @@
           "dataBlockNumber": 9,
           "offset": 11916,
           "address": "DB9.D11916.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1559.5,
+            "y": 1217.65
           }
         },
         {
@@ -1666,9 +1666,9 @@
           "dataBlockNumber": 9,
           "offset": 11852,
           "address": "DB9.D11852.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1559.5,
+            "y": 1243.89
           }
         },
         {
@@ -1677,9 +1677,9 @@
           "dataBlockNumber": 9,
           "offset": 11884,
           "address": "DB9.D11884.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1559.5,
+            "y": 1270.14
           }
         },
         {
@@ -1688,9 +1688,9 @@
           "dataBlockNumber": 9,
           "offset": 11648,
           "address": "DB9.D11648.0",
-          "displayCoordinates": {
-            "x": 0,
-            "y": 0
+          "displayCoordinate": {
+            "x": 1559.5,
+            "y": 1296.39
           }
         }
       ]
