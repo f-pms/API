@@ -11,4 +11,8 @@ public class WebSocketController {
     public Map<String, String> sendMainStationData(Map<String, String> stationData) {
         return stationData;
     }
+    @SendTo("/topic/tr11")
+    public Map<String, String> sendTR11StationData(Map<String, String> stationData) {
+        return stationData;
+    }
 }
