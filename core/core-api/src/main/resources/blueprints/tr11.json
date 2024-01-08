@@ -4,7 +4,7 @@
   "description": "Production parameters of TR11 Station",
   "sensorConfigurations": [
     {
-      "groupId": "DKnhietdo",
+      "groupId": "DKnhietdoCircuit",
       "figures": [
         {
           "id": "figure0",
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "groupId": "DigitalMultiMetterPM5310",
+      "groupId": "DigitalMultiMetterPM5310Table",
       "figures": [
         {
           "id": "figure3",
