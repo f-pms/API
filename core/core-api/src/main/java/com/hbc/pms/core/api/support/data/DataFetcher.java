@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.support.data;
 
 import com.hbc.pms.core.api.service.PlcService;
+import com.hbc.pms.core.model.TrackExecutionTime;
 import com.hbc.pms.plc.integration.huykka7.IoResponse;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,8 @@ public class DataFetcher {
         this.plcService = plcService;
     }
 
-    public Map<String, IoResponse> fetchData(List<String> addresses) throws S7Exception {
+    @TrackExecutionTime
+    public Map<String, IoResponse> fetchData(List<String> addresses)  {
         var nonDuplicatedAddresses = new ArrayList<>(new LinkedHashSet<>(addresses));
         return plcService.getMultiVars(nonDuplicatedAddresses);
     }

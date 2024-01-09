@@ -4,44 +4,6 @@
   "description": "Production parameters of TR11 Station",
   "sensorConfigurations": [
     {
-      "groupId": "DKnhietdo",
-      "figures": [
-        {
-          "id": "figure0",
-          "dataType": "INT",
-          "dataBlockNumber": 112,
-          "offset": 0,
-          "address": "DB112.D0.0",
-          "displayCoordinate": {
-            "x": 1021.49,
-            "y": 129.73
-          }
-        },
-        {
-          "id": "figure1",
-          "dataType": "INT",
-          "dataBlockNumber": 112,
-          "offset": 2,
-          "address": "DB112.D2.0",
-          "displayCoordinate": {
-            "x": 1021.49,
-            "y": 166.87
-          }
-        },
-        {
-          "id": "figure2",
-          "dataType": "INT",
-          "dataBlockNumber": 112,
-          "offset": 4,
-          "address": "DB112.D4.0",
-          "displayCoordinate": {
-            "x": 1021.49,
-            "y": 204.01
-          }
-        }
-      ]
-    },
-    {
       "groupId": "DigitalMultiMetterPM5310",
       "figures": [
         {

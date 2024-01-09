@@ -15,6 +15,7 @@ import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,27 +23,32 @@ import org.springframework.stereotype.Service;
 public class PlcService {
 
     private final S7Client plcClient = new S7Client();
-    private S7Connector s7Connector;
+
+    private final S7Connector s7Connector;
     @Value("${hbc.plc.url}")
     private String plcUrl;
 
-    @PostConstruct
-    public void postConstruct() {
-        // TODO: add retries in case the PLC connection is interrupted
-        try {
-            PlcConnectionConfiguration plcConnectionConfiguration =
-                PlcConnectionConfiguration.builder()
-                    .ipAddress(plcUrl)
-                    .rack(0)
-                    .cpuMpiAddress(1)
-                    .build();
+  public PlcService(S7Connector s7Connector) {
+    this.s7Connector = s7Connector;
+  }
 
-            s7Connector = new S7Connector(plcConnectionConfiguration);
-            s7Connector.connect();
-        } catch (S7Exception e) {
-            throw new PlcConnectionException("Error connecting to PLC: " + e);
-        }
-    }
+//  @PostConstruct
+//    public void postConstruct() {
+//        // TODO: add retries in case the PLC connection is interrupted
+//        try {
+////            PlcConnectionConfiguration plcConnectionConfiguration =
+////                PlcConnectionConfiguration.builder()
+////                    .ipAddress(plcUrl)
+////                    .rack(0)
+////                    .cpuMpiAddress(1)
+////                    .build();
+////
+////            s7Connector = new S7Connector(plcConnectionConfiguration);
+////            s7Connector.connect();
+//        } catch (S7Exception e) {
+//            throw new PlcConnectionException("Error connecting to PLC: " + e);
+//        }
+//    }
 
     public boolean readBoolean(Blueprint.Figure figure) throws S7Exception {
         validateType(figure, DataType.BIT);
@@ -66,8 +72,8 @@ public class PlcService {
         }
     }
 
-    public Map<String, IoResponse> getMultiVars(List<String> addresses) throws S7Exception {
-        return s7Connector.executeMultiVarRequest(addresses);
+    public Map<String, IoResponse> getMultiVars(List<String> addresses)  {
+        return s7Connector.executeBlockRequest(addresses);
     }
 
 //    @Scheduled(fixedRate = 1500)
@@ -75,7 +81,7 @@ public class PlcService {
         long startTime = System.currentTimeMillis();
         var map =
             s7Connector.executeMultiVarRequest(
-                Arrays.asList("DB9.D13544.0", "DB9.D13540.0"));
+                Arrays.asList("DB112.D0.0"));
         long endTime = System.currentTimeMillis();
         long duration = (endTime - startTime);
         log.info(map.toString());
