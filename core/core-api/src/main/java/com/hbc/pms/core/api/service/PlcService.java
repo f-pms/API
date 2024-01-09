@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.service;
 
 import com.hbc.pms.core.api.support.error.PlcConnectionException;
+import com.hbc.pms.plc.PlcConnector;
 import com.hbc.pms.plc.integration.huykka7.IoResponse;
 import com.hbc.pms.plc.integration.huykka7.PlcConnectionConfiguration;
 import com.hbc.pms.plc.integration.huykka7.S7Connector;
@@ -24,11 +25,11 @@ public class PlcService {
 
     private final S7Client plcClient = new S7Client();
 
-    private final S7Connector s7Connector;
+    private final PlcConnector s7Connector;
     @Value("${hbc.plc.url}")
     private String plcUrl;
 
-  public PlcService(S7Connector s7Connector) {
+  public PlcService(PlcConnector s7Connector) {
     this.s7Connector = s7Connector;
   }
 

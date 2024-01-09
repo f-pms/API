@@ -3,6 +3,7 @@ package com.hbc.pms.plc.integration.huykka7;
 import static com.hbc.pms.plc.integration.mokka7.Client.MAX_VARS;
 
 import com.hbc.pms.core.model.TrackExecutionTime;
+import com.hbc.pms.plc.PlcConnector;
 import com.hbc.pms.plc.integration.huykka7.block.S7BlockRequest;
 import com.hbc.pms.plc.integration.mokka7.S7Client;
 import com.hbc.pms.plc.integration.mokka7.S7MultiVar;
@@ -23,12 +24,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class S7Connector {
-
+public class S7Connector implements PlcConnector {
   private final PlcConnectionConfiguration plcConnectionConfiguration;
   private final ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
   private final Lock readLock = rwLock.readLock();

@@ -4,17 +4,26 @@ import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
 import com.hbc.pms.plc.integration.mokka7.util.S7;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 public class IoResponse {
+  public IoResponse(String variableName, DataType dateType, byte[] rawData) {
+    this.variableName = variableName;
+    this.dateType = dateType;
+    this.rawData = rawData;
+  }
+
   private String variableName;
   private DataType dateType;
   private byte[] rawData;
+  private Object value;
 
   public <T> T getValue() throws S7Exception {
+    if (this.value != null) return (T) value;
     Object value = null;
     switch (this.dateType){
       case BIT -> value = S7.getBitAt(rawData[0],0);
