@@ -35,6 +35,10 @@ import java.util.stream.Collectors;
 
 public class Plc4xConnector implements PlcConnector {
     private final S7VariableNameParser variableNameParser = new S7VariableNameParser();
+    private final PlcConnection plcConnection = PlcDriverManager.getDefault().getConnectionManager().getConnection("s7://35.154.81.136");
+
+    public Plc4xConnector() throws PlcConnectionException {
+    }
 
     @Override
     public Map<String, IoResponse> executeMultiVarRequest(List<String> variableNames) throws S7Exception {
@@ -45,28 +49,23 @@ public class Plc4xConnector implements PlcConnector {
     @SneakyThrows
     public Map<String, IoResponse> executeBlockRequest(List<String> variableNames) {
         Map<String, S7VariableAddress> addressMap = getSimpleEntryStream(variableNames);
-        String connectionString = "s7://35.154.81.136";
         Map<String, IoResponse> stringIoResponseMap = new HashMap<>();
-        try (PlcConnection plcConnection = PlcDriverManager.getDefault().getConnectionManager().getConnection(connectionString)) {
-            if (!plcConnection.getMetadata().canRead()) {
-                log.error("This connection doesn't support reading.");
-                return stringIoResponseMap;
-            }
-            PlcReadRequest.Builder builder = plcConnection.readRequestBuilder();
+        if (!plcConnection.getMetadata().canRead()) {
+            log.error("This connection doesn't support reading.");
+            return stringIoResponseMap;
+        }
+        PlcReadRequest.Builder builder = plcConnection.readRequestBuilder();
 
-            for (var entry : addressMap.entrySet()) {
-                builder.addTagAddress(entry.getKey(), convertToPLx4x(entry.getValue()));
-            }
-            final PlcReadRequest rr = builder.build();
-            PlcReadResponse result = rr.execute().get();
-            for (var entry: addressMap.entrySet()){
-                var data = result.getObject(entry.getKey());
-                var io = new IoResponse(entry.getKey(), entry.getValue().getType(), serialize(data));
-                io.setValue(data);
-                stringIoResponseMap.put(entry.getKey(), io);
-            }
-        } catch (Exception e) {
-            throw e;
+        for (var entry : addressMap.entrySet()) {
+            builder.addTagAddress(entry.getKey(), convertToPLx4x(entry.getValue()));
+        }
+        final PlcReadRequest rr = builder.build();
+        PlcReadResponse result = rr.execute().get();
+        for (var entry : addressMap.entrySet()) {
+            var data = result.getObject(entry.getKey());
+            var io = new IoResponse(entry.getKey(), entry.getValue().getType(), serialize(data));
+            io.setPlcValue(result.getPlcValue(entry.getKey()));
+            stringIoResponseMap.put(entry.getKey(), io);
         }
         return stringIoResponseMap;
     }
@@ -74,6 +73,7 @@ public class Plc4xConnector implements PlcConnector {
     private String convertToPLx4x(S7VariableAddress s7VariableAddress) {
         return MessageFormat.format("%DB{0}:{1}:{2}", s7VariableAddress.getDbNr(), String.valueOf(s7VariableAddress.getStart()), convertType(s7VariableAddress.getType()));
     }
+
     public static byte[] serialize(Object obj) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ObjectOutputStream os = new ObjectOutputStream(out);

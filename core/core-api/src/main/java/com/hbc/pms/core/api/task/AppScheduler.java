@@ -30,19 +30,25 @@ public class AppScheduler {
     this.webSocketPublisher = webSocketPublisher;
   }
 
-  @Scheduled(fixedRate = 800)
+  @Scheduled(fixedRate = 1000)
   public void refreshAllStationsState() {
     try {
+      long startTime =System.currentTimeMillis();
+      int totalVar = 0;
       for (Blueprint blueprint : blueprintManager.getBlueprints()) {
         log.info(
             "Fetching data for blueprint: {} - {} vars",
             blueprint.getId(),
             blueprint.getAddresses().size());
+        totalVar += blueprint.getAddresses().size();
         var rawData = dataFetcher.fetchData(blueprint.getAddresses());
         var processedData = dataProcessor.flattenToFigureMappedData(rawData, blueprint);
         webSocketPublisher.fireSendStationData(processedData, blueprint.getId());
         log.info("Processed data: {}", processedData);
       }
+      long stopTime =System.currentTimeMillis();
+      log.info("amount of bytes read: {}", totalVar);
+      log.info("Execution time: " + (stopTime - startTime) + " milliseconds");
     } catch (Exception e) {
       log.error("Failed to fetch data from PLC ", e);
     }

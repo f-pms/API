@@ -19,7 +19,6 @@ public class DataFetcher {
         this.plcService = plcService;
     }
 
-    @TrackExecutionTime
     public Map<String, IoResponse> fetchData(List<String> addresses)  {
         var nonDuplicatedAddresses = new ArrayList<>(new LinkedHashSet<>(addresses));
         return plcService.getMultiVars(nonDuplicatedAddresses);

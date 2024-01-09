@@ -72,7 +72,6 @@ public class S7Connector implements PlcConnector {
     }
     return result;
   }
-  @TrackExecutionTime
   public Map<String, IoResponse> executeBlockRequest(List<String> variableNames) {
     if (variableNames.isEmpty()) {
       return new HashMap<>();
