@@ -29,7 +29,7 @@ public class IoResponse {
       switch (this.dateType){
         case BIT -> value = plcValue.getBoolean();
         case D_INTEGER -> value = plcValue.getInteger();
-        case DOUBLE -> value = plcValue.getFloat();
+        case DOUBLE -> value = plcValue.getDouble();
         default -> throw new S7Exception(-1, "Not supported data type");
       }
       return (T)value;

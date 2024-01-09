@@ -3,8 +3,9 @@
   "name": "TR11 Station",
   "description": "Production parameters of TR11 Station",
   "sensorConfigurations": [
+
     {
-      "groupId": "DigitalMultiMetterPM5310",
+      "groupId": "DigitalMultiMetterPM5310Table",
       "figures": [
         {
           "id": "figure3",
