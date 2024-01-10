@@ -19,17 +19,20 @@ public class DataProcessor {
         return flattenedData;
     }
 
-    public Map<String, String> flattenToFigureMappedData(Map<String, IoResponse> rawData, Blueprint blueprint) throws S7Exception {
-        Map<String, String> flattenedData = new HashMap<>();
-        var addressToFigureMap = blueprint.getAddressToFiguresMap();
-
-        for (Map.Entry<String, IoResponse> entry : rawData.entrySet()) {
-            var valuesByAddress = addressToFigureMap.get(entry.getKey());
-
-            for (String val : valuesByAddress) {
-                flattenedData.put(val, entry.getValue().getValue().toString());
+    public Map<String, Map<String, String>> flattenToFigureMappedData(Map<String, IoResponse> rawData,
+                                                                      Blueprint blueprint) throws S7Exception {
+        Map<String, Map<String, String>> result = new HashMap<>();
+        int count = 0;
+        for (Blueprint.SensorConfiguration sensorConfig : blueprint.getSensorConfigurations()) {
+            Map<String, String> flattenedData = new HashMap<>();
+            for (Blueprint.Figure figure : sensorConfig.getFigures()) {
+                flattenedData.put(figure.getId(), rawData.get(figure.getAddress()).getValue().toString());
+                count++;
             }
+            result.put(sensorConfig.getGroupId(), flattenedData);
         }
-        return flattenedData;
+
+        System.out.println(count);
+        return result;
     }
 }
