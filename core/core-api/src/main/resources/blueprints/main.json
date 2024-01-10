@@ -7,7 +7,6 @@
       "groupId": "TubuTR30Table",
       "figures": [
         {
-          "id": "figure0",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13540,
@@ -18,7 +17,6 @@
           }
         },
         {
-          "id": "figure1",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13544,
@@ -29,7 +27,6 @@
           }
         },
         {
-          "id": "figure2",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13548,
@@ -40,7 +37,6 @@
           }
         },
         {
-          "id": "figure3",
           "dataType": "REAL",
           "dataBlockNumber": 18,
           "offset": 192,
@@ -51,7 +47,6 @@
           }
         },
         {
-          "id": "figure4",
           "dataType": "REAL",
           "dataBlockNumber": 18,
           "offset": 196,
@@ -62,7 +57,6 @@
           }
         },
         {
-          "id": "figure5",
           "dataType": "REAL",
           "dataBlockNumber": 18,
           "offset": 200,
@@ -73,7 +67,6 @@
           }
         },
         {
-          "id": "figure6",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13644,
@@ -89,7 +82,6 @@
       "groupId": "Tr30Table",
       "figures": [
         {
-          "id": "figure7",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13540,
@@ -100,7 +92,6 @@
           }
         },
         {
-          "id": "figure8",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13544,
@@ -111,7 +102,6 @@
           }
         },
         {
-          "id": "figure9",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13548,
@@ -122,7 +112,6 @@
           }
         },
         {
-          "id": "figure10",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13440,
@@ -133,7 +122,6 @@
           }
         },
         {
-          "id": "figure11",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13444,
@@ -144,7 +132,6 @@
           }
         },
         {
-          "id": "figure12",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13448,
@@ -155,7 +142,6 @@
           }
         },
         {
-          "id": "figure13",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13644,
@@ -166,7 +152,6 @@
           }
         },
         {
-          "id": "figure14",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13580,
@@ -177,7 +162,6 @@
           }
         },
         {
-          "id": "figure15",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13612,
@@ -188,7 +172,6 @@
           }
         },
         {
-          "id": "figure16",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13376,
@@ -204,7 +187,6 @@
       "groupId": "Lv11Table",
       "figures": [
         {
-          "id": "figure17",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6016,
@@ -215,7 +197,6 @@
           }
         },
         {
-          "id": "figure18",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6020,
@@ -226,7 +207,6 @@
           }
         },
         {
-          "id": "figure19",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6024,
@@ -237,7 +217,6 @@
           }
         },
         {
-          "id": "figure20",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 5952,
@@ -248,7 +227,6 @@
           }
         },
         {
-          "id": "figure21",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 5956,
@@ -259,7 +237,6 @@
           }
         },
         {
-          "id": "figure22",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 5960,
@@ -270,7 +247,6 @@
           }
         },
         {
-          "id": "figure23",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6156,
@@ -281,7 +257,6 @@
           }
         },
         {
-          "id": "figure24",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6092,
@@ -292,7 +267,6 @@
           }
         },
         {
-          "id": "figure25",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6124,
@@ -303,7 +277,6 @@
           }
         },
         {
-          "id": "figure26",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 5888,
@@ -319,7 +292,6 @@
       "groupId": "Lv12Table",
       "figures": [
         {
-          "id": "figure27",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6592,
@@ -330,7 +302,6 @@
           }
         },
         {
-          "id": "figure28",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6596,
@@ -341,7 +312,6 @@
           }
         },
         {
-          "id": "figure29",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6600,
@@ -352,7 +322,6 @@
           }
         },
         {
-          "id": "figure30",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6528,
@@ -363,7 +332,6 @@
           }
         },
         {
-          "id": "figure31",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6532,
@@ -374,7 +342,6 @@
           }
         },
         {
-          "id": "figure32",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6536,
@@ -385,7 +352,6 @@
           }
         },
         {
-          "id": "figure33",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6732,
@@ -396,7 +362,6 @@
           }
         },
         {
-          "id": "figure34",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6668,
@@ -407,7 +372,6 @@
           }
         },
         {
-          "id": "figure35",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6700,
@@ -418,7 +382,6 @@
           }
         },
         {
-          "id": "figure36",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 6464,
@@ -434,7 +397,6 @@
       "groupId": "Lv42Table",
       "figures": [
         {
-          "id": "figure37",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 4864,
@@ -445,7 +407,6 @@
           }
         },
         {
-          "id": "figure38",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 4868,
@@ -456,7 +417,6 @@
           }
         },
         {
-          "id": "figure39",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 4872,
@@ -467,7 +427,6 @@
           }
         },
         {
-          "id": "figure40",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 4800,
@@ -478,7 +437,6 @@
           }
         },
         {
-          "id": "figure41",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 4804,
@@ -489,7 +447,6 @@
           }
         },
         {
-          "id": "figure42",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 4808,
@@ -500,7 +457,6 @@
           }
         },
         {
-          "id": "figure43",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 5004,
@@ -511,7 +467,6 @@
           }
         },
         {
-          "id": "figure44",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 4940,
@@ -522,7 +477,6 @@
           }
         },
         {
-          "id": "figure45",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 4972,
@@ -533,7 +487,6 @@
           }
         },
         {
-          "id": "figure46",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 4736,
@@ -549,7 +502,6 @@
       "groupId": "TuyenNguonDt477Pb01090028955Table",
       "figures": [
         {
-          "id": "figure47",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 12388,
@@ -560,7 +512,6 @@
           }
         },
         {
-          "id": "figure48",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 12392,
@@ -571,7 +522,6 @@
           }
         },
         {
-          "id": "figure49",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 12396,
@@ -582,7 +532,6 @@
           }
         },
         {
-          "id": "figure50",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 12288,
@@ -593,7 +542,6 @@
           }
         },
         {
-          "id": "figure51",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 12292,
@@ -604,7 +552,6 @@
           }
         },
         {
-          "id": "figure52",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 12296,
@@ -615,7 +562,6 @@
           }
         },
         {
-          "id": "figure53",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 12492,
@@ -626,7 +572,6 @@
           }
         },
         {
-          "id": "figure54",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 12428,
@@ -637,7 +582,6 @@
           }
         },
         {
-          "id": "figure55",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 12460,
@@ -648,7 +592,6 @@
           }
         },
         {
-          "id": "figure56",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 12224,
@@ -664,7 +607,6 @@
       "groupId": "Lv72Table",
       "figures": [
         {
-          "id": "figure57",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3136,
@@ -675,7 +617,6 @@
           }
         },
         {
-          "id": "figure58",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3140,
@@ -686,7 +627,6 @@
           }
         },
         {
-          "id": "figure59",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3144,
@@ -697,7 +637,6 @@
           }
         },
         {
-          "id": "figure60",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3072,
@@ -708,7 +647,6 @@
           }
         },
         {
-          "id": "figure61",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3076,
@@ -719,7 +657,6 @@
           }
         },
         {
-          "id": "figure62",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3080,
@@ -730,7 +667,6 @@
           }
         },
         {
-          "id": "figure63",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3276,
@@ -741,7 +677,6 @@
           }
         },
         {
-          "id": "figure64",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3212,
@@ -752,7 +687,6 @@
           }
         },
         {
-          "id": "figure65",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3244,
@@ -763,7 +697,6 @@
           }
         },
         {
-          "id": "figure66",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3008,
@@ -779,7 +712,6 @@
       "groupId": "Lv52Table",
       "figures": [
         {
-          "id": "figure67",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3712,
@@ -790,7 +722,6 @@
           }
         },
         {
-          "id": "figure68",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3716,
@@ -801,7 +732,6 @@
           }
         },
         {
-          "id": "figure69",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3720,
@@ -812,7 +742,6 @@
           }
         },
         {
-          "id": "figure70",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3648,
@@ -823,7 +752,6 @@
           }
         },
         {
-          "id": "figure71",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3652,
@@ -834,7 +762,6 @@
           }
         },
         {
-          "id": "figure72",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3656,
@@ -845,7 +772,6 @@
           }
         },
         {
-          "id": "figure73",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3852,
@@ -856,7 +782,6 @@
           }
         },
         {
-          "id": "figure74",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3788,
@@ -867,7 +792,6 @@
           }
         },
         {
-          "id": "figure75",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3820,
@@ -878,7 +802,6 @@
           }
         },
         {
-          "id": "figure76",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 3584,
@@ -894,7 +817,6 @@
       "groupId": "Lv31Table",
       "figures": [
         {
-          "id": "figure77",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 256,
@@ -905,7 +827,6 @@
           }
         },
         {
-          "id": "figure78",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 260,
@@ -916,7 +837,6 @@
           }
         },
         {
-          "id": "figure79",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 264,
@@ -927,7 +847,6 @@
           }
         },
         {
-          "id": "figure80",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 192,
@@ -938,7 +857,6 @@
           }
         },
         {
-          "id": "figure81",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 196,
@@ -949,7 +867,6 @@
           }
         },
         {
-          "id": "figure82",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 200,
@@ -960,7 +877,6 @@
           }
         },
         {
-          "id": "figure83",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 396,
@@ -971,7 +887,6 @@
           }
         },
         {
-          "id": "figure84",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 332,
@@ -982,7 +897,6 @@
           }
         },
         {
-          "id": "figure85",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 364,
@@ -993,7 +907,6 @@
           }
         },
         {
-          "id": "figure86",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 128,
@@ -1009,7 +922,6 @@
       "groupId": "Lv32Table",
       "figures": [
         {
-          "id": "figure87",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1408,
@@ -1020,7 +932,6 @@
           }
         },
         {
-          "id": "figure88",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1412,
@@ -1031,7 +942,6 @@
           }
         },
         {
-          "id": "figure89",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1416,
@@ -1042,7 +952,6 @@
           }
         },
         {
-          "id": "figure90",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1344,
@@ -1053,7 +962,6 @@
           }
         },
         {
-          "id": "figure91",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1348,
@@ -1064,7 +972,6 @@
           }
         },
         {
-          "id": "figure92",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1352,
@@ -1075,7 +982,6 @@
           }
         },
         {
-          "id": "figure93",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1548,
@@ -1086,7 +992,6 @@
           }
         },
         {
-          "id": "figure94",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1484,
@@ -1097,7 +1002,6 @@
           }
         },
         {
-          "id": "figure95",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1516,
@@ -1108,7 +1012,6 @@
           }
         },
         {
-          "id": "figure96",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1280,
@@ -1124,7 +1027,6 @@
       "groupId": "Lv33Table",
       "figures": [
         {
-          "id": "figure97",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 832,
@@ -1135,7 +1037,6 @@
           }
         },
         {
-          "id": "figure98",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 836,
@@ -1146,7 +1047,6 @@
           }
         },
         {
-          "id": "figure99",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 840,
@@ -1157,7 +1057,6 @@
           }
         },
         {
-          "id": "figure100",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 768,
@@ -1168,7 +1067,6 @@
           }
         },
         {
-          "id": "figure101",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 772,
@@ -1179,7 +1077,6 @@
           }
         },
         {
-          "id": "figure102",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 776,
@@ -1190,7 +1087,6 @@
           }
         },
         {
-          "id": "figure103",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 972,
@@ -1201,7 +1097,6 @@
           }
         },
         {
-          "id": "figure104",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 908,
@@ -1212,7 +1107,6 @@
           }
         },
         {
-          "id": "figure105",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 940,
@@ -1223,7 +1117,6 @@
           }
         },
         {
-          "id": "figure106",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 704,
@@ -1239,7 +1132,6 @@
       "groupId": "Lv34_2Table",
       "figures": [
         {
-          "id": "figure107",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2560,
@@ -1250,7 +1142,6 @@
           }
         },
         {
-          "id": "figure108",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2564,
@@ -1261,7 +1152,6 @@
           }
         },
         {
-          "id": "figure109",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2568,
@@ -1272,7 +1162,6 @@
           }
         },
         {
-          "id": "figure110",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2496,
@@ -1283,7 +1172,6 @@
           }
         },
         {
-          "id": "figure111",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2500,
@@ -1294,7 +1182,6 @@
           }
         },
         {
-          "id": "figure112",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2504,
@@ -1305,7 +1192,6 @@
           }
         },
         {
-          "id": "figure113",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2700,
@@ -1316,7 +1202,6 @@
           }
         },
         {
-          "id": "figure114",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2636,
@@ -1327,7 +1212,6 @@
           }
         },
         {
-          "id": "figure115",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2668,
@@ -1338,7 +1222,6 @@
           }
         },
         {
-          "id": "figure116",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2432,
@@ -1354,7 +1237,6 @@
       "groupId": "Lv34_1Table",
       "figures": [
         {
-          "id": "figure117",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1984,
@@ -1365,7 +1247,6 @@
           }
         },
         {
-          "id": "figure118",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1988,
@@ -1376,7 +1257,6 @@
           }
         },
         {
-          "id": "figure119",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1992,
@@ -1387,7 +1267,6 @@
           }
         },
         {
-          "id": "figure120",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1920,
@@ -1398,7 +1277,6 @@
           }
         },
         {
-          "id": "figure121",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1924,
@@ -1409,7 +1287,6 @@
           }
         },
         {
-          "id": "figure122",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1928,
@@ -1420,7 +1297,6 @@
           }
         },
         {
-          "id": "figure123",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2124,
@@ -1431,7 +1307,6 @@
           }
         },
         {
-          "id": "figure124",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2060,
@@ -1442,7 +1317,6 @@
           }
         },
         {
-          "id": "figure125",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 2092,
@@ -1453,7 +1327,6 @@
           }
         },
         {
-          "id": "figure126",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1856,
@@ -1469,7 +1342,6 @@
       "groupId": "TuyenNguonNhaKeoTr82Table",
       "figures": [
         {
-          "id": "figure127",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 14080,
@@ -1480,7 +1352,6 @@
           }
         },
         {
-          "id": "figure128",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 14084,
@@ -1491,7 +1362,6 @@
           }
         },
         {
-          "id": "figure129",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 14088,
@@ -1502,7 +1372,6 @@
           }
         },
         {
-          "id": "figure130",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 14016,
@@ -1513,7 +1382,6 @@
           }
         },
         {
-          "id": "figure131",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 14020,
@@ -1524,7 +1392,6 @@
           }
         },
         {
-          "id": "figure132",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 14024,
@@ -1535,7 +1402,6 @@
           }
         },
         {
-          "id": "figure133",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 14220,
@@ -1546,7 +1412,6 @@
           }
         },
         {
-          "id": "figure134",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 14156,
@@ -1557,7 +1422,6 @@
           }
         },
         {
-          "id": "figure135",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 14188,
@@ -1568,7 +1432,6 @@
           }
         },
         {
-          "id": "figure136",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 13952,
@@ -1584,7 +1447,6 @@
       "groupId": "TuyenNguonDt475Pb01090028954Table",
       "figures": [
         {
-          "id": "figure137",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 11812,
@@ -1595,7 +1457,6 @@
           }
         },
         {
-          "id": "figure138",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 11816,
@@ -1606,7 +1467,6 @@
           }
         },
         {
-          "id": "figure139",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 11820,
@@ -1617,7 +1477,6 @@
           }
         },
         {
-          "id": "figure140",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 11712,
@@ -1628,7 +1487,6 @@
           }
         },
         {
-          "id": "figure141",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 11716,
@@ -1639,7 +1497,6 @@
           }
         },
         {
-          "id": "figure142",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 11720,
@@ -1650,7 +1507,6 @@
           }
         },
         {
-          "id": "figure143",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 11916,
@@ -1661,7 +1517,6 @@
           }
         },
         {
-          "id": "figure144",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 11852,
@@ -1672,7 +1527,6 @@
           }
         },
         {
-          "id": "figure145",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 11884,
@@ -1683,7 +1537,6 @@
           }
         },
         {
-          "id": "figure146",
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 11648,
