@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
+@Entity
 @MappedSuperclass
 public abstract class BaseEntity {
 
@@ -14,11 +15,11 @@ public abstract class BaseEntity {
   private Long id;
 
   @CreationTimestamp
-  @Column
+  @Column(name = "created_at")
   private LocalDateTime createdAt;
 
   @UpdateTimestamp
-  @Column
+  @Column(name = "updated_at")
   private LocalDateTime updatedAt;
 
 }

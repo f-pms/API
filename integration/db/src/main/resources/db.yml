@@ -17,16 +17,14 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
-  h2:
-    console:
-      enabled: true
 
 integration:
   datasource:
     core:
-      driver-class-name: org.h2.Driver
-      jdbc-url: jdbc:h2:mem:core;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      jdbc-url: jdbc:sqlserver://localhost:1433;trustServerCertificate=true;databaseName=F-PMS
       username: sa
+      password: P@ssw0rd000
       pool-name: db-pool
       data-source-properties:
         rewriteBatchedStatements: true
