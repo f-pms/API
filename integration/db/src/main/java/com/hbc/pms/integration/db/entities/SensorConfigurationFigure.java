@@ -3,27 +3,35 @@ package com.hbc.pms.integration.db.entities;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-@Table(name = "sensor_configuration_figure")
+@Entity
 @Builder
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class SensorConfigurationFigure extends BaseEntity {
+public class SensorConfigurationFigure {
 
-  @Column(name = "name")
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  private Long id;
+
+  @Column
   private String name;
 
-  @Column(name = "data_type")
+  @Column
   private String dataType;
 
-  @Column(name = "data_block_number")
+  @Column
   private int dataBlockNumber;
 
-  @Column(name = "offset")
+  @Column
   private int offset;
 
+  @Column
+  private int x;
+
+  @Column
+  private int y;
+
   @ManyToOne
-  @JoinColumn(name = "sensor_configuration_id", nullable = false)
+  @JoinColumn(nullable = false)
   private SensorConfiguration sensorConfiguration;
 }

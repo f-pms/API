@@ -12,6 +12,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.apache.commons:commons-lang3'
 
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
+    runtimeOnly 'com.h2database:h2'
+
     testImplementation "org.testcontainers:testcontainers:${testContainerVersion}"
     testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter:${jUnitVersion}"

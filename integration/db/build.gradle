@@ -16,11 +16,12 @@ dependencies {
         }
     }
 
-    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    liquibase 'org.springframework.boot:spring-boot-starter-data-jpa'
+    liquibase 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
     runtimeOnly 'com.h2database:h2'
-
-    liquibase 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
 }
 
 var driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
@@ -60,10 +61,12 @@ tasks.register("createMigration", JavaExec) {
     args "--password=${password}"
     args "--url=${url}"
     args "--driver=${driver}"
-    args "--changeLogFile=src/main/resources/changelogs/changelog-${now()}.yaml"
-    args "--referenceUrl=hibernate:spring:${group}.integration.db" +
-            "?dialect=org.hibernate.dialect.SQLServerDialect"
+    args "--changeLogFile=src/main/resources/changelogs/changelog-${now()}.yml"
+    args "--referenceUrl=hibernate:spring:${projectGroup}.integration.db" +
+            "?dialect=org.hibernate.dialect.SQLServerDialect" +
+            "&hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy"
     args "--referenceDriver=liquibase.ext.hibernate.database.connection.HibernateDriver"
+    args "--logLevel=DEBUG"
     args "diffChangeLog"
 }
 

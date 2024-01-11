@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @Builder
 @Data
-public class SensorConfiguration {
+public class Blueprint {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -18,10 +18,9 @@ public class SensorConfiguration {
   @Column
   private String name;
 
-  @ManyToOne
-  @JoinColumn(nullable = false)
-  private Blueprint blueprint;
+  @Column
+  private String description;
 
-  @OneToMany(mappedBy = "sensorConfiguration")
-  private Set<SensorConfigurationFigure> sensorConfigurationFigures;
+  @OneToMany(mappedBy = "blueprint")
+  private Set<SensorConfiguration> sensorConfigurations;
 }
