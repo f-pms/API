@@ -1,8 +1,358 @@
 {
   "id": "main",
-  "name": "Main Station",
+  "name": "Main",
   "description": "Production parameters of Main Station",
   "sensorConfigurations": [
+    {
+      "groupId": "tr30circuit",
+      "figures": [
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 384,
+          "address": "DB112.INT384.0",
+          "displayCoordinate": {
+            "x": 423.03,
+            "y": 281.51
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 386,
+          "address": "DB112.INT386.0",
+          "displayCoordinate": {
+            "x": 423.03,
+            "y": 307.75
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 388,
+          "address": "DB112.INT388.0",
+          "displayCoordinate": {
+            "x": 423.03,
+            "y": 334
+          }
+        }
+      ]
+    },
+    {
+      "groupId": "lv11circuit",
+      "figures": [
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 0,
+          "address": "DB112.INT0.0",
+          "displayCoordinate": {
+            "x": 886.96,
+            "y": 677.81
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 2,
+          "address": "DB112.INT2.0",
+          "displayCoordinate": {
+            "x": 886.96,
+            "y": 704.06
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 4,
+          "address": "DB112.INT4.0",
+          "displayCoordinate": {
+            "x": 886.96,
+            "y": 730.3
+          }
+        }
+      ]
+    },
+    {
+      "groupId": "lv12circuit",
+      "figures": [
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 192,
+          "address": "DB112.INT192.0",
+          "displayCoordinate": {
+            "x": 1013.71,
+            "y": 678.72
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 194,
+          "address": "DB112.INT194.0",
+          "displayCoordinate": {
+            "x": 1013.71,
+            "y": 704.97
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 196,
+          "address": "DB112.INT196.0",
+          "displayCoordinate": {
+            "x": 1013.71,
+            "y": 731.22
+          }
+        }
+      ]
+    },
+    {
+      "groupId": "lv42circuit",
+      "figures": [
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1344,
+          "address": "DB112.INT1344.0",
+          "displayCoordinate": {
+            "x": 1342.55,
+            "y": 680.38
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1346,
+          "address": "DB112.INT1346.0",
+          "displayCoordinate": {
+            "x": 1342.55,
+            "y": 706.63
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1348,
+          "address": "DB112.INT1348.0",
+          "displayCoordinate": {
+            "x": 1342.55,
+            "y": 732.88
+          }
+        }
+      ]
+    },
+    {
+      "groupId": "lv72circuit",
+      "figures": [
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1728,
+          "address": "DB112.INT1728.0",
+          "displayCoordinate": {
+            "x": 1731.26,
+            "y": 684.79
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1730,
+          "address": "DB112.INT1730.0",
+          "displayCoordinate": {
+            "x": 1731.26,
+            "y": 711.04
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1732,
+          "address": "DB112.INT1732.0",
+          "displayCoordinate": {
+            "x": 1731.26,
+            "y": 737.29
+          }
+        }
+      ]
+    },
+    {
+      "groupId": "lv52circuit",
+      "figures": [
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1536,
+          "address": "DB112.INT1536.0",
+          "displayCoordinate": {
+            "x": 1750.49,
+            "y": 852.81
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1538,
+          "address": "DB112.INT1538.0",
+          "displayCoordinate": {
+            "x": 1810.29,
+            "y": 852.81
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1540,
+          "address": "DB112.INT1540.0",
+          "displayCoordinate": {
+            "x": 1870.08,
+            "y": 852.81
+          }
+        }
+      ]
+    },
+    {
+      "groupId": "lv31circuit",
+      "figures": [
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 576,
+          "address": "DB112.INT576.0",
+          "displayCoordinate": {
+            "x": 2188.99,
+            "y": 682.13
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 578,
+          "address": "DB112.INT578.0",
+          "displayCoordinate": {
+            "x": 2188.99,
+            "y": 708.37
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 580,
+          "address": "DB112.INT580.0",
+          "displayCoordinate": {
+            "x": 2188.99,
+            "y": 734.62
+          }
+        }
+      ]
+    },
+    {
+      "groupId": "lv32circuit",
+      "figures": [
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 768,
+          "address": "DB112.INT768.0",
+          "displayCoordinate": {
+            "x": 2319.11,
+            "y": 682.13
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 770,
+          "address": "DB112.INT770.0",
+          "displayCoordinate": {
+            "x": 2319.11,
+            "y": 708.37
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 772,
+          "address": "DB112.INT772.0",
+          "displayCoordinate": {
+            "x": 2319.11,
+            "y": 734.62
+          }
+        }
+      ]
+    },
+    {
+      "groupId": "lv33circuit",
+      "figures": [
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 960,
+          "address": "DB112.INT960.0",
+          "displayCoordinate": {
+            "x": 2445.25,
+            "y": 682.13
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 962,
+          "address": "DB112.INT962.0",
+          "displayCoordinate": {
+            "x": 2445.25,
+            "y": 708.37
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 964,
+          "address": "DB112.INT964.0",
+          "displayCoordinate": {
+            "x": 2445.25,
+            "y": 734.62
+          }
+        }
+      ]
+    },
+    {
+      "groupId": "lv341342circuit",
+      "figures": [
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1152,
+          "address": "DB112.INT1152.0",
+          "displayCoordinate": {
+            "x": 2580.09,
+            "y": 678.71
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1154,
+          "address": "DB112.INT1154.0",
+          "displayCoordinate": {
+            "x": 2580.09,
+            "y": 704.96
+          }
+        },
+        {
+          "dataType": "INT",
+          "dataBlockNumber": 112,
+          "offset": 1156,
+          "address": "DB112.INT1156.0",
+          "displayCoordinate": {
+            "x": 2580.09,
+            "y": 731.2
+          }
+        }
+      ]
+    },
     {
       "groupId": "TubuTR30Table",
       "figures": [

@@ -30,7 +30,7 @@ public class AppScheduler {
         this.webSocketPublisher = webSocketPublisher;
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 2000)
     public void refreshAllStationsState() {
         try {
             long startTime = System.currentTimeMillis();
