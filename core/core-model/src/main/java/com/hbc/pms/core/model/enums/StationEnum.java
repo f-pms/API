@@ -14,7 +14,11 @@ public enum StationEnum {
   TR32("tr32"),
   TR33("tr33"),
   TR34("tr34"),
-  TR42("tr42");
+  TR42("tr42"),
+  TR52("tr52"),
+  TR72("tr72"),
+  TR82("tr82"),
+  TRALL_METER("all-meter");
 
   private final String name;
 
