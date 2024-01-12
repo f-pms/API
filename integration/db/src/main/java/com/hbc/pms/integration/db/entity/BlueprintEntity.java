@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @Builder
 @Data
-public class Blueprint {
+public class BlueprintEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -22,5 +22,5 @@ public class Blueprint {
   private String description;
 
   @OneToMany(mappedBy = "blueprint")
-  private Set<SensorConfiguration> sensorConfigurations;
+  private Set<SensorConfigurationEntity> sensorConfigurations;
 }

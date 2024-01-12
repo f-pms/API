@@ -4,12 +4,10 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Set;
-
 @Entity
 @Builder
 @Data
-public class SensorConfiguration {
+public class SensorConfigurationFigureEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -18,10 +16,22 @@ public class SensorConfiguration {
   @Column
   private String name;
 
+  @Column
+  private String dataType;
+
+  @Column
+  private int dataBlockNumber;
+
+  @Column
+  private int offset;
+
+  @Column
+  private int x;
+
+  @Column
+  private int y;
+
   @ManyToOne
   @JoinColumn(nullable = false)
-  private Blueprint blueprint;
-
-  @OneToMany(mappedBy = "sensorConfiguration")
-  private Set<SensorConfigurationFigure> sensorConfigurationFigures;
+  private SensorConfigurationEntity sensorConfiguration;
 }
