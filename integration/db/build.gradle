@@ -66,7 +66,6 @@ tasks.register("createMigration", JavaExec) {
             "?dialect=org.hibernate.dialect.SQLServerDialect" +
             "&hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy"
     args "--referenceDriver=liquibase.ext.hibernate.database.connection.HibernateDriver"
-    args "--logLevel=DEBUG"
     args "diffChangeLog"
 }
 
