@@ -44,8 +44,7 @@ import com.hbc.pms.plc.integration.mokka7.type.AreaType;
 import com.hbc.pms.plc.integration.mokka7.type.DataType;
 import com.hbc.pms.plc.integration.mokka7.util.ReturnCode;
 import com.hbc.pms.plc.integration.mokka7.util.S7;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -53,9 +52,8 @@ import org.slf4j.LoggerFactory;
  * @author comtel
  */
 
+@Slf4j
 public class S7Client implements Client, ReturnCode {
-
-    private static final Logger logger = LoggerFactory.getLogger(S7Client.class);
 
     private int pduLength = 0;
 
@@ -122,7 +120,7 @@ public class S7Client implements Client, ReturnCode {
 
     @Override
     public boolean connect() throws S7Exception {
-        logger.debug("try to connect to {}:{}", config.getHost(), config.getPort());
+        log.debug("try to connect to {}:{}", config.getHost(), config.getPort());
         if (connected) {
             disconnect();
         }
@@ -167,7 +165,7 @@ public class S7Client implements Client, ReturnCode {
             int sizeToRead = block.mc7Size;
             // Checks the room
             if (sizeToRead > buffer.length) {
-                logger.error("buffer size to small ({}/{})", sizeToRead, buffer.length);
+                log.error("buffer size to small ({}/{})", sizeToRead, buffer.length);
                 throw buildException(S7_BUFFER_TOO_SMALL);
             }
             if (readArea(AreaType.DB, db, 0, sizeToRead, DataType.BYTE, buffer) > 0) {
@@ -192,7 +190,7 @@ public class S7Client implements Client, ReturnCode {
 
     @Override
     public void disconnect() {
-        logger.debug("disconnecting..");
+        log.debug("disconnecting..");
         closeSilently(inStream);
         closeSilently(outStream);
         closeSilently(tcpSocket);
@@ -329,7 +327,7 @@ public class S7Client implements Client, ReturnCode {
         if (sendPacket(ISO_CR)) {
             int length = recvIsoPacket();
             if (length != 22) {
-                logger.warn("invalid PDU length: {} ({})", length, 22);
+                log.warn("invalid PDU length: {} ({})", length, 22);
                 if (length == 33) {
                     return;
                 }
@@ -356,7 +354,7 @@ public class S7Client implements Client, ReturnCode {
                 throw buildException(ISO_NEGOTIATING_PDU);
             }
             pduLength = S7.getWordAt(pdu, 25);
-            logger.debug("PDU negotiated length: {} bytes", pduLength);
+            log.debug("PDU negotiated length: {} bytes", pduLength);
             if (pduLength < 1) {
                 throw buildException(ISO_NEGOTIATING_PDU);
             }
@@ -454,7 +452,7 @@ public class S7Client implements Client, ReturnCode {
         }
 
         if (offset > pduLength) {
-            logger.error("PDU length < offset ({}/{})", pduLength, offset);
+            log.error("PDU length < offset ({}/{})", pduLength, offset);
             throw buildException(ERR_SIZE_OVER_PDU);
         }
 
@@ -819,11 +817,11 @@ public class S7Client implements Client, ReturnCode {
             if (bytesRead == 0) {
                 throw buildException(TCP_CONNECTION_RESET);
             }
-            logger.error("cleanup the buffer: {}", inStream.available());
+            log.error("cleanup the buffer: {}", inStream.available());
             inStream.read(pdu);
 
         } catch (InterruptedException e) {
-            logger.debug("recv packet interrupted");
+            log.debug("recv packet interrupted");
         } catch (IOException e) {
             throw buildException(TCP_DATA_RECV, e);
         }
