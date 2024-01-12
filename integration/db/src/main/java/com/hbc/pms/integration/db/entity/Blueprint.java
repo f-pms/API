@@ -1,4 +1,4 @@
-package com.hbc.pms.integration.db.entities;
+package com.hbc.pms.integration.db.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
