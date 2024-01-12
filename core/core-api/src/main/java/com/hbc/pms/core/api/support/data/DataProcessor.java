@@ -18,18 +18,4 @@ public class DataProcessor {
         }
         return flattenedData;
     }
-
-    public Map<String, String> flattenToFigureMappedData(Map<String, IoResponse> rawData, Blueprint blueprint) throws S7Exception {
-        Map<String, String> flattenedData = new HashMap<>();
-        var addressToFigureMap = blueprint.getAddressToFiguresMap();
-
-        for (Map.Entry<String, IoResponse> entry : rawData.entrySet()) {
-            var valuesByAddress = addressToFigureMap.get(entry.getKey());
-
-            for (String val : valuesByAddress) {
-                flattenedData.put(val, entry.getValue().getValue().toString());
-            }
-        }
-        return flattenedData;
-    }
 }

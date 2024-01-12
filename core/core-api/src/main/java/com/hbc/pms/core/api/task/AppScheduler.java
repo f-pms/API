@@ -36,7 +36,7 @@ public class AppScheduler {
             long startTime = System.currentTimeMillis();
             for (Blueprint blueprint : blueprintManager.getBlueprints()) {
                 var rawData = dataFetcher.fetchData(blueprint.getAddresses());
-                var processedData = dataProcessor.flattenToFigureMappedData(rawData, blueprint);
+                var processedData = dataProcessor.flattenPLCData(rawData);
                 webSocketPublisher.fireSendStationData(processedData, blueprint.getId());
                 log.info("Processed data: {}", processedData);
             }
