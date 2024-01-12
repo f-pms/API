@@ -1,4 +1,4 @@
-INSERT INTO blueprint (name, description) VALUES ('All Meter', 'Production parameters of All Meter Station');
+INSERT INTO blueprint (name, description) VALUES ('all-meter', 'Production parameters of All Meter Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('lv11dodientongtulv11', 1);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D6016.0', 228.05, 113.76, 1);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D6020.0', 278.88, 113.76, 1);
@@ -499,7 +499,7 @@ INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('lv30circuit', 1);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT384.0', 519.24, 1241.49, 46);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT386.0', 519.24, 1260.55, 46);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT388.0', 519.24, 1279.62, 46);
-INSERT INTO blueprint (name, description) VALUES ('Main', 'Production parameters of Main Station');
+INSERT INTO blueprint (name, description) VALUES ('main', 'Production parameters of Main Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('tr30circuit', 2);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT384.0', 423.03, 281.51, 47);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT386.0', 423.03, 307.75, 47);
@@ -702,7 +702,7 @@ INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id)
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D11852.0', 1559.5, 1243.89, 71);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D11884.0', 1559.5, 1270.14, 71);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D11648.0', 1559.5, 1296.39, 71);
-INSERT INTO blueprint (name, description) VALUES ('TR11 Station', 'Production parameters of TR11 Station');
+INSERT INTO blueprint (name, description) VALUES ('tr11', 'Production parameters of TR11 Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('DKnhietdoCircuit', 3);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.D0.0', 1021.49, 129.73, 72);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.D2.0', 1021.49, 166.87, 72);
@@ -724,7 +724,7 @@ INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id)
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D6208.0', 1681.27, 745.07, 73);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D6212.0', 1755.55, 745.07, 73);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D6216.0', 1829.82, 745.07, 73);
-INSERT INTO blueprint (name, description) VALUES ('TR12', 'Production parameters of TR12 Station');
+INSERT INTO blueprint (name, description) VALUES ('tr12', 'Production parameters of TR12 Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('bodknhietdotbatr12', 4);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT192.0', 457.35, 168.38, 74);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT194.0', 457.35, 192.61, 74);
@@ -851,7 +851,7 @@ INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id)
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D9548.0', 2653.56, 945.54, 84);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D9580.0', 2653.56, 969.76, 84);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D9344.0', 2653.56, 993.99, 84);
-INSERT INTO blueprint (name, description) VALUES ('TR30', 'Production parameters of TR30 Station');
+INSERT INTO blueprint (name, description) VALUES ('tr30', 'Production parameters of TR30 Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('bodknhietdotbatr30', 5);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT384.0', 1518.6, 112.67, 85);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT386.0', 1518.6, 144.76, 85);
@@ -881,7 +881,7 @@ INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id)
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB18.D196.0', 728.07, 1214.38, 87);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB18.D200.0', 792.25, 1214.38, 87);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D13644.0', 730.28, 1246.59, 87);
-INSERT INTO blueprint (name, description) VALUES ('TR31', 'Production parameters of TR31 Station');
+INSERT INTO blueprint (name, description) VALUES ('tr31', 'Production parameters of TR31 Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('bodknhietdotbatr31', 6);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT576.0', 826.73, 126.36, 88);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT578.0', 826.73, 161.5, 88);
@@ -903,7 +903,7 @@ INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id)
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D448.0', 1451.04, 708.61, 89);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D452.0', 1521.32, 708.61, 89);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D456.0', 1591.6, 708.61, 89);
-INSERT INTO blueprint (name, description) VALUES ('TR32', 'Production parameters of TR32 Station');
+INSERT INTO blueprint (name, description) VALUES ('tr32', 'Production parameters of TR32 Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('bodknhietdotbatr32', 7);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT768.0', 435.94, 247.38, 90);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT770.0', 435.94, 274.95, 90);
@@ -925,7 +925,7 @@ INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id)
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D1600.0', 867.29, 649.28, 91);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D1604.0', 922.43, 649.28, 91);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D1608.0', 977.58, 649.28, 91);
-INSERT INTO blueprint (name, description) VALUES ('TR33', 'Production parameters of TR33 Station');
+INSERT INTO blueprint (name, description) VALUES ('tr33', 'Production parameters of TR33 Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('bodknhietdotbatr33', 8);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT960.0', 0, 0, 92);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT962.0', 0, 0, 92);
@@ -947,7 +947,7 @@ INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id)
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D1024.0', 0, 0, 93);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D1028.0', 0, 0, 93);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D1032.0', 0, 0, 93);
-INSERT INTO blueprint (name, description) VALUES ('TR34', 'Production parameters of TR34 Station');
+INSERT INTO blueprint (name, description) VALUES ('tr34', 'Production parameters of TR34 Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('bodknhietdotbatr34', 9);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT1152.0', 1284.57, 122.53, 94);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT1154.0', 1284.57, 156.75, 94);
@@ -986,7 +986,7 @@ INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id)
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D2752.0', 2367.93, 780.3, 96);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D2756.0', 2436.37, 780.3, 96);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D2760.0', 2504.82, 780.3, 96);
-INSERT INTO blueprint (name, description) VALUES ('TR42', 'Production parameters of TR42 Station');
+INSERT INTO blueprint (name, description) VALUES ('tr42', 'Production parameters of TR42 Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('bodknhietdotbatr42', 10);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT1344.0', 0, 0, 97);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT1346.0', 0, 0, 97);
@@ -1036,7 +1036,7 @@ INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id)
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D5516.0', 0, 0, 100);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D5548.0', 0, 0, 100);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D5312.0', 0, 0, 100);
-INSERT INTO blueprint (name, description) VALUES ('TR52', 'Production parameters of TR52 Station');
+INSERT INTO blueprint (name, description) VALUES ('tr52', 'Production parameters of TR52 Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('bodknhietdotbatr52', 11);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT1536.0', 553.39, 121.15, 101);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT1538.0', 553.39, 153.71, 101);
@@ -1075,7 +1075,7 @@ INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id)
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D17728.0', 1287.91, 564.67, 103);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D17732.0', 1353.03, 564.67, 103);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D17736.0', 1418.15, 564.67, 103);
-INSERT INTO blueprint (name, description) VALUES ('TR72', 'Production parameters of TR72 Station');
+INSERT INTO blueprint (name, description) VALUES ('tr72', 'Production parameters of TR72 Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('bodknhietdotbatr72', 12);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT1728.0', 267.53, 238.01, 104);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB112.INT1730.0', 267.53, 266.02, 104);
@@ -1097,7 +1097,7 @@ INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id)
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D3328.0', 641.42, 658.04, 105);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D3332.0', 697.44, 658.04, 105);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D3336.0', 753.45, 658.04, 105);
-INSERT INTO blueprint (name, description) VALUES ('TR82', 'Production parameters of TR82 Station');
+INSERT INTO blueprint (name, description) VALUES ('tr82', 'Production parameters of TR82 Station');
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('bodknhietdotbatr82', 13);
 INSERT INTO sensor_configuration (name, blueprint_id) VALUES ('lv82digitalmultimetterpm5310', 13);
 INSERT INTO sensor_configuration_figure (address, x, y, sensor_configuration_id) VALUES ('DB9.D14080.0', 719.2, 361.5, 107);
