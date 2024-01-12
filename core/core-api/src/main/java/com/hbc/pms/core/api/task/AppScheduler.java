@@ -29,7 +29,7 @@ public class AppScheduler {
                 var rawData = dataFetcher.fetchData(blueprint.getAddresses());
                 var processedData = dataProcessor.flattenPLCData(rawData);
                 webSocketPublisher.fireSendStationData(processedData, blueprint.getName());
-                log.info("Processed data: {}", processedData);
+                log.info("Processed data from {} blueprint: {}", blueprint.getName(), processedData);
             }
             long endTime = System.currentTimeMillis();
             long duration = (endTime - startTime);

@@ -1,8 +1,10 @@
 package com.hbc.pms.core.api.support.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hbc.pms.core.api.support.error.ErrorMessage;
 import com.hbc.pms.core.api.support.error.ErrorType;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<S> {
 
     private final ResultType result;
