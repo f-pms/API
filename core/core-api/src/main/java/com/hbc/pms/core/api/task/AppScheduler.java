@@ -4,8 +4,8 @@ import com.hbc.pms.core.api.service.BlueprintService;
 import com.hbc.pms.core.api.support.data.DataFetcher;
 import com.hbc.pms.core.api.support.data.DataProcessor;
 import com.hbc.pms.core.api.support.data.WebSocketPublisher;
+import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
-import com.hbc.pms.plc.io.Blueprint;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,7 +28,7 @@ public class AppScheduler {
             for (Blueprint blueprint : blueprintService.getAll()) {
                 var rawData = dataFetcher.fetchData(blueprint.getAddresses());
                 var processedData = dataProcessor.flattenPLCData(rawData);
-                webSocketPublisher.fireSendStationData(processedData, blueprint.getId());
+                webSocketPublisher.fireSendStationData(processedData, blueprint.getName());
                 log.info("Processed data: {}", processedData);
             }
             long endTime = System.currentTimeMillis();

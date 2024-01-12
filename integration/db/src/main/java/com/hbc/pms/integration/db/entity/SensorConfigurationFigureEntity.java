@@ -1,37 +1,31 @@
 package com.hbc.pms.integration.db.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 @Entity
+@Table(name = "sensor_configuration_figure")
 @Builder
-@Data
+@Getter
+@Setter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class SensorConfigurationFigureEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column
-  private String name;
+  private String address;
 
   @Column
-  private String dataType;
+  private double x;
 
   @Column
-  private int dataBlockNumber;
+  private double y;
 
-  @Column
-  private int offset;
-
-  @Column
-  private int x;
-
-  @Column
-  private int y;
-
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)
   private SensorConfigurationEntity sensorConfiguration;
 }

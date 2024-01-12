@@ -2,7 +2,6 @@ package com.hbc.pms.core.api.support.data;
 
 import com.hbc.pms.plc.integration.huykka7.IoResponse;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
-import com.hbc.pms.plc.io.Blueprint;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

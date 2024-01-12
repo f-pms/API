@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @ConfigurationPropertiesScan
 @SpringBootApplication(scanBasePackages = "com.hbc.pms.*")
-@EnableJpaRepositories
-@EntityScan(basePackages = "com.hbc.pms.*")
 public class CoreApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(CoreApiApplication.class, args);
