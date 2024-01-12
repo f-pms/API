@@ -23,18 +23,15 @@ public class Blueprint {
     public static class SensorConfiguration {
         private String groupId;
         private List<Figure> figures;
-
     }
 
     @Getter
     public static class Figure {
-        private String id;
-        // TODO: auto calculate these 3 fields based on address
         private String dataType;
         private int offset;
         private int dataBlockNumber;
         @Setter
-        private Point displayCoordinates;
+        private Point displayCoordinate;
         @Setter
         private String address; //For ex: "DB9.D2060.0", "DB9.D2064.0"
     }
@@ -44,15 +41,6 @@ public class Blueprint {
     public static class Point {
         private double x;
         private double y;
-    }
-
-    public Map<String, List<String>> getAddressToFiguresMap() {
-        var flattenedMap =sensorConfigurations.stream()
-            .flatMap(sensorConfiguration -> sensorConfiguration.figures.stream());
-        var result = new HashMap<String, List<String>>();
-        flattenedMap.forEach(figure -> result.computeIfAbsent(figure.getAddress(), k -> new ArrayList<>()).add(figure.getId()));
-
-        return result;
     }
 
     public List<String> getAddresses() {
