@@ -51,4 +51,20 @@ public class WebSocketController {
     public Map<String, String> sendTR42StationData(Map<String, String> stationData) {
         return stationData;
     }
+    @SendTo("/topic/tr52")
+    public Map<String, String> sendTR52StationData(Map<String, String> stationData) {
+        return stationData;
+    }
+    @SendTo("/topic/tr72")
+    public Map<String, String> sendTR72StationData(Map<String, String> stationData) {
+        return stationData;
+    }
+    @SendTo("/topic/tr82")
+    public Map<String, String> sendTR82StationData(Map<String, String> stationData) {
+        return stationData;
+    }
+    @SendTo("/topic/all-meter")
+    public Map<String, String> sendTRAllMeterStationData(Map<String, String> stationData) {
+        return stationData;
+    }
 }
