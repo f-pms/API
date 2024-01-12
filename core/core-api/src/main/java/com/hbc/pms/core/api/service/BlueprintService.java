@@ -30,4 +30,9 @@ public class BlueprintService {
         }
         return BlueprintMapper.INSTANCE.toBlueprint(blueprint.get());
     }
+
+    public void createBlueprint(Blueprint blueprint) {
+        var entity = BlueprintMapper.INSTANCE.toBlueprintEntity(blueprint);
+        blueprintRepository.save(entity);
+    }
 }

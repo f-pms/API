@@ -4,10 +4,7 @@ import com.hbc.pms.core.api.service.BlueprintService;
 import com.hbc.pms.core.api.support.response.ApiResponse;
 import com.hbc.pms.core.model.Blueprint;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,11 +16,13 @@ public class BlueprintController {
 
     @GetMapping()
     public ApiResponse<List<Blueprint>> getBlueprints() {
-        return ApiResponse.success(blueprintService.getAll());
+        var response = blueprintService.getAll();
+        return ApiResponse.success(response);
     }
 
     @GetMapping("/{id}")
     public ApiResponse<Blueprint> getById(@PathVariable Long id) {
-        return ApiResponse.success(blueprintService.getById(id));
+        var response = blueprintService.getById(id);
+        return ApiResponse.success(response);
     }
 }
