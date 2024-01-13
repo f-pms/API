@@ -4,15 +4,14 @@ import com.hbc.pms.core.api.support.error.PlcConnectionException;
 import com.hbc.pms.plc.integration.huykka7.IoResponse;
 import com.hbc.pms.plc.integration.huykka7.PlcConnectionConfiguration;
 import com.hbc.pms.plc.integration.huykka7.S7Connector;
-import com.hbc.pms.plc.integration.mokka7.S7Client;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
 import jakarta.annotation.PostConstruct;
-
-import java.util.*;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
