@@ -32,20 +32,16 @@ public class AppScheduler {
 
     @Scheduled(fixedRate = 2000)
     public void refreshAllStationsState() {
-        try {
-            long startTime = System.currentTimeMillis();
-            for (Blueprint blueprint : blueprintManager.getBlueprints()) {
-                var rawData = dataFetcher.fetchData(blueprint.getAddresses());
-                var processedData = dataProcessor.flattenPLCData(rawData);
-                webSocketPublisher.fireSendStationData(processedData, blueprint.getId());
-                log.info("Processed data: {}", processedData);
-            }
-            long endTime = System.currentTimeMillis();
-            long duration = (endTime - startTime);
-            log.info("Execution time: " + duration + " milliseconds");
-            log.info("============================");
-        } catch (S7Exception e) {
-            log.error("Failed to fetch data from PLC");
+        long startTime = System.currentTimeMillis();
+        for (Blueprint blueprint : blueprintManager.getBlueprints()) {
+            var rawData = dataFetcher.fetchData(blueprint.getAddresses());
+            var processedData = dataProcessor.flattenPLCData(rawData);
+            webSocketPublisher.fireSendStationData(processedData, blueprint.getId());
+            log.info("Processed data: {}", processedData);
         }
+        long endTime = System.currentTimeMillis();
+        long duration = (endTime - startTime);
+        log.info("Execution time: " + duration + " milliseconds");
+        log.info("============================");
     }
 }
