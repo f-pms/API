@@ -3,7 +3,7 @@ package com.hbc.pms.integration.db.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "blueprint")
@@ -18,12 +18,13 @@ public class BlueprintEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
+  @Column(unique = true)
   private String name;
 
   @Column
   private String description;
 
   @OneToMany(mappedBy = "blueprint", fetch = FetchType.EAGER)
-  private Set<SensorConfigurationEntity> sensorConfigurations;
+  private List<SensorConfigurationEntity> sensorConfigurations;
+
 }
