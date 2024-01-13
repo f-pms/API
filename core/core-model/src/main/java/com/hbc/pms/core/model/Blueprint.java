@@ -21,16 +21,6 @@ public class Blueprint {
   @NoArgsConstructor(access = AccessLevel.PACKAGE)
   public static class SensorConfiguration {
     private Long id;
-    private String name;
-    private List<Figure> sensorConfigurationFigures;
-  }
-
-  @Data
-  @Builder
-  @AllArgsConstructor(access = AccessLevel.PRIVATE)
-  @NoArgsConstructor(access = AccessLevel.PACKAGE)
-  public static class Figure {
-    private Long id;
     private String address;
     private double x;
     private double y;
@@ -38,8 +28,7 @@ public class Blueprint {
 
   public List<String> getAddresses() {
     return sensorConfigurations.stream()
-        .flatMap(sensorConfiguration -> sensorConfiguration.sensorConfigurationFigures.stream())
-        .map(Figure::getAddress)
+        .map(SensorConfiguration::getAddress)
         .collect(Collectors.toList());
   }
 }

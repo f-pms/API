@@ -13,16 +13,11 @@ public class BlueprintMapperTest {
 
   @Test
   void shouldMapEntityToModelSuccessfully() {
-    var sensorConfigurationFigureEntity = SensorConfigurationFigureEntity.builder()
+    var sensorConfigurationEntity = SensorConfigurationEntity.builder()
         .id(1L)
         .address("DB9.D2060.0")
         .x(1)
         .y(1)
-        .build();
-    var sensorConfigurationEntity = SensorConfigurationEntity.builder()
-        .id(1L)
-        .name("sensorConfiguration")
-        .sensorConfigurationFigures(Set.of(sensorConfigurationFigureEntity))
         .build();
     var blueprintEntity = BlueprintEntity.builder()
         .id(1L)
@@ -37,27 +32,22 @@ public class BlueprintMapperTest {
         () -> assertEquals("station", model.getName()),
         () -> assertEquals("description", model.getDescription()),
         () -> assertEquals(1L, model.getSensorConfigurations().get(0).getId()),
-        () -> assertEquals("sensorConfiguration", model.getSensorConfigurations().get(0).getName()),
-        () -> assertEquals(1L, model.getSensorConfigurations().get(0).getSensorConfigurationFigures().get(0).getId()),
-        () -> assertEquals("DB9.D2060.0", model.getSensorConfigurations().get(0).getSensorConfigurationFigures().get(0).getAddress()),
-        () -> assertEquals(1, model.getSensorConfigurations().get(0).getSensorConfigurationFigures().get(0).getX()),
-        () -> assertEquals(1, model.getSensorConfigurations().get(0).getSensorConfigurationFigures().get(0).getY())
+        () -> assertEquals("DB9.D2060.0", model.getSensorConfigurations().get(0).getAddress()),
+        () -> assertEquals(1, model.getSensorConfigurations().get(0).getX()),
+        () -> assertEquals(1, model.getSensorConfigurations().get(0).getY())
     );
   }
 
   @Test
   void shouldGetAllAddressesSuccessfully() {
-    var firstSensorConfigurationFigureEntity = SensorConfigurationFigureEntity.builder()
+    var firstSensorConfigurationEntity = SensorConfigurationEntity.builder()
         .address("DB9.D2060.0")
         .build();
-    var secondSensorConfigurationFigureEntity = SensorConfigurationFigureEntity.builder()
+    var secondSensorConfigurationEntity = SensorConfigurationEntity.builder()
         .address("DB10.D2060.0")
         .build();
-    var sensorConfigurationEntity = SensorConfigurationEntity.builder()
-        .sensorConfigurationFigures(Set.of(firstSensorConfigurationFigureEntity, secondSensorConfigurationFigureEntity))
-        .build();
     var blueprintEntity = BlueprintEntity.builder()
-        .sensorConfigurations(Set.of(sensorConfigurationEntity))
+        .sensorConfigurations(Set.of(firstSensorConfigurationEntity, secondSensorConfigurationEntity))
         .build();
 
     var model = BlueprintMapper.INSTANCE.toBlueprint(blueprintEntity);

@@ -19,12 +19,16 @@ public class SensorConfigurationEntity {
   private Long id;
 
   @Column
-  private String name;
+  private String address;
+
+  @Column
+  private double x;
+
+  @Column
+  private double y;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)
   private BlueprintEntity blueprint;
 
-  @OneToMany(mappedBy = "sensorConfiguration", fetch = FetchType.EAGER)
-  private Set<SensorConfigurationFigureEntity> sensorConfigurationFigures;
 }
