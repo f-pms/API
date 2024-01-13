@@ -1,4 +1,4 @@
-package com.hbc.pms.core.api.integration;
+package com.hbc.pms.core.integration;
 
 import com.hbc.pms.plc.integration.mokka7.S7Client;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;

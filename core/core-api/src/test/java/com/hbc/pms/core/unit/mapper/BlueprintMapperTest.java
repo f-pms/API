@@ -1,13 +1,10 @@
-package com.hbc.pms.core.api.unit.mapper;
+package com.hbc.pms.core.unit.mapper;
 
 import com.hbc.pms.core.api.mapper.BlueprintMapper;
-import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity;
-import com.hbc.pms.integration.db.entity.SensorConfigurationFigureEntity;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
