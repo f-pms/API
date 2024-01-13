@@ -61,7 +61,7 @@ public class BlueprintController {
     }
 
     @PutMapping("/{blueprintId}/sensor-configurations/{sensorConfigurationId}")
-    public ApiResponse<Boolean> createSensorConfiguration(@PathVariable Long blueprintId, @PathVariable Long sensorConfigurationId, @RequestBody SensorConfigurationRequest body) {
+    public ApiResponse<Boolean> updateSensorConfiguration(@PathVariable Long blueprintId, @PathVariable Long sensorConfigurationId, @RequestBody SensorConfigurationRequest body) {
         var sensorConfiguration = mapper.map(body, SensorConfiguration.class);
         sensorConfiguration.setId(sensorConfigurationId);
         var response = sensorConfigurationService.update(blueprintId, sensorConfiguration);
