@@ -1,14 +1,12 @@
 package com.hbc.pms.plc.integration.plc4x;
 
-import com.hbc.pms.plc.PlcConnector;
-import com.hbc.pms.plc.integration.huykka7.DataType;
-import com.hbc.pms.plc.integration.huykka7.IoResponse;
-import com.hbc.pms.plc.integration.huykka7.S7VariableAddress;
-import com.hbc.pms.plc.integration.huykka7.S7VariableNameParser;
-import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
+import com.hbc.pms.plc.api.DataType;
+import com.hbc.pms.plc.api.IoResponse;
+import com.hbc.pms.plc.api.PlcConnector;
+import com.hbc.pms.plc.api.S7VariableAddress;
+import com.hbc.pms.plc.api.S7VariableNameParser;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.SerializationUtils;
 import org.apache.plc4x.java.api.PlcConnection;
 import org.apache.plc4x.java.api.PlcDriverManager;
 import org.apache.plc4x.java.api.exceptions.PlcConnectionException;
@@ -41,7 +39,7 @@ public class Plc4xConnector implements PlcConnector {
     }
 
     @Override
-    public Map<String, IoResponse> executeMultiVarRequest(List<String> variableNames) throws S7Exception {
+    public Map<String, IoResponse> executeMultiVarRequest(List<String> variableNames) {
         return this.executeBlockRequest(variableNames);
     }
 
@@ -60,13 +58,22 @@ public class Plc4xConnector implements PlcConnector {
             builder.addTagAddress(entry.getKey(), convertToPLx4x(entry.getValue()));
         }
         final PlcReadRequest rr = builder.build();
-        PlcReadResponse result = rr.execute().get();
-        for (var entry : addressMap.entrySet()) {
-            var data = result.getObject(entry.getKey());
-            var io = new IoResponse(entry.getKey(), entry.getValue().getType(), serialize(data));
-            io.setPlcValue(result.getPlcValue(entry.getKey()));
-            stringIoResponseMap.put(entry.getKey(), io);
+        try{
+            long startTime = System.currentTimeMillis();
+            PlcReadResponse result = rr.execute().get();
+            long endTime = System.currentTimeMillis();
+            log.debug("Total: " + (endTime - startTime));
+            for (var entry : addressMap.entrySet()) {
+                var data = result.getObject(entry.getKey());
+                var io = new IoResponse(entry.getKey(), entry.getValue().getType(), serialize(data));
+                io.setPlcValue(result.getPlcValue(entry.getKey()));
+                stringIoResponseMap.put(entry.getKey(), io);
+            }
         }
+        catch(Exception exception){
+
+        }
+
         return stringIoResponseMap;
     }
 

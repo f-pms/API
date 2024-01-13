@@ -1,9 +1,7 @@
 package com.hbc.pms.core.api.support.data;
 
 import com.hbc.pms.core.api.service.PlcService;
-import com.hbc.pms.core.model.TrackExecutionTime;
-import com.hbc.pms.plc.integration.huykka7.IoResponse;
-import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
+import com.hbc.pms.plc.api.IoResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

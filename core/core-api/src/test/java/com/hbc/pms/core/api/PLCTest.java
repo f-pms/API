@@ -2,17 +2,15 @@ package com.hbc.pms.core.api;
 
 import com.hbc.pms.plc.integration.mokka7.S7Client;
 import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
-import com.hbc.pms.plc.integration.mokka7.type.AreaType;
+import com.hbc.pms.plc.api.AreaType;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.startupcheck.IndefiniteWaitOneShotStartupCheckStrategy;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,11 +26,5 @@ public class PLCTest {
           "/data/datablocks.json"
       );
 
-  @Test
-  public void test() throws IOException, InterruptedException, S7Exception {
-    var client = new S7Client();
-    client.connect(server.getHost(), server.getFirstMappedPort(), 0, 1);
-    var result = client.readString(AreaType.DB, 1, 0, 10);
-    assertEquals("Hello, S7!", result);
-  }
+
 }

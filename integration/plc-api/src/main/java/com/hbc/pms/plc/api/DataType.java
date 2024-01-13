@@ -1,4 +1,4 @@
-package com.hbc.pms.plc.integration.huykka7;
+package com.hbc.pms.plc.api;
 
 public enum DataType {
     BIT,

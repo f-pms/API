@@ -4,11 +4,11 @@ import com.hbc.pms.core.api.service.BlueprintManager;
 import com.hbc.pms.core.api.support.data.DataFetcher;
 import com.hbc.pms.core.api.support.data.DataProcessor;
 import com.hbc.pms.core.api.support.data.WebSocketPublisher;
-import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
 import com.hbc.pms.plc.io.Blueprint;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
 
 @Component
 @Slf4j
@@ -41,7 +41,7 @@ public class AppScheduler {
         }
         long endTime = System.currentTimeMillis();
         long duration = (endTime - startTime);
-        log.info("Execution time: " + duration + " milliseconds");
+        log.info("Execution time: " + duration + " milliseconds ");
         log.info("============================");
     }
 }

@@ -1,0 +1,3 @@
+dependencies {
+    implementation 'org.apache.plc4x:plc4j-api:0.11.0'
+}

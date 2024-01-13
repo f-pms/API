@@ -14,7 +14,7 @@
  * Contributors: Davide Nardella - initial API and implementation J.Zimmermann - Mokka7 fork
  *
  */
-package com.hbc.pms.plc.integration.mokka7.type;
+package com.hbc.pms.plc.api;
 
 import java.util.Arrays;
 import java.util.List;

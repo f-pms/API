@@ -1,6 +1,5 @@
-package com.hbc.pms.plc.integration.huykka7;
+package com.hbc.pms.plc.api;
 
-import com.hbc.pms.plc.integration.mokka7.type.AreaType;
 import java.util.*;
 import java.util.regex.*;
 import org.springframework.stereotype.Component;
