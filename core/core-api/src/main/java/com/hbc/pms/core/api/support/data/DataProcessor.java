@@ -10,24 +10,20 @@ import java.util.Map;
 
 @Component
 public class DataProcessor {
-    public Map<String, String> flattenPLCData(Map<String, IoResponse> rawData) throws S7Exception {
+    public Map<String, String> flattenPLCData(Map<String, IoResponse> rawData) {
         Map<String, String> flattenedData = new HashMap<>();
 
         for (Map.Entry<String, IoResponse> entry : rawData.entrySet()) {
-            flattenedData.put(entry.getKey(), entry.getValue().getValue().toString());
-        }
-        return flattenedData;
-    }
-
-    public Map<String, String> flattenToFigureMappedData(Map<String, IoResponse> rawData, Blueprint blueprint) throws S7Exception {
-        Map<String, String> flattenedData = new HashMap<>();
-        var addressToFigureMap = blueprint.getAddressToFiguresMap();
-
-        for (Map.Entry<String, IoResponse> entry : rawData.entrySet()) {
-            var valuesByAddress = addressToFigureMap.get(entry.getKey());
-
-            for (String val : valuesByAddress) {
-                flattenedData.put(val, entry.getValue().getValue().toString());
+            try {
+                var value = entry.getValue().getValue().toString();
+                if (Float.parseFloat(value) == 0) {
+                    value = "x";
+                }
+                flattenedData.put(entry.getKey(), value);
+            } catch (S7Exception e) {
+                if (e.getErrorCode() == -1) {
+                    flattenedData.put(entry.getKey(), "x");
+                }
             }
         }
         return flattenedData;
