@@ -10,7 +10,7 @@
           "dataType": "INT",
           "dataBlockNumber": 112,
           "offset": 960,
-          "address": "DB112.INT960.0",
+          "address": "%DB112:960:INT",
           "displayCoordinate": {
             "x": 454.28,
             "y": 125.29
@@ -20,7 +20,7 @@
           "dataType": "INT",
           "dataBlockNumber": 112,
           "offset": 962,
-          "address": "DB112.INT962.0",
+          "address": "%DB112:962:INT",
           "displayCoordinate": {
             "x": 454.28,
             "y": 160.67
@@ -30,7 +30,7 @@
           "dataType": "INT",
           "dataBlockNumber": 112,
           "offset": 964,
-          "address": "DB112.INT964.0",
+          "address": "%DB112:964:INT",
           "displayCoordinate": {
             "x": 454.28,
             "y": 196.05
@@ -45,7 +45,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 832,
-          "address": "DB9.D832.0",
+          "address": "%DB9:832:REAL",
           "displayCoordinate": {
             "x": 1007.8,
             "y": 398.08
@@ -55,7 +55,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 836,
-          "address": "DB9.D836.0",
+          "address": "%DB9:836:REAL",
           "displayCoordinate": {
             "x": 1078.56,
             "y": 398.08
@@ -65,7 +65,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 840,
-          "address": "DB9.D840.0",
+          "address": "%DB9:840:REAL",
           "displayCoordinate": {
             "x": 1149.32,
             "y": 398.08
@@ -75,7 +75,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 768,
-          "address": "DB9.D768.0",
+          "address": "%DB9:768:REAL",
           "displayCoordinate": {
             "x": 1007.8,
             "y": 433.46
@@ -85,7 +85,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 772,
-          "address": "DB9.D772.0",
+          "address": "%DB9:772:REAL",
           "displayCoordinate": {
             "x": 1078.56,
             "y": 433.46
@@ -95,7 +95,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 776,
-          "address": "DB9.D776.0",
+          "address": "%DB9:776:REAL",
           "displayCoordinate": {
             "x": 1149.32,
             "y": 433.46
@@ -105,7 +105,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 972,
-          "address": "DB9.D972.0",
+          "address": "%DB9:972:REAL",
           "displayCoordinate": {
             "x": 1081,
             "y": 468.97
@@ -115,7 +115,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 908,
-          "address": "DB9.D908.0",
+          "address": "%DB9:908:REAL",
           "displayCoordinate": {
             "x": 1081,
             "y": 504.35
@@ -125,7 +125,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 940,
-          "address": "DB9.D940.0",
+          "address": "%DB9:940:REAL",
           "displayCoordinate": {
             "x": 1081,
             "y": 539.73
@@ -135,7 +135,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 704,
-          "address": "DB9.D704.0",
+          "address": "%DB9:704:REAL",
           "displayCoordinate": {
             "x": 1081,
             "y": 575.11
@@ -145,7 +145,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1120,
-          "address": "DB9.D1120.0",
+          "address": "%DB9:1120:REAL",
           "displayCoordinate": {
             "x": 1007.8,
             "y": 610.36
@@ -155,7 +155,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1124,
-          "address": "DB9.D1124.0",
+          "address": "%DB9:1124:REAL",
           "displayCoordinate": {
             "x": 1078.56,
             "y": 610.36
@@ -165,7 +165,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1128,
-          "address": "DB9.D1128.0",
+          "address": "%DB9:1128:REAL",
           "displayCoordinate": {
             "x": 1149.32,
             "y": 610.36
@@ -175,7 +175,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1024,
-          "address": "DB9.D1024.0",
+          "address": "%DB9:1024:REAL",
           "displayCoordinate": {
             "x": 1007.8,
             "y": 645.74
@@ -185,7 +185,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1028,
-          "address": "DB9.D1028.0",
+          "address": "%DB9:1028:REAL",
           "displayCoordinate": {
             "x": 1078.56,
             "y": 645.74
@@ -195,7 +195,7 @@
           "dataType": "REAL",
           "dataBlockNumber": 9,
           "offset": 1032,
-          "address": "DB9.D1032.0",
+          "address": "%DB9:1032:REAL",
           "displayCoordinate": {
             "x": 1149.32,
             "y": 645.74
