@@ -6,11 +6,14 @@ dependencies {
     implementation project(":integration:db-core")
     implementation project(":integration:plc-integration")
     implementation project(":support:logging")
+    implementation project(":integration:plc-api")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.apache.commons:commons-lang3'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
 
     testImplementation "org.testcontainers:testcontainers:${testContainerVersion}"
     testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
@@ -19,4 +22,7 @@ dependencies {
 
 tasks.withType(Test) {
     useJUnitPlatform()
+}
+springBoot {
+    mainClass = 'com.hbc.pms.core.api.CoreApiApplication'
 }
