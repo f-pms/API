@@ -33,8 +33,9 @@ public class Plc4xConnector implements PlcConnector {
         IoResponse ioResponse = new IoResponse();
         PlcValue plcValue = defaultPlcReadResponse.getPlcValue(entry);
         if (Objects.isNull(plcValue)) {
-//            log.error("Tag with address {} is null", entry);
-            //TODO: escalate to higher layer to resolve the invalid tags
+            // temporarily ignore logs due to annoying std out
+            // TODO: escalate to higher layer to resolve the invalid tags
+            // log.error("Tag with address {} is null", entry);
         }
         ioResponse.setPlcValue(plcValue);
         ioResponse.setVariableName(entry);
