@@ -1,11 +1,14 @@
 package com.hbc.pms.core.api.support.data;
 
-import com.hbc.pms.plc.integration.huykka7.IoResponse;
-import com.hbc.pms.plc.integration.mokka7.exception.S7Exception;
+import com.hbc.pms.plc.api.IoResponse;
+import com.hbc.pms.plc.io.Blueprint;
+import org.apache.plc4x.java.api.value.PlcValue;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class DataProcessor {
@@ -13,18 +16,25 @@ public class DataProcessor {
         Map<String, String> flattenedData = new HashMap<>();
 
         for (Map.Entry<String, IoResponse> entry : rawData.entrySet()) {
-            try {
-                var value = entry.getValue().getValue().toString();
-                if (Float.parseFloat(value) == 0) {
-                    value = "x";
-                }
-                flattenedData.put(entry.getKey(), value);
-            } catch (S7Exception e) {
-                if (e.getErrorCode() == -1) {
-                    flattenedData.put(entry.getKey(), "x");
-                }
+            String responseAsString = "x";
+            PlcValue plcValue = entry.getValue().getPlcValue();
+            if (Objects.nonNull(plcValue)) {
+                responseAsString = plcValue.getObject().toString();
             }
+            flattenedData.put(entry.getKey(), responseAsString);
         }
         return flattenedData;
+    }
+
+    public Map<String, Map<String, String>> process(Map<String, IoResponse> rawData, List<Blueprint> blueprintList) {
+        Map<String, Map<String, String>> result = new HashMap<>();
+        for (Blueprint blueprint : blueprintList) {
+            Map<String, IoResponse> blueprintResponse = new HashMap<>();
+            for (String address : blueprint.getAddresses()) {
+                blueprintResponse.put(address, rawData.get(address));
+            }
+            result.put(blueprint.getId(), flattenPLCData(blueprintResponse));
+        }
+        return result;
     }
 }
