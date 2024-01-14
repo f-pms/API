@@ -7,7 +7,6 @@ import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.plc4x.java.api.PlcConnection;
-import org.apache.plc4x.java.api.PlcConnectionManager;
 import org.apache.plc4x.java.api.PlcDriverManager;
 import org.apache.plc4x.java.api.exceptions.PlcConnectionException;
 import org.apache.plc4x.java.api.messages.PlcReadRequest;
@@ -65,10 +64,7 @@ public class Plc4xConnector implements PlcConnector {
             builder.addTag(address, S7Tag.of(address));
         }
         final PlcReadRequest rr = builder.build();
-        long startTime = System.currentTimeMillis();
         PlcReadResponse result = rr.execute().get();
-        long endTime = System.currentTimeMillis();
-        log.info("total:{}", (endTime - startTime));
         if (result instanceof DefaultPlcReadResponse defaultPlcReadResponse) {
             for (var entry : defaultPlcReadResponse.getValues().keySet()) {
                 IoResponse ioResponse = getIoResponse(defaultPlcReadResponse, entry);

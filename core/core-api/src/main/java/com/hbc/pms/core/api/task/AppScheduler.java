@@ -32,11 +32,11 @@ public class AppScheduler {
         this.webSocketService = webSocketService;
     }
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedDelay = 500)
     public void refreshAllStationsState() {
         List<Blueprint> blueprintsToFetch = blueprintManager
                 .getBlueprints().stream()
-                .filter(blueprint -> webSocketService.countSubscriberOfTopic(blueprint.getId()) == 0)
+                .filter(blueprint -> webSocketService.countSubscriberOfTopic(blueprint.getId()) > 0)
                 .toList();
         long startTime = System.currentTimeMillis();
         Map<String, IoResponse> responseMap = dataFetcher.fetchData(blueprintsToFetch.stream().flatMap(blueprint -> blueprint.getAddresses().stream()).toList());
