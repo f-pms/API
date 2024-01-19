@@ -1,7 +1,7 @@
 package com.hbc.pms.core.api.support.data;
 
+import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.plc.api.IoResponse;
-import com.hbc.pms.plc.io.Blueprint;
 import org.apache.plc4x.java.api.value.PlcValue;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +33,7 @@ public class DataProcessor {
             for (String address : blueprint.getAddresses()) {
                 blueprintResponse.put(address, rawData.get(address));
             }
-            result.put(blueprint.getId(), flattenPLCData(blueprintResponse));
+            result.put(blueprint.getName(), flattenPLCData(blueprintResponse));
         }
         return result;
     }

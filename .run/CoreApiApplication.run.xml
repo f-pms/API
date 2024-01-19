@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CoreApiApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+    <envs>
+      <env name="SPRING_PROFILES_ACTIVE" value="local" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="com.hbc.pms.core.api.CoreApiApplication" />
+    <module name="PMS.core.core-api.main" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.hbc.pms.core.api.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

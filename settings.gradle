@@ -9,7 +9,7 @@ rootProject.name = 'PMS'
 
 include 'core:core-api'
 include 'core:core-model'
-include 'integration:db-core'
+include 'integration:db'
 include 'integration:plc-integration'
 include 'integration:plc-api'
 include 'support:logging'

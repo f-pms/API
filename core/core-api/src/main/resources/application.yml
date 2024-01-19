@@ -1,11 +1,9 @@
-spring.application.name: core-api
-spring.profiles.active: local
-
 spring:
+  application.name: core-api
   config:
     import:
       - logging.yml
-      - db-core.yml
+      - db.yml
   mvc.throw-exception-if-no-handler-found: true
   web.resources.add-mappings: false
 
@@ -28,17 +26,13 @@ spring.config.activate.on-profile: local
 
 
 ---
-spring.config.activate.on-profile: local-dev
-
-
----
 spring.config.activate.on-profile: dev
 
 
 ---
-spring.config.activate.on-profile: staging
+spring.config.activate.on-profile: test
 
 
 ---
-spring.config.activate.on-profile: live
+spring.config.activate.on-profile: prod
 

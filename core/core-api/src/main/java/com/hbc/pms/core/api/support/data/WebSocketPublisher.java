@@ -13,8 +13,8 @@ public class WebSocketPublisher {
         this.template = template;
     }
 
-    public void fireSendStationData(Map<String, String> stationData, String stationId) {
+    public void fireSendStationData(Map<String, String> stationData, String stationName) {
         String topicPrefix = "/topic/";
-        this.template.convertAndSend(topicPrefix + stationId, stationData);
+        this.template.convertAndSend(topicPrefix + stationName, stationData);
     }
 }
