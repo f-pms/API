@@ -1,0 +1,95 @@
+databaseChangeLog:
+- changeSet:
+    id: 1705995189289-1
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: alarm_conditionPK
+            name: id
+            type: bigint
+        - column:
+            name: cron
+            type: varchar(255)
+        - column:
+            name: description
+            type: varchar(255)
+        - column:
+            name: is_enabled
+            type: bit
+        - column:
+            name: max
+            type: float(53)
+        - column:
+            name: min
+            type: float(53)
+        - column:
+            name: name
+            type: varchar(255)
+        - column:
+            name: severity
+            type: varchar(255)
+        - column:
+            name: time_delay
+            type: int
+        - column:
+            constraints:
+              nullable: false
+            name: sensor_configuration_id
+            type: bigint
+        tableName: alarm_condition
+- changeSet:
+    id: 1705995189289-2
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: alarm_historyPK
+            name: id
+            type: bigint
+        - column:
+            name: created_at
+            type: datetimeoffset(6)
+        - column:
+            constraints:
+              nullable: false
+            name: alarm_condition_id
+            type: bigint
+        tableName: alarm_history
+- changeSet:
+    id: 1705995189289-3
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: sensor_configuration_id
+        baseTableName: alarm_condition
+        constraintName: FKexfqvjgdlt487e0o8vs17qu3u
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: sensor_configuration
+        validate: true
+- changeSet:
+    id: 1705995189289-4
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: alarm_condition_id
+        baseTableName: alarm_history
+        constraintName: FKta2woanb4v1g72bfya5ywr91m
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: alarm_condition
+        validate: true
+

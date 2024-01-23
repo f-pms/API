@@ -1025,3 +1025,5 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:384:INT', 519.24, 1241.49, 13);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:386:INT', 519.24, 1260.55, 13);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:388:INT', 519.24, 1279.62, 13);
+
+INSERT INTO alarm_condition (name, description, is_enabled, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES ('alarm', 'description', 1, NULL, 50, 'LOW', '*/5 * * * * *', 5, 1);
