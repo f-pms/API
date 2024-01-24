@@ -4,7 +4,7 @@ import lombok.*;
 
 @Data
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor()
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class SensorConfiguration {
   private Long id;

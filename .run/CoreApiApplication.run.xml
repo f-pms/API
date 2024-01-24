@@ -7,7 +7,7 @@
     <module name="PMS.core.core-api.main" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.hbc.pms.core.api.*" />
+        <option name="PATTERN" value="com.hbc.pms.core.api.utils.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

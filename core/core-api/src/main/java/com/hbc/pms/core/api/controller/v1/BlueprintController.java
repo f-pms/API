@@ -2,6 +2,7 @@ package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.request.BlueprintRequest;
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest;
+import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
 import com.hbc.pms.core.api.service.BlueprintService;
 import com.hbc.pms.core.api.service.SensorConfigurationService;
@@ -9,16 +10,10 @@ import com.hbc.pms.core.api.support.response.ApiResponse;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RestController()
 @RequestMapping("blueprints")
@@ -68,7 +63,10 @@ public class BlueprintController {
     }
 
     @PutMapping("/{blueprintId}/sensor-configurations/{sensorConfigurationId}")
-    public ApiResponse<Boolean> updateSensorConfiguration(@PathVariable Long blueprintId, @PathVariable Long sensorConfigurationId, @RequestBody SensorConfigurationRequest body) {
+    public ApiResponse<Boolean> updateSensorConfiguration(@PathVariable Long blueprintId,
+                                                          @PathVariable Long sensorConfigurationId,
+                                                          @RequestBody UpdateSensorConfigurationRequest body) {
+        body.aggregateData();
         var sensorConfiguration = mapper.map(body, SensorConfiguration.class);
         sensorConfiguration.setId(sensorConfigurationId);
         var response = sensorConfigurationService.update(blueprintId, sensorConfiguration);

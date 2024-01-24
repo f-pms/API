@@ -1,8 +1,6 @@
 package com.hbc.pms.core.api.controller.v1.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.List;
 
@@ -22,5 +20,11 @@ public class BlueprintResponse {
         private String dataType;
         private double x;
         private double y;
+
+        public void setFields(Object[] resultParts) {
+            setDb((Integer) resultParts[0]);
+            setOffset((Integer) resultParts[1]);
+            setDataType((String) resultParts[2]);
+        }
     }
 }
