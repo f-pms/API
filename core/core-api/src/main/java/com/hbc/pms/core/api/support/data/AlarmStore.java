@@ -12,10 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class AlarmStore {
-  private final ConcurrentHashMap<Long, OffsetDateTime> holdenConditionsMap = new ConcurrentHashMap<>();
+  private final ConcurrentHashMap<Long, OffsetDateTime> holdingConditionsMap = new ConcurrentHashMap<>();
 
-  public boolean checkHoldenCondition(Long id) {
-    return holdenConditionsMap.containsKey(id);
+  public boolean checkHoldingCondition(Long id) {
+    return holdingConditionsMap.containsKey(id);
   }
   
   public List<AlarmCondition> process(List<AlarmCondition> conditions, Map<String, IoResponse> rawData) {
@@ -24,22 +24,22 @@ public class AlarmStore {
           var address = c.getSensorConfiguration().getAddress();
           var currentValue = rawData.get(address).getPlcValue().getDouble();
           if (c.isMet(currentValue)) {
-            holdenConditionsMap.remove(c.getId());
+            holdingConditionsMap.remove(c.getId());
             return false;
           }
 
-          if (!holdenConditionsMap.containsKey(c.getId())) {
-            holdenConditionsMap.put(c.getId(), OffsetDateTime.now());
+          if (!holdingConditionsMap.containsKey(c.getId())) {
+            holdingConditionsMap.put(c.getId(), OffsetDateTime.now());
             return false;
           }
 
-          var previousTime = holdenConditionsMap.get(c.getId());
+          var previousTime = holdingConditionsMap.get(c.getId());
           var duration = Duration.between(previousTime, OffsetDateTime.now());
           if (duration.getSeconds() < c.getTimeDelay()) {
             return false;
           }
 
-          holdenConditionsMap.remove(c.getId());
+          holdingConditionsMap.remove(c.getId());
           return true;
         })
         .toList();

@@ -58,14 +58,14 @@ public class AppScheduler {
 
         var matchedConditions = conditions
             .stream()
-              .filter(c -> CronUtil.matchTime(c.getCron(), currentTime) || alarmStore.checkHoldenCondition(c.getId()))
+              .filter(c -> CronUtil.matchTime(c.getCron(), currentTime) || alarmStore.checkHoldingCondition(c.getId()))
             .toList();
         var matchedAddresses = matchedConditions
             .stream().map(c -> c.getSensorConfiguration().getAddress())
             .toList();
 
         var responseMap = dataFetcher.fetchData(matchedAddresses);
-        var holdenConditions = alarmStore.process(matchedConditions, responseMap);
-        log.info(holdenConditions.toString()); // TODO: will save to db
+        var holdingConditions = alarmStore.process(matchedConditions, responseMap);
+        log.info(holdingConditions.toString()); // TODO: will save to db
     }
 }
