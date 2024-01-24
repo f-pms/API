@@ -23,6 +23,9 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class AppScheduler {
+    private final int ONE_SECOND_DELAY_MILLIS = 1000;
+    private final String EVERY_SECOND_CRON = "*/1 * * * * *";
+
     private final BlueprintService blueprintService;
     private final DataFetcher dataFetcher;
     private final DataProcessor dataProcessor;
@@ -31,7 +34,7 @@ public class AppScheduler {
     private final AlarmService alarmService;
     private final AlarmStore alarmStore;
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
     public void refreshAllStationsState() {
         List<Blueprint> blueprintsToFetch = blueprintService
                 .getAll().stream()
@@ -51,7 +54,7 @@ public class AppScheduler {
 //        log.info("============================");
     }
 
-    @Scheduled(cron = "*/1 * * * * *")
+    @Scheduled(cron = EVERY_SECOND_CRON)
     public void scheduleAlarmConditions() throws InterruptedException {
         var currentTime = OffsetDateTime.now();
         var conditions = alarmService.getAllConditions();
