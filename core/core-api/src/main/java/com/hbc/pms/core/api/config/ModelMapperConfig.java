@@ -35,7 +35,7 @@ public class ModelMapperConfig {
                 new PropertyMap<>() {
                     private final Converter<String, String> fromAddress = c -> {
                         String address = c.getSource();
-                        if (!Utils.isCorrectAddressFormat(address)) {
+                        if (Utils.isIncorrectFormat(address)) {
                             throw new ValidationException(Collections.singletonList(new ErrorMessage("Invalid PLC " +
                                 "Address: " + address)));
                         }
@@ -77,7 +77,7 @@ public class ModelMapperConfig {
                     private final Converter<List<SensorConfiguration>,
                         List<BlueprintResponse.SensorConfigurationResponse>> toSensorConfigurationRes = c -> c
                         .getSource().stream()
-                        .dropWhile(sc -> !Utils.isCorrectAddressFormat(sc.getAddress()))
+                        .dropWhile(sc -> Utils.isIncorrectFormat(sc.getAddress()))
                         .map(e -> modelMapper.map(e, BlueprintResponse.SensorConfigurationResponse.class))
                         .toList();
 
