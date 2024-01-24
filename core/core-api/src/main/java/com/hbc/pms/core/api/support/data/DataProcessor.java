@@ -16,12 +16,11 @@ public class DataProcessor {
         Map<String, String> flattenedData = new HashMap<>();
 
         for (Map.Entry<String, IoResponse> entry : rawData.entrySet()) {
-            String responseAsString = "x";
             PlcValue plcValue = entry.getValue().getPlcValue();
-            if (Objects.nonNull(plcValue)) {
-                responseAsString = plcValue.getObject().toString();
+            if (Objects.isNull(plcValue)) {
+                continue;
             }
-            flattenedData.put(entry.getKey(), responseAsString);
+            flattenedData.put(entry.getKey(), plcValue.getObject().toString());
         }
         return flattenedData;
     }
