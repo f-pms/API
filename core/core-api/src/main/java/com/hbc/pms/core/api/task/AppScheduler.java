@@ -23,8 +23,8 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class AppScheduler {
-    private final int ONE_SECOND_DELAY_MILLIS = 1000;
-    private final String EVERY_SECOND_CRON = "*/1 * * * * *";
+    private static final int ONE_SECOND_DELAY_MILLIS = 1000;
+    private static final String EVERY_SECOND_CRON = "*/1 * * * * *";
 
     private final BlueprintService blueprintService;
     private final DataFetcher dataFetcher;
