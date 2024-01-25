@@ -69,6 +69,11 @@ public class AppScheduler {
 
         var responseMap = dataFetcher.fetchData(matchedAddresses);
         var holdingConditions = alarmStore.process(matchedConditions, responseMap);
+        if (holdingConditions.isEmpty()) {
+            return;
+        }
         log.info(holdingConditions.toString()); // TODO: will save to db
+        var histories = alarmService.createHistories(holdingConditions);
+        log.info(histories.toString());
     }
 }
