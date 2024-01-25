@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("blueprints")
-@RequiredArgsConstructor()
+@RequiredArgsConstructor
 public class BlueprintController {
     private final ModelMapper mapper;
     private final BlueprintService blueprintService;
@@ -29,7 +29,7 @@ public class BlueprintController {
         var response = blueprintService
             .getAll()
             .stream()
-            .map(b -> this.mapper.map(b, BlueprintResponse.class))
+            .map(b -> mapper.map(b, BlueprintResponse.class))
             .toList();
         return ApiResponse.success(response);
     }

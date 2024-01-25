@@ -2,7 +2,7 @@ package com.hbc.pms.core.api.config;
 
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
-import com.hbc.pms.core.api.utils.Utils;
+import com.hbc.pms.core.api.utils.StringUtils;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
 import org.modelmapper.Converter;
@@ -20,22 +20,33 @@ import java.util.List;
 
 @Configuration
 public class ModelMapperConfig {
+    private final ModelMapper modelMapper;
+
+    public ModelMapperConfig() {
+        this.modelMapper = new ModelMapper();
+    }
+
     @Bean
     public ModelMapper modelMapper() throws ValidationException {
-        ModelMapper modelMapper = new ModelMapper();
-
         modelMapper
             .getConfiguration()
             .setMatchingStrategy(MatchingStrategies.STRICT)
             .setSkipNullEnabled(true)
             .setDeepCopyEnabled(true);
 
+        addUpdateSensorConfigurationRequestToSensorConfigurationTypeMap();
+        addSensorConfigurationToSensorConfigurationResponseTypeMap();
+        addBlueprintToBlueprintResponseTypeMap();
+        return modelMapper;
+    }
+
+    private void addUpdateSensorConfigurationRequestToSensorConfigurationTypeMap() {
         modelMapper.createTypeMap(UpdateSensorConfigurationRequest.class, SensorConfiguration.class)
             .addMappings(
                 new PropertyMap<>() {
                     private final Converter<String, String> fromAddress = c -> {
                         String address = c.getSource();
-                        if (Utils.isIncorrectFormat(address)) {
+                        if (StringUtils.isIncorrectPLCAddressFormat(address)) {
                             throw new ValidationException(Collections.singletonList(new ErrorMessage("Invalid PLC " +
                                 "Address: " + address)));
                         }
@@ -49,7 +60,9 @@ public class ModelMapperConfig {
                     }
                 }
             );
+    }
 
+    private void addSensorConfigurationToSensorConfigurationResponseTypeMap() {
         modelMapper.createTypeMap(SensorConfiguration.class, BlueprintResponse.SensorConfigurationResponse.class)
             .addMappings(
                 new PropertyMap<>() {
@@ -70,14 +83,16 @@ public class ModelMapperConfig {
                     }
                 }
             );
+    }
 
+    private void addBlueprintToBlueprintResponseTypeMap() {
         modelMapper.createTypeMap(Blueprint.class, BlueprintResponse.class)
             .addMappings(
                 new PropertyMap<>() {
                     private final Converter<List<SensorConfiguration>,
                         List<BlueprintResponse.SensorConfigurationResponse>> toSensorConfigurationRes = c -> c
                         .getSource().stream()
-                        .dropWhile(sc -> Utils.isIncorrectFormat(sc.getAddress()))
+                        .dropWhile(sc -> StringUtils.isIncorrectPLCAddressFormat(sc.getAddress()))
                         .map(e -> modelMapper.map(e, BlueprintResponse.SensorConfigurationResponse.class))
                         .toList();
 
@@ -89,6 +104,5 @@ public class ModelMapperConfig {
                     }
                 }
             );
-        return modelMapper;
     }
 }
