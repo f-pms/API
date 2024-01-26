@@ -15,6 +15,6 @@ public class PopupChannel implements Channel {
     if (!"popup".equalsIgnoreCase(method.trim())) {
       return;
     }
-    webSocketService.fireAlarm(condition.getId() + " - " +condition.getDescription());
+    webSocketService.fireAlarm(condition.getId() + " - " + condition.getDescription());
   }
 }
