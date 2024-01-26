@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 @Slf4j
 public class EmailChannel implements Channel {
-  private final static Pattern pattern = Pattern.compile("^email:(?<email>[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4})$");
+  private final static Pattern pattern = Pattern.compile("^email:(?<email>(.+)@(\\S+))$");
 
   @Override
   public void notify(String method, AlarmCondition condition) {
