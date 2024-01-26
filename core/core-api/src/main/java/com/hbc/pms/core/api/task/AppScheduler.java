@@ -2,11 +2,11 @@ package com.hbc.pms.core.api.task;
 
 import com.hbc.pms.core.api.service.AlarmService;
 import com.hbc.pms.core.api.service.BlueprintService;
+import com.hbc.pms.core.api.service.NotificationService;
 import com.hbc.pms.core.api.service.WebSocketService;
 import com.hbc.pms.core.api.support.data.AlarmStore;
 import com.hbc.pms.core.api.support.data.DataFetcher;
 import com.hbc.pms.core.api.support.data.DataProcessor;
-import com.hbc.pms.core.api.support.data.WebSocketPublisher;
 import com.hbc.pms.core.api.util.CronUtil;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.plc.api.IoResponse;
@@ -29,10 +29,10 @@ public class AppScheduler {
     private final BlueprintService blueprintService;
     private final DataFetcher dataFetcher;
     private final DataProcessor dataProcessor;
-    private final WebSocketPublisher webSocketPublisher;
     private final WebSocketService webSocketService;
     private final AlarmService alarmService;
     private final AlarmStore alarmStore;
+    private final NotificationService notificationService;
 
     @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
     public void refreshAllStationsState() {
@@ -45,7 +45,7 @@ public class AppScheduler {
         long endTime = System.currentTimeMillis();
         var processedData = dataProcessor.process(responseMap, blueprintsToFetch);
         for (Blueprint blueprint : blueprintsToFetch) {
-            webSocketPublisher.fireSendStationData(processedData.get(blueprint.getName()), blueprint.getName());
+            webSocketService.fireSendStationData(processedData.get(blueprint.getName()), blueprint.getName());
 //            log.info("Processed data: {}", processedData);
         }
 
@@ -72,8 +72,8 @@ public class AppScheduler {
         if (holdingConditions.isEmpty()) {
             return;
         }
-        log.info(holdingConditions.toString()); // TODO: will save to db
         var histories = alarmService.createHistories(holdingConditions);
         log.info(histories.toString());
+        notificationService.notify(histories);
     }
 }

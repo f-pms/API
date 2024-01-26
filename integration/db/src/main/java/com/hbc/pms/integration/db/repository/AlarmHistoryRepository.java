@@ -8,9 +8,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface AlarmHistoryRepository extends CrudRepository<AlarmHistoryEntity, Long> {
-  @Query(
-      value = "SELECT * FROM alarm_history WHERE status <> 'SOLVED' AND alarm_condition_id = :alarm_condition_id",
-      nativeQuery = true
-  )
-  Optional<AlarmHistoryEntity> findUnsolvedByConditionId(@Param("alarm_condition_id") Long id);
+    @Query(
+        value = "SELECT * FROM alarm_history WHERE status <> 'SOLVED' AND alarm_condition_id = :alarm_condition_id",
+        nativeQuery = true
+    )
+    Optional<AlarmHistoryEntity> findUnsolvedByConditionId(@Param("alarm_condition_id") Long id);
 }

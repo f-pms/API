@@ -2,9 +2,10 @@ package com.hbc.pms.core.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
-@Getter
 @AllArgsConstructor
+@ToString
 public enum AlarmStatusEnum {
   TRIGGERED("TRIGGERED"),
   SENT("SENT"),

@@ -4,6 +4,7 @@ import com.hbc.pms.core.model.enums.AlarmStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.OffsetDateTime;
 
@@ -28,6 +29,10 @@ public class AlarmHistoryEntity {
   @CreationTimestamp
   @Column
   private OffsetDateTime createdAt;
+
+  @UpdateTimestamp
+  @Column
+  private OffsetDateTime updatedAt;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)

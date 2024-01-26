@@ -3,6 +3,8 @@ package com.hbc.pms.core.model;
 import com.hbc.pms.core.model.enums.AlarmSeverityEnum;
 import lombok.*;
 
+import java.util.Set;
+
 import static java.util.Objects.nonNull;
 
 @Data
@@ -19,6 +21,7 @@ public class AlarmCondition {
   private Double min;
   private Double max;
   private AlarmSeverityEnum severity;
+  private Set<String> methods;
   private SensorConfiguration sensorConfiguration;
 
   public boolean isMet(Double value) {

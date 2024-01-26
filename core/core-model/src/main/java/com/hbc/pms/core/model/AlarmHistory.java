@@ -11,5 +11,6 @@ import java.time.OffsetDateTime;
 public class AlarmHistory {
   private Long id;
   private OffsetDateTime createdAt;
+  private OffsetDateTime updatedAt;
   private AlarmCondition alarmCondition;
 }

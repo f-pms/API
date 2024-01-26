@@ -14,7 +14,9 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
-    implementation 'org.modelmapper:modelmapper:3.0.0'
+    implementation 'org.modelmapper:modelmapper:3.2.0'
+
+    implementation 'io.vavr:vavr:0.10.4'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'

@@ -4,7 +4,7 @@ import com.hbc.pms.core.model.enums.AlarmSeverityEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "alarm_condition")
@@ -32,7 +32,7 @@ public class AlarmConditionEntity {
   private int timeDelay;
 
   @Column
-  private boolean isEnabled;
+  private boolean isEnabled; // TODO: will implement
 
   @Column
   private Double min;
@@ -43,6 +43,15 @@ public class AlarmConditionEntity {
   @Column
   @Enumerated(EnumType.STRING)
   private AlarmSeverityEnum severity;
+
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(
+      name = "alarm_method",
+      joinColumns = @JoinColumn(name = "alarm_condition_id"),
+      uniqueConstraints = @UniqueConstraint(columnNames = {"alarm_condition_id", "method"})
+  )
+  @Column(name = "method")
+  private Set<String> methods;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)

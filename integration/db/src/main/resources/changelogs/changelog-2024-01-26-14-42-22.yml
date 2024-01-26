@@ -1,0 +1,10 @@
+databaseChangeLog:
+- changeSet:
+    id: 1706254949891-1
+    author: HTG (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: alarm_condition_id, method
+        constraintName: UKpqw96fiu740827bfdb0isiu1g
+        tableName: alarm_method
+
