@@ -20,26 +20,26 @@ public class AlarmStore {
   
   public List<AlarmCondition> process(List<AlarmCondition> conditions, Map<String, IoResponse> rawData) {
     return conditions
-        .stream().filter(c -> {
-          var address = c.getSensorConfiguration().getAddress();
+        .stream().filter(condition -> {
+          var address = condition.getSensorConfiguration().getAddress();
           var currentValue = rawData.get(address).getPlcValue().getDouble();
-          if (c.isMet(currentValue)) {
-            holdingConditionsMap.remove(c.getId());
+          if (condition.isMet(currentValue)) {
+            holdingConditionsMap.remove(condition.getId());
             return false;
           }
 
-          if (!holdingConditionsMap.containsKey(c.getId())) {
-            holdingConditionsMap.put(c.getId(), OffsetDateTime.now());
+          if (!holdingConditionsMap.containsKey(condition.getId())) {
+            holdingConditionsMap.put(condition.getId(), OffsetDateTime.now());
             return false;
           }
 
-          var previousTime = holdingConditionsMap.get(c.getId());
+          var previousTime = holdingConditionsMap.get(condition.getId());
           var duration = Duration.between(previousTime, OffsetDateTime.now());
-          if (duration.getSeconds() < c.getTimeDelay()) {
+          if (duration.getSeconds() < condition.getTimeDelay()) {
             return false;
           }
 
-          holdingConditionsMap.remove(c.getId());
+          holdingConditionsMap.remove(condition.getId());
           return true;
         })
         .toList();
