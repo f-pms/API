@@ -68,7 +68,7 @@ public class AlarmService {
     return alarmHistoryRepository.findUnsolvedByConditionId(id).isPresent();
   }
 
-  public List<AlarmHistory> getAllByStatus(AlarmStatus status) {
+  public List<AlarmHistory> getAllHistoriesByStatus(AlarmStatus status) {
     var entities = alarmHistoryRepository.findAllByStatus(status);
     return entities
         .stream()

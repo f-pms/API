@@ -78,13 +78,13 @@ public class AppScheduler {
 
     @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
     public void scheduleNotification() {
-        var histories = alarmService.getAllByStatus(AlarmStatus.TRIGGERED);
+        var histories = alarmService.getAllHistoriesByStatus(AlarmStatus.TRIGGERED);
         notificationService.notify(histories);
     }
 
     @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
     public void scheduleSolveAlarm() {
         // TODO: will solve alarm on this function
-        var histories = alarmService.getAllByStatus(AlarmStatus.SENT);
+        var histories = alarmService.getAllHistoriesByStatus(AlarmStatus.SENT);
     }
 }
