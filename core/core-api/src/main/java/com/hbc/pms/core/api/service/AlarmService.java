@@ -45,11 +45,11 @@ public class AlarmService {
   public List<AlarmHistory> createHistories(List<AlarmCondition> conditions) {
     var conditionEntities = conditions
         .stream()
+        .filter(condition -> !checkExistUnsolvedByConditionId(condition.getId()))
         .map(e -> mapper.map(e, AlarmConditionEntity.class))
         .toList();
     return conditionEntities
         .stream()
-        .filter(c -> alarmHistoryRepository.findUnsolvedByConditionId(c.getId()).isEmpty())
         .map(c -> {
           var entity = AlarmHistoryEntity.builder().alarmCondition(c).build();
           return Try
@@ -62,6 +62,10 @@ public class AlarmService {
         .filter(Objects::nonNull)
         .map(h -> mapper.map(h, AlarmHistory.class))
         .toList();
+  }
+
+  public boolean checkExistUnsolvedByConditionId(Long id) {
+    return alarmHistoryRepository.findUnsolvedByConditionId(id).isPresent();
   }
 
   public List<AlarmHistory> getAllByStatus(AlarmStatus status) {
