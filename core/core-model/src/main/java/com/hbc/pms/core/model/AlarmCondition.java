@@ -1,6 +1,6 @@
 package com.hbc.pms.core.model;
 
-import com.hbc.pms.core.model.enums.AlarmSeverityEnum;
+import com.hbc.pms.core.model.enums.AlarmSeverity;
 import lombok.*;
 
 import java.util.Set;
@@ -20,7 +20,7 @@ public class AlarmCondition {
   private boolean isEnabled;
   private Double min;
   private Double max;
-  private AlarmSeverityEnum severity;
+  private AlarmSeverity severity;
   private Set<String> methods;
   private SensorConfiguration sensorConfiguration;
 

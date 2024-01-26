@@ -4,7 +4,7 @@ import com.hbc.pms.core.api.support.error.CoreApiException;
 import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.AlarmHistory;
-import com.hbc.pms.core.model.enums.AlarmStatusEnum;
+import com.hbc.pms.core.model.enums.AlarmStatus;
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity;
 import com.hbc.pms.integration.db.entity.AlarmHistoryEntity;
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository;
@@ -64,7 +64,7 @@ public class AlarmService {
         .toList();
   }
 
-  public List<AlarmHistory> getAllByStatus(AlarmStatusEnum status) {
+  public List<AlarmHistory> getAllByStatus(AlarmStatus status) {
     var entities = alarmHistoryRepository.findAllByStatus(status);
     return entities
         .stream()

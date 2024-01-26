@@ -1,6 +1,6 @@
 package com.hbc.pms.integration.db.repository;
 
-import com.hbc.pms.core.model.enums.AlarmStatusEnum;
+import com.hbc.pms.core.model.enums.AlarmStatus;
 import com.hbc.pms.integration.db.entity.AlarmHistoryEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,5 +16,5 @@ public interface AlarmHistoryRepository extends CrudRepository<AlarmHistoryEntit
     )
     Optional<AlarmHistoryEntity> findUnsolvedByConditionId(@Param("alarm_condition_id") Long id);
 
-    List<AlarmHistoryEntity> findAllByStatus(AlarmStatusEnum status);
+    List<AlarmHistoryEntity> findAllByStatus(AlarmStatus status);
 }

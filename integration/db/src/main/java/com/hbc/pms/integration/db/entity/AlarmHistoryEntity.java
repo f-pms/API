@@ -1,6 +1,6 @@
 package com.hbc.pms.integration.db.entity;
 
-import com.hbc.pms.core.model.enums.AlarmStatusEnum;
+import com.hbc.pms.core.model.enums.AlarmStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,7 +24,7 @@ public class AlarmHistoryEntity {
   @Column
   @Enumerated(EnumType.STRING)
   @Builder.Default
-  private AlarmStatusEnum status = AlarmStatusEnum.TRIGGERED;
+  private AlarmStatus status = AlarmStatus.TRIGGERED;
 
   @CreationTimestamp
   @Column

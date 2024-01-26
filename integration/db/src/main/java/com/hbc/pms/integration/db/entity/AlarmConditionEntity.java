@@ -1,6 +1,6 @@
 package com.hbc.pms.integration.db.entity;
 
-import com.hbc.pms.core.model.enums.AlarmSeverityEnum;
+import com.hbc.pms.core.model.enums.AlarmSeverity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,7 +42,7 @@ public class AlarmConditionEntity {
 
   @Column
   @Enumerated(EnumType.STRING)
-  private AlarmSeverityEnum severity;
+  private AlarmSeverity severity;
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(
