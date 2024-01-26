@@ -80,6 +80,7 @@ public class AppScheduler {
     public void scheduleNotification() {
         var histories = alarmService.getAllHistoriesByStatus(AlarmStatus.TRIGGERED);
         notificationService.notify(histories);
+        // TODO: update sent status
     }
 
     @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
