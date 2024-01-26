@@ -9,6 +9,7 @@ import com.hbc.pms.core.api.support.data.DataFetcher;
 import com.hbc.pms.core.api.support.data.DataProcessor;
 import com.hbc.pms.core.api.util.CronUtil;
 import com.hbc.pms.core.model.Blueprint;
+import com.hbc.pms.core.model.enums.AlarmStatusEnum;
 import com.hbc.pms.plc.api.IoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +56,7 @@ public class AppScheduler {
     }
 
     @Scheduled(cron = EVERY_SECOND_CRON)
-    public void scheduleAlarmConditions() throws InterruptedException {
+    public void scheduleAlarm() {
         var currentTime = OffsetDateTime.now();
         var conditions = alarmService.getAllConditions();
 
@@ -72,8 +73,18 @@ public class AppScheduler {
         if (holdingConditions.isEmpty()) {
             return;
         }
-        var histories = alarmService.createHistories(holdingConditions);
-        log.info(histories.toString());
+        alarmService.createHistories(holdingConditions);
+    }
+
+    @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
+    public void scheduleNotification() {
+        var histories = alarmService.getAllByStatus(AlarmStatusEnum.TRIGGERED);
         notificationService.notify(histories);
+    }
+
+    @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
+    public void scheduleSolveAlarm() {
+        // TODO: will solve alarm on this function
+        var histories = alarmService.getAllByStatus(AlarmStatusEnum.SENT);
     }
 }
