@@ -43,7 +43,7 @@ public class Plc4xConnector implements PlcConnector {
     if (Objects.isNull(plcValue)) {
       // temporarily ignore logs due to annoying std out
       // TODO: escalate to higher layer to resolve the invalid tags
-      // log.debug("Tag with address {} is null", entry);
+      log.debug("Tag with address {} is null", entry);
     }
     ioResponse.setPlcValue(plcValue);
     ioResponse.setVariableName(entry);
@@ -56,7 +56,7 @@ public class Plc4xConnector implements PlcConnector {
     plcConnection =
         PlcDriverManager.getDefault().getConnectionManager().getConnection("s7://" + plcUrl);
   }
-
+  @SneakyThrows
   public boolean tryToConnect() {
     if (plcConnection != null && !isConnected()) {
       try {
@@ -66,8 +66,6 @@ public class Plc4xConnector implements PlcConnector {
       } catch (PlcConnectionException plcConnectionException) {
         log.error("Failed to connect to PLC", plcConnectionException);
         return false;
-      } catch (Exception e) {
-        throw new RuntimeException(e);
       }
     }
     return isConnected();
