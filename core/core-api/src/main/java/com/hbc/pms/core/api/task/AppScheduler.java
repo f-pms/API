@@ -25,7 +25,7 @@ public class AppScheduler {
     private static final int ONE_SECOND_DELAY_MILLIS = 1000;
     private static final String EVERY_SECOND_CRON = "*/1 * * * * *";
 
-    private final BlueprintService blueprintService;
+    private final BlueprintPersistenceService blueprintPersistenceService;
     private final DataFetcher dataFetcher;
     private final DataProcessor dataProcessor;
     private final WebSocketService webSocketService;
@@ -36,7 +36,7 @@ public class AppScheduler {
 
     @Scheduled(fixedDelay = HALF_SECOND_DELAY_MILLIS)
     public void refreshAllStationsState() {
-        List<Blueprint> blueprintsToFetch = blueprintService
+        List<Blueprint> blueprintsToFetch = blueprintPersistenceService
                 .getAll().stream()
                 .filter(blueprint -> webSocketService.countSubscriberOfTopic(blueprint.getName()) > 0)
                 .toList();
