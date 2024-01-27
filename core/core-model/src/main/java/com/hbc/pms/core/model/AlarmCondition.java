@@ -25,6 +25,11 @@ public class AlarmCondition {
   private SensorConfiguration sensorConfiguration;
 
   public boolean isMet(Double value) {
+    // TODO: separate 2 condition types
+    // predefined condition (boolean -> double), min = 0
+    // TODO: will implement
+
+    // custom condition
     if (nonNull(min) && nonNull(max)) {
       return (min <= value && value <= max);
     }
