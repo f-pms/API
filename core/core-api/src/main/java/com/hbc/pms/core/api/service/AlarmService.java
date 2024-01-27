@@ -43,9 +43,12 @@ public class AlarmService {
   }
 
   public List<AlarmHistory> createHistories(List<AlarmCondition> conditions) {
-    var conditionEntities = conditions
+    var filteredConditions = conditions
         .stream()
         .filter(condition -> !checkExistUnsolvedByConditionId(condition.getId()))
+        .toList();
+    var conditionEntities = filteredConditions
+        .stream()
         .map(e -> mapper.map(e, AlarmConditionEntity.class))
         .toList();
     return conditionEntities
