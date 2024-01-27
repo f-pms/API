@@ -69,7 +69,7 @@ public class AppScheduler {
             .stream().map(c -> c.getSensorConfiguration().getAddress())
             .toList();
 
-        var responseMap = dataFetcher.fetchData(matchedAddresses);
+        Map<String, IoResponse> responseMap = dataFetcher.fetchData(matchedAddresses);
         var holdingConditions = alarmStore.process(matchedConditions, responseMap);
         if (holdingConditions.isEmpty()) {
             return;
