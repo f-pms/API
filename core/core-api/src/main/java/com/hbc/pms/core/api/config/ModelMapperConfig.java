@@ -45,7 +45,7 @@ public class ModelMapperConfig {
             .addMappings(
                 new PropertyMap<>() {
                     private final Converter<String, String> fromAddress = c -> {
-                        String address = c.getSource();
+                        String address = c.getSource().toUpperCase();
                         if (StringUtils.isIncorrectPLCAddressFormat(address)) {
                             throw new ValidationException(Collections.singletonList(new ErrorMessage("Invalid PLC " +
                                 "Address: " + address)));
