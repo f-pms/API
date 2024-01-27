@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 1705995189289-1
+    id: 1706330015279-1
     author: HTG (generated)
     changes:
     - createTable:
@@ -44,7 +44,7 @@ databaseChangeLog:
             type: bigint
         tableName: alarm_condition
 - changeSet:
-    id: 1705995189289-2
+    id: 1706330015279-2
     author: HTG (generated)
     changes:
     - createTable:
@@ -61,13 +61,55 @@ databaseChangeLog:
             name: created_at
             type: datetimeoffset(6)
         - column:
+            name: status
+            type: varchar(255)
+        - column:
+            name: updated_at
+            type: datetimeoffset(6)
+        - column:
             constraints:
               nullable: false
             name: alarm_condition_id
             type: bigint
         tableName: alarm_history
 - changeSet:
-    id: 1705995189289-3
+    id: 1706330015279-3
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: alarm_condition_id
+            type: bigint
+        - column:
+            name: method
+            type: varchar(255)
+        tableName: alarm_method
+- changeSet:
+    id: 1706330015279-4
+    author: HTG (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: alarm_condition_id, method
+        constraintName: UKpqw96fiu740827bfdb0isiu1g
+        tableName: alarm_method
+- changeSet:
+    id: 1706330015279-5
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: alarm_condition_id
+        baseTableName: alarm_method
+        constraintName: FK3aoqh62hdwip6m2njn10h4pq6
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: alarm_condition
+        validate: true
+- changeSet:
+    id: 1706330015279-6
     author: HTG (generated)
     changes:
     - addForeignKeyConstraint:
@@ -80,7 +122,7 @@ databaseChangeLog:
         referencedTableName: sensor_configuration
         validate: true
 - changeSet:
-    id: 1705995189289-4
+    id: 1706330015279-7
     author: HTG (generated)
     changes:
     - addForeignKeyConstraint:
