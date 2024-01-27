@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 1706330015279-1
+    id: 1706346756037-1
     author: HTG (generated)
     changes:
     - createTable:
@@ -44,7 +44,7 @@ databaseChangeLog:
             type: bigint
         tableName: alarm_condition
 - changeSet:
-    id: 1706330015279-2
+    id: 1706346756037-2
     author: HTG (generated)
     changes:
     - createTable:
@@ -73,7 +73,7 @@ databaseChangeLog:
             type: bigint
         tableName: alarm_history
 - changeSet:
-    id: 1706330015279-3
+    id: 1706346756037-3
     author: HTG (generated)
     changes:
     - createTable:
@@ -88,7 +88,7 @@ databaseChangeLog:
             type: varchar(255)
         tableName: alarm_method
 - changeSet:
-    id: 1706330015279-4
+    id: 1706346756037-4
     author: HTG (generated)
     changes:
     - addUniqueConstraint:
@@ -96,7 +96,7 @@ databaseChangeLog:
         constraintName: UKpqw96fiu740827bfdb0isiu1g
         tableName: alarm_method
 - changeSet:
-    id: 1706330015279-5
+    id: 1706346756037-5
     author: HTG (generated)
     changes:
     - addForeignKeyConstraint:
@@ -109,7 +109,7 @@ databaseChangeLog:
         referencedTableName: alarm_condition
         validate: true
 - changeSet:
-    id: 1706330015279-6
+    id: 1706346756037-6
     author: HTG (generated)
     changes:
     - addForeignKeyConstraint:
@@ -122,7 +122,7 @@ databaseChangeLog:
         referencedTableName: sensor_configuration
         validate: true
 - changeSet:
-    id: 1706330015279-7
+    id: 1706346756037-7
     author: HTG (generated)
     changes:
     - addForeignKeyConstraint:

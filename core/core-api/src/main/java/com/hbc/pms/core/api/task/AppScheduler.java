@@ -1,9 +1,6 @@
 package com.hbc.pms.core.api.task;
 
-import com.hbc.pms.core.api.service.AlarmService;
-import com.hbc.pms.core.api.service.BlueprintService;
-import com.hbc.pms.core.api.service.NotificationService;
-import com.hbc.pms.core.api.service.WebSocketService;
+import com.hbc.pms.core.api.service.*;
 import com.hbc.pms.core.api.support.data.AlarmStore;
 import com.hbc.pms.core.api.support.data.DataFetcher;
 import com.hbc.pms.core.api.support.data.DataProcessor;
@@ -32,6 +29,7 @@ public class AppScheduler {
     private final DataFetcher dataFetcher;
     private final DataProcessor dataProcessor;
     private final WebSocketService webSocketService;
+    private final AlarmPersistenceService alarmPersistenceService;
     private final AlarmService alarmService;
     private final AlarmStore alarmStore;
     private final NotificationService notificationService;
@@ -59,7 +57,7 @@ public class AppScheduler {
     @Scheduled(cron = EVERY_SECOND_CRON)
     public void scheduleAlarm() {
         var startTime = OffsetDateTime.now();
-        var conditions = alarmService.getAllConditions();
+        var conditions = alarmPersistenceService.getAllConditions();
 
         var matchedConditions = conditions
             .stream()
@@ -79,7 +77,7 @@ public class AppScheduler {
 
     @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
     public void scheduleNotification() {
-        var histories = alarmService.getAllHistoriesByStatus(AlarmStatus.TRIGGERED);
+        var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.TRIGGERED);
         notificationService.notify(histories);
         // TODO: update sent status
     }
@@ -87,6 +85,6 @@ public class AppScheduler {
     @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
     public void scheduleSolveAlarm() {
         // TODO: will solve alarm on this function
-        var histories = alarmService.getAllHistoriesByStatus(AlarmStatus.SENT);
+        var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.SENT);
     }
 }
