@@ -24,6 +24,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class AppScheduler {
+    private static final int HALF_SECOND_DELAY_MILLIS = 500;
     private static final int ONE_SECOND_DELAY_MILLIS = 1000;
     private static final String EVERY_SECOND_CRON = "*/1 * * * * *";
 
@@ -35,11 +36,11 @@ public class AppScheduler {
     private final AlarmStore alarmStore;
     private final NotificationService notificationService;
 
-    @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
+    @Scheduled(fixedDelay = HALF_SECOND_DELAY_MILLIS)
     public void refreshAllStationsState() {
         List<Blueprint> blueprintsToFetch = blueprintService
                 .getAll().stream()
-//                .filter(blueprint -> webSocketService.countSubscriberOfTopic(blueprint.getName()) > 0)
+                .filter(blueprint -> webSocketService.countSubscriberOfTopic(blueprint.getName()) > 0)
                 .toList();
         long startTime = System.currentTimeMillis();
         Map<String, IoResponse> responseMap = dataFetcher.fetchData(blueprintsToFetch.stream().flatMap(blueprint -> blueprint.getAddresses().stream()).toList());
@@ -47,12 +48,12 @@ public class AppScheduler {
         var processedData = dataProcessor.process(responseMap, blueprintsToFetch);
         for (Blueprint blueprint : blueprintsToFetch) {
             webSocketService.fireSendStationData(processedData.get(blueprint.getName()), blueprint.getName());
-//            log.info("Processed data: {}", processedData);
+            log.info("Processed data: {}", processedData);
         }
 
-//        long duration = (endTime - startTime);
-//        log.info("Execution time: " + duration + " milliseconds ");
-//        log.info("============================");
+        long duration = (endTime - startTime);
+        log.info("Execution time: " + duration + " milliseconds ");
+        log.info("============================");
     }
 
     @Scheduled(cron = EVERY_SECOND_CRON)
