@@ -55,7 +55,7 @@ jobs:
         APP_VERSION: ${{ steps.version-getter.outputs.TAG_NAME }}
       uses: docker/build-push-action@v5
       with:
-        context: "/home/runner/work/API/API/core/core-api/build/docker/Dockerfile"
+        context: "/home/runner/work/API/API/core/core-api/build/docker"
         push: true
         tags: huybui38/rms:${{ steps.version-getter.outputs.TAG_NAME }}
     # - name: Build the Docker image
