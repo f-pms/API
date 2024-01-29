@@ -33,7 +33,10 @@ jobs:
       run: ./gradlew createRelease -Prelease.versionIncrementer=increment${{inputs.choice}}
     - name: Current Version
       run: echo "TAG_NAME=$(./gradlew currentVersion -q "-Prelease.quiet")" >> $GITHUB_OUTPUT
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    - name: Configure Docker
+      env:
+        DOCKER_VERSION: "5:19.03.9~3-0~ubuntu-focal"
+        DOCKER_HOST: "tcp://127.0.0.1:2375"
+      run: .github/setup_docker.sh
     - name: Build & Push
       run: ./gradlew dockerBuildImage
