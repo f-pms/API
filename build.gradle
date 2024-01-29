@@ -8,6 +8,7 @@ plugins {
 allprojects {
     group = "${projectGroup}"
     version = scmVersion.version
+    project.version = scmVersion.version
     java {
         sourceCompatibility = project.javaVersion
     }
