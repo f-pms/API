@@ -65,7 +65,7 @@ jobs:
       run: |
         git config --local user.email "actions@github.com"
         git config --local user.name "Github Actions"
-        git push origin ${{ steps.version-getter.outputs.TAG_NAME }} --force
+        git push origin v${{ steps.version-getter.outputs.TAG_NAME }} --force
     # - name: Build the Docker image
     #   env:
     #     APP_VERSION: ${{ steps.version-getter.outputs.TAG_NAME }}
