@@ -10,8 +10,11 @@ permissions:
 
 jobs:
   ci:
-    uses: f-pms/Devops/.github/workflows/ci.yaml@master
-    with:
-        prepare-command: echo "Preparing...!"
-        build-command: echo "Building...!"
-        test-command: echo "Testing...!"
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Setup
+      uses: f-pms/Devops/.github/workflows/ci.yaml@master
+      with:
+          prepare-command: echo "Preparing...!"
+          build-command: echo "Building...!"
+          test-command: echo "Testing...!"
