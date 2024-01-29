@@ -1,0 +1,37 @@
+# This is a basic workflow that is manually triggered
+
+name: Manual workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    inputs:
+      choice:
+        type: choice
+        description: Make a choice
+        options:
+        - MAJOR
+        - MINOR
+        - PATCH
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: corretto
+        java-version: 17
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3-beta
+    - name: Create Release
+      run: ./gradlew createRelease -Prelease.versionIncrementer=increment${{inputs.choice}}
+    - name: Current Version
+      run: echo "TAG_NAME=$(./gradlew currentVersion -q "-Prelease.quiet")" >> $GITHUB_OUTPUT
+    - name: Build & Push
+      run: ./gradlew dockerBuildImage
