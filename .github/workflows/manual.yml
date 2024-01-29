@@ -61,10 +61,10 @@ jobs:
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/rms:${{ steps.version-getter.outputs.TAG_NAME }}
     - name: Publish tags
       run: |
-        ./gradlew pushRelease \
+        ./gradlew pushRelease --stacktrace \
             -Prelease.customUsername=${{ github.actor }} \
             -Prelease.customPassword=${{ github.token }} \
-            -Prelease.pushTagsOnly
+            -Prelease.pushTagsOnly 
     # - name: Build the Docker image
     #   env:
     #     APP_VERSION: ${{ steps.version-getter.outputs.TAG_NAME }}
