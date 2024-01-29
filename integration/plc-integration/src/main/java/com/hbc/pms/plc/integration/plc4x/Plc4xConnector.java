@@ -52,7 +52,7 @@ public class Plc4xConnector implements PlcConnector {
 
   @PostConstruct
   private void init() throws PlcConnectionException {
-    Assert.notNull(plcUrl, "PLC URL must be provided!");
+    Assert.notNull(plcUrl, "PLC URL must be provided!s");
     plcConnection =
         PlcDriverManager.getDefault().getConnectionManager().getConnection("s7://" + plcUrl);
   }

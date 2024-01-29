@@ -7,8 +7,7 @@ plugins {
 }
 allprojects {
     group = "${projectGroup}"
-    version = scmVersion.version
-    project.version = scmVersion.version
+    apply from: "${rootDir}/gradle/axion.gradle"
     java {
         sourceCompatibility = project.javaVersion
     }
