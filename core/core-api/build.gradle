@@ -38,5 +38,10 @@ springBoot {
 docker {
     javaApplication  {
         baseImage = 'eclipse-temurin:17.0.10_7-jre-alpine'
+        images = ["${projectName}:${rootProject.version}"]
+    }
+    registryCredentials {
+        username = "${System.getenv("DOCKER_USERNAME")}"
+        password = "${System.getenv("DOCKER_PASSWORD")}"
     }
 }

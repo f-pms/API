@@ -3,11 +3,11 @@ plugins {
     id 'org.springframework.boot' apply(false)
     id 'io.spring.dependency-management'
     id 'com.bmuschko.docker-java-application'  version '9.4.0'  apply(false)
+    id 'pl.allegro.tech.build.axion-release' version '1.15.1'
 }
 allprojects {
     group = "${projectGroup}"
-    version = "${applicationVersion}"
-
+    version = scmVersion.version
     java {
         sourceCompatibility = project.javaVersion
     }
@@ -16,7 +16,12 @@ allprojects {
         mavenCentral()
     }
 }
-
+rootProject.afterEvaluate(){
+    def currentVersionTask = project.tasks.named("currentVersion")
+    currentVersionTask.configure {
+        doNotTrackState("Walkaround")
+    }
+}
 subprojects {
   apply plugin: 'java-library'
   apply plugin: 'org.springframework.boot'
