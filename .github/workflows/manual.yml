@@ -11,9 +11,9 @@ on:
         type: choice
         description: Make a choice
         options:
-        - MAJOR
-        - MINOR
-        - PATCH
+        - Major
+        - Minor
+        - Patch
 
 jobs:
   release:
