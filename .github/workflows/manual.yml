@@ -52,7 +52,6 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push
-      needs: [createDockerFile]
       env:
         APP_VERSION: ${{ steps.version-getter.outputs.TAG_NAME }}
       uses: docker/build-push-action@v5
