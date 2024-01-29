@@ -61,7 +61,7 @@ jobs:
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/rms:${{ steps.version-getter.outputs.TAG_NAME }}
     - name: Publish tags
       run: |
-        ./gradlew release \
+        ./gradlew pushRelease \
             -Prelease.customUsername=${{ github.actor }} \
             -Prelease.customPassword=${{ github.token }} \
             -Prelease.pushTagsOnly
