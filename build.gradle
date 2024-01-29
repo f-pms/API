@@ -2,8 +2,8 @@ plugins {
     id 'java-library'
     id 'org.springframework.boot' apply(false)
     id 'io.spring.dependency-management'
+    id 'com.bmuschko.docker-java-application'  version '9.4.0'  apply(false)
 }
-
 allprojects {
     group = "${projectGroup}"
     version = "${applicationVersion}"
