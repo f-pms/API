@@ -59,6 +59,12 @@ jobs:
         context: "/home/runner/work/API/API/core/core-api/build/docker"
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/rms:${{ steps.version-getter.outputs.TAG_NAME }}
+    - name: Publish tags
+      run: |
+        ./gradlew release \
+            -Prelease.customUsername=${{ github.actor }} \
+            -Prelease.customPassword=${{ github.token }} |
+            -Prelease.pushTagsOnly
     # - name: Build the Docker image
     #   env:
     #     APP_VERSION: ${{ steps.version-getter.outputs.TAG_NAME }}
