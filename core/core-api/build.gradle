@@ -36,7 +36,6 @@ springBoot {
     mainClass = 'com.hbc.pms.core.api.CoreApiApplication'
 }
 docker {
-    url = "tcp://127.0.0.1:2375"
     javaApplication  {
         baseImage = 'eclipse-temurin:17.0.10_7-jre-alpine'
         images = ["${projectName}:${rootProject.version}"]
