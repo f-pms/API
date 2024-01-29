@@ -9,15 +9,10 @@ permissions:
     pull-requests: read
 
 jobs:
-  ci:
+  general-ci:
     uses: f-pms/Devops/.github/workflows/ci.yaml@master
     with:
-        prepare-command: |
-          echo "A initial message"
-          pip install -r requirements.txt
-          echo "Another message or command"
-          python myscript.py
-          bash some-shell-script-file.sh -xe
+        prepare-command: echo "Building...!"
         build-command: echo "Building...!"
         test-command: echo "Testing...!"
   java-ci:
