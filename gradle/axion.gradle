@@ -1,0 +1,23 @@
+scmVersion {
+    repository {
+        type.set("git")
+        remote.set("origin")
+    }
+
+    useHighestVersion.set(true)
+
+    checks {
+        uncommittedChanges.set(false)
+        aheadOfRemote.set(false)
+        snapshotDependencies.set(false)
+    }
+
+    hooks {
+        post {
+            "push"
+        }
+    }
+}
+
+project.version = scmVersion.version
+rootProject.version = scmVersion.version

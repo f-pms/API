@@ -20,19 +20,3 @@ hbc:
     publisher:
       enabled: true
   origins: http://localhost:5173
-
----
-spring.config.activate.on-profile: local
-
-
----
-spring.config.activate.on-profile: dev
-
-
----
-spring.config.activate.on-profile: test
-
-
----
-spring.config.activate.on-profile: prod
-
