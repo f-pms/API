@@ -21,9 +21,9 @@ public class AppScheduler {
         List<Blueprint> blueprintsToFetch = blueprintService
                 .getAll().stream()
                 .toList();
-    plcConnector.updateScheduler(
-        blueprintsToFetch.stream()
-            .flatMap(blueprint -> blueprint.getAddresses().stream())
-            .toList());
-    }
+    //    plcConnector.updateScheduler(
+    //        blueprintsToFetch.stream()
+    //            .flatMap(blueprint -> blueprint.getAddresses().stream())
+    //            .toList());
+  }
 }

@@ -20,9 +20,7 @@ import org.apache.plc4x.java.api.messages.PlcReadResponse;
 import org.apache.plc4x.java.api.types.PlcResponseCode;
 import org.apache.plc4x.java.scraper.ScraperTask;
 import org.apache.plc4x.java.scraper.exception.ScraperException;
-import org.apache.plc4x.java.scraper.triggeredscraper.TriggeredScrapeJobImpl;
 import org.apache.plc4x.java.scraper.triggeredscraper.TriggeredScraperImpl;
-import org.apache.plc4x.java.scraper.triggeredscraper.triggerhandler.collector.TriggerCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,9 +49,7 @@ public class HbcScraperTask implements ScraperTask {
       Map<String, String> tags,
       long requestTimeoutMs,
       ExecutorService executorService,
-      ResultHandler resultHandler,
-      TriggeredScrapeJobImpl triggeredScrapeJob,
-      TriggerCollector triggerCollector)
+      ResultHandler resultHandler)
       throws ScraperException {
     this.connectionManager = connectionManager;
     this.jobName = jobName;

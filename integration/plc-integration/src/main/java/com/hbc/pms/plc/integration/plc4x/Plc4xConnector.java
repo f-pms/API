@@ -7,6 +7,8 @@ import com.hbc.pms.plc.api.IoResponse;
 import com.hbc.pms.plc.api.PlcConnector;
 import com.hbc.pms.plc.api.ResultHandler;
 import com.hbc.pms.plc.api.exceptions.MaximumScraperReachException;
+import com.hbc.pms.plc.integration.plc4x.scraper.CronScrapeJob;
+import com.hbc.pms.plc.integration.plc4x.scraper.HbcScrapeJob;
 import com.hbc.pms.plc.integration.plc4x.scraper.HbcScraper;
 import jakarta.annotation.PostConstruct;
 import java.util.HashMap;
@@ -26,9 +28,6 @@ import org.apache.plc4x.java.s7.readwrite.connection.S7HDefaultNettyPlcConnectio
 import org.apache.plc4x.java.s7.readwrite.connection.S7HMuxImpl;
 import org.apache.plc4x.java.s7.readwrite.tag.S7Tag;
 import org.apache.plc4x.java.scraper.Scraper;
-import org.apache.plc4x.java.scraper.config.triggeredscraper.ScraperConfigurationTriggeredImpl;
-import org.apache.plc4x.java.scraper.config.triggeredscraper.ScraperConfigurationTriggeredImplBuilder;
-import org.apache.plc4x.java.scraper.exception.ScraperException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -97,26 +96,22 @@ public class Plc4xConnector implements PlcConnector {
         throw new MaximumScraperReachException(
             "Maximum number of active scraper has reached:" + numberOfActiveScraper.get());
       }
-      ScraperConfigurationTriggeredImpl scraperConfig = getScraperConfig(variableNames);
-      scraper = new HbcScraper(scraperConfig, resultHandler, null);
+      var jobs = getScraperJobs(variableNames);
+      scraper = new HbcScraper(resultHandler, jobs);
       scraper.start();
       log.info("Current active scraper: {}", numberOfActiveScraper.incrementAndGet());
-    } catch (ScraperException e) {
-      log.error("Error starting the scraper", e);
     } finally {
       lock.unlock();
     }
   }
 
-  private ScraperConfigurationTriggeredImpl getScraperConfig(List<String> variableNames) {
-    ScraperConfigurationTriggeredImplBuilder scraperConfigBuilder =
-        new ScraperConfigurationTriggeredImplBuilder();
-    scraperConfigBuilder.addSource("HBC", plcUrl);
-    var jobBuilder = scraperConfigBuilder.job("schedule-1", "(SCHEDULED,1000)");
-    jobBuilder.source("HBC");
+  private List<CronScrapeJob> getScraperJobs(List<String> variableNames) {
+    var jobBuilder = HbcScrapeJob.builder()
+        .sourceConnection("HBC", plcUrl).jobName("schedule-1").cron("*/1 * * * * *");
+
+
     variableNames.forEach(address -> jobBuilder.tag(address, address));
-    jobBuilder.build();
-    return scraperConfigBuilder.build();
+    return List.of(jobBuilder.build());
   }
 
   @Override

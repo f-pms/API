@@ -1,6 +1,8 @@
 package com.hbc.pms.plc.integration.plc4x.scraper;
 
 import com.hbc.pms.plc.api.ResultHandler;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -8,7 +10,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -25,18 +26,16 @@ import org.apache.plc4x.java.api.PlcConnectionManager;
 import org.apache.plc4x.java.api.PlcDriver;
 import org.apache.plc4x.java.api.exceptions.PlcRuntimeException;
 import org.apache.plc4x.java.api.messages.PlcReadResponse;
-import org.apache.plc4x.java.scraper.ScrapeJob;
 import org.apache.plc4x.java.scraper.Scraper;
 import org.apache.plc4x.java.scraper.ScraperTask;
-import org.apache.plc4x.java.scraper.config.ScraperConfiguration;
-import org.apache.plc4x.java.scraper.config.triggeredscraper.ScraperConfigurationTriggeredImpl;
 import org.apache.plc4x.java.scraper.exception.ScraperException;
-import org.apache.plc4x.java.scraper.triggeredscraper.TriggeredScrapeJobImpl;
 import org.apache.plc4x.java.scraper.triggeredscraper.triggerhandler.collector.TriggerCollector;
 import org.apache.plc4x.java.scraper.util.PercentageAboveThreshold;
 import org.apache.plc4x.java.utils.cache.CachedPlcConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
 
 public class HbcScraper implements Scraper {
 
@@ -45,89 +44,21 @@ public class HbcScraper implements Scraper {
 
   private static final int DEFAULT_FUTURE_TIME_OUT = 6000;
 
-  private final ScheduledExecutorService scheduler;
+  private final ThreadPoolTaskScheduler scheduler;
   private final ExecutorService executorService;
   private final com.hbc.pms.plc.api.ResultHandler resultHandler;
-  private final MultiValuedMap<ScrapeJob, ScraperTask> tasks = new ArrayListValuedHashMap<>();
+  private final MultiValuedMap<CronScrapeJob, ScraperTask> tasks = new ArrayListValuedHashMap<>();
   private final MultiValuedMap<ScraperTask, ScheduledFuture<?>> scraperTaskMap =
       new ArrayListValuedHashMap<>();
   private final PlcConnectionManager plcConnectionManager;
   private final long futureTimeOut;
   private final TriggerCollector triggerCollector;
   private ScheduledFuture<?> statisticsLogger;
-  @Setter private List<ScrapeJob> jobs;
+  @Setter private List<CronScrapeJob> jobs;
   private MBeanServer mBeanServer;
 
-  /**
-   * Creates a Scraper instance from a configuration. By default a {@link
-   * CachedPlcConnectionManager} is used.
-   *
-   * @param config Configuration to use.
-   * @param resultHandler handler the defines the processing of acquired data
-   * @param triggerCollector the trigger collector
-   * @throws ScraperException something went wrong
-   */
-  public HbcScraper(
-      ScraperConfiguration config, ResultHandler resultHandler, TriggerCollector triggerCollector)
-      throws ScraperException {
-    this(
-        resultHandler,
-        createCachedPlcConnectionManager(),
-        config.getJobs(),
-        triggerCollector,
-        DEFAULT_FUTURE_TIME_OUT);
-  }
-
-  /**
-   * Creates a Scraper instance from a configuration.
-   *
-   * @param config Configuration to use.
-   * @param plcConnectionManager external DriverManager
-   * @param resultHandler handler the defines the processing of acquired data
-   * @param triggerCollector the trigger collector
-   * @throws ScraperException something went wrong
-   */
-  public HbcScraper(
-      ScraperConfiguration config,
-      PlcConnectionManager plcConnectionManager,
-      com.hbc.pms.plc.api.ResultHandler resultHandler,
-      TriggerCollector triggerCollector)
-      throws ScraperException {
-    this(
-        resultHandler,
-        plcConnectionManager,
-        config.getJobs(),
-        triggerCollector,
-        DEFAULT_FUTURE_TIME_OUT);
-  }
-
-  /**
-   * Creates a Scraper instance from a configuration.
-   *
-   * @param config Configuration to use.
-   * @param plcConnectionManager external DriverManager
-   * @param resultHandler handler the defines the processing of acquired data
-   * @param triggerCollector the trigger collector
-   * @param poolSizeExecutor the pool size of the executor
-   * @param poolSizeScheduler the pool size of the scheduler
-   * @throws ScraperException something went wrong
-   */
-  public HbcScraper(
-      ScraperConfigurationTriggeredImpl config,
-      PlcConnectionManager plcConnectionManager,
-      com.hbc.pms.plc.api.ResultHandler resultHandler,
-      TriggerCollector triggerCollector,
-      int poolSizeScheduler,
-      int poolSizeExecutor)
-      throws ScraperException {
-    this(
-        resultHandler,
-        plcConnectionManager,
-        config.getJobs(),
-        triggerCollector,
-        DEFAULT_FUTURE_TIME_OUT,
-        poolSizeScheduler,
-        poolSizeExecutor);
+  public HbcScraper(ResultHandler resultHandler, List<CronScrapeJob> jobs) {
+    this(resultHandler, createCachedPlcConnectionManager(), jobs, null, DEFAULT_FUTURE_TIME_OUT);
   }
 
   /**
@@ -143,7 +74,7 @@ public class HbcScraper implements Scraper {
   public HbcScraper(
       com.hbc.pms.plc.api.ResultHandler resultHandler,
       PlcConnectionManager plcConnectionManager,
-      List<ScrapeJob> jobs,
+      List<CronScrapeJob> jobs,
       TriggerCollector triggerCollector,
       long futureTimeOut) {
     this(resultHandler, plcConnectionManager, jobs, triggerCollector, futureTimeOut, 20, 5);
@@ -152,7 +83,7 @@ public class HbcScraper implements Scraper {
   public HbcScraper(
       com.hbc.pms.plc.api.ResultHandler resultHandler,
       PlcConnectionManager plcConnectionManager,
-      List<ScrapeJob> jobs,
+      List<CronScrapeJob> jobs,
       TriggerCollector triggerCollector,
       long futureTimeOut,
       int poolSizeScheduler,
@@ -167,15 +98,12 @@ public class HbcScraper implements Scraper {
     this.jobs = jobs;
     this.triggerCollector = triggerCollector;
     this.futureTimeOut = futureTimeOut;
-
-    this.scheduler =
-        Executors.newScheduledThreadPool(
-            poolSizeScheduler,
-            new BasicThreadFactory.Builder()
-                .namingPattern("triggeredscraper-scheduling-thread-%d")
-                .daemon(false)
-                .build());
-
+    ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+    threadPoolTaskScheduler.setPoolSize(poolSizeScheduler);
+    threadPoolTaskScheduler.setDaemon(false);
+    threadPoolTaskScheduler.setThreadNamePrefix("triggeredscraper-scheduling-thread-%d");
+    threadPoolTaskScheduler.initialize();
+    this.scheduler = threadPoolTaskScheduler;
     this.executorService =
         Executors.newFixedThreadPool(
             poolSizeExecutor,
@@ -183,14 +111,6 @@ public class HbcScraper implements Scraper {
                 .namingPattern("triggeredscraper-executor-thread-%d")
                 .daemon(true)
                 .build());
-
-    // Register MBean
-    /*mBeanServer = ManagementFactory.getPlatformMBeanServer();
-    try {
-        mBeanServer.registerMBean(this, new ObjectName(MX_DOMAIN, "scraper", "scraper"));
-    } catch (InstanceAlreadyExistsException | MBeanRegistrationException | NotCompliantMBeanException | MalformedObjectNameException e) {
-        LOGGER.debug("Unable to register Scraper as MBean", e);
-    }*/
   }
 
   /**
@@ -289,7 +209,7 @@ public class HbcScraper implements Scraper {
   @Override
   public void start() {
     LOGGER.info("Starting jobs...");
-    for (ScrapeJob job : jobs) {
+    for (CronScrapeJob job : jobs) {
       for (Map.Entry<String, String> sourceEntry : job.getSourceConnections().entrySet()) {
         if (LOGGER.isDebugEnabled()) {
           LOGGER.debug(
@@ -311,17 +231,14 @@ public class HbcScraper implements Scraper {
                   job.getTags(),
                   futureTimeOut,
                   executorService,
-                  resultHandler,
-                  (TriggeredScrapeJobImpl) job,
-                  triggerCollector);
+                  resultHandler);
 
           if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Task {} added to scheduling", triggeredScraperTask);
           }
           tasks.put(job, triggeredScraperTask);
           ScheduledFuture<?> future =
-              scheduler.scheduleAtFixedRate(
-                  triggeredScraperTask, 0, job.getScrapeRate(), TimeUnit.MILLISECONDS);
+              scheduler.schedule(triggeredScraperTask, new CronTrigger(job.getCron()));
 
           // Store the handle for stopping, etc.
           scraperTaskMap.put(triggeredScraperTask, future);
@@ -341,7 +258,7 @@ public class HbcScraper implements Scraper {
     statisticsLogger =
         scheduler.scheduleAtFixedRate(
             () -> {
-              for (Map.Entry<ScrapeJob, ScraperTask> entry : tasks.entries()) {
+              for (Map.Entry<CronScrapeJob, ScraperTask> entry : tasks.entries()) {
                 DescriptiveStatistics statistics = entry.getValue().getLatencyStatistics();
                 String msg =
                     String.format(
@@ -362,22 +279,8 @@ public class HbcScraper implements Scraper {
                 }
               }
             },
-            1_000,
-            1_000,
-            TimeUnit.MILLISECONDS);
-  }
-
-  /**
-   * Register a task as MBean
-   *
-   * @param task task to register
-   */
-  private void registerTaskMBean(ScraperTask task) {
-    /*try {
-        mBeanServer.registerMBean(task, new ObjectName(MX_DOMAIN + ":type=ScrapeTask,name=" + task.getJobName() + "-" + task.getConnectionAlias()));
-    } catch (InstanceAlreadyExistsException | MBeanRegistrationException | NotCompliantMBeanException | MalformedObjectNameException e) {
-        LOGGER.debug("Unable to register Task as MBean", e);
-    }*/
+            Instant.now().plusSeconds(1),
+            Duration.ofMillis(1000));
   }
 
   @Override
@@ -395,7 +298,7 @@ public class HbcScraper implements Scraper {
       statisticsLogger.cancel(false);
     }
     shutdownAndAwaitTermination(executorService);
-    shutdownAndAwaitTermination(scheduler);
+    scheduler.shutdown();
   }
 
   void shutdownAndAwaitTermination(ExecutorService pool) {
@@ -408,12 +311,6 @@ public class HbcScraper implements Scraper {
     } catch (InterruptedException ex) {
       Thread.currentThread().interrupt();
     }
-  }
-
-  // MBean methods
-  public boolean isRunning() {
-    // TODO is this okay so?
-    return !scraperTaskMap.isEmpty();
   }
 
   @Override
