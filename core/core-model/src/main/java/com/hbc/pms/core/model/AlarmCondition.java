@@ -17,7 +17,6 @@ public class AlarmCondition {
   private String description;
   private boolean isEnabled;
   private AlarmSeverity severity;
-  private Set<String> methods;
   private SensorConfiguration sensorConfiguration;
 
   // TODO: type: PREDEFINED, CUSTOM

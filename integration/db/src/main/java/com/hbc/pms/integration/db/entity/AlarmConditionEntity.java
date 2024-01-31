@@ -44,15 +44,6 @@ public class AlarmConditionEntity {
   @Column
   private Double max;
 
-  @ElementCollection(fetch = FetchType.EAGER)
-  @CollectionTable(
-      name = "alarm_method",
-      joinColumns = @JoinColumn(name = "alarm_condition_id"),
-      uniqueConstraints = @UniqueConstraint(columnNames = {"alarm_condition_id", "method"})
-  )
-  @Column(name = "method")
-  private Set<String> methods;
-
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)
   private SensorConfigurationEntity sensorConfiguration;
