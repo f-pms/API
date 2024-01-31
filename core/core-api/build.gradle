@@ -1,6 +1,8 @@
 bootJar.enabled = true
 jar.enabled = false
 
+apply plugin: 'com.bmuschko.docker-java-application'
+
 dependencies {
     implementation project(":core:core-model")
     implementation project(":integration:db")
@@ -34,4 +36,14 @@ tasks.withType(Test) {
 }
 springBoot {
     mainClass = 'com.hbc.pms.core.api.CoreApiApplication'
+}
+docker {
+    javaApplication  {
+        baseImage = 'eclipse-temurin:17.0.10_7-jre-alpine'
+        images = ["${projectName}:${rootProject.version}"]
+    }
+    registryCredentials {
+        username = "${System.getenv("DOCKER_USERNAME")}"
+        password = "${System.getenv("DOCKER_PASSWORD")}"
+    }
 }

@@ -38,7 +38,6 @@ public class AppScheduler {
     public void refreshAllStationsState() {
         List<Blueprint> blueprintsToFetch = blueprintPersistenceService
                 .getAll().stream()
-                .filter(blueprint -> webSocketService.countSubscriberOfTopic(blueprint.getName()) > 0)
                 .toList();
         long startTime = System.currentTimeMillis();
         Map<String, IoResponse> responseMap = dataFetcher.fetchData(blueprintsToFetch.stream().flatMap(blueprint -> blueprint.getAddresses().stream()).toList());
@@ -46,7 +45,6 @@ public class AppScheduler {
         var processedData = dataProcessor.process(responseMap, blueprintsToFetch);
         for (Blueprint blueprint : blueprintsToFetch) {
             webSocketService.fireSendStationData(processedData.get(blueprint.getName()), blueprint.getName());
-            log.info("Processed data: {}", processedData);
         }
 
         long duration = (endTime - startTime);
