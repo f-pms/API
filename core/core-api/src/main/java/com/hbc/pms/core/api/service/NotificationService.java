@@ -20,11 +20,11 @@ public class NotificationService {
     // TODO: add async
     histories.forEach(h -> {
       var condition = h.getAlarmCondition();
-      var methods = condition.getMethods();
-      methods.forEach(m -> {
-        popupChannel.notify(m, condition);
-        emailChannel.notify(m, condition);
-      });
+//      var methods = condition.getMethods();
+//      methods.forEach(m -> {
+//        popupChannel.notify(m, condition);
+//        emailChannel.notify(m, condition);
+//      });
     });
   }
 }

@@ -33,7 +33,7 @@ public class AlarmConditionEntity {
   @Enumerated(EnumType.STRING)
   private AlarmSeverity severity;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)
   private SensorConfigurationEntity sensorConfiguration;
 
