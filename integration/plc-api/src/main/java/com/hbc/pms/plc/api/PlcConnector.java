@@ -8,4 +8,8 @@ public interface PlcConnector {
     Map<String, IoResponse> executeBlockRequest(List<String> variableNames);
 
     IoResponse validate(String address);
+
+  void runScheduler(List<String> variableNames);
+
+  void updateScheduler(List<String> variableNames);
 }

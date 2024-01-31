@@ -9,7 +9,7 @@ spring:
 
 hbc:
   plc:
-    url: hbc-plc.ohtgo.me
+    url: s7://hbc-plc.ohtgo.me
     publisher:
       enabled: true
   origins: http://localhost:5173
