@@ -1,9 +1,5 @@
-# This is a basic workflow that is manually triggered
+name: Release version
 
-name: Manual workflow
-
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   workflow_dispatch:
     inputs:
@@ -19,9 +15,10 @@ jobs:
   release:
     runs-on: ubuntu-20.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Setup Java
       uses: actions/setup-java@v3
       with:
@@ -66,7 +63,3 @@ jobs:
         git config --local user.email "actions@github.com"
         git config --local user.name "Github Actions"
         git push origin v${{ steps.version-getter.outputs.TAG_NAME }} --force
-    # - name: Build the Docker image
-    #   env:
-    #     APP_VERSION: ${{ steps.version-getter.outputs.TAG_NAME }}
-    #   run: docker build . --file /home/runner/work/API/API/core/core-api/build/docker/Dockerfile --tag ${{secrets.docker_username}}/${{secrets.repo_name}}:${{APP_VERSION}}

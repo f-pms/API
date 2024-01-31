@@ -6,11 +6,6 @@ scmVersion {
 
     useHighestVersion.set(true)
 
-    checks {
-        uncommittedChanges.set(false)
-        aheadOfRemote.set(false)
-        snapshotDependencies.set(false)
-    }
 
     hooks {
         post {
