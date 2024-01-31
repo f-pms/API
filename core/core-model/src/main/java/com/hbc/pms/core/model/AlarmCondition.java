@@ -15,14 +15,18 @@ public class AlarmCondition {
   private Long id;
   private String name;
   private String description;
-  private String cron;
-  private int timeDelay;
   private boolean isEnabled;
-  private Double min;
-  private Double max;
   private AlarmSeverity severity;
   private Set<String> methods;
   private SensorConfiguration sensorConfiguration;
+
+  // TODO: type: PREDEFINED, CUSTOM
+
+  // predefined condition
+  private String cron;
+  private int timeDelay;
+  private Double min;
+  private Double max;
 
   public boolean isMet(Double value) {
     // TODO: separate 2 condition types

@@ -26,23 +26,23 @@ public class AlarmConditionEntity {
   private String description;
 
   @Column
+  private boolean isEnabled; // TODO: will implement
+
+  @Column
+  @Enumerated(EnumType.STRING)
+  private AlarmSeverity severity;
+
+  @Column
   private String cron;
 
   @Column
   private int timeDelay;
 
   @Column
-  private boolean isEnabled; // TODO: will implement
-
-  @Column
   private Double min;
 
   @Column
   private Double max;
-
-  @Column
-  @Enumerated(EnumType.STRING)
-  private AlarmSeverity severity;
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(
