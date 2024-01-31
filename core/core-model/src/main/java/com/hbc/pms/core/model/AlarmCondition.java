@@ -1,6 +1,7 @@
 package com.hbc.pms.core.model;
 
 import com.hbc.pms.core.model.enums.AlarmSeverity;
+import com.hbc.pms.core.model.enums.AlarmType;
 import lombok.*;
 
 import java.util.Set;
@@ -20,6 +21,7 @@ public class AlarmCondition {
   private SensorConfiguration sensorConfiguration;
 
   // TODO: type: PREDEFINED, CUSTOM
+  private AlarmType type;
 
   // predefined condition
   private String cron;
@@ -28,9 +30,10 @@ public class AlarmCondition {
   private Double max;
 
   public boolean isMet(Double value) {
-    // TODO: separate 2 condition types
-    // predefined condition (boolean -> double), min = 0
-    // TODO: will implement
+    // predefined condition
+    if (type.equals(AlarmType.PREDEFINED)) {
+      return (value < 1);
+    }
 
     // custom condition
     if (nonNull(min) && nonNull(max)) {

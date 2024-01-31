@@ -1,6 +1,7 @@
 package com.hbc.pms.integration.db.entity;
 
 import com.hbc.pms.core.model.enums.AlarmSeverity;
+import com.hbc.pms.core.model.enums.AlarmType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,6 +33,14 @@ public class AlarmConditionEntity {
   @Enumerated(EnumType.STRING)
   private AlarmSeverity severity;
 
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(nullable = false)
+  private SensorConfigurationEntity sensorConfiguration;
+
+  @Column
+  @Enumerated(EnumType.STRING)
+  private AlarmType type;
+
   @Column
   private String cron;
 
@@ -43,8 +52,4 @@ public class AlarmConditionEntity {
 
   @Column
   private Double max;
-
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(nullable = false)
-  private SensorConfigurationEntity sensorConfiguration;
 }
