@@ -15,7 +15,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    environment: dev
     steps:
     - name: connect to remote server
       uses: npgy/cloudflared-ssh-action@v2.0
