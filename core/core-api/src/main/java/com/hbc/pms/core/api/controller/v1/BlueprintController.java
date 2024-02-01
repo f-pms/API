@@ -2,6 +2,7 @@ package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.request.BlueprintRequest;
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest;
+import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
 import com.hbc.pms.core.api.service.BlueprintService;
 import com.hbc.pms.core.api.service.SensorConfigurationService;
@@ -24,6 +25,7 @@ public class BlueprintController {
 
     @GetMapping()
     public ApiResponse<List<BlueprintResponse>> getBlueprints() {
+
         var response = blueprintService
             .getAll()
             .stream()
@@ -61,7 +63,10 @@ public class BlueprintController {
     }
 
     @PutMapping("/{blueprintId}/sensor-configurations/{sensorConfigurationId}")
-    public ApiResponse<Boolean> updateSensorConfiguration(@PathVariable Long blueprintId, @PathVariable Long sensorConfigurationId, @RequestBody SensorConfigurationRequest body) {
+    public ApiResponse<Boolean> updateSensorConfiguration(@PathVariable Long blueprintId,
+                                                          @PathVariable Long sensorConfigurationId,
+                                                          @RequestBody UpdateSensorConfigurationRequest body) {
+        body.aggregateData();
         var sensorConfiguration = mapper.map(body, SensorConfiguration.class);
         sensorConfiguration.setId(sensorConfigurationId);
         var response = sensorConfigurationService.update(blueprintId, sensorConfiguration);
