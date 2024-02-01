@@ -27,7 +27,7 @@ public class AlarmHistoryEntity {
   private AlarmStatus status = AlarmStatus.TRIGGERED;
 
   @CreationTimestamp
-  @Column
+  @Column(updatable = false)
   private OffsetDateTime createdAt;
 
   @UpdateTimestamp

@@ -76,6 +76,7 @@ public class AppScheduler {
     @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
     public void scheduleNotification() {
         var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.TRIGGERED);
+        if (histories.isEmpty()) return;
         notificationService.notify(histories);
         alarmService.updateStatusHistories(histories, AlarmStatus.SENT);
     }
@@ -83,6 +84,7 @@ public class AppScheduler {
     @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
     public void scheduleSolveAlarm() {
         var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.SENT);
+        if (histories.isEmpty()) return;
         var addresses = histories
             .stream()
             .map(history -> history.getAlarmCondition().getSensorConfiguration().getAddress())
