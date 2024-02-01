@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 @RequiredArgsConstructor
@@ -15,15 +18,18 @@ import java.util.List;
 public class NotificationService {
   private final PopupChannel popupChannel;
   private final EmailChannel emailChannel;
+  private final ExecutorService executor = Executors.newFixedThreadPool(5);
 
   public void notify(List<AlarmHistory> histories) {
-    // TODO: add async
+    // TODO: need to enhance async
     histories.forEach(history -> {
       var condition = history.getAlarmCondition();
       var actions = condition.getActions();
       actions.forEach(action -> {
-        popupChannel.notify(action, condition);
-        emailChannel.notify(action, condition);
+        CompletableFuture.runAsync(() -> {
+          popupChannel.notify(action, condition);
+          emailChannel.notify(action, condition);
+        }, executor);
       });
     });
   }
