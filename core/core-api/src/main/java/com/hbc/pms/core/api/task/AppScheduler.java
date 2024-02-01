@@ -77,12 +77,25 @@ public class AppScheduler {
     public void scheduleNotification() {
         var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.TRIGGERED);
         notificationService.notify(histories);
-        // TODO: update sent status
+        alarmService.updateStatusHistories(histories, AlarmStatus.SENT);
     }
 
     @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
     public void scheduleSolveAlarm() {
-        // TODO: will solve alarm on this function
         var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.SENT);
+        var addresses = histories
+            .stream()
+            .map(history -> history.getAlarmCondition().getSensorConfiguration().getAddress())
+            .toList();
+        Map<String, IoResponse> responseMap = dataFetcher.fetchData(addresses);
+        var solvedHistories = histories
+            .stream()
+            .filter(history -> {
+                var condition = history.getAlarmCondition();
+                var currentValue = responseMap.get(condition.getSensorConfiguration().getAddress());
+                return condition.isMet(currentValue.getPlcValue().getDouble());
+            })
+            .toList();
+        alarmService.updateStatusHistories(solvedHistories, AlarmStatus.SOLVED);
     }
 }

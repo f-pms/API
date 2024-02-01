@@ -57,4 +57,10 @@ public class AlarmPersistenceService {
     var historyEntity = AlarmHistoryEntity.builder().alarmCondition(conditionEntity).build();
     return mapper.map(alarmHistoryRepository.save(historyEntity), AlarmHistory.class);
   }
+
+  public void updateStatusHistory(AlarmHistory history, AlarmStatus status) {
+    var historyEntity = mapper.map(history, AlarmHistoryEntity.class);
+    historyEntity.setStatus(status);
+    alarmHistoryRepository.save(historyEntity);
+  }
 }
