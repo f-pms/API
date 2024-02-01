@@ -53,7 +53,7 @@ public class AlarmConditionEntity {
   @Column
   private Double max;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "alarm_condition_alarm_action",
       joinColumns = @JoinColumn(name = "alarm_condition_id"),
