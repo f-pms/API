@@ -1,0 +1,56 @@
+databaseChangeLog:
+- changeSet:
+    id: 1706764749521-1
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: alarm_actionPK
+            name: id
+            type: bigint
+        - column:
+            name: type
+            type: varchar(255)
+        tableName: alarm_action
+- changeSet:
+    id: 1706764749521-2
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: alarm_action_id
+            type: bigint
+        - column:
+            name: recipient
+            type: varchar(255)
+        tableName: alarm_action_recipient
+- changeSet:
+    id: 1706764749521-3
+    author: HTG (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: alarm_action_id, recipient
+        constraintName: UKm2ucye9e4yk9rjd82yu59j10p
+        tableName: alarm_action_recipient
+- changeSet:
+    id: 1706764749521-4
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: alarm_action_id
+        baseTableName: alarm_action_recipient
+        constraintName: FKmgn02483rv0kmvvj3yhpi4t1v
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: alarm_action
+        validate: true
+
