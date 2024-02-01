@@ -16,6 +16,13 @@ public class SensorConfigurationPersistenceService {
   private final ModelMapper mapper;
   private final SensorConfigurationRepository sensorConfigurationRepository;
 
+  public SensorConfiguration get(Long id) {
+    var entity = sensorConfigurationRepository.findById(id);
+    if (entity.isEmpty()) {
+      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, "Sensor configuration not found with id: " + id);
+    }
+    return mapper.map(entity.get(), SensorConfiguration.class);
+  }
 
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);

@@ -14,7 +14,6 @@ import static java.util.Objects.nonNull;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class AlarmCondition {
   private Long id;
-  private String name;
   private boolean isEnabled;
   private AlarmSeverity severity;
   private SensorConfiguration sensorConfiguration;
