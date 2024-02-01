@@ -31,4 +31,5 @@ public class AlarmActionEntity {
   )
   @Column(name = "recipient")
   private Set<String> recipients;
+
 }

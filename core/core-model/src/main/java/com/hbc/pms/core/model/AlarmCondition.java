@@ -4,7 +4,7 @@ import com.hbc.pms.core.model.enums.AlarmSeverity;
 import com.hbc.pms.core.model.enums.AlarmType;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 import static java.util.Objects.nonNull;
 
@@ -28,6 +28,8 @@ public class AlarmCondition {
   private int timeDelay;
   private Double min;
   private Double max;
+
+  private List<AlarmAction> actions;
 
   public boolean isMet(Double value) {
     // predefined condition
