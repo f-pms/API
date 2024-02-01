@@ -23,6 +23,9 @@ public class AlarmActionEntity {
   @Enumerated(EnumType.STRING)
   private AlarmActionType type;
 
+  @Column
+  private String message;
+
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(
       name = "alarm_action_recipient",

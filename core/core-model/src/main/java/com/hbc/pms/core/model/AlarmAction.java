@@ -12,5 +12,6 @@ import java.util.Set;
 public class AlarmAction {
   private Long id;
   private AlarmActionType type;
+  private String message;
   private Set<String> recipients;
 }

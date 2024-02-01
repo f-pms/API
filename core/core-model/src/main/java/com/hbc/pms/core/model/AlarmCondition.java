@@ -15,7 +15,6 @@ import static java.util.Objects.nonNull;
 public class AlarmCondition {
   private Long id;
   private String name;
-  private String description;
   private boolean isEnabled;
   private AlarmSeverity severity;
   private SensorConfiguration sensorConfiguration;

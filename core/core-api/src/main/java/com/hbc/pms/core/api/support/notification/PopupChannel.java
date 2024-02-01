@@ -17,6 +17,6 @@ public class PopupChannel implements Channel {
     if (!action.getType().equals(AlarmActionType.POPUP)) {
       return;
     }
-    webSocketService.fireAlarm(condition.getId() + " - " + condition.getDescription());
+    webSocketService.fireAlarm(condition.getId() + ": " + action.getMessage());
   }
 }
