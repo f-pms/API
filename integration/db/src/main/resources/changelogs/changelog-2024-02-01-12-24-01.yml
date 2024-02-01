@@ -1,0 +1,45 @@
+databaseChangeLog:
+- changeSet:
+    id: 1706765046503-1
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: alarm_condition_id
+            type: bigint
+        - column:
+            constraints:
+              nullable: false
+            name: alarm_action_id
+            type: bigint
+        tableName: alarm_condition_alarm_action
+- changeSet:
+    id: 1706765046503-2
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: alarm_action_id
+        baseTableName: alarm_condition_alarm_action
+        constraintName: FKas779yyg53mhya2bua313i3np
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: alarm_action
+        validate: true
+- changeSet:
+    id: 1706765046503-3
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: alarm_condition_id
+        baseTableName: alarm_condition_alarm_action
+        constraintName: FKejlmvmom9hq5liwifqj7i1fru
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: alarm_condition
+        validate: true
+

@@ -5,6 +5,8 @@ import com.hbc.pms.core.model.enums.AlarmType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "alarm_condition")
 @Builder
@@ -50,4 +52,11 @@ public class AlarmConditionEntity {
 
   @Column
   private Double max;
+
+  @ManyToMany
+  @JoinTable(
+      name = "alarm_condition_alarm_action",
+      joinColumns = @JoinColumn(name = "alarm_condition_id"),
+      inverseJoinColumns = @JoinColumn(name = "alarm_action_id"))
+  private List<AlarmActionEntity> actions;
 }
