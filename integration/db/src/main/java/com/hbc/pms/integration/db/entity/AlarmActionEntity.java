@@ -32,4 +32,8 @@ public class AlarmActionEntity {
   @Column(name = "recipient")
   private Set<String> recipients;
 
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(nullable = false)
+  private AlarmConditionEntity condition;
+
 }

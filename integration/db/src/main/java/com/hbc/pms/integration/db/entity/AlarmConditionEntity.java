@@ -53,7 +53,7 @@ public class AlarmConditionEntity {
   @Column
   private Double max;
 
-  @OneToMany(fetch = FetchType.EAGER)
-  @JoinColumn(nullable = false)
+  @OneToMany(mappedBy = "condition", fetch = FetchType.EAGER)
   private List<AlarmActionEntity> actions;
+
 }
