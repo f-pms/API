@@ -1,6 +1,6 @@
 package com.hbc.pms.integration.db.entity;
 
-import com.hbc.pms.core.model.enums.ActionType;
+import com.hbc.pms.core.model.enums.AlarmActionType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +21,7 @@ public class AlarmActionEntity {
 
   @Column
   @Enumerated(EnumType.STRING)
-  private ActionType type;
+  private AlarmActionType type;
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(

@@ -1,6 +1,6 @@
 package com.hbc.pms.core.model;
 
-import com.hbc.pms.core.model.enums.ActionType;
+import com.hbc.pms.core.model.enums.AlarmActionType;
 import lombok.*;
 
 import java.util.Set;
@@ -11,6 +11,6 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class AlarmAction {
   private Long id;
-  private ActionType type;
+  private AlarmActionType type;
   private Set<String> recipients;
 }

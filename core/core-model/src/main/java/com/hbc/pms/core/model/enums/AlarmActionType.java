@@ -1,6 +1,6 @@
 package com.hbc.pms.core.model.enums;
 
-public enum ActionType {
+public enum AlarmActionType {
   POPUP,
   EMAIL
 }
