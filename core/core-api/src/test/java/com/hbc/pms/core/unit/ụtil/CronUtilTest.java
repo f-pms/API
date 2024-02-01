@@ -23,4 +23,11 @@ public class CronUtilTest {
     var time = OffsetDateTime.of(2001, 1, 1, 0, 1, 30, 0, ZoneOffset.UTC);
     assertFalse(CronUtil.matchTime(cron, time));
   }
+
+  @Test
+  public void shouldNotMatchEvery1Minute30Seconds() {
+    var cron = "* */1.5 * * * *";
+    var time = OffsetDateTime.of(2001, 1, 1, 0, 1, 30, 0, ZoneOffset.UTC);
+    assertFalse(CronUtil.matchTime(cron, time));
+  }
 }
