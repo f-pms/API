@@ -18,8 +18,8 @@ public class NotificationService {
 
   public void notify(List<AlarmHistory> histories) {
     // TODO: add async
-    histories.forEach(h -> {
-      var condition = h.getAlarmCondition();
+    histories.forEach(history -> {
+      var condition = history.getAlarmCondition();
       var actions = condition.getActions();
       actions.forEach(action -> {
         popupChannel.notify(action, condition);
