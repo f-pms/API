@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.plc4x.java.api.PlcConnection;
 import org.apache.plc4x.java.api.PlcDriverManager;
 import org.apache.plc4x.java.api.exceptions.PlcConnectionException;
+import org.apache.plc4x.java.api.exceptions.PlcInvalidTagException;
 import org.apache.plc4x.java.api.messages.PlcReadRequest;
 import org.apache.plc4x.java.api.messages.PlcReadResponse;
 import org.apache.plc4x.java.api.value.PlcValue;
@@ -91,7 +92,11 @@ public class Plc4xConnector implements PlcConnector {
     }
     PlcReadRequest.Builder builder = plcConnection.readRequestBuilder();
     for (var address : variableNames) {
-      builder.addTag(address, S7Tag.of(address));
+      try {
+        builder.addTag(address, S7Tag.of(address));
+      } catch (PlcInvalidTagException e) {
+        log.error(e.getMessage());
+      }
     }
     final PlcReadRequest rr = builder.build();
     PlcReadResponse result = rr.execute().get(4000, TimeUnit.MILLISECONDS);
