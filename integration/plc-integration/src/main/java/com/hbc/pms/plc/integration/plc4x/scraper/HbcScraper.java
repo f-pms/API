@@ -1,20 +1,7 @@
 package com.hbc.pms.plc.integration.plc4x.scraper;
 
-import com.hbc.pms.plc.api.ResultHandler;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.stream.Collectors;
-import javax.management.MBeanServer;
+import com.hbc.pms.plc.api.scraper.CronScrapeJob;
+import com.hbc.pms.plc.api.scraper.ResultHandler;
 import lombok.Setter;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
@@ -37,6 +24,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 
+import javax.management.MBeanServer;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
+
 public class HbcScraper implements Scraper {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HbcScraper.class);
@@ -46,7 +42,7 @@ public class HbcScraper implements Scraper {
 
   private final ThreadPoolTaskScheduler scheduler;
   private final ExecutorService executorService;
-  private final com.hbc.pms.plc.api.ResultHandler resultHandler;
+  private final ResultHandler resultHandler;
   private final MultiValuedMap<CronScrapeJob, ScraperTask> tasks = new ArrayListValuedHashMap<>();
   private final MultiValuedMap<ScraperTask, ScheduledFuture<?>> scraperTaskMap =
       new ArrayListValuedHashMap<>();
@@ -72,7 +68,7 @@ public class HbcScraper implements Scraper {
    * @param futureTimeOut max duration of future to return a result
    */
   public HbcScraper(
-      com.hbc.pms.plc.api.ResultHandler resultHandler,
+          ResultHandler resultHandler,
       PlcConnectionManager plcConnectionManager,
       List<CronScrapeJob> jobs,
       TriggerCollector triggerCollector,
@@ -81,7 +77,7 @@ public class HbcScraper implements Scraper {
   }
 
   public HbcScraper(
-      com.hbc.pms.plc.api.ResultHandler resultHandler,
+          ResultHandler resultHandler,
       PlcConnectionManager plcConnectionManager,
       List<CronScrapeJob> jobs,
       TriggerCollector triggerCollector,

@@ -1,4 +1,6 @@
-package com.hbc.pms.plc.api;
+package com.hbc.pms.plc.api.scraper;
+
+import com.hbc.pms.plc.api.IoResponse;
 
 import java.util.Map;
 

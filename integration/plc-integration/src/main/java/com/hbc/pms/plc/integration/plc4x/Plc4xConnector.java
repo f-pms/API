@@ -1,26 +1,15 @@
 package com.hbc.pms.plc.integration.plc4x;
 
-import static com.hbc.pms.plc.integration.plc4x.PlcUtil.convertPlcResponseToMap;
-import static com.hbc.pms.plc.integration.plc4x.PlcUtil.getIoResponse;
-
 import com.hbc.pms.plc.api.IoResponse;
 import com.hbc.pms.plc.api.PlcConnector;
-import com.hbc.pms.plc.api.ResultHandler;
 import com.hbc.pms.plc.api.exceptions.MaximumScraperReachException;
-import com.hbc.pms.plc.integration.plc4x.scraper.CronScrapeJob;
-import com.hbc.pms.plc.integration.plc4x.scraper.HbcScrapeJob;
+import com.hbc.pms.plc.api.scraper.ResultHandler;
+import com.hbc.pms.plc.api.scraper.ScrapeConfiguration;
 import com.hbc.pms.plc.integration.plc4x.scraper.HbcScraper;
 import jakarta.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReentrantLock;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.plc4x.java.api.PlcConnection;
-import org.apache.plc4x.java.api.PlcDriverManager;
 import org.apache.plc4x.java.api.exceptions.PlcConnectionException;
 import org.apache.plc4x.java.api.messages.PlcReadRequest;
 import org.apache.plc4x.java.api.messages.PlcReadResponse;
@@ -28,33 +17,51 @@ import org.apache.plc4x.java.s7.readwrite.connection.S7HDefaultNettyPlcConnectio
 import org.apache.plc4x.java.s7.readwrite.connection.S7HMuxImpl;
 import org.apache.plc4x.java.s7.readwrite.tag.S7Tag;
 import org.apache.plc4x.java.scraper.Scraper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static com.hbc.pms.plc.integration.plc4x.PlcUtil.convertPlcResponseToMap;
+import static com.hbc.pms.plc.integration.plc4x.PlcUtil.getIoResponse;
 
 @Component
 @Slf4j
 @Primary
 public class Plc4xConnector implements PlcConnector {
-  private final ResultHandler resultHandler;
   private final ReentrantLock lock = new ReentrantLock();
   private final AtomicInteger numberOfActiveScraper = new AtomicInteger(0);
 
-  @Value("${hbc.plc.url}")
-  private String plcUrl;
+  private final ResultHandler resultHandler;
+  private final ScrapeConfiguration scrapeConfiguration;
   private PlcConnection plcConnection;
   private Scraper scraper;
 
-  public Plc4xConnector(ResultHandler resultHandler) {
+  public Plc4xConnector(ResultHandler resultHandler, ScrapeConfiguration scrapeConfiguration) {
     this.resultHandler = resultHandler;
+    this.scrapeConfiguration = scrapeConfiguration;
   }
 
   @SuppressWarnings("java:S1135")
   @PostConstruct
   private void init() throws PlcConnectionException {
-    Assert.notNull(plcUrl, "PLC URL must be provided!s");
-    plcConnection = PlcDriverManager.getDefault().getConnectionManager().getConnection(plcUrl);
+    String firstConnectionString = scrapeConfiguration
+            .getPlcConfiguration().getDeviceConnections().values().stream()
+            .findFirst().orElseThrow();
+//    plcConnection = PlcDriverManager.getDefault().getConnectionManager().getConnection(firstConnectionString);
+  }
+
+  @EventListener
+  public void onApplicationEvent(ContextRefreshedEvent event) {
+    runScheduler();
   }
   @SneakyThrows
   public boolean tryToConnect() {
@@ -78,40 +85,29 @@ public class Plc4xConnector implements PlcConnector {
     return false;
   }
 
-  public void updateScheduler(List<String> variableNames) {
+  public void updateScheduler() {
     if (scraper != null) {
       scraper.stop();
     }
     if (numberOfActiveScraper.get() > 0) {
       numberOfActiveScraper.decrementAndGet();
     }
-    runScheduler(variableNames);
+    runScheduler();
   }
-
   @SneakyThrows
-  public void runScheduler(List<String> variableNames) {
+  public void runScheduler() {
     try {
       lock.lock();
       if (numberOfActiveScraper.get() >= 1) {
         throw new MaximumScraperReachException(
             "Maximum number of active scraper has reached:" + numberOfActiveScraper.get());
       }
-      var jobs = getScraperJobs(variableNames);
-      scraper = new HbcScraper(resultHandler, jobs);
+      scraper = new HbcScraper(resultHandler, scrapeConfiguration.getJobs());
       scraper.start();
       log.info("Current active scraper: {}", numberOfActiveScraper.incrementAndGet());
     } finally {
       lock.unlock();
     }
-  }
-
-  private List<CronScrapeJob> getScraperJobs(List<String> variableNames) {
-    var jobBuilder = HbcScrapeJob.builder()
-        .sourceConnection("HBC", plcUrl).jobName("schedule-1").cron("*/1 * * * * *");
-
-
-    variableNames.forEach(address -> jobBuilder.tag(address, address));
-    return List.of(jobBuilder.build());
   }
 
   @Override
@@ -136,8 +132,7 @@ public class Plc4xConnector implements PlcConnector {
   }
 
   @Override
-  @SneakyThrows
-  public IoResponse validate(String address) {
+  public IoResponse validate(String address) throws ExecutionException, InterruptedException {
     PlcReadRequest.Builder builder = plcConnection.readRequestBuilder();
     builder.addTag(address, S7Tag.of(address));
     PlcReadResponse readResponse = builder.build().execute().get();
