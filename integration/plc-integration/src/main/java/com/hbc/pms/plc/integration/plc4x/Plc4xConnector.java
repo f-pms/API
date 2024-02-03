@@ -10,6 +10,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.plc4x.java.api.PlcConnection;
+import org.apache.plc4x.java.api.PlcConnectionManager;
 import org.apache.plc4x.java.api.PlcDriverManager;
 import org.apache.plc4x.java.api.exceptions.PlcConnectionException;
 import org.apache.plc4x.java.api.messages.PlcReadRequest;
@@ -43,12 +44,14 @@ public class Plc4xConnector implements PlcConnector {
 
   private final ResultHandler resultHandler;
   private final ScrapeConfiguration scrapeConfiguration;
+  private final PlcConnectionManager cachedPlcConnectionManager;
   private PlcConnection plcConnection;
   private Scraper scraper;
 
-  public Plc4xConnector(ResultHandler resultHandler, ScrapeConfiguration scrapeConfiguration) {
+  public Plc4xConnector(ResultHandler resultHandler, ScrapeConfiguration scrapeConfiguration, PlcConnectionManager cachedPlcConnectionManager) {
     this.resultHandler = resultHandler;
     this.scrapeConfiguration = scrapeConfiguration;
+    this.cachedPlcConnectionManager = cachedPlcConnectionManager;
   }
 
   @SuppressWarnings("java:S1135")
@@ -103,7 +106,7 @@ public class Plc4xConnector implements PlcConnector {
         throw new MaximumScraperReachException(
             "Maximum number of active scraper has reached:" + numberOfActiveScraper.get());
       }
-      scraper = new HbcScraper(resultHandler, scrapeConfiguration.getJobs());
+      scraper = new HbcScraper(resultHandler, scrapeConfiguration.getJobs(), cachedPlcConnectionManager);
       scraper.start();
       log.info("Current active scraper: {}", numberOfActiveScraper.incrementAndGet());
     } finally {

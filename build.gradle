@@ -38,13 +38,11 @@ subprojects {
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
-    testImplementation platform("org.spockframework:spock-bom:2.3-groovy-4.0")
+    testImplementation platform("org.spockframework:spock-bom:2.4-M1-groovy-4.0")
     testImplementation "org.spockframework:spock-core"
+    testImplementation "org.spockframework:spock-spring"
   }
   test {
     useJUnitPlatform()
-    testLogging {
-      events "passed", "skipped", "failed"
-    }
   }
 }

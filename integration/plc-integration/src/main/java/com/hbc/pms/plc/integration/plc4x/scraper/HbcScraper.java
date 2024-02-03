@@ -53,8 +53,8 @@ public class HbcScraper implements Scraper {
   @Setter private List<CronScrapeJob> jobs;
   private MBeanServer mBeanServer;
 
-  public HbcScraper(ResultHandler resultHandler, List<CronScrapeJob> jobs) {
-    this(resultHandler, createCachedPlcConnectionManager(), jobs, null, DEFAULT_FUTURE_TIME_OUT);
+  public HbcScraper(ResultHandler resultHandler, List<CronScrapeJob> jobs, PlcConnectionManager cachedPlcConnectionManager) {
+    this(resultHandler, cachedPlcConnectionManager, jobs, null, DEFAULT_FUTURE_TIME_OUT);
   }
 
   /**

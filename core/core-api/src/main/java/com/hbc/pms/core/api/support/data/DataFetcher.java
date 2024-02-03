@@ -24,4 +24,6 @@ public class DataFetcher {
         log.info("Start fetching total {} addresses", nonDuplicatedAddresses.size());
         return plcService.getMultiVars(nonDuplicatedAddresses);
     }
+
+
 }
