@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public class RmsPlcDataSource implements HbcScrapeJobDataSource {
+public class PlcDataSource implements HbcScrapeJobDataSource {
   private final BlueprintService blueprintService;
 
   @Override

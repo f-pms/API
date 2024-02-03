@@ -4,6 +4,7 @@ plugins {
     id 'io.spring.dependency-management'
     id 'com.bmuschko.docker-java-application'  version '9.4.0'  apply(false)
     id 'pl.allegro.tech.build.axion-release' version '1.15.1'
+    id 'groovy'
 }
 allprojects {
     group = "${projectGroup}"
@@ -24,14 +25,26 @@ rootProject.afterEvaluate(){
 }
 subprojects {
   apply plugin: 'java-library'
+  apply plugin: 'groovy'
   apply plugin: 'org.springframework.boot'
   apply plugin: 'io.spring.dependency-management'
   bootJar.enabled = false
   jar.enabled = true
 
   dependencies {
+    implementation platform('org.apache.groovy:groovy-bom:4.0.18')
+    implementation 'org.apache.groovy:groovy'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    testImplementation platform("org.spockframework:spock-bom:2.3-groovy-4.0")
+    testImplementation "org.spockframework:spock-core"
+  }
+  test {
+    useJUnitPlatform()
+    testLogging {
+      events "passed", "skipped", "failed"
+    }
   }
 }

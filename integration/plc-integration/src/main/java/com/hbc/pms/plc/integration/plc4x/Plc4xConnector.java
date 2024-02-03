@@ -10,6 +10,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.plc4x.java.api.PlcConnection;
+import org.apache.plc4x.java.api.PlcDriverManager;
 import org.apache.plc4x.java.api.exceptions.PlcConnectionException;
 import org.apache.plc4x.java.api.messages.PlcReadRequest;
 import org.apache.plc4x.java.api.messages.PlcReadResponse;
@@ -56,7 +57,7 @@ public class Plc4xConnector implements PlcConnector {
     String firstConnectionString = scrapeConfiguration
             .getPlcConfiguration().getDeviceConnections().values().stream()
             .findFirst().orElseThrow();
-//    plcConnection = PlcDriverManager.getDefault().getConnectionManager().getConnection(firstConnectionString);
+    plcConnection = PlcDriverManager.getDefault().getConnectionManager().getConnection(firstConnectionString);
   }
 
   @EventListener
