@@ -34,7 +34,7 @@ public class SensorConfigurationService {
     }
 
     var existedEntity = oSensorConfiguration.get();
-    mapper.map(entity, existedEntity);
+    existedEntity.setAddress(entity.getAddress());
     sensorConfigurationRepository.save(existedEntity);
     return true;
   }
