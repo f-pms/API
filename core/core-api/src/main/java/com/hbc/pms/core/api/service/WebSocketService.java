@@ -9,19 +9,19 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class WebSocketService {
-    private static final String TOPIC_PREFIX = "/topic/";
-    private final WebSocketMetricInterceptor metricInterceptor;
-    private final SimpMessagingTemplate template;
+  private static final String TOPIC_PREFIX = "/topic/";
+  private final WebSocketMetricInterceptor metricInterceptor;
+  private final SimpMessagingTemplate template;
 
-    public int countSubscriberOfTopic(String topic) {
-        return metricInterceptor.countSubscriberOfTopic(topic);
-    }
+  public int countSubscriberOfTopic(String topic) {
+    return metricInterceptor.countSubscriberOfTopic(topic);
+  }
 
-    public void fireSendStationData(Map<String, String> stationData, String stationName) {
-        this.template.convertAndSend(TOPIC_PREFIX + stationName, stationData);
-    }
+  public void fireSendStationData(Map<String, String> stationData, String stationName) {
+    this.template.convertAndSend(TOPIC_PREFIX + stationName, stationData);
+  }
 
-    public void fireAlarm(String alarm) {
-        template.convertAndSend(TOPIC_PREFIX + "alarm", alarm);
-    }
+  public void fireAlarm(String alarm) {
+    template.convertAndSend(TOPIC_PREFIX + "alarm", alarm);
+  }
 }

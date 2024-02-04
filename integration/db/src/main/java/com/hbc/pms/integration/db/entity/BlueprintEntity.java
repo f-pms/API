@@ -20,10 +20,8 @@ public class BlueprintEntity {
   @Column(unique = true)
   private String name;
 
-  @Column
-  private String description;
+  @Column private String description;
 
   @OneToMany(mappedBy = "blueprint", fetch = FetchType.EAGER)
   private List<SensorConfigurationEntity> sensorConfigurations;
-
 }

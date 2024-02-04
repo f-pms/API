@@ -19,11 +19,9 @@ public class AlarmConditionEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
-  private String name;
+  @Column private String name;
 
-  @Column
-  private boolean isEnabled; // TODO: will implement
+  @Column private boolean isEnabled; // TODO: will implement
 
   @Column
   @Enumerated(EnumType.STRING)
@@ -37,19 +35,14 @@ public class AlarmConditionEntity {
   @Enumerated(EnumType.STRING)
   private AlarmType type;
 
-  @Column
-  private String cron;
+  @Column private String cron;
 
-  @Column
-  private int timeDelay;
+  @Column private int timeDelay;
 
-  @Column
-  private Double min;
+  @Column private Double min;
 
-  @Column
-  private Double max;
+  @Column private Double max;
 
   @OneToMany(mappedBy = "condition", fetch = FetchType.EAGER)
   private List<AlarmActionEntity> actions;
-
 }

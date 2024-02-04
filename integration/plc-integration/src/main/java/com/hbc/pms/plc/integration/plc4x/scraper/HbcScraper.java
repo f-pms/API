@@ -52,7 +52,10 @@ public class HbcScraper implements Scraper {
   @Setter private List<CronScrapeJob> jobs;
   private MBeanServer mBeanServer;
 
-  public HbcScraper(ResultHandler resultHandler, List<CronScrapeJob> jobs, PlcConnectionManager cachedPlcConnectionManager) {
+  public HbcScraper(
+      ResultHandler resultHandler,
+      List<CronScrapeJob> jobs,
+      PlcConnectionManager cachedPlcConnectionManager) {
     this(resultHandler, cachedPlcConnectionManager, jobs, null, DEFAULT_FUTURE_TIME_OUT);
   }
 
@@ -67,7 +70,7 @@ public class HbcScraper implements Scraper {
    * @param futureTimeOut max duration of future to return a result
    */
   public HbcScraper(
-          ResultHandler resultHandler,
+      ResultHandler resultHandler,
       PlcConnectionManager plcConnectionManager,
       List<CronScrapeJob> jobs,
       TriggerCollector triggerCollector,
@@ -76,7 +79,7 @@ public class HbcScraper implements Scraper {
   }
 
   public HbcScraper(
-          ResultHandler resultHandler,
+      ResultHandler resultHandler,
       PlcConnectionManager plcConnectionManager,
       List<CronScrapeJob> jobs,
       TriggerCollector triggerCollector,

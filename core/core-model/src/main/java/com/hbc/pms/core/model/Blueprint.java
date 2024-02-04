@@ -16,17 +16,14 @@ public class Blueprint {
   private List<SensorConfiguration> sensorConfigurations;
 
   public List<String> getAddresses() {
-    return sensorConfigurations.stream()
-            .map(SensorConfiguration::getAddress)
-            .toList();
+    return sensorConfigurations.stream().map(SensorConfiguration::getAddress).toList();
   }
 
   public Map<String, List<String>> getAddressToSensorMap() {
     return sensorConfigurations.stream()
-            .collect(Collectors.groupingBy(
-                    SensorConfiguration::getAddress,
-                    Collectors.mapping(sensor -> String.valueOf(sensor.getId()), Collectors.toList())
-            ));
+        .collect(
+            Collectors.groupingBy(
+                SensorConfiguration::getAddress,
+                Collectors.mapping(sensor -> String.valueOf(sensor.getId()), Collectors.toList())));
   }
 }
-

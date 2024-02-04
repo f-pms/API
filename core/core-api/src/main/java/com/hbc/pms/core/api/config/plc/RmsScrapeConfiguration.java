@@ -11,7 +11,8 @@ public class RmsScrapeConfiguration implements ScrapeConfiguration {
   private final List<CronScrapeJob> cronScrapeJobs;
   private final PlcConfiguration plcConfiguration;
 
-  public RmsScrapeConfiguration(List<CronScrapeJob> cronScrapeJobs, PlcConfiguration plcConfiguration) {
+  public RmsScrapeConfiguration(
+      List<CronScrapeJob> cronScrapeJobs, PlcConfiguration plcConfiguration) {
     this.cronScrapeJobs = cronScrapeJobs;
     this.plcConfiguration = plcConfiguration;
   }

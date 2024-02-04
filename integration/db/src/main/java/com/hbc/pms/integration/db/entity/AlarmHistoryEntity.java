@@ -29,12 +29,9 @@ public class AlarmHistoryEntity {
   @Column(updatable = false)
   private OffsetDateTime createdAt;
 
-  @UpdateTimestamp
-  @Column
-  private OffsetDateTime updatedAt;
+  @UpdateTimestamp @Column private OffsetDateTime updatedAt;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)
   private AlarmConditionEntity alarmCondition;
-
 }

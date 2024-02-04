@@ -26,17 +26,19 @@ public class DataProcessor {
     return flattenedData;
   }
 
-  public Map<String, String> flattenToFigureMappedData(Map<String, IoResponse> rawData, Blueprint blueprint) {
+  public Map<String, String> flattenToFigureMappedData(
+      Map<String, IoResponse> rawData, Blueprint blueprint) {
     Map<String, String> flattenedData = new HashMap<>();
     var addressToFigureMap = blueprint.getAddressToSensorMap();
 
-    for (Map.Entry<String, List<String>> addrToFigEntry :
-            addressToFigureMap.entrySet()) {
+    for (Map.Entry<String, List<String>> addrToFigEntry : addressToFigureMap.entrySet()) {
       for (String figureId : addrToFigEntry.getValue()) {
         try {
-          flattenedData.put(figureId, rawData.get(addrToFigEntry.getKey()).getPlcValue().getObject().toString());
+          flattenedData.put(
+              figureId, rawData.get(addrToFigEntry.getKey()).getPlcValue().getObject().toString());
         } catch (NullPointerException e) {
-          log.debug("Address {} of figureID {} is not found in PLC", addrToFigEntry.getKey(), figureId);
+          log.debug(
+              "Address {} of figureID {} is not found in PLC", addrToFigEntry.getKey(), figureId);
         }
       }
     }
@@ -44,7 +46,8 @@ public class DataProcessor {
     return flattenedData;
   }
 
-  public Map<String, Map<String, String>> process(Map<String, IoResponse> rawData, List<Blueprint> blueprintList) {
+  public Map<String, Map<String, String>> process(
+      Map<String, IoResponse> rawData, List<Blueprint> blueprintList) {
     Map<String, Map<String, String>> result = new HashMap<>();
     for (Blueprint blueprint : blueprintList) {
       Map<String, IoResponse> blueprintResponse = new HashMap<>();

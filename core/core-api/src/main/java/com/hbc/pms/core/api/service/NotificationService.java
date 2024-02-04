@@ -21,15 +21,19 @@ public class NotificationService {
 
   public void notify(List<AlarmHistory> histories) {
     // TODO: need to enhance async
-    histories.forEach(history -> {
-      var condition = history.getAlarmCondition();
-      var actions = condition.getActions();
-      actions.forEach(action -> {
-        CompletableFuture.runAsync(() -> {
-          popupChannel.notify(action, condition);
-          emailChannel.notify(action, condition);
-        }, executor);
-      });
-    });
+    histories.forEach(
+        history -> {
+          var condition = history.getAlarmCondition();
+          var actions = condition.getActions();
+          actions.forEach(
+              action -> {
+                CompletableFuture.runAsync(
+                    () -> {
+                      popupChannel.notify(action, condition);
+                      emailChannel.notify(action, condition);
+                    },
+                    executor);
+              });
+        });
   }
 }

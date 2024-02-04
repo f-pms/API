@@ -19,13 +19,14 @@ public class AlarmHistoryHandler implements RmsHandler {
   public void handle(Map<String, IoResponse> response) {
     var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.SENT);
     if (histories.isEmpty()) return;
-    var solvedHistories = histories
-            .stream()
-            .filter(history -> {
-              var condition = history.getAlarmCondition();
-              var currentValue = response.get(condition.getSensorConfiguration().getAddress());
-              return condition.isMet(currentValue.getPlcValue().getDouble());
-            })
+    var solvedHistories =
+        histories.stream()
+            .filter(
+                history -> {
+                  var condition = history.getAlarmCondition();
+                  var currentValue = response.get(condition.getSensorConfiguration().getAddress());
+                  return condition.isMet(currentValue.getPlcValue().getDouble());
+                })
             .toList();
     alarmService.updateStatusHistories(solvedHistories, AlarmStatus.SOLVED);
   }

@@ -48,7 +48,10 @@ public class Plc4xConnector implements PlcConnector {
   private PlcConnection plcConnection;
   private Scraper scraper;
 
-  public Plc4xConnector(ResultHandler resultHandler, ScrapeConfiguration scrapeConfiguration, PlcConnectionManager cachedPlcConnectionManager) {
+  public Plc4xConnector(
+      ResultHandler resultHandler,
+      ScrapeConfiguration scrapeConfiguration,
+      PlcConnectionManager cachedPlcConnectionManager) {
     this.resultHandler = resultHandler;
     this.scrapeConfiguration = scrapeConfiguration;
     this.cachedPlcConnectionManager = cachedPlcConnectionManager;
@@ -57,16 +60,19 @@ public class Plc4xConnector implements PlcConnector {
   @SuppressWarnings("java:S1135")
   @PostConstruct
   private void init() throws PlcConnectionException {
-    String firstConnectionString = scrapeConfiguration
-            .getPlcConfiguration().getDeviceConnections().values().stream()
-            .findFirst().orElseThrow();
-    plcConnection = PlcDriverManager.getDefault().getConnectionManager().getConnection(firstConnectionString);
+    String firstConnectionString =
+        scrapeConfiguration.getPlcConfiguration().getDeviceConnections().values().stream()
+            .findFirst()
+            .orElseThrow();
+    plcConnection =
+        PlcDriverManager.getDefault().getConnectionManager().getConnection(firstConnectionString);
   }
 
   @EventListener
   public void onApplicationEvent(ContextRefreshedEvent event) {
     runScheduler();
   }
+
   @SneakyThrows
   public boolean tryToConnect() {
     if (plcConnection != null && !isConnected()) {
@@ -98,6 +104,7 @@ public class Plc4xConnector implements PlcConnector {
     }
     runScheduler();
   }
+
   @SneakyThrows
   public void runScheduler() {
     try {
@@ -106,7 +113,8 @@ public class Plc4xConnector implements PlcConnector {
         throw new MaximumScraperReachException(
             "Maximum number of active scraper has reached:" + numberOfActiveScraper.get());
       }
-      scraper = new HbcScraper(resultHandler, scrapeConfiguration.getJobs(), cachedPlcConnectionManager);
+      scraper =
+          new HbcScraper(resultHandler, scrapeConfiguration.getJobs(), cachedPlcConnectionManager);
       scraper.start();
       log.info("Current active scraper: {}", numberOfActiveScraper.incrementAndGet());
     } finally {

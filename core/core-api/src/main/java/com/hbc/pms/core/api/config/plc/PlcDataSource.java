@@ -15,9 +15,7 @@ public class PlcDataSource implements HbcScrapeJobDataSource {
 
   @Override
   public Map<String, String> getTags() {
-    return blueprintService
-            .getAllAddresses()
-            .stream()
-            .collect(Collectors.toMap(Function.identity(), Function.identity(), (a1, a2) -> a1));
+    return blueprintService.getAllAddresses().stream()
+        .collect(Collectors.toMap(Function.identity(), Function.identity(), (a1, a2) -> a1));
   }
 }

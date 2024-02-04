@@ -12,26 +12,27 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-    private final WebSocketMetricInterceptor webSocketMetricLogger;
-    @Value("#{'${hbc.origins}'.split(',')}")
-    private List<String> allowedOrigins;
+  private final WebSocketMetricInterceptor webSocketMetricLogger;
 
-    public WebSocketConfig(WebSocketMetricInterceptor webSocketMetricLogger) {
-        this.webSocketMetricLogger = webSocketMetricLogger;
-    }
+  @Value("#{'${hbc.origins}'.split(',')}")
+  private List<String> allowedOrigins;
 
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/websocket").setAllowedOrigins(allowedOrigins.toArray(String[]::new));
-    }
+  public WebSocketConfig(WebSocketMetricInterceptor webSocketMetricLogger) {
+    this.webSocketMetricLogger = webSocketMetricLogger;
+  }
 
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
-    }
+  @Override
+  public void registerStompEndpoints(StompEndpointRegistry registry) {
+    registry.addEndpoint("/websocket").setAllowedOrigins(allowedOrigins.toArray(String[]::new));
+  }
 
-    @Override
-    public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(webSocketMetricLogger);
-    }
+  @Override
+  public void configureMessageBroker(MessageBrokerRegistry config) {
+    config.enableSimpleBroker("/topic");
+  }
+
+  @Override
+  public void configureClientInboundChannel(ChannelRegistration registration) {
+    registration.interceptors(webSocketMetricLogger);
+  }
 }

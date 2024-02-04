@@ -16,17 +16,13 @@ public class SensorConfigurationEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
-  private String address;
+  @Column private String address;
 
-  @Column
-  private double x;
+  @Column private double x;
 
-  @Column
-  private double y;
+  @Column private double y;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)
   private BlueprintEntity blueprint;
-
 }

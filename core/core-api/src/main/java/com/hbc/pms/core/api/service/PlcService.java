@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @AllArgsConstructor
 public class PlcService {
-    private final PlcConnector s7Connector;
+  private final PlcConnector s7Connector;
 
-    public Map<String, IoResponse> getMultiVars(List<String> addresses) {
-        return s7Connector.executeBlockRequest(addresses);
-    }
+  public Map<String, IoResponse> getMultiVars(List<String> addresses) {
+    return s7Connector.executeBlockRequest(addresses);
+  }
 
-    public IoResponse validate(String address) throws ExecutionException, InterruptedException {
-        return s7Connector.validate(address);
-    }
+  public IoResponse validate(String address) throws ExecutionException, InterruptedException {
+    return s7Connector.validate(address);
+  }
 }

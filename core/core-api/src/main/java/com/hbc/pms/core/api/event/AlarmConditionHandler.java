@@ -22,9 +22,12 @@ public class AlarmConditionHandler implements RmsHandler {
     var startTime = OffsetDateTime.now();
     var conditions = alarmPersistenceService.getAllConditions();
 
-    var matchedConditions = conditions
-            .stream()
-            .filter(c -> CronUtil.matchTime(c.getCron(), startTime) || alarmStore.checkHoldingCondition(c.getId()))
+    var matchedConditions =
+        conditions.stream()
+            .filter(
+                c ->
+                    CronUtil.matchTime(c.getCron(), startTime)
+                        || alarmStore.checkHoldingCondition(c.getId()))
             .toList();
     var holdingConditions = alarmStore.process(matchedConditions, response);
     if (holdingConditions.isEmpty()) {

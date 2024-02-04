@@ -25,16 +25,16 @@ public class AlarmPersistenceService {
   private final AlarmHistoryRepository alarmHistoryRepository;
 
   public List<AlarmCondition> getAllConditions() {
-    return StreamSupport
-            .stream(alarmConditionRepository.findAll().spliterator(), false)
-            .map(b -> mapper.map(b, AlarmCondition.class))
-            .toList();
+    return StreamSupport.stream(alarmConditionRepository.findAll().spliterator(), false)
+        .map(b -> mapper.map(b, AlarmCondition.class))
+        .toList();
   }
 
   public AlarmCondition getConditionById(Long id) {
     var oCondition = alarmConditionRepository.findById(id);
     if (oCondition.isEmpty()) {
-      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, "Alarm condition not found with id: " + id);
+      throw new CoreApiException(
+          ErrorType.NOT_FOUND_ERROR, "Alarm condition not found with id: " + id);
     }
     return mapper.map(oCondition.get(), AlarmCondition.class);
   }
@@ -45,10 +45,7 @@ public class AlarmPersistenceService {
 
   public List<AlarmHistory> getAllHistoriesByStatus(AlarmStatus status) {
     var entities = alarmHistoryRepository.findAllByStatus(status);
-    return entities
-            .stream()
-            .map(e -> mapper.map(e, AlarmHistory.class))
-            .toList();
+    return entities.stream().map(e -> mapper.map(e, AlarmHistory.class)).toList();
   }
 
   public AlarmHistory createHistoryByCondition(AlarmCondition condition) {
