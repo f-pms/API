@@ -10,7 +10,7 @@
     </appender>
 
     <logger name="org.springframework" level="INFO"/>
-    <logger name="com.hbc.pms" level="DEBUG"/>
+    <logger name="com.hbc.pms" level="INFO"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

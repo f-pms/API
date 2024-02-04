@@ -8,12 +8,12 @@ import java.util.regex.Pattern;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtils {
-    public static boolean isIncorrectPLCAddressFormat(String address) {
-        Pattern pattern = Pattern
+  public static boolean isIncorrectPLCAddressFormat(String address) {
+    Pattern pattern = Pattern
             .compile("^%DB(\\d{1,5}):(\\d{1,7})(.([0-7]))?:([a-zA-Z_]+)(\\[(\\d+)])?");
-        //Copied from S7Tag.java
+    //Copied from S7Tag.java
 
-        Matcher matcher = pattern.matcher(address);
-        return !matcher.matches();
-    }
+    Matcher matcher = pattern.matcher(address);
+    return !matcher.matches();
+  }
 }

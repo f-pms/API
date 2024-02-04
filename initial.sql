@@ -1031,10 +1031,10 @@ INSERT INTO alarm_condition (name, is_enabled, type, min, max, severity, cron, t
 INSERT INTO alarm_condition (name, is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES ('alarm', 1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 3);
 INSERT INTO alarm_condition (name, is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES ('alarm', 1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 4);
 
-INSERT INTO alarm_action (type, message, condition_id) VALUES ('POPUP', 'Action 1 with popup', 1)
+-- INSERT INTO alarm_action (type, message, condition_id) VALUES ('POPUP', 'Action 1 with popup', 1)
 -- NOTE: This is a test email, please ignore it to avoid spamming
-INSERT INTO alarm_action (type, message, condition_id) VALUES ('EMAIL', 'Action 2 with email', 1)
-INSERT INTO alarm_action_recipient (recipient, alarm_action_id) VALUES ('nguyennhathuy.orit@gmail.com', 2)
+-- INSERT INTO alarm_action (type, message, condition_id) VALUES ('EMAIL', 'Action 2 with email', 1)
+-- INSERT INTO alarm_action_recipient (recipient, alarm_action_id) VALUES ('nguyennhathuy.orit@gmail.com', 2)
 
 -- NOTE: for alarm testing
 -- UPDATE sensor_configuration SET address = '%DB100:0.0:BOOL' WHERE id = 1;

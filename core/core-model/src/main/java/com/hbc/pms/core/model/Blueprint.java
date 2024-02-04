@@ -1,10 +1,6 @@
 package com.hbc.pms.core.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.Map;
@@ -22,16 +18,16 @@ public class Blueprint {
 
   public List<String> getAddresses() {
     return sensorConfigurations.stream()
-      .map(SensorConfiguration::getAddress)
-      .toList();
+            .map(SensorConfiguration::getAddress)
+            .toList();
   }
 
   public Map<String, List<String>> getAddressToSensorMap() {
     return sensorConfigurations.stream()
-      .collect(Collectors.groupingBy(
-        SensorConfiguration::getAddress,
-        Collectors.mapping(sensor -> String.valueOf(sensor.getId()), Collectors.toList())
-      ));
+            .collect(Collectors.groupingBy(
+                    SensorConfiguration::getAddress,
+                    Collectors.mapping(sensor -> String.valueOf(sensor.getId()), Collectors.toList())
+            ));
   }
 }
 
