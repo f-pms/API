@@ -16,3 +16,4 @@ The project utilizes multi-module structure. The modules are:
 # Development setup
 
 - Install [google-java-format](https://plugins.jetbrains.com/plugin/8527) plugin, [reference docs](https://github.com/google/google-java-format?tab=readme-ov-file#intellij-android-studio-and-other-jetbrains-ides)
+- Install [CheckStyle-IDEA](https://plugins.jetbrains.com/plugin/1065-checkstyle-idea) plugin
