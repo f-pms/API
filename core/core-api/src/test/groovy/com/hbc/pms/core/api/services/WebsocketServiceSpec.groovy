@@ -20,5 +20,4 @@ class WebsocketServiceSpec extends FunctionalTestSpec {
     then: "Received event with value = 15.0"
     assertPlcTagWithValue(sensorConfiguration.id, "15.0")
   }
-
 }

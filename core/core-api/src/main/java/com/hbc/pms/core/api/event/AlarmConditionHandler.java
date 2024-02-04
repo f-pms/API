@@ -19,7 +19,6 @@ public class AlarmConditionHandler implements RmsHandler {
   private final AlarmStore alarmStore;
   private final AlarmService alarmService;
 
-
   @Override
   public void handle(Map<String, IoResponse> response) {
     var startTime = OffsetDateTime.now();

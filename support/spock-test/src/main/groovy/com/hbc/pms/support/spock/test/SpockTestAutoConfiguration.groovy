@@ -18,12 +18,12 @@ class SpockTestAutoConfiguration {
   @Bean
   @Primary
   CachedPlcConnectionManager mockCachedManager(MockDevice mockDevice) throws PlcConnectionException {
-    String mockUrl = "mock:scraper";
-    var cachedPlcConnectionManager = CachedPlcConnectionManager.getBuilder().build();
-    cachedPlcConnectionManager.getConnection(mockUrl);
-    var connection = (MockConnection) cachedPlcConnectionManager.connectionContainers.get(mockUrl).connection;
-    connection.setDevice(mockDevice);
-    return cachedPlcConnectionManager;
+    String mockUrl = "mock:scraper"
+    var cachedPlcConnectionManager = CachedPlcConnectionManager.getBuilder().build()
+    cachedPlcConnectionManager.getConnection(mockUrl)
+    var connection = (MockConnection) cachedPlcConnectionManager.connectionContainers.get(mockUrl).connection
+    connection.setDevice(mockDevice)
+    return cachedPlcConnectionManager
   }
 
   @Bean
@@ -36,9 +36,4 @@ class SpockTestAutoConfiguration {
     return new DefaultEventCollector()
   }
 
-//  @Bean
-//  @Primary
-//  SimpMessagingTemplate simpMessagingTemplate() {
-//    return detachedMockFactory.Spy(simpMessagingTemplate)
-//  }
 }
