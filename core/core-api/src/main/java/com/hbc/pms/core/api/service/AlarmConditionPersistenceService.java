@@ -21,6 +21,10 @@ public class AlarmConditionPersistenceService {
   public AlarmCondition create(AlarmCondition alarmCondition) {
     var entity = mapper.map(alarmCondition, AlarmConditionEntity.class);
 
+    for (var action : entity.getActions()) {
+      action.setCondition(entity);
+    }
+
     return mapper.map(alarmConditionRepository.save(entity), AlarmCondition.class);
   }
 
