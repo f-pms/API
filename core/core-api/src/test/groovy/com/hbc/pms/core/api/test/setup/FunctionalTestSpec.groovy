@@ -9,7 +9,6 @@ import spock.util.concurrent.PollingConditions
 
 @SpringBootTest(classes = [CoreApiApplication])
 @ActiveProfiles("test")
-@Import(value = FunctionalConfiguration.class)
 class FunctionalTestSpec extends AbstractFunctionalSpec {
   PollingConditions conditions = new PollingConditions(timeout: 10)
 
