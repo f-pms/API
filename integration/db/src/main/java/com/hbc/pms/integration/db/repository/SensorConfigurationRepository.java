@@ -6,8 +6,6 @@ import jakarta.annotation.Nullable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 public interface SensorConfigurationRepository extends CrudRepository<SensorConfigurationEntity, Long> {
 
   @Query("SELECT sc FROM SensorConfigurationEntity sc" +
