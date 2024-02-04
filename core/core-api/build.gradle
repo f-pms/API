@@ -27,8 +27,7 @@ dependencies {
     testImplementation "org.testcontainers:testcontainers:${testContainerVersion}"
     testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter:${jUnitVersion}"
-    testImplementation "org.apache.plc4x:plc4j-transport-test:${plc4xVersion}"
-    testImplementation "org.apache.plc4x:plc4j-driver-mock:${plc4xVersion}"
+  testImplementation project(":support:spock-test")
 }
 
 tasks.withType(Test) {

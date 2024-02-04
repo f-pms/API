@@ -13,5 +13,6 @@ include 'integration:db'
 include 'integration:plc-integration'
 include 'integration:plc-api'
 include 'support:logging'
-
+include 'support:spock-test'
+findProject(':support:spock-test')?.name = 'spock-test'
 
