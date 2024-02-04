@@ -34,70 +34,70 @@ public class AppScheduler {
     private final AlarmStore alarmStore;
     private final NotificationService notificationService;
 
-    @Scheduled(fixedDelay = HALF_SECOND_DELAY_MILLIS)
-    public void refreshAllStationsState() {
-        List<Blueprint> blueprintsToFetch = blueprintPersistenceService
-                .getAll().stream()
-                .toList();
-        long startTime = System.currentTimeMillis();
-        Map<String, IoResponse> responseMap = dataFetcher.fetchData(blueprintsToFetch.stream().flatMap(blueprint -> blueprint.getAddresses().stream()).toList());
-        long endTime = System.currentTimeMillis();
-        var processedData = dataProcessor.process(responseMap, blueprintsToFetch);
-        for (Blueprint blueprint : blueprintsToFetch) {
-            webSocketService.fireSendStationData(processedData.get(blueprint.getName()), blueprint.getName());
-        }
-
-        long duration = (endTime - startTime);
-        log.info("Execution time: " + duration + " milliseconds ");
-        log.info("============================");
-    }
-
-    @Scheduled(cron = EVERY_SECOND_CRON)
-    public void scheduleAlarm() {
-        var startTime = OffsetDateTime.now();
-        var conditions = alarmPersistenceService.getAllConditions();
-
-        var matchedConditions = conditions
-            .stream()
-              .filter(c -> CronUtil.matchTime(c.getCron(), startTime) || alarmStore.checkHoldingCondition(c.getId()))
-            .toList();
-        var matchedAddresses = matchedConditions
-            .stream().map(c -> c.getSensorConfiguration().getAddress())
-            .toList();
-
-        Map<String, IoResponse> responseMap = dataFetcher.fetchData(matchedAddresses);
-        var holdingConditions = alarmStore.process(matchedConditions, responseMap);
-        if (holdingConditions.isEmpty()) {
-            return;
-        }
-        alarmService.createHistories(holdingConditions);
-    }
-
-    @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
-    public void scheduleNotification() {
-        var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.TRIGGERED);
-        if (histories.isEmpty()) return;
-        notificationService.notify(histories);
-        alarmService.updateStatusHistories(histories, AlarmStatus.SENT);
-    }
-
-    @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
-    public void scheduleSolveAlarm() {
-        var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.SENT);
-        if (histories.isEmpty()) return;
-        var addresses = histories
-            .stream()
-            .map(history -> history.getAlarmCondition().getSensorConfiguration().getAddress())
-            .toList();
-        Map<String, IoResponse> responseMap = dataFetcher.fetchData(addresses);
-        var solvedHistories = histories
-            .stream()
-            .filter(history -> {
-                var condition = history.getAlarmCondition();
-                var currentValue = responseMap.get(condition.getSensorConfiguration().getAddress());
-                return condition.isMet(currentValue.getPlcValue().getDouble());
-            })
-            .toList();
-        alarmService.updateStatusHistories(solvedHistories, AlarmStatus.SOLVED);
-    }
+//    @Scheduled(fixedDelay = HALF_SECOND_DELAY_MILLIS)
+//    public void refreshAllStationsState() {
+//        List<Blueprint> blueprintsToFetch = blueprintPersistenceService
+//                .getAll().stream()
+//                .toList();
+//        long startTime = System.currentTimeMillis();
+//        Map<String, IoResponse> responseMap = dataFetcher.fetchData(blueprintsToFetch.stream().flatMap(blueprint -> blueprint.getAddresses().stream()).toList());
+//        long endTime = System.currentTimeMillis();
+//        var processedData = dataProcessor.process(responseMap, blueprintsToFetch);
+//        for (Blueprint blueprint : blueprintsToFetch) {
+//            webSocketService.fireSendStationData(processedData.get(blueprint.getName()), blueprint.getName());
+//        }
+//
+//        long duration = (endTime - startTime);
+//        log.info("Execution time: " + duration + " milliseconds ");
+//        log.info("============================");
+//    }
+//
+//    @Scheduled(cron = EVERY_SECOND_CRON)
+//    public void scheduleAlarm() {
+//        var startTime = OffsetDateTime.now();
+//        var conditions = alarmPersistenceService.getAllConditions();
+//
+//        var matchedConditions = conditions
+//            .stream()
+//              .filter(c -> CronUtil.matchTime(c.getCron(), startTime) || alarmStore.checkHoldingCondition(c.getId()))
+//            .toList();
+//        var matchedAddresses = matchedConditions
+//            .stream().map(c -> c.getSensorConfiguration().getAddress())
+//            .toList();
+//
+//        Map<String, IoResponse> responseMap = dataFetcher.fetchData(matchedAddresses);
+//        var holdingConditions = alarmStore.process(matchedConditions, responseMap);
+//        if (holdingConditions.isEmpty()) {
+//            return;
+//        }
+//        alarmService.createHistories(holdingConditions);
+//    }
+//
+//    @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
+//    public void scheduleNotification() {
+//        var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.TRIGGERED);
+//        if (histories.isEmpty()) return;
+//        notificationService.notify(histories);
+//        alarmService.updateStatusHistories(histories, AlarmStatus.SENT);
+//    }
+//
+//    @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
+//    public void scheduleSolveAlarm() {
+//        var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.SENT);
+//        if (histories.isEmpty()) return;
+//        var addresses = histories
+//            .stream()
+//            .map(history -> history.getAlarmCondition().getSensorConfiguration().getAddress())
+//            .toList();
+//        Map<String, IoResponse> responseMap = dataFetcher.fetchData(addresses);
+//        var solvedHistories = histories
+//            .stream()
+//            .filter(history -> {
+//                var condition = history.getAlarmCondition();
+//                var currentValue = responseMap.get(condition.getSensorConfiguration().getAddress());
+//                return condition.isMet(currentValue.getPlcValue().getDouble());
+//            })
+//            .toList();
+//        alarmService.updateStatusHistories(solvedHistories, AlarmStatus.SOLVED);
+//    }
 }

@@ -1026,10 +1026,10 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:3
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:386:INT', 519.24, 1260.55, 13);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:388:INT', 519.24, 1279.62, 13);
 
-INSERT INTO alarm_condition (name, is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES ('alarm', 1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 1);
-INSERT INTO alarm_condition (name, is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES ('alarm', 1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 2);
-INSERT INTO alarm_condition (name, is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES ('alarm', 1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 3);
-INSERT INTO alarm_condition (name, is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES ('alarm', 1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 4);
+INSERT INTO alarm_condition (is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES (1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 1);
+INSERT INTO alarm_condition (is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES (1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 2);
+INSERT INTO alarm_condition (is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES (1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 3);
+INSERT INTO alarm_condition (is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES (1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 4);
 
 INSERT INTO alarm_action (type, message, condition_id) VALUES ('POPUP', 'Action 1 with popup', 1)
 -- NOTE: This is a test email, please ignore it to avoid spamming

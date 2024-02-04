@@ -21,9 +21,6 @@ public class AlarmConditionEntity {
   private Long id;
 
   @Column
-  private String name;
-
-  @Column
   private boolean isEnabled; // TODO: will implement
 
   @Column
