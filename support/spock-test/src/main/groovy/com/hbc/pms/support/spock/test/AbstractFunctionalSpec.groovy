@@ -16,62 +16,62 @@ import spock.lang.Specification
 
 @Slf4j
 class AbstractFunctionalSpec extends Specification {
-  @Autowired
-  SimpMessagingTemplate simpMessagingTemplate
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate
 
-  @Autowired
-  EventCollector eventCollector
+    @Autowired
+    EventCollector eventCollector
 
-  @Autowired
-  private AbstractSubscribableChannel clientInboundChannel
+    @Autowired
+    private AbstractSubscribableChannel clientInboundChannel
 
-  @Autowired
-  private AbstractSubscribableChannel clientOutboundChannel
+    @Autowired
+    private AbstractSubscribableChannel clientOutboundChannel
 
-  @Autowired
-  private AbstractSubscribableChannel brokerChannel
+    @Autowired
+    private AbstractSubscribableChannel brokerChannel
 
-  private TestChannelInterceptor clientOutboundChannelInterceptor
-  private TestChannelInterceptor brokerChannelInterceptor
-  protected PlcValueTestFactory plcValueTestFactory = new PlcValueTestFactory()
+    private TestChannelInterceptor clientOutboundChannelInterceptor
+    private TestChannelInterceptor brokerChannelInterceptor
+    protected PlcValueTestFactory plcValueTestFactory = new PlcValueTestFactory()
 
-  def setup() {
-    this.brokerChannelInterceptor = new TestChannelInterceptor(eventCollector)
-    this.clientOutboundChannelInterceptor = new TestChannelInterceptor(eventCollector)
-    this.brokerChannel.addInterceptor(this.brokerChannelInterceptor)
-    mockDevice.read(_ as String) >> { String address ->
-      plcValueTestFactory.respondItem(address)
+    def setup() {
+        this.brokerChannelInterceptor = new TestChannelInterceptor(eventCollector)
+        this.clientOutboundChannelInterceptor = new TestChannelInterceptor(eventCollector)
+        this.brokerChannel.addInterceptor(this.brokerChannelInterceptor)
+        mockDevice.read(_ as String) >> { String address ->
+            plcValueTestFactory.respondItem(address)
+        }
     }
-  }
 
-  def cleanup() {
-    eventCollector.clear()
-  }
-  @Autowired
-  MockDevice mockDevice
-  RandomDataGenerator random = new RandomDataGenerator()
+    def cleanup() {
+        eventCollector.clear()
+    }
+    @Autowired
+    MockDevice mockDevice
+    RandomDataGenerator random = new RandomDataGenerator()
 
-  void mockRead(String variable, PlcValue value) {
-    mockDevice.read(variable) >> new ResponseItem<PlcValue>(PlcResponseCode.OK, value)
-  }
+    void mockRead(String variable, PlcValue value) {
+        mockDevice.read(variable) >> new ResponseItem<PlcValue>(PlcResponseCode.OK, value)
+    }
 
-  void mockRead(String variable, Float min, Float max) {
-    mockRead(variable, new PlcREAL(random.nextF(min, max)))
-  }
+    void mockRead(String variable, Float min, Float max) {
+        mockRead(variable, new PlcREAL(random.nextF(min, max)))
+    }
 
-  void mockRead(String variable, Float value) {
-    mockRead(variable, new PlcREAL(value))
-  }
+    void mockRead(String variable, Float value) {
+        mockRead(variable, new PlcREAL(value))
+    }
 
-  void mockRead(String variable, Integer value) {
-    mockRead(variable, new PlcINT(value))
-  }
+    void mockRead(String variable, Integer value) {
+        mockRead(variable, new PlcINT(value))
+    }
 
-  void mockRead(String variable, Integer min, Integer max) {
-    mockRead(variable, new PlcINT(random.nextInt(min, max)))
-  }
+    void mockRead(String variable, Integer min, Integer max) {
+        mockRead(variable, new PlcINT(random.nextInt(min, max)))
+    }
 
-  void mockRead(String variable, Boolean flag) {
-    mockRead(variable, new PlcBOOL(flag))
-  }
+    void mockRead(String variable, Boolean flag) {
+        mockRead(variable, new PlcBOOL(flag))
+    }
 }

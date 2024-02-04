@@ -40,10 +40,10 @@ tasks.register("setupDatabase") {
         var masterFile = new File("${projectDir.path}/src/main/resources/master-changelog.yml")
         if (!masterFile.exists()) {
             masterFile.write(
-                "databaseChangeLog:\n" +
-                "  - includeAll:\n" +
-                "      path: changelogs/\n" +
-                "      relativeToChangelogFile: true"
+                    "databaseChangeLog:\n" +
+                            "  - includeAll:\n" +
+                            "      path: changelogs/\n" +
+                            "      relativeToChangelogFile: true"
             )
         }
 
