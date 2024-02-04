@@ -1,9 +1,8 @@
 package com.hbc.pms.core.api.controller.v1.request;
 
+import java.text.MessageFormat;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.text.MessageFormat;
 
 @Getter
 @Setter

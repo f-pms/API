@@ -2,9 +2,8 @@ package com.hbc.pms.integration.db.entity;
 
 import com.hbc.pms.core.model.enums.AlarmActionType;
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.Set;
+import lombok.*;
 
 @Entity
 @Table(name = "alarm_action")

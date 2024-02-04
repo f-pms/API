@@ -3,9 +3,8 @@ package com.hbc.pms.core.api.config.plc;
 import com.hbc.pms.plc.api.PlcConfiguration;
 import com.hbc.pms.plc.api.scraper.CronScrapeJob;
 import com.hbc.pms.plc.api.scraper.ScrapeConfiguration;
-import org.springframework.context.annotation.Configuration;
-
 import java.util.List;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RmsScrapeConfiguration implements ScrapeConfiguration {

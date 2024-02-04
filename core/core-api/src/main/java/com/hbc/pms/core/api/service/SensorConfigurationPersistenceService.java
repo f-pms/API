@@ -16,7 +16,6 @@ public class SensorConfigurationPersistenceService {
   private final ModelMapper mapper;
   private final SensorConfigurationRepository sensorConfigurationRepository;
 
-
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
@@ -30,7 +29,8 @@ public class SensorConfigurationPersistenceService {
 
     var oSensorConfiguration = sensorConfigurationRepository.findById(entity.getId());
     if (oSensorConfiguration.isEmpty()) {
-      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, "Sensor configuration not found with id: " + entity.getId());
+      throw new CoreApiException(
+          ErrorType.NOT_FOUND_ERROR, "Sensor configuration not found with id: " + entity.getId());
     }
 
     var existedEntity = oSensorConfiguration.get();
@@ -43,7 +43,8 @@ public class SensorConfigurationPersistenceService {
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     var oSensorConfiguration = sensorConfigurationRepository.findById(entity.getId());
     if (oSensorConfiguration.isEmpty()) {
-      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, "Sensor configuration not found with id: " + entity.getId());
+      throw new CoreApiException(
+          ErrorType.NOT_FOUND_ERROR, "Sensor configuration not found with id: " + entity.getId());
     }
     sensorConfigurationRepository.delete(oSensorConfiguration.get());
     return true;

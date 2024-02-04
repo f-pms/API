@@ -1,8 +1,7 @@
 package com.hbc.pms.core.api.controller.v1.response;
 
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class BlueprintResponse {

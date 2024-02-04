@@ -2,11 +2,10 @@ package com.hbc.pms.integration.db.entity;
 
 import com.hbc.pms.core.model.enums.AlarmStatus;
 import jakarta.persistence.*;
+import java.time.OffsetDateTime;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "alarm_history")

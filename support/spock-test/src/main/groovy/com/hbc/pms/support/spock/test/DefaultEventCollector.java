@@ -1,9 +1,8 @@
 package com.hbc.pms.support.spock.test;
 
-import lombok.Getter;
-
 import java.util.*;
 import java.util.function.Predicate;
+import lombok.Getter;
 
 @Getter
 public class DefaultEventCollector implements EventCollector {

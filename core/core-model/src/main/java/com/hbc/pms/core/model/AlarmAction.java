@@ -1,9 +1,8 @@
 package com.hbc.pms.core.model;
 
 import com.hbc.pms.core.model.enums.AlarmActionType;
-import lombok.*;
-
 import java.util.Set;
+import lombok.*;
 
 @Data
 @Builder

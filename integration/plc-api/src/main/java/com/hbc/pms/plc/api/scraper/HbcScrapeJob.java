@@ -1,12 +1,11 @@
 package com.hbc.pms.plc.api.scraper;
 
 import com.hbc.pms.plc.api.PlcConfiguration;
+import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-
-import java.util.Map;
 
 @Getter
 @Setter
