@@ -5,7 +5,6 @@ import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.repository.BlueprintRepository;
-import com.hbc.pms.integration.db.repository.SensorConfigurationRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import java.util.stream.StreamSupport;
 public class BlueprintPersistenceService {
     private final ModelMapper mapper;
     private final BlueprintRepository blueprintRepository;
-    private final SensorConfigurationRepository sensorConfigurationRepository;
 
     public List<Blueprint> getAll() {
         return StreamSupport
@@ -26,6 +24,10 @@ public class BlueprintPersistenceService {
             .map(b -> mapper.map(b, Blueprint.class))
             .toList();
     }
+
+  public List<String> getAllAddresses() {
+    return getAll().stream().flatMap(blueprint -> blueprint.getAddresses().stream()).toList();
+  }
 
     public Blueprint getById(Long id) {
         var oBlueprint = blueprintRepository.findById(id);

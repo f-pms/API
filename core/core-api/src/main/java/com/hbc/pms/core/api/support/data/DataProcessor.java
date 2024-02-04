@@ -32,7 +32,7 @@ public class DataProcessor {
     var addressToFigureMap = blueprint.getAddressToSensorMap();
 
     for (Map.Entry<String, List<String>> addrToFigEntry :
-      addressToFigureMap.entrySet()) {
+            addressToFigureMap.entrySet()) {
       for (String figureId : addrToFigEntry.getValue()) {
         try {
           flattenedData.put(figureId, rawData.get(addrToFigEntry.getKey()).getPlcValue().getObject().toString());

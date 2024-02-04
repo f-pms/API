@@ -68,8 +68,8 @@ public class WebSocketController {
         return stationData;
     }
 
-    @SendTo("/topic/alarm")
-    public String sendAlarm(String alarm) {
-        return alarm;
-    }
+  @SendTo("/topic/alarm")
+  public String sendAlarm(String alarm) {
+    return alarm;
+  }
 }

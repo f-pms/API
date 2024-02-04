@@ -1,3 +1,4 @@
 dependencies {
-    api('org.apache.plc4x:plc4j-api:0.11.0')
+    api("org.apache.plc4x:plc4j-api:${plc4xVersion}")
+    api("org.apache.plc4x:plc4j-scraper:${plc4xVersion}")
 }

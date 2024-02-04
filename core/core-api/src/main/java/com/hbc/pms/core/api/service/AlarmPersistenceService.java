@@ -27,9 +27,9 @@ public class AlarmPersistenceService {
 
   public List<AlarmCondition> getAllConditions() {
     return StreamSupport
-        .stream(alarmConditionRepository.findAll().spliterator(), false)
-        .map(b -> mapper.map(b, AlarmCondition.class))
-        .toList();
+            .stream(alarmConditionRepository.findAll().spliterator(), false)
+            .map(b -> mapper.map(b, AlarmCondition.class))
+            .toList();
   }
 
   public AlarmCondition getConditionById(Long id) {
@@ -47,9 +47,9 @@ public class AlarmPersistenceService {
   public List<AlarmHistory> getAllHistoriesByStatus(AlarmStatus status) {
     var entities = alarmHistoryRepository.findAllByStatus(status);
     return entities
-        .stream()
-        .map(e -> mapper.map(e, AlarmHistory.class))
-        .toList();
+            .stream()
+            .map(e -> mapper.map(e, AlarmHistory.class))
+            .toList();
   }
 
   public AlarmHistory createHistoryByCondition(AlarmCondition condition) {
