@@ -3,6 +3,7 @@ package com.hbc.pms.support.spock.test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -67,6 +68,7 @@ public class TestChannelInterceptor implements ChannelInterceptor {
     return message;
   }
 
+  @SneakyThrows
   private TestEvent constructTestEvent(Message<?> message) {
     ObjectMapper objectMapper = new ObjectMapper();
     StompHeaderAccessor headers = StompHeaderAccessor.wrap(message);
@@ -74,12 +76,7 @@ public class TestChannelInterceptor implements ChannelInterceptor {
     TypeReference<HashMap<String, String>> typeRef
             = new TypeReference<>() {
     };
-    HashMap<String, String> parsedObj = null;
-    try {
-      parsedObj = objectMapper.readValue(json, typeRef);
-    } catch (JsonProcessingException e) {
-      throw new RuntimeException(e);
-    }
+    HashMap<String, String> parsedObj = objectMapper.readValue(json, typeRef);
     return TestEvent.builder()
             .payload(parsedObj)
             .localDateTime(LocalDateTime.now())

@@ -29,9 +29,6 @@ public class AlarmConditionHandler implements RmsHandler {
             .stream()
             .filter(c -> CronUtil.matchTime(c.getCron(), startTime) || alarmStore.checkHoldingCondition(c.getId()))
             .toList();
-    List<String> matchedAddresses = matchedConditions
-            .stream().map(c -> c.getSensorConfiguration().getAddress())
-            .toList();
     var holdingConditions = alarmStore.process(matchedConditions, response);
     if (holdingConditions.isEmpty()) {
       return;
