@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SensorConfigurationService {
+public class SensorConfigurationPersistenceService {
   private final ModelMapper mapper;
   private final SensorConfigurationRepository sensorConfigurationRepository;
 
@@ -34,7 +34,7 @@ public class SensorConfigurationService {
     }
 
     var existedEntity = oSensorConfiguration.get();
-    mapper.map(entity, existedEntity);
+    existedEntity.setAddress(entity.getAddress());
     sensorConfigurationRepository.save(existedEntity);
     return true;
   }

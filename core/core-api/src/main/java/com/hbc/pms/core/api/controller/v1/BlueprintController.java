@@ -2,9 +2,10 @@ package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.request.BlueprintRequest;
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest;
+import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
-import com.hbc.pms.core.api.service.BlueprintService;
-import com.hbc.pms.core.api.service.SensorConfigurationService;
+import com.hbc.pms.core.api.service.BlueprintPersistenceService;
+import com.hbc.pms.core.api.service.SensorConfigurationPersistenceService;
 import com.hbc.pms.core.api.support.response.ApiResponse;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
@@ -19,12 +20,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BlueprintController {
     private final ModelMapper mapper;
-    private final BlueprintService blueprintService;
-    private final SensorConfigurationService sensorConfigurationService;
+    private final BlueprintPersistenceService blueprintPersistenceService;
+    private final SensorConfigurationPersistenceService sensorConfigurationPersistenceService;
 
     @GetMapping()
     public ApiResponse<List<BlueprintResponse>> getBlueprints() {
-        var response = blueprintService
+        var response = blueprintPersistenceService
             .getAll()
             .stream()
             .map(b -> mapper.map(b, BlueprintResponse.class))
@@ -35,13 +36,13 @@ public class BlueprintController {
     @PostMapping()
     public ApiResponse<BlueprintResponse> create(@RequestBody BlueprintRequest body) {
         var blueprint = mapper.map(body, Blueprint.class);
-        var response = mapper.map(blueprintService.create(blueprint), BlueprintResponse.class);
+        var response = mapper.map(blueprintPersistenceService.create(blueprint), BlueprintResponse.class);
         return ApiResponse.success(response);
     }
 
     @GetMapping("/{blueprintId}")
     public ApiResponse<BlueprintResponse> getById(@PathVariable Long blueprintId) {
-        var response = mapper.map(blueprintService.getById(blueprintId), BlueprintResponse.class);
+        var response = mapper.map(blueprintPersistenceService.getById(blueprintId), BlueprintResponse.class);
         return ApiResponse.success(response);
     }
 
@@ -49,22 +50,25 @@ public class BlueprintController {
     public ApiResponse<BlueprintResponse> update(@PathVariable Long blueprintId, @RequestBody BlueprintRequest body) {
         var blueprint = mapper.map(body, Blueprint.class);
         blueprint.setId(blueprintId);
-        var response = mapper.map(blueprintService.create(blueprint), BlueprintResponse.class);
+        var response = mapper.map(blueprintPersistenceService.create(blueprint), BlueprintResponse.class);
         return ApiResponse.success(response);
     }
 
     @PostMapping("/{blueprintId}/sensor-configurations")
     public ApiResponse<Boolean> createSensorConfiguration(@PathVariable Long blueprintId, @RequestBody SensorConfigurationRequest body) {
         var sensorConfiguration = mapper.map(body, SensorConfiguration.class);
-        var response = sensorConfigurationService.create(blueprintId, sensorConfiguration);
+        var response = sensorConfigurationPersistenceService.create(blueprintId, sensorConfiguration);
         return ApiResponse.success(response);
     }
 
     @PutMapping("/{blueprintId}/sensor-configurations/{sensorConfigurationId}")
-    public ApiResponse<Boolean> updateSensorConfiguration(@PathVariable Long blueprintId, @PathVariable Long sensorConfigurationId, @RequestBody SensorConfigurationRequest body) {
+    public ApiResponse<Boolean> updateSensorConfiguration(@PathVariable Long blueprintId,
+                                                          @PathVariable Long sensorConfigurationId,
+                                                          @RequestBody UpdateSensorConfigurationRequest body) {
+        body.aggregateData();
         var sensorConfiguration = mapper.map(body, SensorConfiguration.class);
         sensorConfiguration.setId(sensorConfigurationId);
-        var response = sensorConfigurationService.update(blueprintId, sensorConfiguration);
+        var response = sensorConfigurationPersistenceService.update(blueprintId, sensorConfiguration);
         return ApiResponse.success(response);
     }
 }

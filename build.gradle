@@ -20,7 +20,7 @@ allprojects {
 rootProject.afterEvaluate(){
     def currentVersionTask = project.tasks.named("currentVersion")
     currentVersionTask.configure {
-        doNotTrackState("Walkaround")
+        doNotTrackState("Walkarounds")
     }
 }
 subprojects {
