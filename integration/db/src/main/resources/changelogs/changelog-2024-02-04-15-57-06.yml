@@ -1,9 +1,0 @@
-databaseChangeLog:
-- changeSet:
-    id: 1707037037813-1
-    author: letie (generated)
-    changes:
-    - dropColumn:
-        columnName: name
-        tableName: alarm_condition
-

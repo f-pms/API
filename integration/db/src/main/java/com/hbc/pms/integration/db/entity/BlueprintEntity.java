@@ -1,5 +1,7 @@
 package com.hbc.pms.integration.db.entity;
 
+import com.hbc.pms.core.model.enums.AlarmType;
+import com.hbc.pms.core.model.enums.BlueprintType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,4 +29,7 @@ public class BlueprintEntity {
   @OneToMany(mappedBy = "blueprint", fetch = FetchType.EAGER)
   private List<SensorConfigurationEntity> sensorConfigurations;
 
+  @Column
+  @Enumerated(EnumType.STRING)
+  private BlueprintType type;
 }

@@ -4,6 +4,7 @@ import com.hbc.pms.core.api.support.error.CoreApiException;
 import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.Blueprint;
+import com.hbc.pms.integration.db.entity.AlarmActionEntity;
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository;
@@ -22,6 +23,7 @@ public class AlarmConditionPersistenceService {
 
   public AlarmCondition create(AlarmCondition alarmCondition) {
     var entity = mapper.map(alarmCondition, AlarmConditionEntity.class);
+
     return mapper.map(alarmConditionRepository.save(entity), AlarmCondition.class);
   }
 

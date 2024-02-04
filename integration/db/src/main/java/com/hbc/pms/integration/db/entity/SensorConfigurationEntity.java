@@ -22,10 +22,10 @@ public class SensorConfigurationEntity {
   private String address;
 
   @Column
-  private double x;
+  private Double x;
 
   @Column
-  private double y;
+  private Double y;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)

@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.service;
 
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
+import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.SensorConfiguration;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,9 @@ public class AlarmConditionService {
     AlarmCondition alarmCondition = modelMapper.map(createCommand, AlarmCondition.class);
     alarmCondition.setEnabled(true);
     alarmCondition.setSensorConfiguration(sensorConfig);
+    for(AlarmAction action: alarmCondition.getActions()) {
+      action.setMessage(createCommand.getMessage());
+    }
 
     return alarmConditionPersistenceService.create(alarmCondition);
   }

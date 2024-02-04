@@ -47,7 +47,7 @@ public class AlarmConditionEntity {
   @Column
   private Double max;
 
-  @OneToMany(mappedBy = "condition", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "condition", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   private List<AlarmActionEntity> actions;
 
 }

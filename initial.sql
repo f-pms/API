@@ -1,4 +1,4 @@
-INSERT INTO blueprint (name, description) VALUES ('main', 'Production parameters of Main Station');
+INSERT INTO blueprint (name, description, type) VALUES ('main', 'Production parameters of Main Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:13540:REAL', 302.14, 1158.13, 1);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:13544:REAL', 354.64, 1158.13, 1);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:13548:REAL', 407.13, 1158.13, 1);
@@ -146,7 +146,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:119
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:11852:REAL', 1559.5, 1243.89, 1);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:11884:REAL', 1559.5, 1270.14, 1);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:11648:REAL', 1559.5, 1296.39, 1);
-INSERT INTO blueprint (name, description) VALUES ('tr11', 'Production parameters of TR11 Station');
+INSERT INTO blueprint (name, description, type) VALUES ('tr11', 'Production parameters of TR11 Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:0:REAL', 1021.49, 129.73, 2);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:2:REAL', 1021.49, 166.87, 2);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:4:REAL', 1021.49, 204.01, 2);
@@ -166,7 +166,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:631
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:6208:REAL', 1681.27, 745.07, 2);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:6212:REAL', 1755.55, 745.07, 2);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:6216:REAL', 1829.82, 745.07, 2);
-INSERT INTO blueprint (name, description) VALUES ('tr12', 'Production parameters of TR12 Station');
+INSERT INTO blueprint (name, description, type) VALUES ('tr12', 'Production parameters of TR12 Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:192:INT', 457.35, 168.38, 3);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:194:INT', 457.35, 192.61, 3);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:196:INT', 457.35, 216.84, 3);
@@ -282,7 +282,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:961
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:9548:REAL', 2653.56, 945.54, 3);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:9580:REAL', 2653.56, 969.76, 3);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:9344:REAL', 2653.56, 993.99, 3);
-INSERT INTO blueprint (name, description) VALUES ('tr30', 'Production parameters of TR30 Station');
+INSERT INTO blueprint (name, description, type) VALUES ('tr30', 'Production parameters of TR30 Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:384:INT', 1518.6, 112.67, 4);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:386:INT', 1518.6, 144.76, 4);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:388:INT', 1518.6, 176.85, 4);
@@ -309,7 +309,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB18:19
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB18:196:REAL', 728.07, 1214.38, 4);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB18:200:REAL', 792.25, 1214.38, 4);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:13644:REAL', 730.28, 1246.59, 4);
-INSERT INTO blueprint (name, description) VALUES ('tr31', 'Production parameters of TR31 Station');
+INSERT INTO blueprint (name, description, type) VALUES ('tr31', 'Production parameters of TR31 Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:576:INT', 826.73, 126.36, 5);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:578:INT', 826.73, 161.5, 5);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:580:INT', 826.73, 196.64, 5);
@@ -329,7 +329,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:552
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:448:REAL', 1451.04, 708.61, 5);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:452:REAL', 1521.32, 708.61, 5);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:456:REAL', 1591.6, 708.61, 5);
-INSERT INTO blueprint (name, description) VALUES ('tr32', 'Production parameters of TR32 Station');
+INSERT INTO blueprint (name, description, type) VALUES ('tr32', 'Production parameters of TR32 Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:768:INT', 435.94, 247.38, 6);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:770:INT', 435.94, 274.95, 6);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:772:INT', 435.94, 302.52, 6);
@@ -349,7 +349,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:170
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:1600:REAL', 867.29, 649.28, 6);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:1604:REAL', 922.43, 649.28, 6);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:1608:REAL', 977.58, 649.28, 6);
-INSERT INTO blueprint (name, description) VALUES ('tr33', 'Production parameters of TR33 Station');
+INSERT INTO blueprint (name, description, type) VALUES ('tr33', 'Production parameters of TR33 Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:960:INT', 454.28, 125.29, 7);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:962:INT', 454.28, 160.67, 7);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:964:INT', 454.28, 196.05, 7);
@@ -369,7 +369,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:112
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:1024:REAL', 1007.8, 645.74, 7);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:1028:REAL', 1078.56, 645.74, 7);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:1032:REAL', 1149.32, 645.74, 7);
-INSERT INTO blueprint (name, description) VALUES ('tr34', 'Production parameters of TR34 Station');
+INSERT INTO blueprint (name, description, type) VALUES ('tr34', 'Production parameters of TR34 Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1152:INT', 1284.57, 122.53, 8);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1154:INT', 1284.57, 156.75, 8);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1156:INT', 1284.57, 190.98, 8);
@@ -405,7 +405,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:285
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:2752:REAL', 2367.93, 780.3, 8);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:2756:REAL', 2436.37, 780.3, 8);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:2760:REAL', 2504.82, 780.3, 8);
-INSERT INTO blueprint (name, description) VALUES ('tr42', 'Production parameters of TR42 Station');
+INSERT INTO blueprint (name, description, type) VALUES ('tr42', 'Production parameters of TR42 Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1344:INT', 494.47, 174.69, 9);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1346:INT', 494.47, 201.74, 9);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1348:INT', 494.47, 228.79, 9);
@@ -451,7 +451,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:558
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:5516:REAL', 2181.61, 594.54, 9);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:5548:REAL', 2181.61, 621.59, 9);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:5312:REAL', 2181.61, 648.64, 9);
-INSERT INTO blueprint (name, description) VALUES ('tr52', 'Production parameters of TR52 Station');
+INSERT INTO blueprint (name, description, type) VALUES ('tr52', 'Production parameters of TR52 Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1536:INT', 553.39, 121.15, 10);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1538:INT', 553.39, 153.71, 10);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1540:INT', 553.39, 186.27, 10);
@@ -487,7 +487,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:178
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:17728:REAL', 1287.91, 564.67, 10);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:17732:REAL', 1353.03, 564.67, 10);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:17736:REAL', 1418.15, 564.67, 10);
-INSERT INTO blueprint (name, description) VALUES ('tr72', 'Production parameters of TR72 Station');
+INSERT INTO blueprint (name, description, type) VALUES ('tr72', 'Production parameters of TR72 Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1728:INT', 267.53, 238.01, 11);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1730:INT', 267.53, 266.02, 11);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:1732:INT', 267.53, 294.02, 11);
@@ -507,7 +507,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:343
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:3328:REAL', 641.42, 658.04, 11);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:3332:REAL', 697.44, 658.04, 11);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:3336:REAL', 753.45, 658.04, 11);
-INSERT INTO blueprint (name, description) VALUES ('tr82', 'Production parameters of TR82 Station');
+INSERT INTO blueprint (name, description, type) VALUES ('tr82', 'Production parameters of TR82 Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:14080:REAL', 719.2, 361.5, 12);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:14084:REAL', 780.8, 361.5, 12);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:14088:REAL', 842.39, 361.5, 12);
@@ -570,7 +570,7 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:159
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:15884:REAL', 1396.7, 887.04, 12);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:15916:REAL', 1396.7, 917.84, 12);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:15680:REAL', 1396.7, 948.64, 12);
-INSERT INTO blueprint (name, description) VALUES ('all-meter', 'Production parameters of All Meter Station');
+INSERT INTO blueprint (name, description, type) VALUES ('all-meter', 'Production parameters of All Meter Station', 'MONITORING');
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:6016:REAL', 228.05, 113.76, 13);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:6020:REAL', 278.88, 113.76, 13);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB9:6024:REAL', 329.7, 113.76, 13);
@@ -1026,6 +1026,11 @@ INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:3
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:386:INT', 519.24, 1260.55, 13);
 INSERT INTO sensor_configuration (address, x, y, blueprint_id) VALUES ('%DB112:388:INT', 519.24, 1279.62, 13);
 
+INSERT INTO blueprint (name, description, type) VALUES ('PREDEFINED', 'Holding sensor configurations created for Predefined Alarm', 'ALARM');
+INSERT INTO sensor_configuration (address, blueprint_id) VALUES ('%DB112:1234:BOOL', 14);
+INSERT INTO blueprint (name, description, type) VALUES ('CUSTOM', 'Holding sensor configurations created for Custom Alarm', 'ALARM');
+INSERT INTO sensor_configuration (address, blueprint_id) VALUES ('%DB112:388:INT', 15);
+
 INSERT INTO alarm_condition (is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES (1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 1);
 INSERT INTO alarm_condition (is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES (1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 2);
 INSERT INTO alarm_condition (is_enabled, type, min, max, severity, cron, time_delay, sensor_configuration_id) VALUES (1, 'CUSTOM', NULL, 50, 'LOW', '*/5 * * * * *', 5, 3);
@@ -1033,8 +1038,8 @@ INSERT INTO alarm_condition (is_enabled, type, min, max, severity, cron, time_de
 
 INSERT INTO alarm_action (type, message, condition_id) VALUES ('POPUP', 'Action 1 with popup', 1)
 -- NOTE: This is a test email, please ignore it to avoid spamming
-INSERT INTO alarm_action (type, message, condition_id) VALUES ('EMAIL', 'Action 2 with email', 1)
-INSERT INTO alarm_action_recipient (recipient, alarm_action_id) VALUES ('nguyennhathuy.orit@gmail.com', 2)
+--INSERT INTO alarm_action (type, message, condition_id) VALUES ('EMAIL', 'Action 2 with email', 1)
+--INSERT INTO alarm_action_recipient (recipient, alarm_action_id) VALUES ('nguyennhathuy.orit@gmail.com', 2)
 
 -- NOTE: for alarm testing
 -- UPDATE sensor_configuration SET address = '%DB100:0.0:BOOL' WHERE id = 1;
