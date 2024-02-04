@@ -17,7 +17,7 @@ integration:
       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
       jdbc-url: jdbc:sqlserver://localhost:1433;trustServerCertificate=true;databaseName=F-PMS
       username: sa
-      password: dev@123
+      password: P@ssw0rd000
       pool-name: db-pool
       data-source-properties:
         rewriteBatchedStatements: true

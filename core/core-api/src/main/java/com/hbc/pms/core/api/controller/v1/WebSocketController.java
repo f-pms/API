@@ -67,4 +67,9 @@ public class WebSocketController {
     public Map<String, String> sendTRAllMeterStationData(Map<String, String> stationData) {
         return stationData;
     }
+
+    @SendTo("/topic/alarm")
+    public String sendAlarm(String alarm) {
+        return alarm;
+    }
 }

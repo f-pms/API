@@ -15,7 +15,7 @@ import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
-public class BlueprintService {
+public class BlueprintPersistenceService {
     private final ModelMapper mapper;
     private final BlueprintRepository blueprintRepository;
     private final SensorConfigurationRepository sensorConfigurationRepository;

@@ -20,6 +20,8 @@ dependencies {
     liquibase 'org.springframework.boot:spring-boot-starter-data-jpa'
     liquibase 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
 
+    implementation project(":core:core-model")
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
     runtimeOnly 'com.h2database:h2'
@@ -27,7 +29,7 @@ dependencies {
 
 var driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
 var username = "sa"
-var password = "dev@123"
+var password = "P@ssw0rd000"
 var url = "jdbc:sqlserver://localhost:1433;trustServerCertificate=true;databaseName=F-PMS"
 
 tasks.register("setupDatabase") {

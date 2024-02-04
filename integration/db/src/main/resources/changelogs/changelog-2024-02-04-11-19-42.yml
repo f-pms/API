@@ -1,0 +1,184 @@
+databaseChangeLog:
+- changeSet:
+    id: 1707020387244-1
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: alarm_actionPK
+            name: id
+            type: bigint
+        - column:
+            name: message
+            type: varchar(255)
+        - column:
+            name: type
+            type: varchar(255)
+        - column:
+            constraints:
+              nullable: false
+            name: condition_id
+            type: bigint
+        tableName: alarm_action
+- changeSet:
+    id: 1707020387244-2
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: alarm_action_id
+            type: bigint
+        - column:
+            name: recipient
+            type: varchar(255)
+        tableName: alarm_action_recipient
+- changeSet:
+    id: 1707020387244-3
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: alarm_conditionPK
+            name: id
+            type: bigint
+        - column:
+            name: cron
+            type: varchar(255)
+        - column:
+            name: is_enabled
+            type: bit
+        - column:
+            name: max
+            type: float(53)
+        - column:
+            name: min
+            type: float(53)
+        - column:
+            name: name
+            type: varchar(255)
+        - column:
+            name: severity
+            type: varchar(255)
+        - column:
+            name: time_delay
+            type: int
+        - column:
+            name: type
+            type: varchar(255)
+        - column:
+            constraints:
+              nullable: false
+            name: sensor_configuration_id
+            type: bigint
+        tableName: alarm_condition
+- changeSet:
+    id: 1707020387244-4
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: alarm_historyPK
+            name: id
+            type: bigint
+        - column:
+            name: created_at
+            type: datetimeoffset(6)
+        - column:
+            name: status
+            type: varchar(255)
+        - column:
+            name: updated_at
+            type: datetimeoffset(6)
+        - column:
+            constraints:
+              nullable: false
+            name: alarm_condition_id
+            type: bigint
+        tableName: alarm_history
+- changeSet:
+    id: 1707020387244-5
+    author: HTG (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: sensor_configuration_id
+        constraintName: UC_ALARM_CONDITIONSENSOR_CONFIGURATION_ID_COL
+        tableName: alarm_condition
+- changeSet:
+    id: 1707020387244-6
+    author: HTG (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: alarm_action_id, recipient
+        constraintName: UKm2ucye9e4yk9rjd82yu59j10p
+        tableName: alarm_action_recipient
+- changeSet:
+    id: 1707020387244-7
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: sensor_configuration_id
+        baseTableName: alarm_condition
+        constraintName: FKexfqvjgdlt487e0o8vs17qu3u
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: sensor_configuration
+        validate: true
+- changeSet:
+    id: 1707020387244-8
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: alarm_action_id
+        baseTableName: alarm_action_recipient
+        constraintName: FKmgn02483rv0kmvvj3yhpi4t1v
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: alarm_action
+        validate: true
+- changeSet:
+    id: 1707020387244-9
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: alarm_condition_id
+        baseTableName: alarm_history
+        constraintName: FKta2woanb4v1g72bfya5ywr91m
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: alarm_condition
+        validate: true
+- changeSet:
+    id: 1707020387244-10
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: condition_id
+        baseTableName: alarm_action
+        constraintName: FKtd4x0hrgsjyqgrxtjmd5a7ekt
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: alarm_condition
+        validate: true
+
