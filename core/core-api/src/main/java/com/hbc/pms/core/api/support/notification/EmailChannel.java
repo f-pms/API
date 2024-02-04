@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class EmailChannel implements Channel {
   private final JavaMailSender emailSender;
+
   @Override
   public void notify(AlarmAction action, AlarmCondition condition) {
     if (!action.getType().equals(AlarmActionType.EMAIL)) {

@@ -4,7 +4,6 @@ import com.hbc.pms.core.api.service.PlcService;
 import com.hbc.pms.plc.api.IoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -21,9 +20,9 @@ public class DataFetcher {
     public Map<String, IoResponse> fetchData(List<String> addresses)  {
         var nonDuplicatedAddresses = new ArrayList<>(new LinkedHashSet<>(addresses));
         log.info("Start fetching total {} addresses", nonDuplicatedAddresses.size());
-        if (nonDuplicatedAddresses.isEmpty()) {
-            return Map.of();
-        }
+      if (nonDuplicatedAddresses.isEmpty()) {
+        return Map.of();
+      }
         return plcService.getMultiVars(nonDuplicatedAddresses);
     }
 

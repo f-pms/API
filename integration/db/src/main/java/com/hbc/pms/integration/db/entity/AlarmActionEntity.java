@@ -28,9 +28,9 @@ public class AlarmActionEntity {
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(
-      name = "alarm_action_recipient",
-      joinColumns = @JoinColumn(name = "alarm_action_id"),
-      uniqueConstraints = @UniqueConstraint(columnNames = {"alarm_action_id", "recipient"})
+          name = "alarm_action_recipient",
+          joinColumns = @JoinColumn(name = "alarm_action_id"),
+          uniqueConstraints = @UniqueConstraint(columnNames = {"alarm_action_id", "recipient"})
   )
   @Column(name = "recipient")
   private Set<String> recipients;

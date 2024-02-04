@@ -1,6 +1,6 @@
 package com.hbc.pms.core.api.config.plc;
 
-import com.hbc.pms.core.api.service.BlueprintService;
+import com.hbc.pms.core.api.service.BlueprintPersistenceService;
 import com.hbc.pms.plc.api.scraper.HbcScrapeJobDataSource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Component
 @AllArgsConstructor
 public class PlcDataSource implements HbcScrapeJobDataSource {
-  private final BlueprintService blueprintService;
+  private final BlueprintPersistenceService blueprintService;
 
   @Override
   public Map<String, String> getTags() {
