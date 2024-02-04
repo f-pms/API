@@ -12,7 +12,7 @@ dependencies {
     implementation project(":integration:plc-api")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+  implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
   implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.apache.commons:commons-lang3'
@@ -27,6 +27,7 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.awaitility:awaitility"
+  testImplementation "org.testcontainers:mssqlserver:1.19.4"
     testImplementation "org.testcontainers:testcontainers:${testContainerVersion}"
     testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter:${jUnitVersion}"

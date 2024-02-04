@@ -8,7 +8,7 @@ import groovy.util.logging.Slf4j
 class WebsocketServiceSpec extends FunctionalTestSpec {
 
 
-  def "Websocket correct PLC values"() {
+  def "Websocket sends correct PLC values"() {
     def target = "%DB9:13548:REAL"
     when: "Set tag to 5f"
     plcValueTestFactory.setCurrentValue(target, 5f)
@@ -21,7 +21,6 @@ class WebsocketServiceSpec extends FunctionalTestSpec {
 
     then: "Received event with value = 15.0"
     assertPlcTagWithValue(target, "15.0")
-
   }
 
 }

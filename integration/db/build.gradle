@@ -5,6 +5,7 @@ configurations {
 }
 
 dependencies {
+
     api(group: "org.liquibase", name: "liquibase-core") {
         version {
             strictly liquibaseVersion
@@ -75,7 +76,6 @@ tasks.register("createMigration", JavaExec) {
 tasks.register("applyMigration", JavaExec) {
     group = "hbc-database"
     dependsOn([setupDatabase])
-
     classpath sourceSets.main.runtimeClasspath
     mainClass = "liquibase.integration.commandline.Main"
 
