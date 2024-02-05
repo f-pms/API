@@ -137,7 +137,7 @@ public class HbcScraperTask implements ScraperTask {
           executorService);
     } catch (Exception e) {
       LOGGER.warn(
-          "Exception during scraping of Job {}, Connection-Alias {}: Error-message: {} - for stack-trace change logging to DEBUG",
+          "Exception during scraping of Job {}, Connection-Alias {}: {}",
           jobName,
           connectionAlias,
           e.toString());

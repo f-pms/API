@@ -267,7 +267,9 @@ public class HbcScraper implements Scraper {
                 String msg =
                     String.format(
                         Locale.ENGLISH,
-                        "Job statistics (%s, %s) number of requests: %d (%d success, %.1f %% failed, %.1f %% too slow), min latency: %.2f ms, mean latency: %.2f ms, median: %.2f ms",
+                        "Job statistics (%s, %s) number of requests: %d; "
+                            + "%d success, %.1f %% failed, %.1f %% too slow; "
+                            + "min latency: %.2f ms, mean latency: %.2f ms, median: %.2f ms",
                         entry.getValue().getJobName(),
                         entry.getValue().getConnectionAlias(),
                         entry.getValue().getRequestCounter(),
