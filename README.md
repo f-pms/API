@@ -17,6 +17,7 @@
     --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
 
 - Import the following code style scheme in IDE `(Setting -> Editor -> Code Style -> Import scheme)`: [java_code_style.xml](/setup/java_code_style.xml)
+- Enable the google-java-format plugin ` (Setting -> google-java-format plugin -> Enable)`
 # Project Structure
 The project utilizes multi-module structure. The modules are:
 - `core` - contains the core logic of the application
