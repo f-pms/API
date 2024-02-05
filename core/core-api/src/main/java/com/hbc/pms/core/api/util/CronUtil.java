@@ -1,13 +1,13 @@
 package com.hbc.pms.core.api.util;
 
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import lombok.experimental.UtilityClass;
 import org.springframework.scheduling.support.CronExpression;
 
-import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
-
 @UtilityClass
 public class CronUtil {
+
   public static boolean matchTime(String cron, OffsetDateTime time) {
     if (!CronExpression.isValidExpression(cron)) {
       return false;

@@ -5,5 +5,6 @@ import java.util.Map;
 
 @FunctionalInterface
 public interface RmsHandler {
+
   void handle(Map<String, IoResponse> response);
 }

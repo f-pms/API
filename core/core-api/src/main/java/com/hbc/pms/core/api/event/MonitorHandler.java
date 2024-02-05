@@ -5,15 +5,15 @@ import com.hbc.pms.core.api.service.WebSocketService;
 import com.hbc.pms.core.api.support.data.DataProcessor;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.plc.api.IoResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class MonitorHandler implements RmsHandler {
+
   private final BlueprintPersistenceService blueprintService;
   private final DataProcessor dataProcessor;
   private final WebSocketService webSocketService;

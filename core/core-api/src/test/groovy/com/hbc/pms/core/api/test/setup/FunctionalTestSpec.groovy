@@ -21,9 +21,11 @@ class FunctionalTestSpec extends AbstractFunctionalSpec {
 
   @Autowired
   BlueprintPersistenceService blueprintPersistenceService
-  @Autowired SensorConfigurationPersistenceService configurationPersistenceService
+  @Autowired
+  SensorConfigurationPersistenceService configurationPersistenceService
 
   SensorConfiguration sensorConfiguration
+
   def setup() {
     Blueprint blueprint = Blueprint.builder().name("Test")
             .description("desc")

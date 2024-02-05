@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class EmailChannel implements Channel {
+
   private final JavaMailSender emailSender;
 
   @Override

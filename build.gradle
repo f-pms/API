@@ -1,27 +1,27 @@
 plugins {
-    id 'java-library'
-    id 'org.springframework.boot' apply(false)
-    id 'io.spring.dependency-management'
-    id 'com.bmuschko.docker-java-application'  version '9.4.0'  apply(false)
-    id 'pl.allegro.tech.build.axion-release' version '1.15.1'
-    id 'groovy'
+  id 'java-library'
+  id 'org.springframework.boot' apply(false)
+  id 'io.spring.dependency-management'
+  id 'com.bmuschko.docker-java-application' version '9.4.0' apply(false)
+  id 'pl.allegro.tech.build.axion-release' version '1.15.1'
+  id 'groovy'
 }
 allprojects {
-    group = "${projectGroup}"
-    apply from: "${rootDir}/gradle/axion.gradle"
-    java {
-        sourceCompatibility = project.javaVersion
-    }
+  group = "${projectGroup}"
+  apply from: "${rootDir}/gradle/axion.gradle"
+  java {
+    sourceCompatibility = project.javaVersion
+  }
 
-    repositories {
-        mavenCentral()
-    }
+  repositories {
+    mavenCentral()
+  }
 }
-rootProject.afterEvaluate(){
-    def currentVersionTask = project.tasks.named("currentVersion")
-    currentVersionTask.configure {
-      doNotTrackState("Walkarounds")
-    }
+rootProject.afterEvaluate() {
+  def currentVersionTask = project.tasks.named("currentVersion")
+  currentVersionTask.configure {
+    doNotTrackState("Walkarounds")
+  }
 }
 subprojects {
   apply plugin: 'java-library'

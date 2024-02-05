@@ -9,7 +9,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(scanBasePackages = "com.hbc.pms.*")
 @EnableScheduling
 public class CoreApiApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(CoreApiApplication.class, args);
-    }
+
+  public static void main(String[] args) {
+    SpringApplication.run(CoreApiApplication.class, args);
+  }
 }

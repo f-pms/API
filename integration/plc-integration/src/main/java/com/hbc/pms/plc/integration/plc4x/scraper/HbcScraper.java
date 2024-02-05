@@ -2,6 +2,20 @@ package com.hbc.pms.plc.integration.plc4x.scraper;
 
 import com.hbc.pms.plc.api.scraper.CronScrapeJob;
 import com.hbc.pms.plc.api.scraper.ResultHandler;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
+import javax.management.MBeanServer;
 import lombok.Setter;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
@@ -24,15 +38,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 
-import javax.management.MBeanServer;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.*;
-import java.util.stream.Collectors;
-
 public class HbcScraper implements Scraper {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HbcScraper.class);
@@ -53,7 +58,10 @@ public class HbcScraper implements Scraper {
   @Setter private List<CronScrapeJob> jobs;
   private MBeanServer mBeanServer;
 
-  public HbcScraper(ResultHandler resultHandler, List<CronScrapeJob> jobs, PlcConnectionManager cachedPlcConnectionManager) {
+  public HbcScraper(
+      ResultHandler resultHandler,
+      List<CronScrapeJob> jobs,
+      PlcConnectionManager cachedPlcConnectionManager) {
     this(resultHandler, cachedPlcConnectionManager, jobs, null, DEFAULT_FUTURE_TIME_OUT);
   }
 
@@ -68,7 +76,7 @@ public class HbcScraper implements Scraper {
    * @param futureTimeOut max duration of future to return a result
    */
   public HbcScraper(
-          ResultHandler resultHandler,
+      ResultHandler resultHandler,
       PlcConnectionManager plcConnectionManager,
       List<CronScrapeJob> jobs,
       TriggerCollector triggerCollector,
@@ -77,7 +85,7 @@ public class HbcScraper implements Scraper {
   }
 
   public HbcScraper(
-          ResultHandler resultHandler,
+      ResultHandler resultHandler,
       PlcConnectionManager plcConnectionManager,
       List<CronScrapeJob> jobs,
       TriggerCollector triggerCollector,
@@ -88,7 +96,8 @@ public class HbcScraper implements Scraper {
     Validate.notEmpty(jobs);
     if (!(plcConnectionManager instanceof CachedPlcConnectionManager)) {
       LOGGER.warn(
-          "The Triggered Scraper is intended to be used with a cached PlcConnectionManager. In other situations leaks could occur!");
+          "The Triggered Scraper is intended to be used with a cached PlcConnectionManager. "
+              + "In other situations leaks could occur!");
     }
     this.plcConnectionManager = plcConnectionManager;
     this.jobs = jobs;
@@ -259,7 +268,9 @@ public class HbcScraper implements Scraper {
                 String msg =
                     String.format(
                         Locale.ENGLISH,
-                        "Job statistics (%s, %s) number of requests: %d (%d success, %.1f %% failed, %.1f %% too slow), min latency: %.2f ms, mean latency: %.2f ms, median: %.2f ms",
+                        "Job statistics (%s, %s) number of requests: %d; "
+                            + "%d success, %.1f %% failed, %.1f %% too slow; "
+                            + "min latency: %.2f ms, mean latency: %.2f ms, median: %.2f ms",
                         entry.getValue().getJobName(),
                         entry.getValue().getConnectionAlias(),
                         entry.getValue().getRequestCounter(),
@@ -302,7 +313,9 @@ public class HbcScraper implements Scraper {
     try {
       if (!pool.awaitTermination(30, TimeUnit.SECONDS)) {
         pool.shutdownNow();
-        if (!pool.awaitTermination(30, TimeUnit.SECONDS)) LOGGER.error("Pool did not terminate");
+        if (!pool.awaitTermination(30, TimeUnit.SECONDS)) {
+          LOGGER.error("Pool did not terminate");
+        }
       }
     } catch (InterruptedException ex) {
       Thread.currentThread().interrupt();
