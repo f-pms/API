@@ -7,15 +7,14 @@
 # Intellij setup
 - Install [google-java-format](https://plugins.jetbrains.com/plugin/8527-google-java-format) plugin
 - Add additional configuration by going to `Help→Edit Custom VM Options...`, add these lines
-
-
+```
     --add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
     --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
     --add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
     --add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
     --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
     --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
-
+```
 - Import the following code style scheme in IDE `(Setting -> Editor -> Code Style -> Import scheme)`: [java_code_style.xml](/setup/java_code_style.xml)
 - Enable the google-java-format plugin ` (Setting -> google-java-format plugin -> Enable)`
 # Project Structure
