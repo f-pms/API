@@ -5,6 +5,9 @@ import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
 import com.hbc.pms.core.api.utils.StringUtils;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -13,10 +16,6 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.ErrorMessage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Configuration
 public class ModelMapperConfig {

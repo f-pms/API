@@ -1,12 +1,11 @@
 package com.hbc.pms.core.model;
 
+import static java.util.Objects.nonNull;
+
 import com.hbc.pms.core.model.enums.AlarmSeverity;
 import com.hbc.pms.core.model.enums.AlarmType;
-import lombok.*;
-
 import java.util.List;
-
-import static java.util.Objects.nonNull;
+import lombok.*;
 
 @Data
 @Builder

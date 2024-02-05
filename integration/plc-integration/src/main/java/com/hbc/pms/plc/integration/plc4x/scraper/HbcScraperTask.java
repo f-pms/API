@@ -3,6 +3,14 @@ package com.hbc.pms.plc.integration.plc4x.scraper;
 import com.hbc.pms.plc.api.exceptions.NotSupportedPlcResponseException;
 import com.hbc.pms.plc.api.scraper.ResultHandler;
 import com.hbc.pms.plc.integration.plc4x.PlcUtil;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.plc4x.java.api.PlcConnection;
@@ -15,15 +23,6 @@ import org.apache.plc4x.java.scraper.exception.ScraperException;
 import org.apache.plc4x.java.scraper.triggeredscraper.TriggeredScraperImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class HbcScraperTask implements ScraperTask {
   private static final Logger LOGGER = LoggerFactory.getLogger(HbcScraperTask.class);

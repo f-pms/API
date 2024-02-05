@@ -1,9 +1,9 @@
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.apache.plc4x:plc4j-api:0.11.0'
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.apache.plc4x:plc4j-api:0.11.0'
   implementation 'org.apache.plc4x:plc4j-scraper:0.11.0'
   implementation 'org.apache.plc4x:plc4j-connection-cache:0.11.0'
-    implementation 'org.apache.plc4x:plc4j-driver-s7:0.11.0'
-    implementation project(":core:core-model")
-    implementation project(":integration:plc-api")
+  implementation 'org.apache.plc4x:plc4j-driver-s7:0.11.0'
+  implementation project(":core:core-model")
+  implementation project(":integration:plc-api")
 }

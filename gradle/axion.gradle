@@ -1,17 +1,17 @@
 scmVersion {
-    repository {
-        type.set("git")
-        remote.set("origin")
+  repository {
+    type.set("git")
+    remote.set("origin")
+  }
+
+  useHighestVersion.set(true)
+
+
+  hooks {
+    post {
+      "push"
     }
-
-    useHighestVersion.set(true)
-
-
-    hooks {
-        post {
-            "push"
-        }
-    }
+  }
 }
 
 project.version = scmVersion.version

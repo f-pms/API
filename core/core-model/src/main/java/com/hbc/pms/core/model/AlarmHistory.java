@@ -1,9 +1,8 @@
 package com.hbc.pms.core.model;
 
 import com.hbc.pms.core.model.enums.AlarmStatus;
-import lombok.*;
-
 import java.time.OffsetDateTime;
+import lombok.*;
 
 @Data
 @Builder

@@ -1,9 +1,8 @@
 package com.hbc.pms.plc.api.scraper;
 
 
-import org.apache.plc4x.java.scraper.ScrapeJob;
-
 import java.util.Map;
+import org.apache.plc4x.java.scraper.ScrapeJob;
 
 public interface CronScrapeJob extends ScrapeJob {
   String getCron();

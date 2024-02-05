@@ -3,9 +3,8 @@ package com.hbc.pms.integration.db.entity;
 import com.hbc.pms.core.model.enums.AlarmSeverity;
 import com.hbc.pms.core.model.enums.AlarmType;
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.List;
+import lombok.*;
 
 @Entity
 @Table(name = "alarm_condition")

@@ -5,16 +5,16 @@ on:
       - master
 
 permissions:
-    contents: read
-    pull-requests: read
+  contents: read
+  pull-requests: read
 
 jobs:
   general-ci:
     uses: f-pms/Devops/.github/workflows/ci.yaml@master
     with:
-        prepare-command: echo "Building...!"
-        build-command: echo "Building...!"
-        test-command: echo "Testing...!"
+      prepare-command: echo "Building...!"
+      build-command: echo "Building...!"
+      test-command: echo "Testing...!"
   java-ci:
     runs-on: ubuntu-latest
     steps:

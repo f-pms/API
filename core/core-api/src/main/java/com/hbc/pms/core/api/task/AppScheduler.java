@@ -27,7 +27,6 @@ public class AppScheduler {
   private final AlarmStore alarmStore;
   private final NotificationService notificationService;
 
-
   @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
   public void scheduleNotification() {
     var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.TRIGGERED);
@@ -35,5 +34,4 @@ public class AppScheduler {
     notificationService.notify(histories);
     alarmService.updateStatusHistories(histories, AlarmStatus.SENT);
   }
-
 }

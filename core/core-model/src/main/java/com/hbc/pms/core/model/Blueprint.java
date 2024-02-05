@@ -1,10 +1,9 @@
 package com.hbc.pms.core.model;
 
-import lombok.*;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import lombok.*;
 
 @Data
 @Builder

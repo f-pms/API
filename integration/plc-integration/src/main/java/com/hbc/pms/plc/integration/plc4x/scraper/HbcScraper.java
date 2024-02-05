@@ -2,6 +2,14 @@ package com.hbc.pms.plc.integration.plc4x.scraper;
 
 import com.hbc.pms.plc.api.scraper.CronScrapeJob;
 import com.hbc.pms.plc.api.scraper.ResultHandler;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
+import javax.management.MBeanServer;
 import lombok.Setter;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
@@ -23,15 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
-
-import javax.management.MBeanServer;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.*;
-import java.util.stream.Collectors;
 
 public class HbcScraper implements Scraper {
 
