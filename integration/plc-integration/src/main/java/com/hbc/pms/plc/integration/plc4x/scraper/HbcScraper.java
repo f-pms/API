@@ -96,7 +96,8 @@ public class HbcScraper implements Scraper {
     Validate.notEmpty(jobs);
     if (!(plcConnectionManager instanceof CachedPlcConnectionManager)) {
       LOGGER.warn(
-          "The Triggered Scraper is intended to be used with a cached PlcConnectionManager. In other situations leaks could occur!");
+          "The Triggered Scraper is intended to be used with a cached PlcConnectionManager. "
+              + "In other situations leaks could occur!");
     }
     this.plcConnectionManager = plcConnectionManager;
     this.jobs = jobs;
