@@ -39,6 +39,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Primary
 public class Plc4xConnector implements PlcConnector {
+
   private final ReentrantLock lock = new ReentrantLock();
   private final AtomicInteger numberOfActiveScraper = new AtomicInteger(0);
 

@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
   @Value("#{'${hbc.origins}'.split(',')}")
   private List<String> allowedOrigins;
 

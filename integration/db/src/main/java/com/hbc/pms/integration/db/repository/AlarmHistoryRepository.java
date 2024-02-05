@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface AlarmHistoryRepository extends CrudRepository<AlarmHistoryEntity, Long> {
+
   @Query(
       value =
           "SELECT * FROM alarm_history WHERE status <> 'SOLVED' AND alarm_condition_id = :alarm_condition_id",

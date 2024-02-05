@@ -3,13 +3,18 @@ package com.hbc.pms.core.model;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class Blueprint {
+
   private Long id;
   private String name;
   private String description;

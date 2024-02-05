@@ -1,6 +1,10 @@
 package com.hbc.pms.core.api.task;
 
-import com.hbc.pms.core.api.service.*;
+import com.hbc.pms.core.api.service.AlarmPersistenceService;
+import com.hbc.pms.core.api.service.AlarmService;
+import com.hbc.pms.core.api.service.BlueprintPersistenceService;
+import com.hbc.pms.core.api.service.NotificationService;
+import com.hbc.pms.core.api.service.WebSocketService;
 import com.hbc.pms.core.api.support.data.AlarmStore;
 import com.hbc.pms.core.api.support.data.DataFetcher;
 import com.hbc.pms.core.api.support.data.DataProcessor;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 public class AppScheduler {
+
   private static final int HALF_SECOND_DELAY_MILLIS = 500;
   private static final int ONE_SECOND_DELAY_MILLIS = 1000;
   private static final String EVERY_SECOND_CRON = "*/1 * * * * *";
@@ -30,7 +35,9 @@ public class AppScheduler {
   @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)
   public void scheduleNotification() {
     var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.TRIGGERED);
-    if (histories.isEmpty()) return;
+    if (histories.isEmpty()) {
+      return;
+    }
     notificationService.notify(histories);
     alarmService.updateStatusHistories(histories, AlarmStatus.SENT);
   }

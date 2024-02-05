@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class AlarmService {
+
   private final AlarmPersistenceService alarmPersistenceService;
 
   public void createHistories(List<AlarmCondition> conditions) {
@@ -36,11 +37,16 @@ public class AlarmService {
     histories.forEach(
         history -> {
           var currentStatus = history.getStatus();
-          if (currentStatus.equals(AlarmStatus.SOLVED)) return;
-          if (currentStatus.equals(AlarmStatus.SENT) && !(status.equals(AlarmStatus.SOLVED)))
+          if (currentStatus.equals(AlarmStatus.SOLVED)) {
             return;
+          }
+          if (currentStatus.equals(AlarmStatus.SENT) && !(status.equals(AlarmStatus.SOLVED))) {
+            return;
+          }
           if (currentStatus.equals(AlarmStatus.TRIGGERED)
-              && !(status.equals(AlarmStatus.SENT) || status.equals(AlarmStatus.SOLVED))) return;
+              && !(status.equals(AlarmStatus.SENT) || status.equals(AlarmStatus.SOLVED))) {
+            return;
+          }
           alarmPersistenceService.updateStatusHistory(history, status);
         });
   }

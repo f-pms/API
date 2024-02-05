@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HbcScraperTask implements ScraperTask {
+
   private static final Logger LOGGER = LoggerFactory.getLogger(HbcScraperTask.class);
 
   private final PlcConnectionManager connectionManager;

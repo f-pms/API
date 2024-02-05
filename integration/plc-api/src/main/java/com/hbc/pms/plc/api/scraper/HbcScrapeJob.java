@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class HbcScrapeJob implements CronScrapeJob {
+
   @NonNull private final String jobName;
   @NonNull private final String alias;
   @NonNull private final HbcScrapeJobDataSource hbcScrapeJobDataSource;

@@ -3,6 +3,7 @@ package com.hbc.pms.plc.api.exceptions;
 import org.apache.plc4x.java.api.exceptions.PlcException;
 
 public class NotSupportedPlcResponseException extends PlcException {
+
   public NotSupportedPlcResponseException(String message) {
     super(message);
   }

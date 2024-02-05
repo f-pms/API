@@ -12,12 +12,19 @@ import com.hbc.pms.core.model.SensorConfiguration;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
 @RequestMapping("blueprints")
 @RequiredArgsConstructor
 public class BlueprintController {
+
   private final ModelMapper mapper;
   private final BlueprintPersistenceService blueprintPersistenceService;
   private final SensorConfigurationPersistenceService sensorConfigurationPersistenceService;

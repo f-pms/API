@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class AlarmPersistenceService {
+
   private final ModelMapper mapper;
   private final AlarmConditionRepository alarmConditionRepository;
   private final AlarmHistoryRepository alarmHistoryRepository;

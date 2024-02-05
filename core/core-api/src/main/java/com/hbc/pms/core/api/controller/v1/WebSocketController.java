@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class WebSocketController {
+
   @SendTo("/topic/main")
   public Map<String, String> sendMainStationData(Map<String, String> stationData) {
     return stationData;

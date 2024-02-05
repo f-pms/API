@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class AlarmConditionHandler implements RmsHandler {
+
   private final AlarmPersistenceService alarmPersistenceService;
   private final AlarmStore alarmStore;
   private final AlarmService alarmService;

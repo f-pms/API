@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 public class DataFetcher {
+
   private final PlcService plcService;
 
   public Map<String, IoResponse> fetchData(List<String> addresses) {

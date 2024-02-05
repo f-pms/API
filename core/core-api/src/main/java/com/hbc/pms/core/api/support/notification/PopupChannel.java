@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PopupChannel implements Channel {
+
   private final WebSocketService webSocketService;
 
   @Override

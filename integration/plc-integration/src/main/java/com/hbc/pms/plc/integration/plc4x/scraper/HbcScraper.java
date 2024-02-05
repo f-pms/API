@@ -310,7 +310,9 @@ public class HbcScraper implements Scraper {
     try {
       if (!pool.awaitTermination(30, TimeUnit.SECONDS)) {
         pool.shutdownNow();
-        if (!pool.awaitTermination(30, TimeUnit.SECONDS)) LOGGER.error("Pool did not terminate");
+        if (!pool.awaitTermination(30, TimeUnit.SECONDS)) {
+          LOGGER.error("Pool did not terminate");
+        }
       }
     } catch (InterruptedException ex) {
       Thread.currentThread().interrupt();

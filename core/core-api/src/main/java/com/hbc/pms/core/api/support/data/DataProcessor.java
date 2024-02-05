@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class DataProcessor {
+
   public Map<String, String> flattenPLCData(Map<String, IoResponse> rawData) {
     Map<String, String> flattenedData = new HashMap<>();
 

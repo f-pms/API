@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class PlcResultHandler implements ResultHandler {
+
   private final List<RmsHandler> rmsHandlers;
 
   @Override

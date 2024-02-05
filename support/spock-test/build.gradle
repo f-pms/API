@@ -1,12 +1,12 @@
 dependencies {
-    implementation platform("org.spockframework:spock-bom:2.4-M1-groovy-4.0")
-    implementation "org.spockframework:spock-core"
-    implementation "org.spockframework:spock-spring"
-    implementation "org.springframework.boot:spring-boot-starter-websocket"
-    api("org.apache.plc4x:plc4j-transport-test:${plc4xVersion}")
-    api("org.apache.plc4x:plc4j-driver-mock:${plc4xVersion}")
-    api("org.apache.plc4x:plc4j-api:${plc4xVersion}")
-    api("org.apache.plc4x:plc4j-scraper:${plc4xVersion}")
-    implementation "org.apache.plc4x:plc4j-driver-s7:${plc4xVersion}"
-    api 'org.objenesis:objenesis:3.3'
+  implementation platform("org.spockframework:spock-bom:2.4-M1-groovy-4.0")
+  implementation "org.spockframework:spock-core"
+  implementation "org.spockframework:spock-spring"
+  implementation "org.springframework.boot:spring-boot-starter-websocket"
+  api("org.apache.plc4x:plc4j-transport-test:${plc4xVersion}")
+  api("org.apache.plc4x:plc4j-driver-mock:${plc4xVersion}")
+  api("org.apache.plc4x:plc4j-api:${plc4xVersion}")
+  api("org.apache.plc4x:plc4j-scraper:${plc4xVersion}")
+  implementation "org.apache.plc4x:plc4j-driver-s7:${plc4xVersion}"
+  api 'org.objenesis:objenesis:3.3'
 }

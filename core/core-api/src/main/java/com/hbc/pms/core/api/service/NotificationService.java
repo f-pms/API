@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class NotificationService {
+
   private final PopupChannel popupChannel;
   private final EmailChannel emailChannel;
   private final ExecutorService executor = Executors.newFixedThreadPool(5);

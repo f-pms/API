@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class PlcConfiguration {
+
   @Value("${hbc.plc.url}")
   private String plcUrl;
 

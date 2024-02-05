@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @AllArgsConstructor
 public class PlcService {
+
   private final PlcConnector s7Connector;
 
   public Map<String, IoResponse> getMultiVars(List<String> addresses) {

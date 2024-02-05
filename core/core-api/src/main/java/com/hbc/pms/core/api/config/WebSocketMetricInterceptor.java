@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class WebSocketMetricInterceptor implements ChannelInterceptor {
+
   private final Map<String, Integer> connectedSessionIds;
 
   public WebSocketMetricInterceptor() {

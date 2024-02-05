@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ModelMapperConfig {
+
   private final ModelMapper modelMapper;
 
   public ModelMapperConfig() {

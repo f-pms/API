@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class WebSocketService {
+
   private static final String TOPIC_PREFIX = "/topic/";
   private final WebSocketMetricInterceptor metricInterceptor;
   private final SimpMessagingTemplate template;

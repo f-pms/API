@@ -4,6 +4,7 @@ import java.util.Map;
 import org.apache.plc4x.java.scraper.ScrapeJob;
 
 public interface CronScrapeJob extends ScrapeJob {
+
   String getCron();
 
   String getAlias();

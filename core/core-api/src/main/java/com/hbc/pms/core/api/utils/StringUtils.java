@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtils {
+
   public static boolean isIncorrectPLCAddressFormat(String address) {
     Pattern pattern =
         Pattern.compile("^%DB(\\d{1,5}):(\\d{1,7})(.([0-7]))?:([a-zA-Z_]+)(\\[(\\d+)])?");

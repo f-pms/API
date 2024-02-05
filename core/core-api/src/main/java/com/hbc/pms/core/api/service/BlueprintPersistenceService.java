@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class BlueprintPersistenceService {
+
   private final ModelMapper mapper;
   private final BlueprintRepository blueprintRepository;
 

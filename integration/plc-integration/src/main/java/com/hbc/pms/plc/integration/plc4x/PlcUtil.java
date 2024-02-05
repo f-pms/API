@@ -14,6 +14,7 @@ import org.apache.plc4x.java.spi.messages.DefaultPlcReadResponse;
 @UtilityClass
 @Slf4j
 public class PlcUtil {
+
   public static Map<String, IoResponse> convertPlcResponseToMap(PlcReadResponse plcReadResponse)
       throws NotSupportedPlcResponseException {
     Map<String, IoResponse> result = new HashMap<>();

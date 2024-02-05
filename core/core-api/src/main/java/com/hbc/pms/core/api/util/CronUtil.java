@@ -7,6 +7,7 @@ import org.springframework.scheduling.support.CronExpression;
 
 @UtilityClass
 public class CronUtil {
+
   public static boolean matchTime(String cron, OffsetDateTime time) {
     if (!CronExpression.isValidExpression(cron)) {
       return false;

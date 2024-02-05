@@ -10,5 +10,6 @@ import lombok.Singular;
 @Setter
 @Builder
 public class PlcConfiguration {
+
   @Singular private Map<String, String> deviceConnections;
 }

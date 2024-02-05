@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SensorConfigurationPersistenceService {
+
   private final ModelMapper mapper;
   private final SensorConfigurationRepository sensorConfigurationRepository;
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AlarmStore {
+
   private final ConcurrentHashMap<Long, OffsetDateTime> holdingConditionsMap =
       new ConcurrentHashMap<>();
 

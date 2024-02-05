@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MonitorHandler implements RmsHandler {
+
   private final BlueprintPersistenceService blueprintService;
   private final DataProcessor dataProcessor;
   private final WebSocketService webSocketService;

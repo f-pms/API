@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class TestEvent {
+
   private String topic;
   private Map<String, String> payload;
   private LocalDateTime localDateTime;

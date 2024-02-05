@@ -9,6 +9,7 @@ import java.time.ZoneOffset;
 import org.junit.jupiter.api.Test;
 
 public class CronUtilTest {
+
   @Test
   public void shouldMatchEvery1Minute30Seconds() {
     var cron = "*/30 */1 * * * *";
