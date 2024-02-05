@@ -1,5 +1,6 @@
 package com.hbc.pms.plc.api;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import org.apache.plc4x.java.api.value.PlcValue;
 @AllArgsConstructor
 public class IoResponse {
   private String variableName;
-    private PlcTag plcTag;
+  private PlcTag plcTag;
   private PlcValue plcValue;
+  private LocalDateTime localDateTime;
 }

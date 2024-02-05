@@ -5,6 +5,7 @@ configurations {
 }
 
 dependencies {
+
     api(group: "org.liquibase", name: "liquibase-core") {
         version {
             strictly liquibaseVersion
@@ -19,6 +20,8 @@ dependencies {
 
     liquibase 'org.springframework.boot:spring-boot-starter-data-jpa'
     liquibase 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
+
+    implementation project(":core:core-model")
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
@@ -73,7 +76,6 @@ tasks.register("createMigration", JavaExec) {
 tasks.register("applyMigration", JavaExec) {
     group = "hbc-database"
     dependsOn([setupDatabase])
-
     classpath sourceSets.main.runtimeClasspath
     mainClass = "liquibase.integration.commandline.Main"
 

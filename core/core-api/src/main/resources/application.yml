@@ -6,10 +6,18 @@ spring:
       - db.yml
   mvc.throw-exception-if-no-handler-found: true
   web.resources.add-mappings: false
+  mail:
+    host: mail.smtp2go.com
+    port: 2525
+    username: pms@ohtgo.me
+    password: P@ssw0rd000
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
 
 hbc:
   plc:
-    url: hbc-plc.ohtgo.me
+    url: s7://hbc-plc.ohtgo.me
     publisher:
       enabled: true
   origins: http://localhost:5173

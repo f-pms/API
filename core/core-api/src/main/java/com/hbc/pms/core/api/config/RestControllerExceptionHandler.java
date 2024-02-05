@@ -16,9 +16,9 @@ public class RestControllerExceptionHandler {
         return ApiResponse.error(ex.getErrorType(), ex.getData());
     }
 
-    @ResponseBody
-    @ExceptionHandler({ValidationException.class})
-    public ApiResponse<RuntimeException> handleMapperException(ValidationException ex) {
-        return ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getErrorMessages());
-    }
+  @ResponseBody
+  @ExceptionHandler({ValidationException.class})
+  public ApiResponse<RuntimeException> handleMapperException(ValidationException ex) {
+    return ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getErrorMessages());
+  }
 }

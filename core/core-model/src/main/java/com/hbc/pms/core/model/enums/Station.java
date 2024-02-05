@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum StationEnum {
+public enum Station {
   MAIN("main"),
   TR11("tr11"),
   TR12("tr12"),
@@ -21,5 +21,4 @@ public enum StationEnum {
   TRALL_METER("all-meter");
 
   private final String name;
-
 }

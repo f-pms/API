@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Slf4j
@@ -19,7 +20,7 @@ public class PlcService {
         return s7Connector.executeBlockRequest(addresses);
     }
 
-    public IoResponse validate(String address) {
+    public IoResponse validate(String address) throws ExecutionException, InterruptedException {
         return s7Connector.validate(address);
     }
 }
