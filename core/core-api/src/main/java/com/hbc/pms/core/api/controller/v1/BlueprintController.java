@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.request.BlueprintRequest;
+import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
@@ -10,6 +11,8 @@ import com.hbc.pms.core.api.support.response.ApiResponse;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
 import java.util.List;
+
+import com.hbc.pms.core.model.enums.BlueprintType;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,12 +32,13 @@ public class BlueprintController {
   private final BlueprintPersistenceService blueprintPersistenceService;
   private final SensorConfigurationPersistenceService sensorConfigurationPersistenceService;
 
-  @GetMapping()
-  public ApiResponse<List<BlueprintResponse>> getBlueprints() {
+  @GetMapping
+  public ApiResponse<List<BlueprintResponse>> getBlueprints(SearchBlueprintCommand searchCommand) {
     var response =
-        blueprintPersistenceService.getAll().stream()
-            .map(b -> mapper.map(b, BlueprintResponse.class))
-            .toList();
+            blueprintPersistenceService.getAll(searchCommand)
+                    .stream()
+                    .map(b -> mapper.map(b, BlueprintResponse.class))
+                    .toList();
     return ApiResponse.success(response);
   }
 

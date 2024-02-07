@@ -4,6 +4,7 @@ import com.hbc.pms.core.api.service.BlueprintPersistenceService;
 import com.hbc.pms.core.api.service.WebSocketService;
 import com.hbc.pms.core.api.support.data.DataProcessor;
 import com.hbc.pms.core.model.Blueprint;
+import com.hbc.pms.core.model.enums.BlueprintType;
 import com.hbc.pms.plc.api.IoResponse;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,8 @@ public class MonitorHandler implements RmsHandler {
 
   @Override
   public void handle(Map<String, IoResponse> response) {
-    List<Blueprint> blueprintsToFetch = blueprintService.getAll().stream().toList();
+    List<Blueprint> blueprintsToFetch =
+            blueprintService.getAll().stream().toList();
     var processedData = dataProcessor.process(response, blueprintsToFetch);
     for (Blueprint blueprint : blueprintsToFetch) {
       webSocketService.fireSendStationData(
