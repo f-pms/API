@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   general-ci:
-    uses: f-pms/Devops/.github/workflows/ci.yaml@huynn/linter
+    uses: f-pms/Devops/.github/workflows/ci.yaml@huynn/line-length
   java-ci:
     runs-on: ubuntu-latest
     steps:
