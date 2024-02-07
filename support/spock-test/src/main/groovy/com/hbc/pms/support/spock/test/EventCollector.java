@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public interface EventCollector {
+
   Map<String, List<TestEvent>> getAllEvents();
 
   void add(TestEvent testEvent);

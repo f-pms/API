@@ -1,16 +1,7 @@
 package com.hbc.pms.support.spock.test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.util.AntPathMatcher;
-import org.springframework.util.PathMatcher;
-
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,10 +11,15 @@ import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
+import lombok.SneakyThrows;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.messaging.support.ChannelInterceptor;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 
-/**
- * A ChannelInterceptor that caches messages.
- */
+/** A ChannelInterceptor that caches messages. */
 public class TestChannelInterceptor implements ChannelInterceptor {
 
   private final BlockingQueue<Message<?>> messages = new ArrayBlockingQueue<>(999);
@@ -73,15 +69,12 @@ public class TestChannelInterceptor implements ChannelInterceptor {
     ObjectMapper objectMapper = new ObjectMapper();
     StompHeaderAccessor headers = StompHeaderAccessor.wrap(message);
     String json = new String((byte[]) message.getPayload(), StandardCharsets.UTF_8);
-    TypeReference<HashMap<String, String>> typeRef
-            = new TypeReference<>() {
-    };
+    TypeReference<HashMap<String, String>> typeRef = new TypeReference<>() {};
     HashMap<String, String> parsedObj = objectMapper.readValue(json, typeRef);
     return TestEvent.builder()
-            .payload(parsedObj)
-            .localDateTime(LocalDateTime.now())
-            .topic(headers.getDestination())
-            .build();
+        .payload(parsedObj)
+        .localDateTime(LocalDateTime.now())
+        .topic(headers.getDestination())
+        .build();
   }
-
 }

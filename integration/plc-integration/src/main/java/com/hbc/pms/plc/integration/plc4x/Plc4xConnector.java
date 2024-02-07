@@ -1,5 +1,8 @@
 package com.hbc.pms.plc.integration.plc4x;
 
+import static com.hbc.pms.plc.integration.plc4x.PlcUtil.convertPlcResponseToMap;
+import static com.hbc.pms.plc.integration.plc4x.PlcUtil.getIoResponse;
+
 import com.hbc.pms.plc.api.IoResponse;
 import com.hbc.pms.plc.api.PlcConnector;
 import com.hbc.pms.plc.api.exceptions.MaximumScraperReachException;
@@ -7,6 +10,13 @@ import com.hbc.pms.plc.api.scraper.ResultHandler;
 import com.hbc.pms.plc.api.scraper.ScrapeConfiguration;
 import com.hbc.pms.plc.integration.plc4x.scraper.HbcScraper;
 import jakarta.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.plc4x.java.api.PlcConnection;
@@ -25,21 +35,11 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReentrantLock;
-
-import static com.hbc.pms.plc.integration.plc4x.PlcUtil.convertPlcResponseToMap;
-import static com.hbc.pms.plc.integration.plc4x.PlcUtil.getIoResponse;
-
 @Component
 @Slf4j
 @Primary
 public class Plc4xConnector implements PlcConnector {
+
   private final ReentrantLock lock = new ReentrantLock();
   private final AtomicInteger numberOfActiveScraper = new AtomicInteger(0);
 
@@ -49,7 +49,10 @@ public class Plc4xConnector implements PlcConnector {
   private PlcConnection plcConnection;
   private Scraper scraper;
 
-  public Plc4xConnector(ResultHandler resultHandler, ScrapeConfiguration scrapeConfiguration, PlcConnectionManager cachedPlcConnectionManager) {
+  public Plc4xConnector(
+      ResultHandler resultHandler,
+      ScrapeConfiguration scrapeConfiguration,
+      PlcConnectionManager cachedPlcConnectionManager) {
     this.resultHandler = resultHandler;
     this.scrapeConfiguration = scrapeConfiguration;
     this.cachedPlcConnectionManager = cachedPlcConnectionManager;
@@ -58,16 +61,19 @@ public class Plc4xConnector implements PlcConnector {
   @SuppressWarnings("java:S1135")
   @PostConstruct
   private void init() throws PlcConnectionException {
-    String firstConnectionString = scrapeConfiguration
-            .getPlcConfiguration().getDeviceConnections().values().stream()
-            .findFirst().orElseThrow();
-    plcConnection = PlcDriverManager.getDefault().getConnectionManager().getConnection(firstConnectionString);
+    String firstConnectionString =
+        scrapeConfiguration.getPlcConfiguration().getDeviceConnections().values().stream()
+            .findFirst()
+            .orElseThrow();
+    plcConnection =
+        PlcDriverManager.getDefault().getConnectionManager().getConnection(firstConnectionString);
   }
 
   @EventListener
   public void onApplicationEvent(ContextRefreshedEvent event) {
     runScheduler();
   }
+
   @SneakyThrows
   public boolean tryToConnect() {
     if (plcConnection != null && !isConnected()) {
@@ -99,6 +105,7 @@ public class Plc4xConnector implements PlcConnector {
     }
     runScheduler();
   }
+
   @SneakyThrows
   public void runScheduler() {
     try {
@@ -107,7 +114,8 @@ public class Plc4xConnector implements PlcConnector {
         throw new MaximumScraperReachException(
             "Maximum number of active scraper has reached:" + numberOfActiveScraper.get());
       }
-      scraper = new HbcScraper(resultHandler, scrapeConfiguration.getJobs(), cachedPlcConnectionManager);
+      scraper =
+          new HbcScraper(resultHandler, scrapeConfiguration.getJobs(), cachedPlcConnectionManager);
       scraper.start();
       log.info("Current active scraper: {}", numberOfActiveScraper.incrementAndGet());
     } finally {

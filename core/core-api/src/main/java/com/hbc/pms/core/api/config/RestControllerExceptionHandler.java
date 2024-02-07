@@ -15,6 +15,7 @@ import java.util.Map;
 
 @ControllerAdvice
 public class RestControllerExceptionHandler {
+
   @ResponseBody
   @ExceptionHandler({CoreApiException.class})
   public ApiResponse<RuntimeException> handleException(CoreApiException ex) {

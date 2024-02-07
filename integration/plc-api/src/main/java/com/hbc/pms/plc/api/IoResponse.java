@@ -13,6 +13,7 @@ import org.apache.plc4x.java.api.value.PlcValue;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IoResponse {
+
   private String variableName;
   private PlcTag plcTag;
   private PlcValue plcValue;

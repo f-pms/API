@@ -1,10 +1,24 @@
 package com.hbc.pms.integration.db.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import com.hbc.pms.core.model.enums.BlueprintType;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "blueprint")
@@ -22,8 +36,7 @@ public class BlueprintEntity {
   @Column(unique = true)
   private String name;
 
-  @Column
-  private String description;
+  @Column private String description;
 
   @OneToMany(mappedBy = "blueprint", fetch = FetchType.EAGER)
   private List<SensorConfigurationEntity> sensorConfigurations;
