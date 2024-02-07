@@ -29,16 +29,16 @@ public class AlarmConditionPersistenceService {
   }
 
   public List<AlarmCondition> getAll() {
-    return StreamSupport
-            .stream(alarmConditionRepository.findAll().spliterator(), false)
-            .map(b -> mapper.map(b, AlarmCondition.class))
-            .toList();
+    return StreamSupport.stream(alarmConditionRepository.findAll().spliterator(), false)
+        .map(b -> mapper.map(b, AlarmCondition.class))
+        .toList();
   }
 
   public AlarmCondition getById(long id) {
     var oCondition = alarmConditionRepository.findById(id);
     if (oCondition.isEmpty()) {
-      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, "Not found Alarm Condition with id: " + id);
+      throw new CoreApiException(
+          ErrorType.NOT_FOUND_ERROR, "Not found Alarm Condition with id: " + id);
     }
 
     return mapper.map(oCondition.get(), AlarmCondition.class);

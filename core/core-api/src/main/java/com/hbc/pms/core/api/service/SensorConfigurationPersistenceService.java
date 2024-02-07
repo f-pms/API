@@ -22,20 +22,21 @@ public class SensorConfigurationPersistenceService {
   private final SensorConfigurationRepository sensorConfigurationRepository;
 
   public List<SensorConfiguration> getAll(SearchBlueprintCommand searchCommand) {
-    return StreamSupport
-            .stream(sensorConfigurationRepository.findAllByBlueprint_TypeAndBlueprint_Name(
-                    searchCommand.getBlueprintType(),
-                    searchCommand.getBlueprintName()
-            ).spliterator(), false)
-            .map(b -> mapper.map(b, SensorConfiguration.class))
-            .toList();
+    return StreamSupport.stream(
+            sensorConfigurationRepository
+                .findAllByBlueprint_TypeAndBlueprint_Name(
+                    searchCommand.getBlueprintType(), searchCommand.getBlueprintName())
+                .spliterator(),
+            false)
+        .map(b -> mapper.map(b, SensorConfiguration.class))
+        .toList();
   }
 
   public SensorConfiguration get(Long id) {
     var entity = sensorConfigurationRepository.findById(id);
     if (entity.isEmpty()) {
       throw new CoreApiException(
-              ErrorType.NOT_FOUND_ERROR, "Sensor configuration not found with id: " + id);
+          ErrorType.NOT_FOUND_ERROR, "Sensor configuration not found with id: " + id);
     }
     return mapper.map(entity.get(), SensorConfiguration.class);
   }
@@ -54,7 +55,7 @@ public class SensorConfigurationPersistenceService {
     var oSensorConfiguration = sensorConfigurationRepository.findById(entity.getId());
     if (oSensorConfiguration.isEmpty()) {
       throw new CoreApiException(
-              ErrorType.NOT_FOUND_ERROR, "Sensor configuration not found with id: " + entity.getId());
+          ErrorType.NOT_FOUND_ERROR, "Sensor configuration not found with id: " + entity.getId());
     }
 
     var existedEntity = oSensorConfiguration.get();
@@ -68,7 +69,7 @@ public class SensorConfigurationPersistenceService {
     var oSensorConfiguration = sensorConfigurationRepository.findById(entity.getId());
     if (oSensorConfiguration.isEmpty()) {
       throw new CoreApiException(
-              ErrorType.NOT_FOUND_ERROR, "Sensor configuration not found with id: " + entity.getId());
+          ErrorType.NOT_FOUND_ERROR, "Sensor configuration not found with id: " + entity.getId());
     }
     sensorConfigurationRepository.delete(oSensorConfiguration.get());
     return true;

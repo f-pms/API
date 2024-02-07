@@ -2,8 +2,20 @@ package com.hbc.pms.integration.db.entity;
 
 import com.hbc.pms.core.model.enums.AlarmSeverity;
 import com.hbc.pms.core.model.enums.AlarmType;
-import jakarta.persistence.*;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -25,8 +37,7 @@ public class AlarmConditionEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
-  private boolean isEnabled; // TODO: will implement
+  @Column private boolean isEnabled; // TODO: will implement
 
   @Column
   @Enumerated(EnumType.STRING)
@@ -48,7 +59,9 @@ public class AlarmConditionEntity {
 
   @Column private Double max;
 
-  @OneToMany(mappedBy = "condition", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+  @OneToMany(
+      mappedBy = "condition",
+      fetch = FetchType.EAGER,
+      cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   private List<AlarmActionEntity> actions;
-
 }

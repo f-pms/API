@@ -11,8 +11,6 @@ import com.hbc.pms.core.api.support.response.ApiResponse;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
 import java.util.List;
-
-import com.hbc.pms.core.model.enums.BlueprintType;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.GetMapping;
