@@ -12,9 +12,7 @@ public interface AlarmHistoryRepository extends CrudRepository<AlarmHistoryEntit
 
   @Query(
       value =
-          "SELECT * "
-              + "FROM alarm_history "
-              + "WHERE status <> 'SOLVED' AND alarm_condition_id = :alarm_condition_id",
+          "SELECT * FROM alarm_history WHERE status <> 'SOLVED' AND alarm_condition_id = :alarm_condition_id",
       nativeQuery = true)
   Optional<AlarmHistoryEntity> findUnsolvedByConditionId(@Param("alarm_condition_id") Long id);
 
