@@ -1,19 +1,19 @@
 databaseChangeLog:
-- changeSet:
-    id: 1707066501674-1
-    author: letie (generated)
-    changes:
-    - addColumn:
-        columns:
-        - column:
-            name: type
-            type: varchar(255)
-        tableName: blueprint
-- changeSet:
-    id: 1707066501674-2
-    author: letie (generated)
-    changes:
-    - dropColumn:
-        columnName: name
-        tableName: alarm_condition
+  - changeSet:
+      id: 1707066501674-1
+      author: letie (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: type
+                  type: varchar(255)
+            tableName: blueprint
+  - changeSet:
+      id: 1707066501674-2
+      author: letie (generated)
+      changes:
+        - dropColumn:
+            columnName: name
+            tableName: alarm_condition
 

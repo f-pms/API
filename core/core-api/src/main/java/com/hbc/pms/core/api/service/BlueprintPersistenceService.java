@@ -7,10 +7,8 @@ import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.enums.BlueprintType;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.repository.BlueprintRepository;
-
 import java.util.List;
 import java.util.stream.StreamSupport;
-
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -28,20 +26,20 @@ public class BlueprintPersistenceService {
 
   public List<Blueprint> getAll(SearchBlueprintCommand searchCommand) {
     return StreamSupport.stream(
-                    blueprintRepository.findAllByTypeAndName(
-                            searchCommand.getBlueprintType() == null
-                                    ? BlueprintType.MONITORING
-                                    : searchCommand.getBlueprintType(),
-                            searchCommand.getBlueprintName()
-                    ).spliterator(),
-                    false)
-            .map(b -> mapper.map(b, Blueprint.class))
-            .toList();
+            blueprintRepository
+                .findAllByTypeAndName(
+                    searchCommand.getBlueprintType() == null
+                        ? BlueprintType.MONITORING
+                        : searchCommand.getBlueprintType(),
+                    searchCommand.getBlueprintName())
+                .spliterator(),
+            false)
+        .map(b -> mapper.map(b, Blueprint.class))
+        .toList();
   }
 
   public List<String> getAllMonitoringAddresses() {
-    return getAll()
-            .stream().flatMap(blueprint -> blueprint.getAddresses().stream()).toList();
+    return getAll().stream().flatMap(blueprint -> blueprint.getAddresses().stream()).toList();
   }
 
   public Blueprint getById(Long id) {
@@ -61,7 +59,7 @@ public class BlueprintPersistenceService {
     var existedBlueprint = getById(blueprint.getId());
     mapper.map(blueprint, existedBlueprint);
     return mapper.map(
-            blueprintRepository.save(mapper.map(existedBlueprint, BlueprintEntity.class)),
-            Blueprint.class);
+        blueprintRepository.save(mapper.map(existedBlueprint, BlueprintEntity.class)),
+        Blueprint.class);
   }
 }

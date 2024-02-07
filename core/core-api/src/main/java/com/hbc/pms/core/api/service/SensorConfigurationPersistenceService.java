@@ -7,12 +7,11 @@ import com.hbc.pms.core.model.SensorConfiguration;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity;
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository;
+import java.util.List;
+import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -20,8 +19,8 @@ public class SensorConfigurationPersistenceService {
 
   private final ModelMapper mapper;
   private final SensorConfigurationRepository sensorConfigurationRepository;
-  private static final String SENSOR_CONFIG_NOT_FOUND_LITERAL
-      = "Sensor configuration not found with id: ";
+  private static final String SENSOR_CONFIG_NOT_FOUND_LITERAL =
+      "Sensor configuration not found with id: ";
 
   public List<SensorConfiguration> getAll(SearchBlueprintCommand searchCommand) {
     return StreamSupport.stream(
@@ -37,8 +36,7 @@ public class SensorConfigurationPersistenceService {
   public SensorConfiguration get(Long id) {
     var entity = sensorConfigurationRepository.findById(id);
     if (entity.isEmpty()) {
-      throw new CoreApiException(
-          ErrorType.NOT_FOUND_ERROR, SENSOR_CONFIG_NOT_FOUND_LITERAL + id);
+      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, SENSOR_CONFIG_NOT_FOUND_LITERAL + id);
     }
     return mapper.map(entity.get(), SensorConfiguration.class);
   }

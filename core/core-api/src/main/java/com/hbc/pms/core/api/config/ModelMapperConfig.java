@@ -33,10 +33,10 @@ public class ModelMapperConfig {
   @Bean
   public ModelMapper modelMapper() throws ValidationException {
     modelMapper
-      .getConfiguration()
-      .setMatchingStrategy(MatchingStrategies.STRICT)
-      .setSkipNullEnabled(true)
-      .setDeepCopyEnabled(true);
+        .getConfiguration()
+        .setMatchingStrategy(MatchingStrategies.STRICT)
+        .setSkipNullEnabled(true)
+        .setDeepCopyEnabled(true);
 
     addCreateActionCommandToActionTypeMap();
     addCreateAlarmConditionCommandToAlarmConditionTypeMap();
@@ -49,29 +49,31 @@ public class ModelMapperConfig {
 
   private void addCreateActionCommandToActionTypeMap() {
     TypeMap<CreateAlarmConditionCommand.CreateAlarmActionCommand, AlarmAction> propertyMapper =
-      modelMapper.createTypeMap(CreateAlarmConditionCommand.CreateAlarmActionCommand.class, AlarmAction.class);
-    propertyMapper
-      .addMappings(
-        mapping -> mapping.map(CreateAlarmConditionCommand.CreateAlarmActionCommand::getRecipientIds,
-          AlarmAction::setRecipients)
-      );
+        modelMapper.createTypeMap(
+            CreateAlarmConditionCommand.CreateAlarmActionCommand.class, AlarmAction.class);
+    propertyMapper.addMappings(
+        mapping ->
+            mapping.map(
+                CreateAlarmConditionCommand.CreateAlarmActionCommand::getRecipientIds,
+                AlarmAction::setRecipients));
   }
 
   private void addCreateAlarmConditionCommandToAlarmConditionTypeMap() {
-    modelMapper.createTypeMap(CreateAlarmConditionCommand.class, AlarmCondition.class)
-      .addMappings(
-        new PropertyMap<>() {
-          private final Converter<Integer, String> fromAddress = c -> {
-            int seconds = c.getSource();
-            return StringUtils.buildCronFromSeconds(seconds);
-          };
+    modelMapper
+        .createTypeMap(CreateAlarmConditionCommand.class, AlarmCondition.class)
+        .addMappings(
+            new PropertyMap<>() {
+              private final Converter<Integer, String> fromAddress =
+                  c -> {
+                    int seconds = c.getSource();
+                    return StringUtils.buildCronFromSeconds(seconds);
+                  };
 
-          @Override
-          protected void configure() {
-            using(fromAddress).map(source.getCheckInterval()).setCron("");
-          }
-        }
-      );
+              @Override
+              protected void configure() {
+                using(fromAddress).map(source.getCheckInterval()).setCron("");
+              }
+            });
   }
 
   private void addUpdateSensorConfigurationRequestToSensorConfigurationTypeMap() {

@@ -6,12 +6,13 @@ import jakarta.annotation.Nullable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-public interface SensorConfigurationRepository extends
-        CrudRepository<SensorConfigurationEntity, Long> {
+public interface SensorConfigurationRepository
+    extends CrudRepository<SensorConfigurationEntity, Long> {
 
-  @Query("SELECT sc FROM SensorConfigurationEntity sc" +
-          " WHERE (:blueprintType is null or sc.blueprint.type = :blueprintType)" +
-          " AND (:blueprintName is null or sc.blueprint.name = :blueprintName)")
+  @Query(
+      "SELECT sc FROM SensorConfigurationEntity sc"
+          + " WHERE (:blueprintType is null or sc.blueprint.type = :blueprintType)"
+          + " AND (:blueprintName is null or sc.blueprint.name = :blueprintName)")
   Iterable<SensorConfigurationEntity> findAllByBlueprint_TypeAndBlueprint_Name(
-          @Nullable BlueprintType blueprintType, @Nullable String blueprintName);
+      @Nullable BlueprintType blueprintType, @Nullable String blueprintName);
 }

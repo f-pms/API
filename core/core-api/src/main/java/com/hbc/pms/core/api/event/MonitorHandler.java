@@ -20,8 +20,7 @@ public class MonitorHandler implements RmsHandler {
 
   @Override
   public void handle(Map<String, IoResponse> response) {
-    List<Blueprint> blueprintsToFetch =
-            blueprintService.getAll().stream().toList();
+    List<Blueprint> blueprintsToFetch = blueprintService.getAll().stream().toList();
     var processedData = dataProcessor.process(response, blueprintsToFetch);
     for (Blueprint blueprint : blueprintsToFetch) {
       webSocketService.fireSendStationData(

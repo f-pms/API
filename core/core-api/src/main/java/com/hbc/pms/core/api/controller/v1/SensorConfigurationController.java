@@ -3,12 +3,11 @@ package com.hbc.pms.core.api.controller.v1;
 import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.api.service.SensorConfigurationPersistenceService;
 import com.hbc.pms.core.model.SensorConfiguration;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("sensor-configurations")

@@ -33,10 +33,9 @@ public class BlueprintController {
   @GetMapping
   public ApiResponse<List<BlueprintResponse>> getBlueprints(SearchBlueprintCommand searchCommand) {
     var response =
-            blueprintPersistenceService.getAll(searchCommand)
-                    .stream()
-                    .map(b -> mapper.map(b, BlueprintResponse.class))
-                    .toList();
+        blueprintPersistenceService.getAll(searchCommand).stream()
+            .map(b -> mapper.map(b, BlueprintResponse.class))
+            .toList();
     return ApiResponse.success(response);
   }
 

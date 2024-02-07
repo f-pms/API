@@ -7,9 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface BlueprintRepository extends CrudRepository<BlueprintEntity, Long> {
-  @Query("SELECT b FROM BlueprintEntity b" +
-          " WHERE (:blueprintType is null or b.type = :blueprintType)" +
-          " AND (:blueprintName is null or b.name = :blueprintName)")
+  @Query(
+      "SELECT b FROM BlueprintEntity b"
+          + " WHERE (:blueprintType is null or b.type = :blueprintType)"
+          + " AND (:blueprintName is null or b.name = :blueprintName)")
   Iterable<BlueprintEntity> findAllByTypeAndName(
-          @Nullable BlueprintType blueprintType, @Nullable String blueprintName);
+      @Nullable BlueprintType blueprintType, @Nullable String blueprintName);
 }

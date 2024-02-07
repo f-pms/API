@@ -17,12 +17,12 @@ public class AlarmConditionService {
 
   public AlarmCondition createAlarmCondition(CreateAlarmConditionCommand createCommand) {
     SensorConfiguration sensorConfig =
-      sensorConfigurationPersistenceService.get(createCommand.getSensorConfigurationId());
+        sensorConfigurationPersistenceService.get(createCommand.getSensorConfigurationId());
 
     AlarmCondition alarmCondition = modelMapper.map(createCommand, AlarmCondition.class);
     alarmCondition.setEnabled(true);
     alarmCondition.setSensorConfiguration(sensorConfig);
-    for(AlarmAction action: alarmCondition.getActions()) {
+    for (AlarmAction action : alarmCondition.getActions()) {
       action.setMessage(createCommand.getMessage());
     }
 

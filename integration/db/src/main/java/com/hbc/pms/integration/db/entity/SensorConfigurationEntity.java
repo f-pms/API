@@ -31,11 +31,9 @@ public class SensorConfigurationEntity {
 
   @Column private String address;
 
-  @Column
-  private Double x;
+  @Column private Double x;
 
-  @Column
-  private Double y;
+  @Column private Double y;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)

@@ -6,10 +6,9 @@ import com.hbc.pms.core.api.service.AlarmConditionService;
 import com.hbc.pms.core.api.support.response.ApiResponse;
 import com.hbc.pms.core.model.AlarmCondition;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-
-import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,9 +32,8 @@ public class AlarmConditionController {
 
   @GetMapping()
   public ApiResponse<List<AlarmCondition>> getAll() {
-    List<AlarmCondition> alarmConditions = alarmConditionPersistenceService
-            .getAll()
-            .stream()
+    List<AlarmCondition> alarmConditions =
+        alarmConditionPersistenceService.getAll().stream()
             .map(ac -> mapper.map(ac, AlarmCondition.class))
             .toList();
 

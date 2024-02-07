@@ -5,11 +5,10 @@ import com.hbc.pms.core.model.enums.AlarmSeverity;
 import com.hbc.pms.core.model.enums.AlarmType;
 import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.AssertTrue;
-import lombok.Data;
-import org.hibernate.validator.constraints.Range;
-
 import java.util.List;
 import java.util.Set;
+import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
 @Data
 public class CreateAlarmConditionCommand {
@@ -18,12 +17,10 @@ public class CreateAlarmConditionCommand {
   private Long sensorConfigurationId;
   private AlarmType type;
 
-  @Range(min = 1, max = 3600, message
-          = "Check Interval must be from 1 to 3600 seconds")
+  @Range(min = 1, max = 3600, message = "Check Interval must be from 1 to 3600 seconds")
   private int checkInterval;
 
-  @Range(min = 1, max = 3600, message
-          = "Time Delay must be from 1 to 3600 seconds")
+  @Range(min = 1, max = 3600, message = "Time Delay must be from 1 to 3600 seconds")
   private int timeDelay;
 
   private Double min;
