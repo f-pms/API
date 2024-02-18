@@ -1,6 +1,6 @@
 spring:
   liquibase:
-    enabled: false
+    enabled: ${LIQUIBASE_ENABLED:false}
     changelog: classpath:/master-changelog.yml
   jpa:
     hibernate:
