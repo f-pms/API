@@ -1,13 +1,13 @@
 package com.hbc.pms.core.api.controller.v1.request;
 
+import java.text.MessageFormat;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.text.MessageFormat;
 
 @Getter
 @Setter
 public class UpdateSensorConfigurationRequest {
+
   private String address;
   private Integer db;
   private Integer offset;

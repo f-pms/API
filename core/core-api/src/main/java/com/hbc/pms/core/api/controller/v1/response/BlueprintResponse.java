@@ -1,11 +1,11 @@
 package com.hbc.pms.core.api.controller.v1.response;
 
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class BlueprintResponse {
+
   private Long id;
   private String name;
   private String description;
@@ -13,6 +13,7 @@ public class BlueprintResponse {
 
   @Data
   public static class SensorConfigurationResponse {
+
     private Long id;
     private String address;
     private int db;

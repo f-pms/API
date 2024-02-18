@@ -3,6 +3,7 @@ package com.hbc.pms.plc.api.exceptions;
 import org.apache.plc4x.java.api.exceptions.PlcException;
 
 public class MaximumScraperReachException extends PlcException {
+
   public MaximumScraperReachException(String message) {
     super(message);
   }

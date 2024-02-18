@@ -20,5 +20,4 @@ class CoreDataSourceConfig {
   public HikariDataSource coreDataSource(@Qualifier("coreHikariConfig") HikariConfig config) {
     return new HikariDataSource(config);
   }
-
 }

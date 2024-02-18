@@ -1,12 +1,17 @@
 package com.hbc.pms.support.spock.test;
 
-import lombok.Getter;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
+import lombok.Getter;
 
 @Getter
 public class DefaultEventCollector implements EventCollector {
+
   private final Map<String, List<TestEvent>> events = new HashMap<>();
 
   @Override

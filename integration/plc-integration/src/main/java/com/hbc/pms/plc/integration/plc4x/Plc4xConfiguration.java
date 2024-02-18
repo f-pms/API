@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Plc4xConfiguration {
+
   @Bean
   PlcConnectionManager cachedPlcConnectionManager() {
     return CachedPlcConnectionManager.getBuilder().build();
