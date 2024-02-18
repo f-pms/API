@@ -16,9 +16,9 @@ integration:
   datasource:
     core:
       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      jdbc-url: jdbc:sqlserver://localhost:1433;trustServerCertificate=true;databaseName=F-PMS
-      username: sa
-      password: dev@123
+      jdbc-url: ${DATABASE_URL:jdbc:sqlserver://localhost:1433;trustServerCertificate=true;databaseName=F-PMS}
+      username: ${DATABASE_USER:sa}
+      password: ${DATABASE_PASSWORD:dev@123}
       pool-name: db-pool
       data-source-properties:
         rewriteBatchedStatements: true
