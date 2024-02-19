@@ -5,7 +5,6 @@ import com.hbc.pms.core.api.support.notification.PopupChannel;
 import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.AlarmHistory;
-import io.vavr.control.Try;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
