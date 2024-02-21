@@ -41,11 +41,6 @@ public class AlarmConditionService {
     }
 
     mapper.map(updateCommand, existedCondition);
-//    newCondition.setId(existedCondition.getId());
-//    newCondition.setSensorConfiguration(existedCondition.getSensorConfiguration());
-//    newCondition.setType(existedCondition.getType());
-//    newCondition.setCron(existedCondition.getCron());
-//    newCondition.setActions(existedCondition.getActions());
 
     return alarmConditionPersistenceService.update(existedCondition);
   }

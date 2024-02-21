@@ -50,13 +50,13 @@ public class ModelMapperConfig {
   }
 
   private void addCreateActionCommandToActionTypeMap() {
-    TypeMap<CreateAlarmConditionCommand.CreateAlarmActionCommand, AlarmAction> propertyMapper =
+    TypeMap<CreateAlarmConditionCommand.AlarmActionCommand, AlarmAction> propertyMapper =
         modelMapper.createTypeMap(
-            CreateAlarmConditionCommand.CreateAlarmActionCommand.class, AlarmAction.class);
+            CreateAlarmConditionCommand.AlarmActionCommand.class, AlarmAction.class);
     propertyMapper.addMappings(
         mapping ->
             mapping.map(
-                CreateAlarmConditionCommand.CreateAlarmActionCommand::getRecipientIds,
+                CreateAlarmConditionCommand.AlarmActionCommand::getRecipientIds,
                 AlarmAction::setRecipients));
   }
 

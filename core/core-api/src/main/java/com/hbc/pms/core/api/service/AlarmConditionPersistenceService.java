@@ -28,12 +28,20 @@ public class AlarmConditionPersistenceService {
   }
 
   public AlarmCondition update(AlarmCondition alarmCondition) {
-    AlarmCondition existedCondition = getById(alarmCondition.getId());
-    mapper.map(alarmCondition, existedCondition);
-
     AlarmConditionEntity entity = mapper.map(alarmCondition, AlarmConditionEntity.class);
 
     return mapper.map(alarmConditionRepository.save(entity), AlarmCondition.class);
+  }
+
+  public boolean delete(Long id) {
+    var entity = alarmConditionRepository.findById(id);
+    if (entity.isEmpty()) {
+      throw new CoreApiException(
+          ErrorType.NOT_FOUND_ERROR, "Not found Alarm Condition with id: " + id);
+    }
+
+    alarmConditionRepository.delete(entity.get());
+    return true;
   }
 
   public List<AlarmCondition> getAll() {

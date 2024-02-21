@@ -77,7 +77,7 @@ public class BlueprintController {
       @PathVariable Long blueprintId,
       @PathVariable Long sensorConfigurationId,
       @RequestBody UpdateSensorConfigurationRequest body) {
-    body.aggregateData();
+    body.aggregatePlcAddress();
     var sensorConfiguration = mapper.map(body, SensorConfiguration.class);
     sensorConfiguration.setId(sensorConfigurationId);
     var response = sensorConfigurationPersistenceService.update(blueprintId, sensorConfiguration);

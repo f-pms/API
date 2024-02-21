@@ -13,7 +13,7 @@ public class UpdateSensorConfigurationRequest {
   private Integer offset;
   private String dataType;
 
-  public void aggregateData() {
+  public void aggregatePlcAddress() {
     if (address == null) {
       address = MessageFormat.format("%DB{0,number,#}:{1,number,#}:{2}", db, offset, dataType);
     }
