@@ -4,12 +4,14 @@ import static java.util.Objects.nonNull;
 
 import com.hbc.pms.core.model.enums.AlarmSeverity;
 import com.hbc.pms.core.model.enums.AlarmType;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.scheduling.support.CronExpression;
 
 @Data
 @Builder
@@ -51,8 +53,15 @@ public class AlarmCondition {
     }
     return false;
   }
-  public String getCheckInterval() {
-    var a = Integer.parseInt("*/3");
-    return "aA";
+
+  public int getCheckInterval() {
+    String nonNumberPattern = "[^\\d.]";
+    String[] parts = cron.split(" ");
+    int second = Integer.parseInt(parts[0].replaceAll(nonNumberPattern, ""));
+    int minute =
+        parts[1].replaceAll(nonNumberPattern, "").isEmpty()
+            ? 0
+            : Integer.parseInt(parts[1].replaceAll(nonNumberPattern, ""));
+    return second + minute * 60;
   }
 }
