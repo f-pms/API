@@ -51,4 +51,8 @@ public class AlarmCondition {
     }
     return false;
   }
+  public String getCheckInterval() {
+    var a = Integer.parseInt("*/3");
+    return "aA";
+  }
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController()
+@RestController
 @RequestMapping("alarm-conditions")
 @RequiredArgsConstructor
 public class AlarmConditionController {
@@ -24,13 +24,13 @@ public class AlarmConditionController {
   private final AlarmConditionService alarmConditionService;
   private final AlarmConditionPersistenceService alarmConditionPersistenceService;
 
-  @PostMapping()
+  @PostMapping
   public ApiResponse<AlarmCondition> create(@Valid @RequestBody CreateAlarmConditionCommand body) {
     AlarmCondition result = alarmConditionService.createAlarmCondition(body);
     return ApiResponse.success(result);
   }
 
-  @GetMapping()
+  @GetMapping
   public ApiResponse<List<AlarmCondition>> getAll() {
     List<AlarmCondition> alarmConditions =
         alarmConditionPersistenceService.getAll().stream()

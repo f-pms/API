@@ -21,7 +21,7 @@ public class BlueprintPersistenceService {
   private final BlueprintRepository blueprintRepository;
 
   public List<Blueprint> getAll() {
-    return getAll(new SearchBlueprintCommand(BlueprintType.MONITORING, null));
+    return getAll(new SearchBlueprintCommand(null, null));
   }
 
   public List<Blueprint> getAll(SearchBlueprintCommand searchCommand) {
@@ -38,7 +38,7 @@ public class BlueprintPersistenceService {
         .toList();
   }
 
-  public List<String> getAllMonitoringAddresses() {
+  public List<String> getAllAddresses() {
     return getAll().stream().flatMap(blueprint -> blueprint.getAddresses().stream()).toList();
   }
 
