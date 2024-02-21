@@ -1,8 +1,7 @@
 package com.hbc.pms.core.api.config;
 
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
+import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
 import com.hbc.pms.core.api.utils.StringUtils;
@@ -15,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.Module;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeMap;
 import org.modelmapper.ValidationException;
@@ -43,6 +41,7 @@ public class ModelMapperConfig {
 
     addCreateActionCommandToActionTypeMap();
     addCreateAlarmConditionCommandToAlarmConditionTypeMap();
+    addUpdateAlarmConditionCommandToAlarmConditionTypeMap();
 
     addUpdateSensorConfigurationRequestToSensorConfigurationTypeMap();
     addSensorConfigurationToSensorConfigurationResponseTypeMap();
@@ -64,6 +63,24 @@ public class ModelMapperConfig {
   private void addCreateAlarmConditionCommandToAlarmConditionTypeMap() {
     modelMapper
         .createTypeMap(CreateAlarmConditionCommand.class, AlarmCondition.class)
+        .addMappings(
+            new PropertyMap<>() {
+              private final Converter<Integer, String> fromAddress =
+                  c -> {
+                    int seconds = c.getSource();
+                    return StringUtils.buildCronFromSeconds(seconds);
+                  };
+
+              @Override
+              protected void configure() {
+                using(fromAddress).map(source.getCheckInterval()).setCron("");
+              }
+            });
+  }
+
+  private void addUpdateAlarmConditionCommandToAlarmConditionTypeMap() {
+    modelMapper
+        .createTypeMap(UpdateAlarmConditionCommand.class, AlarmCondition.class)
         .addMappings(
             new PropertyMap<>() {
               private final Converter<Integer, String> fromAddress =

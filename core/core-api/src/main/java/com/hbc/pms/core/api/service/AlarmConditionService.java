@@ -1,6 +1,9 @@
 package com.hbc.pms.core.api.service;
 
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
+import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
+import com.hbc.pms.core.api.support.error.CoreApiException;
+import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.SensorConfiguration;
@@ -11,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AlarmConditionService {
-  private final ModelMapper modelMapper;
+  private final ModelMapper mapper;
   private final SensorConfigurationPersistenceService sensorConfigurationPersistenceService;
   private final AlarmConditionPersistenceService alarmConditionPersistenceService;
 
@@ -19,7 +22,7 @@ public class AlarmConditionService {
     SensorConfiguration sensorConfig =
         sensorConfigurationPersistenceService.get(createCommand.getSensorConfigurationId());
 
-    AlarmCondition alarmCondition = modelMapper.map(createCommand, AlarmCondition.class);
+    AlarmCondition alarmCondition = mapper.map(createCommand, AlarmCondition.class);
     alarmCondition.setEnabled(true);
     alarmCondition.setSensorConfiguration(sensorConfig);
     for (AlarmAction action : alarmCondition.getActions()) {
@@ -27,5 +30,23 @@ public class AlarmConditionService {
     }
 
     return alarmConditionPersistenceService.create(alarmCondition);
+  }
+
+  public AlarmCondition updateAlarmCondition(Long id, UpdateAlarmConditionCommand updateCommand) {
+    AlarmCondition existedCondition = alarmConditionPersistenceService.getById(id);
+
+    if (updateCommand.getType() != existedCondition.getType()) {
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR, "Can not change Alarm Condition Type");
+    }
+
+    mapper.map(updateCommand, existedCondition);
+//    newCondition.setId(existedCondition.getId());
+//    newCondition.setSensorConfiguration(existedCondition.getSensorConfiguration());
+//    newCondition.setType(existedCondition.getType());
+//    newCondition.setCron(existedCondition.getCron());
+//    newCondition.setActions(existedCondition.getActions());
+
+    return alarmConditionPersistenceService.update(existedCondition);
   }
 }

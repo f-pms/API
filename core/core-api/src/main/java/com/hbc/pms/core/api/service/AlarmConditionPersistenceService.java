@@ -27,6 +27,15 @@ public class AlarmConditionPersistenceService {
     return mapper.map(alarmConditionRepository.save(entity), AlarmCondition.class);
   }
 
+  public AlarmCondition update(AlarmCondition alarmCondition) {
+    AlarmCondition existedCondition = getById(alarmCondition.getId());
+    mapper.map(alarmCondition, existedCondition);
+
+    AlarmConditionEntity entity = mapper.map(alarmCondition, AlarmConditionEntity.class);
+
+    return mapper.map(alarmConditionRepository.save(entity), AlarmCondition.class);
+  }
+
   public List<AlarmCondition> getAll() {
     return StreamSupport.stream(alarmConditionRepository.findAll().spliterator(), false)
         .map(b -> mapper.map(b, AlarmCondition.class))
