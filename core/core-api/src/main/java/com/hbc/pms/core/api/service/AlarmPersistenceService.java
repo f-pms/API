@@ -46,7 +46,8 @@ public class AlarmPersistenceService {
 
   public List<AlarmHistory> getAllHistoriesByStatus(AlarmStatus status) {
     var entities = alarmHistoryRepository.findAllByStatus(status);
-    return entities.stream().map(e -> mapper.map(e, AlarmHistory.class)).toList();
+    var a= entities.stream().map(e -> mapper.map(e, AlarmHistory.class)).toList();
+    return a;
   }
 
   public AlarmHistory createHistoryByCondition(AlarmCondition condition) {
