@@ -5,7 +5,6 @@ import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity;
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository;
-import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;

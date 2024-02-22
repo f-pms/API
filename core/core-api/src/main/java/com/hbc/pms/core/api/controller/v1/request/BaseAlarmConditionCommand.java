@@ -4,12 +4,10 @@ import com.hbc.pms.core.model.enums.AlarmSeverity;
 import com.hbc.pms.core.model.enums.AlarmType;
 import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.AssertTrue;
-import java.lang.annotation.Documented;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
 @Data
-@Documented
 public class BaseAlarmConditionCommand {
   private Boolean isEnabled = true;
   private AlarmSeverity severity;
