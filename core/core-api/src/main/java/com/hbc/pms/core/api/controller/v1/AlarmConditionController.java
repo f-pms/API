@@ -2,6 +2,7 @@ package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
+import com.hbc.pms.core.api.controller.v1.response.AlarmConditionResponse;
 import com.hbc.pms.core.api.service.AlarmActionPersistenceService;
 import com.hbc.pms.core.api.service.AlarmActionService;
 import com.hbc.pms.core.api.service.AlarmConditionPersistenceService;
@@ -78,11 +79,9 @@ public class AlarmConditionController {
   }
 
   @GetMapping
-  public ApiResponse<List<AlarmCondition>> getAll() {
-    List<AlarmCondition> alarmConditions =
-        alarmConditionPersistenceService.getAll().stream()
-            .map(ac -> mapper.map(ac, AlarmCondition.class))
-            .toList();
+  public ApiResponse<List<AlarmConditionResponse>> getAll() {
+    List<AlarmConditionResponse> alarmConditions =
+        alarmConditionService.getAllWithBlueprints().stream().toList();
 
     return ApiResponse.success(alarmConditions);
   }

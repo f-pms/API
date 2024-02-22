@@ -5,6 +5,7 @@ import com.hbc.pms.core.api.controller.v1.response.SensorConfigurationResponse;
 import com.hbc.pms.core.api.support.error.CoreApiException;
 import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.AlarmCondition;
+import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity;
@@ -62,6 +63,11 @@ public class SensorConfigurationPersistenceService {
       throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, SENSOR_CONFIG_NOT_FOUND_LITERAL + id);
     }
     return mapper.map(entity.get(), SensorConfiguration.class);
+  }
+
+  public Blueprint getAssociatedBlueprint(Long id) {
+    var entity = sensorConfigurationRepository.findById(id);
+    return mapper.map(entity.get().getBlueprint(), Blueprint.class);
   }
 
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {

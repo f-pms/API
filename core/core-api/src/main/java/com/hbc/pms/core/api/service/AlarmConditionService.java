@@ -2,11 +2,14 @@ package com.hbc.pms.core.api.service;
 
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
+import com.hbc.pms.core.api.controller.v1.response.AlarmConditionResponse;
+import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
 import com.hbc.pms.core.api.support.error.CoreApiException;
 import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.SensorConfiguration;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -43,5 +46,21 @@ public class AlarmConditionService {
     mapper.map(updateCommand, existedCondition);
 
     return alarmConditionPersistenceService.update(existedCondition);
+  }
+
+  public List<AlarmConditionResponse> getAllWithBlueprints() {
+    List<AlarmConditionResponse> conditions =
+        alarmConditionPersistenceService.getAll().stream()
+            .map(c -> mapper.map(c, AlarmConditionResponse.class))
+            .toList();
+
+    conditions.forEach(
+        c ->
+            c.setBlueprint(
+                mapper.map(
+                    sensorConfigurationPersistenceService.getAssociatedBlueprint(c.getId()),
+                    AlarmConditionResponse.BlueprintForConditionResponse.class)));
+
+    return conditions;
   }
 }

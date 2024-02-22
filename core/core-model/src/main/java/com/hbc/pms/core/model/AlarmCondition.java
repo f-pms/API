@@ -53,15 +53,4 @@ public class AlarmCondition {
     }
     return false;
   }
-
-  public int getCheckInterval() {
-    String nonNumberPattern = "[^\\d.]";
-    String[] parts = cron.split(" ");
-    int second = Integer.parseInt(parts[0].replaceAll(nonNumberPattern, ""));
-    int minute =
-        parts[1].replaceAll(nonNumberPattern, "").isEmpty()
-            ? 0
-            : Integer.parseInt(parts[1].replaceAll(nonNumberPattern, ""));
-    return second + minute * 60;
-  }
 }
