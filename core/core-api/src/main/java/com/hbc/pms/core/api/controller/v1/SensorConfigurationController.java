@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
+import com.hbc.pms.core.api.controller.v1.response.SensorConfigurationResponse;
 import com.hbc.pms.core.api.service.SensorConfigurationPersistenceService;
 import com.hbc.pms.core.api.support.response.ApiResponse;
 import com.hbc.pms.core.model.SensorConfiguration;
@@ -17,7 +18,9 @@ public class SensorConfigurationController {
   private final SensorConfigurationPersistenceService sensorConfigurationPersistenceService;
 
   @GetMapping()
-  public ApiResponse<List<SensorConfiguration>> getAll(SearchBlueprintCommand searchCommand) {
-    return ApiResponse.success(sensorConfigurationPersistenceService.getAll(searchCommand));
+  public ApiResponse<List<SensorConfigurationResponse>> getAll(
+      SearchBlueprintCommand searchCommand) {
+    return ApiResponse.success(
+        sensorConfigurationPersistenceService.getAllWithAlarmStatus(searchCommand));
   }
 }

@@ -8,7 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface SensorConfigurationRepository
     extends CrudRepository<SensorConfigurationEntity, Long> {
-
   @Query(
       "SELECT sc FROM SensorConfigurationEntity sc"
           + " WHERE (:blueprintType is null or sc.blueprint.type = :blueprintType)"

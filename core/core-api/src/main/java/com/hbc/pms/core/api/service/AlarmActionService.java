@@ -46,6 +46,6 @@ public class AlarmActionService {
 
     mapper.map(updatingAction, existedAction);
 
-    return alarmActionPersistenceService.update(conditionId, updatingAction);
+    return alarmActionPersistenceService.update(conditionId, existedAction);
   }
 }

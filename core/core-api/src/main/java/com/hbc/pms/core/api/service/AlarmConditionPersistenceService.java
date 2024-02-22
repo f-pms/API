@@ -5,6 +5,7 @@ import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity;
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,13 @@ public class AlarmConditionPersistenceService {
   private final AlarmConditionRepository alarmConditionRepository;
 
   public AlarmCondition create(AlarmCondition alarmCondition) {
+    if (hasAttachedAlarm(alarmCondition.getSensorConfiguration().getId())) {
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR,
+          "Existed Alarm Sensor Configuration with id: "
+              + alarmCondition.getSensorConfiguration().getId());
+    }
+
     var entity = mapper.map(alarmCondition, AlarmConditionEntity.class);
 
     for (var action : entity.getActions()) {
@@ -58,5 +66,9 @@ public class AlarmConditionPersistenceService {
     }
 
     return mapper.map(oCondition.get(), AlarmCondition.class);
+  }
+
+  public boolean hasAttachedAlarm(Long sensorConfigurationId) {
+    return alarmConditionRepository.findBySensorConfiguration_Id(sensorConfigurationId) != null;
   }
 }

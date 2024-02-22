@@ -1,8 +1,10 @@
 package com.hbc.pms.core.api.service;
 
 import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
+import com.hbc.pms.core.api.controller.v1.response.SensorConfigurationResponse;
 import com.hbc.pms.core.api.support.error.CoreApiException;
 import com.hbc.pms.core.api.support.error.ErrorType;
+import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.SensorConfiguration;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity;
@@ -19,6 +21,7 @@ public class SensorConfigurationPersistenceService {
 
   private final ModelMapper mapper;
   private final SensorConfigurationRepository sensorConfigurationRepository;
+  private final AlarmConditionPersistenceService alarmConditionPersistenceService;
   private static final String SENSOR_CONFIG_NOT_FOUND_LITERAL =
       "Sensor configuration not found with id: ";
 
@@ -31,6 +34,26 @@ public class SensorConfigurationPersistenceService {
             false)
         .map(b -> mapper.map(b, SensorConfiguration.class))
         .toList();
+  }
+
+  public List<SensorConfigurationResponse> getAllWithAlarmStatus(
+      SearchBlueprintCommand searchCommand) {
+    List<Long> attachedToAlarmIds =
+        alarmConditionPersistenceService.getAll().stream().map(AlarmCondition::getId).toList();
+
+    var result =
+        StreamSupport.stream(
+                sensorConfigurationRepository
+                    .findAllByBlueprint_TypeAndBlueprint_Name(
+                        searchCommand.getBlueprintType(), searchCommand.getBlueprintName())
+                    .spliterator(),
+                false)
+            .map(b -> mapper.map(b, SensorConfigurationResponse.class))
+            .toList();
+
+    result.forEach(s -> s.setAttachedToAlarm(attachedToAlarmIds.contains(s.getId())));
+
+    return result;
   }
 
   public SensorConfiguration get(Long id) {

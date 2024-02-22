@@ -20,7 +20,7 @@ public class CreateAlarmConditionCommand extends BaseAlarmConditionCommand {
   public static class AlarmActionCommand {
     private AlarmActionType type;
     private String message;
-    private Set<String> recipientIds;
+    private Set<String> recipients;
 
     private boolean isEmailType() {
       return type == AlarmActionType.EMAIL;
@@ -29,7 +29,7 @@ public class CreateAlarmConditionCommand extends BaseAlarmConditionCommand {
     @AssertTrue(message = "Set at least 1 recipients for Email")
     private boolean isValidRecipients() {
       if (isEmailType()) {
-        return recipientIds != null && !recipientIds.isEmpty();
+        return recipients != null && !recipients.isEmpty();
       }
       return true;
     }

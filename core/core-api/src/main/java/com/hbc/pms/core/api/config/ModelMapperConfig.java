@@ -56,7 +56,7 @@ public class ModelMapperConfig {
     propertyMapper.addMappings(
         mapping ->
             mapping.map(
-                CreateAlarmConditionCommand.AlarmActionCommand::getRecipientIds,
+                CreateAlarmConditionCommand.AlarmActionCommand::getRecipients,
                 AlarmAction::setRecipients));
   }
 
