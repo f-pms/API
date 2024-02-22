@@ -2,6 +2,7 @@ package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.api.service.SensorConfigurationPersistenceService;
+import com.hbc.pms.core.api.support.response.ApiResponse;
 import com.hbc.pms.core.model.SensorConfiguration;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class SensorConfigurationController {
   private final SensorConfigurationPersistenceService sensorConfigurationPersistenceService;
 
   @GetMapping()
-  public List<SensorConfiguration> getAll(SearchBlueprintCommand searchCommand) {
-    return sensorConfigurationPersistenceService.getAll(searchCommand);
+  public ApiResponse<List<SensorConfiguration>> getAll(SearchBlueprintCommand searchCommand) {
+    return ApiResponse.success(sensorConfigurationPersistenceService.getAll(searchCommand));
   }
 }
