@@ -21,6 +21,9 @@ hbc:
     publisher:
       enabled: true
   origins: http://localhost:5173
+  mail:
+    from: PMS <pms@ohtgo.me>
+    subject: Alarm notification
 
 server:
   tomcat:

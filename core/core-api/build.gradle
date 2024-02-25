@@ -22,6 +22,9 @@ dependencies {
 
   implementation 'io.vavr:vavr:0.10.4'
 
+  implementation 'org.springframework.retry:spring-retry:2.0.5'
+  implementation 'org.springframework:spring-aspects'
+
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
   runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
   runtimeOnly 'com.h2database:h2'

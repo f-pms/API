@@ -9,15 +9,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PopupChannel implements Channel {
+public class PopupChannel extends Channel {
 
   private final WebSocketService webSocketService;
 
   @Override
-  public void notify(AlarmAction action, AlarmCondition condition) {
-    if (!action.getType().equals(AlarmActionType.POPUP)) {
-      return;
-    }
+  protected boolean filter(AlarmAction action) {
+    return AlarmActionType.POPUP.equals(action.getType());
+  }
+
+  @Override
+  protected void send(AlarmAction action, AlarmCondition condition) {
     webSocketService.fireAlarm(condition.getId() + ": " + action.getMessage());
   }
 }
