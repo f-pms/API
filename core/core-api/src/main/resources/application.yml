@@ -17,7 +17,7 @@ spring:
 
 hbc:
   plc:
-    url: s7://hbc-plc.ohtgo.me
+    url: ${PLC_ADDRESS:s7://hbc-plc.ohtgo.me}
     publisher:
       enabled: true
   origins: http://localhost:5173
