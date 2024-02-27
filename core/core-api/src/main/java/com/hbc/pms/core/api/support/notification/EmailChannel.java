@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class EmailChannel extends Channel {
+public class EmailChannel extends AbstractChannel {
 
   private final JavaMailSender emailSender;
 
