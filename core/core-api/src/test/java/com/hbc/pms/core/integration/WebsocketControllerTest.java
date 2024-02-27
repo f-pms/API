@@ -1,37 +1,37 @@
-//package com.hbc.pms.core.integration;
+// package com.hbc.pms.core.integration;
 //
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Disabled;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.boot.test.web.server.LocalServerPort;
-//import org.springframework.messaging.converter.StringMessageConverter;
-//import org.springframework.messaging.simp.stomp.StompFrameHandler;
-//import org.springframework.messaging.simp.stomp.StompHeaders;
-//import org.springframework.messaging.simp.stomp.StompSession;
-//import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
-//import org.springframework.test.context.ActiveProfiles;
-//import org.springframework.web.socket.client.standard.StandardWebSocketClient;
-//import org.springframework.web.socket.messaging.WebSocketStompClient;
-//import org.springframework.web.socket.sockjs.client.SockJsClient;
-//import org.springframework.web.socket.sockjs.client.WebSocketTransport;
+// import org.junit.jupiter.api.BeforeEach;
+// import org.junit.jupiter.api.Disabled;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.beans.factory.annotation.Value;
+// import org.springframework.boot.test.context.SpringBootTest;
+// import org.springframework.boot.test.web.server.LocalServerPort;
+// import org.springframework.messaging.converter.StringMessageConverter;
+// import org.springframework.messaging.simp.stomp.StompFrameHandler;
+// import org.springframework.messaging.simp.stomp.StompHeaders;
+// import org.springframework.messaging.simp.stomp.StompSession;
+// import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+// import org.springframework.test.context.ActiveProfiles;
+// import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+// import org.springframework.web.socket.messaging.WebSocketStompClient;
+// import org.springframework.web.socket.sockjs.client.SockJsClient;
+// import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 //
-//import java.lang.reflect.Type;
-//import java.util.List;
-//import java.util.concurrent.ArrayBlockingQueue;
-//import java.util.concurrent.BlockingQueue;
+// import java.lang.reflect.Type;
+// import java.util.List;
+// import java.util.concurrent.ArrayBlockingQueue;
+// import java.util.concurrent.BlockingQueue;
 //
-//import static java.util.concurrent.TimeUnit.SECONDS;
-//import static org.awaitility.Awaitility.await;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
+// import static java.util.concurrent.TimeUnit.SECONDS;
+// import static org.awaitility.Awaitility.await;
+// import static org.junit.jupiter.api.Assertions.assertEquals;
 //
-//@SpringBootTest(
+// @SpringBootTest(
 //    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
-//)
-//@ActiveProfiles("local")
-//@Disabled
-//public class WebsocketControllerTest {
+// )
+// @ActiveProfiles("local")
+// @Disabled
+// public class WebsocketControllerTest {
 //  @LocalServerPort
 //  private Integer port;
 //
@@ -39,7 +39,8 @@
 //
 //  @BeforeEach
 //  void setup() {
-//    this.webSocketStompClient = new WebSocketStompClient(new SockJsClient(List.of(new WebSocketTransport(new StandardWebSocketClient()))));
+//    this.webSocketStompClient = new WebSocketStompClient(new SockJsClient(List.of(new
+// WebSocketTransport(new StandardWebSocketClient()))));
 //  }
 //
 //  private String getWsPath() {
@@ -69,4 +70,4 @@
 //        .atMost(1, SECONDS)
 //        .untilAsserted(() -> assertEquals("Hello, Mike!", blockingQueue.poll()));
 //  }
-//}
+// }

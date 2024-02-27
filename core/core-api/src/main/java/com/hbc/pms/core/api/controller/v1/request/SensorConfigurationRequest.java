@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class SensorConfigurationRequest {
+
   private String address;
   private double x;
   private double y;

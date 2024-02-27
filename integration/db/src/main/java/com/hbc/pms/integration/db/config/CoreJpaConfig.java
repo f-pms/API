@@ -9,6 +9,4 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EntityScan(basePackages = "com.hbc.pms.integration.db")
 @EnableJpaRepositories(basePackages = "com.hbc.pms.integration.db")
-class CoreJpaConfig {
-
-}
+class CoreJpaConfig {}

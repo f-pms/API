@@ -17,11 +17,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: connect to remote server
-      uses: npgy/cloudflared-ssh-action@v2.0
-      with:
-        host: ${{ vars.HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        private_key: ${{ secrets.SSH_PRIVKEY }}
-        port: ${{ secrets.SSH_PORT }}
-        commands: docker run -p 9200:8080 -e environment=dev -d huybui479/rms:{{inputs.version}}
+      - name: connect to remote server
+        uses: npgy/cloudflared-ssh-action@v2.0
+        with:
+          host: ${{ vars.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          private_key: ${{ secrets.SSH_PRIVKEY }}
+          port: ${{ secrets.SSH_PORT }}
+          commands: docker run -p 9200:8080 -e environment=dev -d huybui479/rms:{{inputs.version}}

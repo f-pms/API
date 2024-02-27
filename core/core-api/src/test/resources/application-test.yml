@@ -1,0 +1,14 @@
+spring:
+  liquibase:
+    enabled: true
+hbc:
+  plc:
+    url: mock:scraper
+integration:
+  datasource:
+    core:
+      driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+      jdbc-url: jdbc:tc:sqlserver:2017-CU12:///F-PMS
+      pool-name: db-pool
+      data-source-properties:
+        rewriteBatchedStatements: true

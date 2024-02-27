@@ -9,25 +9,24 @@ import com.hbc.pms.integration.db.entity.AlarmConditionEntity;
 import com.hbc.pms.integration.db.entity.AlarmHistoryEntity;
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository;
 import com.hbc.pms.integration.db.repository.AlarmHistoryRepository;
+import java.util.List;
+import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.StreamSupport;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class AlarmPersistenceService {
+
   private final ModelMapper mapper;
   private final AlarmConditionRepository alarmConditionRepository;
   private final AlarmHistoryRepository alarmHistoryRepository;
 
   public List<AlarmCondition> getAllConditions() {
-    return StreamSupport
-        .stream(alarmConditionRepository.findAll().spliterator(), false)
+    return StreamSupport.stream(alarmConditionRepository.findAll().spliterator(), false)
         .map(b -> mapper.map(b, AlarmCondition.class))
         .toList();
   }
@@ -35,7 +34,8 @@ public class AlarmPersistenceService {
   public AlarmCondition getConditionById(Long id) {
     var oCondition = alarmConditionRepository.findById(id);
     if (oCondition.isEmpty()) {
-      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, "Alarm condition not found with id: " + id);
+      throw new CoreApiException(
+          ErrorType.NOT_FOUND_ERROR, "Alarm condition not found with id: " + id);
     }
     return mapper.map(oCondition.get(), AlarmCondition.class);
   }
@@ -46,10 +46,8 @@ public class AlarmPersistenceService {
 
   public List<AlarmHistory> getAllHistoriesByStatus(AlarmStatus status) {
     var entities = alarmHistoryRepository.findAllByStatus(status);
-    return entities
-        .stream()
-        .map(e -> mapper.map(e, AlarmHistory.class))
-        .toList();
+    var a= entities.stream().map(e -> mapper.map(e, AlarmHistory.class)).toList();
+    return a;
   }
 
   public AlarmHistory createHistoryByCondition(AlarmCondition condition) {
