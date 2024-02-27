@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SensorConfigurationController {
   private final SensorConfigurationPersistenceService sensorConfigurationPersistenceService;
 
-  @GetMapping()
+  @GetMapping
   public ApiResponse<List<SensorConfigurationResponse>> getAll(
       SearchBlueprintCommand searchCommand) {
     return ApiResponse.success(

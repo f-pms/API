@@ -39,7 +39,7 @@ public class BlueprintController {
     return ApiResponse.success(response);
   }
 
-  @PostMapping()
+  @PostMapping
   public ApiResponse<BlueprintResponse> create(@RequestBody BlueprintRequest body) {
     var blueprint = mapper.map(body, Blueprint.class);
     var response =

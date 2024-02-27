@@ -27,8 +27,7 @@ public class BlueprintPersistenceService {
     return StreamSupport.stream(
             blueprintRepository
                 .findAllByTypeAndName(
-                    searchCommand.getBlueprintType(),
-                    searchCommand.getBlueprintName())
+                    searchCommand.getBlueprintType(), searchCommand.getBlueprintName())
                 .spliterator(),
             false)
         .map(b -> mapper.map(b, Blueprint.class))
