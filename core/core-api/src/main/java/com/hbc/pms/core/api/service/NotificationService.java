@@ -1,7 +1,6 @@
 package com.hbc.pms.core.api.service;
 
-import com.hbc.pms.core.api.support.notification.EmailChannel;
-import com.hbc.pms.core.api.support.notification.PopupChannel;
+import com.hbc.pms.core.api.support.notification.Channel;
 import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.AlarmHistory;
@@ -19,8 +18,7 @@ import org.springframework.stereotype.Service;
 public class NotificationService {
 
   private final ExecutorService executor = Executors.newFixedThreadPool(5);
-  private final PopupChannel popupChannel;
-  private final EmailChannel emailChannel;
+  private final List<Channel> channels;
 
   public void notify(List<AlarmHistory> histories) {
     histories.forEach(
@@ -34,8 +32,7 @@ public class NotificationService {
   private void notifyAsync(AlarmAction action, AlarmCondition condition) {
     CompletableFuture.runAsync(
         () -> {
-          popupChannel.notify(action, condition);
-          emailChannel.notify(action, condition);
+          channels.forEach(c -> c.notify(action, condition));
         },
         executor);
   }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PopupChannel extends Channel {
+public class PopupChannel extends AbstractChannel {
 
   private final WebSocketService webSocketService;
 
