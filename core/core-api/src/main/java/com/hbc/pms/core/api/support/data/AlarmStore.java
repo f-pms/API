@@ -25,6 +25,10 @@ public class AlarmStore {
         .filter(
             condition -> {
               var address = condition.getSensorConfiguration().getAddress();
+              if (!rawData.containsKey(address)) {
+                return false;
+              }
+
               var currentValue = rawData.get(address).getPlcValue().getDouble();
               if (condition.isMet(currentValue)) {
                 holdingConditionsMap.remove(condition.getId());
