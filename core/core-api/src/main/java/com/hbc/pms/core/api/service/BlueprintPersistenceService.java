@@ -28,9 +28,7 @@ public class BlueprintPersistenceService {
     return StreamSupport.stream(
             blueprintRepository
                 .findAllByTypeAndName(
-                    searchCommand.getBlueprintType() == null
-                        ? BlueprintType.MONITORING
-                        : searchCommand.getBlueprintType(),
+                    searchCommand.getBlueprintType(),
                     searchCommand.getBlueprintName())
                 .spliterator(),
             false)
