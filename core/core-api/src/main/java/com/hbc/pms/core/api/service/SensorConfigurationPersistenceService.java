@@ -20,11 +20,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SensorConfigurationPersistenceService {
 
+  private static final String SENSOR_CONFIG_NOT_FOUND_LITERAL =
+      "Sensor configuration not found with id: ";
   private final ModelMapper mapper;
   private final SensorConfigurationRepository sensorConfigurationRepository;
   private final AlarmConditionPersistenceService alarmConditionPersistenceService;
-  private static final String SENSOR_CONFIG_NOT_FOUND_LITERAL =
-      "Sensor configuration not found with id: ";
 
   public List<SensorConfiguration> getAll(SearchBlueprintCommand searchCommand) {
     return StreamSupport.stream(

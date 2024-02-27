@@ -31,13 +31,6 @@ public class AlarmConditionResponse {
   private BlueprintForConditionResponse blueprint;
   private List<AlarmAction> actions;
 
-  @Data
-  public static class BlueprintForConditionResponse {
-    private Long id;
-    private String name;
-    private String description;
-  }
-
   public int getCheckInterval() {
     String nonNumberPattern = "[^\\d.]";
     String[] parts = cron.split(" ");
@@ -47,5 +40,12 @@ public class AlarmConditionResponse {
             ? 0
             : Integer.parseInt(parts[1].replaceAll(nonNumberPattern, ""));
     return second + minute * 60;
+  }
+
+  @Data
+  public static class BlueprintForConditionResponse {
+    private Long id;
+    private String name;
+    private String description;
   }
 }

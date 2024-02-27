@@ -4,7 +4,6 @@ import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.api.support.error.CoreApiException;
 import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.Blueprint;
-import com.hbc.pms.core.model.enums.BlueprintType;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.repository.BlueprintRepository;
 import java.util.List;

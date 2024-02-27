@@ -10,7 +10,6 @@ import com.hbc.pms.core.api.service.AlarmConditionService;
 import com.hbc.pms.core.api.support.response.ApiResponse;
 import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
