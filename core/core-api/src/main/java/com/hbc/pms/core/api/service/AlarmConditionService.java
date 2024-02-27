@@ -58,7 +58,8 @@ public class AlarmConditionService {
         c ->
             c.setBlueprint(
                 mapper.map(
-                    sensorConfigurationPersistenceService.getAssociatedBlueprint(c.getId()),
+                    sensorConfigurationPersistenceService.getAssociatedBlueprint(
+                        c.getSensorConfiguration().getId()),
                     AlarmConditionResponse.BlueprintForConditionResponse.class)));
 
     return conditions;

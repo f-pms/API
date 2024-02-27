@@ -67,6 +67,7 @@ public class SensorConfigurationPersistenceService {
 
   public Blueprint getAssociatedBlueprint(Long id) {
     var entity = sensorConfigurationRepository.findById(id);
+    var bp = entity.get().getBlueprint();
     return mapper.map(entity.get().getBlueprint(), Blueprint.class);
   }
 
