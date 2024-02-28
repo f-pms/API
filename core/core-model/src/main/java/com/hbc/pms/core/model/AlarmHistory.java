@@ -16,7 +16,8 @@ public class AlarmHistory {
 
   private Long id;
   private AlarmStatus status;
-  private OffsetDateTime createdAt;
-  private OffsetDateTime updatedAt;
+  private OffsetDateTime triggeredAt;
+  private OffsetDateTime sentAt;
+  private OffsetDateTime solvedAt;
   private AlarmCondition alarmCondition;
 }

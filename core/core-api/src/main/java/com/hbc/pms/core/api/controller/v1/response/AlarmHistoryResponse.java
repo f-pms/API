@@ -9,7 +9,8 @@ import lombok.Data;
 public class AlarmHistoryResponse {
   private Long id;
   private AlarmStatus status;
-  private OffsetDateTime createdAt;
-  private OffsetDateTime updatedAt;
+  private OffsetDateTime triggeredAt;
+  private OffsetDateTime sentAt;
+  private OffsetDateTime solvedAt;
   private AlarmCondition alarmCondition;
 }

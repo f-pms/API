@@ -9,6 +9,7 @@ import com.hbc.pms.integration.db.entity.AlarmConditionEntity;
 import com.hbc.pms.integration.db.entity.AlarmHistoryEntity;
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository;
 import com.hbc.pms.integration.db.repository.AlarmHistoryRepository;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
@@ -51,13 +52,17 @@ public class AlarmPersistenceService {
 
   public AlarmHistory createHistoryByCondition(AlarmCondition condition) {
     var conditionEntity = mapper.map(condition, AlarmConditionEntity.class);
-    var historyEntity = AlarmHistoryEntity.builder().alarmCondition(conditionEntity).build();
+    var historyEntity =
+        AlarmHistoryEntity.builder()
+            .alarmCondition(conditionEntity)
+            .status(AlarmStatus.TRIGGERED)
+            .triggeredAt(OffsetDateTime.now())
+            .build();
     return mapper.map(alarmHistoryRepository.save(historyEntity), AlarmHistory.class);
   }
 
-  public void updateStatusHistory(AlarmHistory history, AlarmStatus status) {
+  public void updateHistory(AlarmHistory history) {
     var historyEntity = mapper.map(history, AlarmHistoryEntity.class);
-    historyEntity.setStatus(status);
     alarmHistoryRepository.save(historyEntity);
   }
 }

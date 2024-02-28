@@ -4,6 +4,7 @@ import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.AlarmHistory;
 import com.hbc.pms.core.model.enums.AlarmStatus;
 import io.vavr.control.Try;
+import java.time.OffsetDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +48,22 @@ public class AlarmService {
               && !(status.equals(AlarmStatus.SENT) || status.equals(AlarmStatus.SOLVED))) {
             return;
           }
-          alarmPersistenceService.updateStatusHistory(history, status);
+
+          switch (status) {
+            case TRIGGERED -> {
+              history.setStatus(AlarmStatus.TRIGGERED);
+              history.setTriggeredAt(OffsetDateTime.now());
+            }
+            case SENT -> {
+              history.setStatus(AlarmStatus.SENT);
+              history.setSentAt(OffsetDateTime.now());
+            }
+            case SOLVED -> {
+              history.setStatus(AlarmStatus.SOLVED);
+              history.setSolvedAt(OffsetDateTime.now());
+            }
+          }
+          alarmPersistenceService.updateHistory(history);
         });
   }
 }
