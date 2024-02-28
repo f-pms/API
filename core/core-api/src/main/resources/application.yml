@@ -20,7 +20,7 @@ hbc:
     url: ${PLC_ADDRESS:s7://hbc-plc.ohtgo.me}
     publisher:
       enabled: true
-  origins: http://localhost:5173
+  origins: ${CORS_ORIGINS:http://localhost:5173}
   mail:
     from: PMS <pms@ohtgo.me>
     subject: Alarm notification
