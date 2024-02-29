@@ -38,7 +38,7 @@ public class AppScheduler {
     if (histories.isEmpty()) {
       return;
     }
-    notificationService.notify(histories);
     alarmService.updateStatusHistories(histories, AlarmStatus.SENT);
+    notificationService.notify(histories);
   }
 }
