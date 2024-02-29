@@ -2,6 +2,7 @@ package com.hbc.pms.integration.db.entity;
 
 import com.hbc.pms.core.model.enums.AlarmSeverity;
 import com.hbc.pms.core.model.enums.AlarmType;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -35,8 +36,6 @@ public class AlarmConditionEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column private String name;
-
   @Column private boolean isEnabled; // TODO: will implement
 
   @Column
@@ -59,6 +58,12 @@ public class AlarmConditionEntity {
 
   @Column private Double max;
 
-  @OneToMany(mappedBy = "condition", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "condition", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+  private List<AlarmHistoryEntity> histories;
+
+  @OneToMany(
+      mappedBy = "condition",
+      fetch = FetchType.EAGER,
+      cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   private List<AlarmActionEntity> actions;
 }

@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.request.BlueprintRequest;
+import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController()
+@RestController
 @RequestMapping("blueprints")
 @RequiredArgsConstructor
 public class BlueprintController {
@@ -29,16 +30,16 @@ public class BlueprintController {
   private final BlueprintPersistenceService blueprintPersistenceService;
   private final SensorConfigurationPersistenceService sensorConfigurationPersistenceService;
 
-  @GetMapping()
-  public ApiResponse<List<BlueprintResponse>> getBlueprints() {
+  @GetMapping
+  public ApiResponse<List<BlueprintResponse>> getBlueprints(SearchBlueprintCommand searchCommand) {
     var response =
-        blueprintPersistenceService.getAll().stream()
+        blueprintPersistenceService.getAll(searchCommand).stream()
             .map(b -> mapper.map(b, BlueprintResponse.class))
             .toList();
     return ApiResponse.success(response);
   }
 
-  @PostMapping()
+  @PostMapping
   public ApiResponse<BlueprintResponse> create(@RequestBody BlueprintRequest body) {
     var blueprint = mapper.map(body, Blueprint.class);
     var response =
@@ -76,7 +77,7 @@ public class BlueprintController {
       @PathVariable Long blueprintId,
       @PathVariable Long sensorConfigurationId,
       @RequestBody UpdateSensorConfigurationRequest body) {
-    body.aggregateData();
+    body.aggregatePlcAddress();
     var sensorConfiguration = mapper.map(body, SensorConfiguration.class);
     sensorConfiguration.setId(sensorConfigurationId);
     var response = sensorConfigurationPersistenceService.update(blueprintId, sensorConfiguration);

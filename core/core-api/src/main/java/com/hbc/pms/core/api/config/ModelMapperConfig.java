@@ -1,8 +1,12 @@
 package com.hbc.pms.core.api.config;
 
+import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
+import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
 import com.hbc.pms.core.api.utils.StringUtils;
+import com.hbc.pms.core.model.AlarmAction;
+import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
 import java.util.ArrayList;
@@ -11,6 +15,7 @@ import java.util.List;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
 import org.modelmapper.ValidationException;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.ErrorMessage;
@@ -31,13 +36,63 @@ public class ModelMapperConfig {
     modelMapper
         .getConfiguration()
         .setMatchingStrategy(MatchingStrategies.STRICT)
-        .setSkipNullEnabled(true)
-        .setDeepCopyEnabled(true);
+        .setSkipNullEnabled(true);
+
+    addCreateActionCommandToActionTypeMap();
+    addCreateAlarmConditionCommandToAlarmConditionTypeMap();
+    addUpdateAlarmConditionCommandToAlarmConditionTypeMap();
 
     addUpdateSensorConfigurationRequestToSensorConfigurationTypeMap();
     addSensorConfigurationToSensorConfigurationResponseTypeMap();
     addBlueprintToBlueprintResponseTypeMap();
     return modelMapper;
+  }
+
+  private void addCreateActionCommandToActionTypeMap() {
+    TypeMap<CreateAlarmConditionCommand.AlarmActionCommand, AlarmAction> propertyMapper =
+        modelMapper.createTypeMap(
+            CreateAlarmConditionCommand.AlarmActionCommand.class, AlarmAction.class);
+    propertyMapper.addMappings(
+        mapping ->
+            mapping.map(
+                CreateAlarmConditionCommand.AlarmActionCommand::getRecipients,
+                AlarmAction::setRecipients));
+  }
+
+  private void addCreateAlarmConditionCommandToAlarmConditionTypeMap() {
+    modelMapper
+        .createTypeMap(CreateAlarmConditionCommand.class, AlarmCondition.class)
+        .addMappings(
+            new PropertyMap<>() {
+              private final Converter<Integer, String> fromAddress =
+                  c -> {
+                    int seconds = c.getSource();
+                    return StringUtils.buildCronFromSeconds(seconds);
+                  };
+
+              @Override
+              protected void configure() {
+                using(fromAddress).map(source.getCheckInterval()).setCron("");
+              }
+            });
+  }
+
+  private void addUpdateAlarmConditionCommandToAlarmConditionTypeMap() {
+    modelMapper
+        .createTypeMap(UpdateAlarmConditionCommand.class, AlarmCondition.class)
+        .addMappings(
+            new PropertyMap<>() {
+              private final Converter<Integer, String> fromAddress =
+                  c -> {
+                    int seconds = c.getSource();
+                    return StringUtils.buildCronFromSeconds(seconds);
+                  };
+
+              @Override
+              protected void configure() {
+                using(fromAddress).map(source.getCheckInterval()).setCron("");
+              }
+            });
   }
 
   private void addUpdateSensorConfigurationRequestToSensorConfigurationTypeMap() {

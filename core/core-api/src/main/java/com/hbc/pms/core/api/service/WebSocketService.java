@@ -16,7 +16,7 @@ public class WebSocketService {
     this.template.convertAndSend(TOPIC_PREFIX + stationName, stationData);
   }
 
-  public void fireAlarm(String alarm) {
-    template.convertAndSend(TOPIC_PREFIX + "alarm", alarm);
+  public void fireAlarm(Map<String, String> alarmData) {
+    template.convertAndSend(TOPIC_PREFIX + "alarm", alarmData);
   }
 }

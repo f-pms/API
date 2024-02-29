@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.service;
 
+import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.api.support.error.CoreApiException;
 import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.Blueprint;
@@ -19,7 +20,16 @@ public class BlueprintPersistenceService {
   private final BlueprintRepository blueprintRepository;
 
   public List<Blueprint> getAll() {
-    return StreamSupport.stream(blueprintRepository.findAll().spliterator(), false)
+    return getAll(new SearchBlueprintCommand(null, null));
+  }
+
+  public List<Blueprint> getAll(SearchBlueprintCommand searchCommand) {
+    return StreamSupport.stream(
+            blueprintRepository
+                .findAllByTypeAndName(
+                    searchCommand.getBlueprintType(), searchCommand.getBlueprintName())
+                .spliterator(),
+            false)
         .map(b -> mapper.map(b, Blueprint.class))
         .toList();
   }

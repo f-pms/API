@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class SensorConfiguration {
-
   private Long id;
   private String address;
   private double x;

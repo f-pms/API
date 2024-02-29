@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 public class AlarmCondition {
 
   private Long id;
-  private String name;
   private boolean isEnabled;
   private AlarmSeverity severity;
   private SensorConfiguration sensorConfiguration;
@@ -51,5 +50,16 @@ public class AlarmCondition {
       return (value <= max);
     }
     return false;
+  }
+
+  public int getCheckInterval() {
+    String nonNumberPattern = "[^\\d.]";
+    String[] parts = cron.split(" ");
+    int second = Integer.parseInt(parts[0].replaceAll(nonNumberPattern, ""));
+    int minute =
+        parts[1].replaceAll(nonNumberPattern, "").isEmpty()
+            ? 0
+            : Integer.parseInt(parts[1].replaceAll(nonNumberPattern, ""));
+    return second + minute * 60;
   }
 }

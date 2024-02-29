@@ -19,8 +19,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "alarm_history")
@@ -37,16 +35,13 @@ public class AlarmHistoryEntity {
 
   @Column
   @Enumerated(EnumType.STRING)
-  @Builder.Default
-  private AlarmStatus status = AlarmStatus.TRIGGERED;
+  private AlarmStatus status;
 
-  @CreationTimestamp
-  @Column(updatable = false)
-  private OffsetDateTime createdAt;
-
-  @UpdateTimestamp @Column private OffsetDateTime updatedAt;
+  @Column private OffsetDateTime triggeredAt;
+  @Column private OffsetDateTime sentAt;
+  @Column private OffsetDateTime solvedAt;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)
-  private AlarmConditionEntity alarmCondition;
+  private AlarmConditionEntity condition;
 }

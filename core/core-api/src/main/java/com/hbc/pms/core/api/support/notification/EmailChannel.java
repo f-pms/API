@@ -2,6 +2,7 @@ package com.hbc.pms.core.api.support.notification;
 
 import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
+import com.hbc.pms.core.model.AlarmHistory;
 import com.hbc.pms.core.model.enums.AlarmActionType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +30,14 @@ public class EmailChannel extends AbstractChannel {
   }
 
   @Override
-  protected void send(AlarmAction action, AlarmCondition condition) {
+  protected void send(AlarmHistory history, AlarmCondition condition, AlarmAction action) {
     var emails = action.getRecipients();
     var message = new SimpleMailMessage();
     message.setFrom(from);
     message.setTo(emails.toArray(String[]::new));
     message.setSubject(subject);
-    message.setText(condition.getId() + ": " + action.getMessage());
+    message.setText(
+        "Message: " + action.getMessage() + "; TriggeredAt: " + history.getTriggeredAt());
     emailSender.send(message);
   }
 }

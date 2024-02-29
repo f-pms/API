@@ -25,7 +25,7 @@ public class AlarmHistoryHandler implements RmsHandler {
         histories.stream()
             .filter(
                 history -> {
-                  var condition = history.getAlarmCondition();
+                  var condition = history.getCondition();
                   var currentValue = response.get(condition.getSensorConfiguration().getAddress());
                   return condition.isMet(currentValue.getPlcValue().getDouble());
                 })

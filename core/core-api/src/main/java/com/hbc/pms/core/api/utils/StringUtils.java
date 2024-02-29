@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.utils;
 
+import java.text.MessageFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.AccessLevel;
@@ -15,5 +16,12 @@ public class StringUtils {
 
     Matcher matcher = pattern.matcher(address);
     return !matcher.matches();
+  }
+
+  public static String buildCronFromSeconds(int seconds) {
+    int minutes = seconds / 60;
+    seconds = seconds % 60;
+
+    return MessageFormat.format("*/{0} *{1} * * * *", seconds, minutes != 0 ? "/" + minutes : "");
   }
 }
