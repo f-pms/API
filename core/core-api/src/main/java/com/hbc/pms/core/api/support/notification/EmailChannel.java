@@ -36,7 +36,8 @@ public class EmailChannel extends AbstractChannel {
     message.setFrom(from);
     message.setTo(emails.toArray(String[]::new));
     message.setSubject(subject);
-    message.setText("Message: " + action.getMessage() + "; TriggeredAt: " + history.getTriggeredAt());
+    message.setText(
+        "Message: " + action.getMessage() + "; TriggeredAt: " + history.getTriggeredAt());
     emailSender.send(message);
   }
 }

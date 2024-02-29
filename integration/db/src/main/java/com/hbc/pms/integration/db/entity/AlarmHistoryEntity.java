@@ -1,7 +1,6 @@
 package com.hbc.pms.integration.db.entity;
 
 import com.hbc.pms.core.model.enums.AlarmStatus;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

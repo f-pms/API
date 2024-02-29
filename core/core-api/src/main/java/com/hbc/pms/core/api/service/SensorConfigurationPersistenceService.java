@@ -39,7 +39,9 @@ public class SensorConfigurationPersistenceService {
   public List<SensorConfigurationResponse> getAllWithAlarmStatus(
       SearchBlueprintCommand searchCommand) {
     List<Long> attachedToAlarmIds =
-        alarmConditionPersistenceService.getAll().stream().map(e -> e.getSensorConfiguration().getId()).toList();
+        alarmConditionPersistenceService.getAll().stream()
+            .map(e -> e.getSensorConfiguration().getId())
+            .toList();
 
     var result =
         StreamSupport.stream(

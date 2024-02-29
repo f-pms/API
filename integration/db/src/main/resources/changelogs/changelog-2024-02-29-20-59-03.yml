@@ -1,102 +1,102 @@
 databaseChangeLog:
-- changeSet:
-    id: 1709215150621-7
-    author: HTG (generated)
-    changes:
-    - dropForeignKeyConstraint:
-        baseTableName: alarm_history
-        constraintName: FKta2woanb4v1g72bfya5ywr91m
-- changeSet:
-    id: 1709215150621-1
-    author: HTG (generated)
-    changes:
-    - addColumn:
-        columns:
-        - column:
-            constraints:
-              nullable: false
-            name: condition_id
-            type: bigint
-        tableName: alarm_history
-- changeSet:
-    id: 1709215150621-2
-    author: HTG (generated)
-    changes:
-    - addColumn:
-        columns:
-        - column:
-            name: sent_at
-            type: datetimeoffset(6)
-        tableName: alarm_history
-- changeSet:
-    id: 1709215150621-3
-    author: HTG (generated)
-    changes:
-    - addColumn:
-        columns:
-        - column:
-            name: solved_at
-            type: datetimeoffset(6)
-        tableName: alarm_history
-- changeSet:
-    id: 1709215150621-4
-    author: HTG (generated)
-    changes:
-    - addColumn:
-        columns:
-        - column:
-            name: triggered_at
-            type: datetimeoffset(6)
-        tableName: alarm_history
-- changeSet:
-    id: 1709215150621-5
-    author: HTG (generated)
-    changes:
-    - addColumn:
-        columns:
-        - column:
-            name: type
-            type: varchar(255)
-        tableName: blueprint
-- changeSet:
-    id: 1709215150621-6
-    author: HTG (generated)
-    changes:
-    - addForeignKeyConstraint:
-        baseColumnNames: condition_id
-        baseTableName: alarm_history
-        constraintName: FKhqppxft68dd6s87oevqwhtmw7
-        deferrable: false
-        initiallyDeferred: false
-        referencedColumnNames: id
-        referencedTableName: alarm_condition
-        validate: true
-- changeSet:
-    id: 1709215150621-8
-    author: HTG (generated)
-    changes:
-    - dropColumn:
-        columnName: alarm_condition_id
-        tableName: alarm_history
-- changeSet:
-    id: 1709215150621-9
-    author: HTG (generated)
-    changes:
-    - dropColumn:
-        columnName: created_at
-        tableName: alarm_history
-- changeSet:
-    id: 1709215150621-10
-    author: HTG (generated)
-    changes:
-    - dropColumn:
-        columnName: name
-        tableName: alarm_condition
-- changeSet:
-    id: 1709215150621-11
-    author: HTG (generated)
-    changes:
-    - dropColumn:
-        columnName: updated_at
-        tableName: alarm_history
+  - changeSet:
+      id: 1709215150621-7
+      author: HTG (generated)
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: alarm_history
+            constraintName: FKta2woanb4v1g72bfya5ywr91m
+  - changeSet:
+      id: 1709215150621-1
+      author: HTG (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: condition_id
+                  type: bigint
+            tableName: alarm_history
+  - changeSet:
+      id: 1709215150621-2
+      author: HTG (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: sent_at
+                  type: datetimeoffset(6)
+            tableName: alarm_history
+  - changeSet:
+      id: 1709215150621-3
+      author: HTG (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: solved_at
+                  type: datetimeoffset(6)
+            tableName: alarm_history
+  - changeSet:
+      id: 1709215150621-4
+      author: HTG (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: triggered_at
+                  type: datetimeoffset(6)
+            tableName: alarm_history
+  - changeSet:
+      id: 1709215150621-5
+      author: HTG (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: type
+                  type: varchar(255)
+            tableName: blueprint
+  - changeSet:
+      id: 1709215150621-6
+      author: HTG (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: condition_id
+            baseTableName: alarm_history
+            constraintName: FKhqppxft68dd6s87oevqwhtmw7
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: alarm_condition
+            validate: true
+  - changeSet:
+      id: 1709215150621-8
+      author: HTG (generated)
+      changes:
+        - dropColumn:
+            columnName: alarm_condition_id
+            tableName: alarm_history
+  - changeSet:
+      id: 1709215150621-9
+      author: HTG (generated)
+      changes:
+        - dropColumn:
+            columnName: created_at
+            tableName: alarm_history
+  - changeSet:
+      id: 1709215150621-10
+      author: HTG (generated)
+      changes:
+        - dropColumn:
+            columnName: name
+            tableName: alarm_condition
+  - changeSet:
+      id: 1709215150621-11
+      author: HTG (generated)
+      changes:
+        - dropColumn:
+            columnName: updated_at
+            tableName: alarm_history
 

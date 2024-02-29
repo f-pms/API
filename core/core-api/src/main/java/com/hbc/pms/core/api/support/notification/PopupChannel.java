@@ -22,10 +22,10 @@ public class PopupChannel extends AbstractChannel {
 
   @Override
   protected void send(AlarmHistory history, AlarmCondition condition, AlarmAction action) {
-    var alarmData = Map.of(
-        "message", action.getMessage(),
-        "triggeredAt", history.getTriggeredAt().toString()
-    );
+    var alarmData =
+        Map.of(
+            "message", action.getMessage(),
+            "triggeredAt", history.getTriggeredAt().toString());
     webSocketService.fireAlarm(alarmData);
   }
 }
