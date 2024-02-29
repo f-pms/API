@@ -61,6 +61,13 @@ public class AlarmConditionEntity {
   @OneToMany(
       mappedBy = "condition",
       fetch = FetchType.EAGER,
+      cascade = CascadeType.REMOVE
+  )
+  private List<AlarmHistoryEntity> histories;
+
+  @OneToMany(
+      mappedBy = "condition",
+      fetch = FetchType.EAGER,
       cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   private List<AlarmActionEntity> actions;
 }

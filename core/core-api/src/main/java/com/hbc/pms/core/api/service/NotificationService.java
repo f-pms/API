@@ -23,7 +23,7 @@ public class NotificationService {
   public void notify(List<AlarmHistory> histories) {
     histories.forEach(
         history -> {
-          var condition = history.getAlarmCondition();
+          var condition = history.getCondition();
           var actions = condition.getActions();
           actions.forEach(action -> notifyAsync(history, condition, action));
         });

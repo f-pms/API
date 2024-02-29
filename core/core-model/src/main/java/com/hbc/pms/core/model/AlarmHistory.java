@@ -19,5 +19,5 @@ public class AlarmHistory {
   private OffsetDateTime triggeredAt;
   private OffsetDateTime sentAt;
   private OffsetDateTime solvedAt;
-  private AlarmCondition alarmCondition;
+  private AlarmCondition condition;
 }

@@ -1,6 +1,7 @@
 package com.hbc.pms.integration.db.entity;
 
 import com.hbc.pms.core.model.enums.AlarmStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -43,5 +44,5 @@ public class AlarmHistoryEntity {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(nullable = false)
-  private AlarmConditionEntity alarmCondition;
+  private AlarmConditionEntity condition;
 }

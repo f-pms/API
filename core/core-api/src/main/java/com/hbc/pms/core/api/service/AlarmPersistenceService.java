@@ -54,7 +54,7 @@ public class AlarmPersistenceService {
     var conditionEntity = mapper.map(condition, AlarmConditionEntity.class);
     var historyEntity =
         AlarmHistoryEntity.builder()
-            .alarmCondition(conditionEntity)
+            .condition(conditionEntity)
             .status(AlarmStatus.TRIGGERED)
             .triggeredAt(OffsetDateTime.now())
             .build();
