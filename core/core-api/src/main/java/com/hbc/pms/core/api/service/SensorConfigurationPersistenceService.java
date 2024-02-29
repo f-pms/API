@@ -4,7 +4,6 @@ import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.api.controller.v1.response.SensorConfigurationResponse;
 import com.hbc.pms.core.api.support.error.CoreApiException;
 import com.hbc.pms.core.api.support.error.ErrorType;
-import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
@@ -40,7 +39,7 @@ public class SensorConfigurationPersistenceService {
   public List<SensorConfigurationResponse> getAllWithAlarmStatus(
       SearchBlueprintCommand searchCommand) {
     List<Long> attachedToAlarmIds =
-        alarmConditionPersistenceService.getAll().stream().map(AlarmCondition::getId).toList();
+        alarmConditionPersistenceService.getAll().stream().map(e -> e.getSensorConfiguration().getId()).toList();
 
     var result =
         StreamSupport.stream(
