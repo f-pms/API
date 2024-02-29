@@ -73,7 +73,7 @@ public class WebSocketController {
   }
 
   @SendTo("/topic/alarm")
-  public String sendAlarm(String alarm) {
-    return alarm;
+  public Map<String, String> sendAlarm(Map<String, String> alarmData) {
+    return alarmData;
   }
 }

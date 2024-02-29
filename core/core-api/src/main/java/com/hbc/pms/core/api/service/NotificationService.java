@@ -25,14 +25,14 @@ public class NotificationService {
         history -> {
           var condition = history.getAlarmCondition();
           var actions = condition.getActions();
-          actions.forEach(action -> notifyAsync(action, condition));
+          actions.forEach(action -> notifyAsync(history, condition, action));
         });
   }
 
-  private void notifyAsync(AlarmAction action, AlarmCondition condition) {
+  private void notifyAsync(AlarmHistory history, AlarmCondition condition, AlarmAction action) {
     CompletableFuture.runAsync(
         () -> {
-          channels.forEach(c -> c.notify(action, condition));
+          channels.forEach(c -> c.notify(history, condition, action));
         },
         executor);
   }
