@@ -18,9 +18,6 @@ public class AlarmHistoryHandler implements RmsHandler {
   @Override
   public void handle(Map<String, IoResponse> response) {
     var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.SENT);
-    if (histories.isEmpty()) {
-      return;
-    }
     var solvedHistories =
         histories.stream()
             .filter(

@@ -6,6 +6,7 @@ import com.hbc.pms.core.model.enums.AlarmStatus;
 import io.vavr.control.Try;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class AlarmService {
 
   private final AlarmPersistenceService alarmPersistenceService;
+  private final WebSocketService webSocketService;
 
   public void createHistories(List<AlarmCondition> conditions) {
     var filteredConditions =
@@ -65,5 +67,10 @@ public class AlarmService {
           }
           alarmPersistenceService.updateHistory(history);
         });
+
+    // fire an empty event when has solved alarms
+    if (!histories.isEmpty()) {
+      webSocketService.fireAlarm(Map.of());
+    }
   }
 }
