@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <configuration>
     <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
         <encoder>
             <charset>utf8</charset>
-            <pattern>
-                %clr(%d{HH:mm:ss.SSS}){faint}|%clr(${level:-%5p})|%32X{traceId:-},%16X{spanId:-}|%clr(%-40.40logger{39}){cyan}%clr(|){faint}%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}
+            <pattern>%clr(&#8203;[%date{ISO8601}]){faint}|%clr(${level:-%5p})|%32X{traceId:-},%16X{spanId:-}|%clr(%-40.40logger{39}){cyan}%clr(|){faint}%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}
             </pattern>
         </encoder>
     </appender>
