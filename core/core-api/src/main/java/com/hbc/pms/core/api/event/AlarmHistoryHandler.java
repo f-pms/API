@@ -32,7 +32,7 @@ public class AlarmHistoryHandler implements RmsHandler {
     alarmService.updateStatusHistories(solvedHistories, AlarmStatus.SOLVED);
 
     // fire an empty event when has solved alarms
-    if (!histories.isEmpty()) {
+    if (!solvedHistories.isEmpty()) {
       webSocketService.fireAlarm(Map.of());
     }
   }
