@@ -2,12 +2,7 @@ package com.hbc.pms.core.api.task;
 
 import com.hbc.pms.core.api.service.AlarmPersistenceService;
 import com.hbc.pms.core.api.service.AlarmService;
-import com.hbc.pms.core.api.service.BlueprintPersistenceService;
 import com.hbc.pms.core.api.service.NotificationService;
-import com.hbc.pms.core.api.service.WebSocketService;
-import com.hbc.pms.core.api.support.data.AlarmStore;
-import com.hbc.pms.core.api.support.data.DataFetcher;
-import com.hbc.pms.core.api.support.data.DataProcessor;
 import com.hbc.pms.core.model.enums.AlarmStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,17 +14,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AppScheduler {
 
-  private static final int HALF_SECOND_DELAY_MILLIS = 500;
   private static final int ONE_SECOND_DELAY_MILLIS = 1000;
-  private static final String EVERY_SECOND_CRON = "*/1 * * * * *";
-
-  private final BlueprintPersistenceService blueprintPersistenceService;
-  private final DataFetcher dataFetcher;
-  private final DataProcessor dataProcessor;
-  private final WebSocketService webSocketService;
   private final AlarmPersistenceService alarmPersistenceService;
   private final AlarmService alarmService;
-  private final AlarmStore alarmStore;
   private final NotificationService notificationService;
 
   @Scheduled(fixedDelay = ONE_SECOND_DELAY_MILLIS)

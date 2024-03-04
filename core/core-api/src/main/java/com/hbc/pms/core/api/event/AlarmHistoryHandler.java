@@ -2,6 +2,7 @@ package com.hbc.pms.core.api.event;
 
 import com.hbc.pms.core.api.service.AlarmPersistenceService;
 import com.hbc.pms.core.api.service.AlarmService;
+import com.hbc.pms.core.api.service.WebSocketService;
 import com.hbc.pms.core.model.enums.AlarmStatus;
 import com.hbc.pms.plc.api.IoResponse;
 import java.util.Map;
@@ -14,13 +15,11 @@ public class AlarmHistoryHandler implements RmsHandler {
 
   private final AlarmPersistenceService alarmPersistenceService;
   private final AlarmService alarmService;
+  private final WebSocketService webSocketService;
 
   @Override
   public void handle(Map<String, IoResponse> response) {
     var histories = alarmPersistenceService.getAllHistoriesByStatus(AlarmStatus.SENT);
-    if (histories.isEmpty()) {
-      return;
-    }
     var solvedHistories =
         histories.stream()
             .filter(
@@ -31,5 +30,10 @@ public class AlarmHistoryHandler implements RmsHandler {
                 })
             .toList();
     alarmService.updateStatusHistories(solvedHistories, AlarmStatus.SOLVED);
+
+    // fire an empty event when has solved alarms
+    if (!solvedHistories.isEmpty()) {
+      webSocketService.fireAlarm(Map.of());
+    }
   }
 }
