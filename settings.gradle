@@ -1,8 +1,8 @@
 pluginManagement {
-    plugins {
-        id 'org.springframework.boot' version "${springBootVersion}"
-        id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
-    }
+  plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+  }
 }
 
 rootProject.name = 'PMS'
@@ -13,5 +13,6 @@ include 'integration:db'
 include 'integration:plc-integration'
 include 'integration:plc-api'
 include 'support:logging'
-
+include 'support:spock-test'
+findProject(':support:spock-test')?.name = 'spock-test'
 

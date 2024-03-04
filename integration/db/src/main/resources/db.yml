@@ -1,6 +1,7 @@
 spring:
   liquibase:
-    enabled: false
+    enabled: ${LIQUIBASE_ENABLED:false}
+    changelog: classpath:/master-changelog.yml
   jpa:
     hibernate:
       ddl-auto: none
@@ -15,9 +16,9 @@ integration:
   datasource:
     core:
       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      jdbc-url: jdbc:sqlserver://localhost:1433;trustServerCertificate=true;databaseName=F-PMS
-      username: sa
-      password: dev@123
+      jdbc-url: ${DATABASE_URL:jdbc:sqlserver://localhost:1433;trustServerCertificate=true;databaseName=F-PMS}
+      username: ${DATABASE_USER:sa}
+      password: ${DATABASE_PASSWORD:P@ssw0rd000}
       pool-name: db-pool
       data-source-properties:
         rewriteBatchedStatements: true

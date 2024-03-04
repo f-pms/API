@@ -1,90 +1,92 @@
 import java.text.SimpleDateFormat
 
 configurations {
-    liquibase
+  liquibase
 }
 
 dependencies {
-    api(group: "org.liquibase", name: "liquibase-core") {
-        version {
-            strictly liquibaseVersion
-        }
-    }
-    api(group: "org.liquibase.ext", name: "liquibase-hibernate6") {
-        exclude group: "org.slf4j", module: "slf4j-simple"
-        version {
-            strictly liquibaseVersion
-        }
-    }
 
-    liquibase 'org.springframework.boot:spring-boot-starter-data-jpa'
-    liquibase 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
+  api(group: "org.liquibase", name: "liquibase-core") {
+    version {
+      strictly liquibaseVersion
+    }
+  }
+  api(group: "org.liquibase.ext", name: "liquibase-hibernate6") {
+    exclude group: "org.slf4j", module: "slf4j-simple"
+    version {
+      strictly liquibaseVersion
+    }
+  }
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
-    runtimeOnly 'com.h2database:h2'
+  liquibase 'org.springframework.boot:spring-boot-starter-data-jpa'
+  liquibase 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
+
+  implementation project(":core:core-model")
+
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
+  runtimeOnly 'com.h2database:h2'
 }
 
 var driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
 var username = "sa"
-var password = "dev@123"
+var password = "P@ssw0rd000"
 var url = "jdbc:sqlserver://localhost:1433;trustServerCertificate=true;databaseName=F-PMS"
 
 tasks.register("setupDatabase") {
-    group = "hbc-database"
+  group = "hbc-database"
 
-    doFirst {
-        var masterFile = new File("${projectDir.path}/src/main/resources/master-changelog.yml")
-        if (!masterFile.exists()) {
-            masterFile.write(
-                "databaseChangeLog:\n" +
-                "  - includeAll:\n" +
-                "      path: changelogs/\n" +
-                "      relativeToChangelogFile: true"
-            )
-        }
-
-        var changeLogDir = new File("${projectDir.path}/src/main/resources/changelogs")
-        if (!changeLogDir.exists()) {
-            changeLogDir.mkdir()
-        }
+  doFirst {
+    var masterFile = new File("${projectDir.path}/src/main/resources/master-changelog.yml")
+    if (!masterFile.exists()) {
+      masterFile.write(
+              "databaseChangeLog:\n" +
+                      "  - includeAll:\n" +
+                      "      path: changelogs/\n" +
+                      "      relativeToChangelogFile: true"
+      )
     }
+
+    var changeLogDir = new File("${projectDir.path}/src/main/resources/changelogs")
+    if (!changeLogDir.exists()) {
+      changeLogDir.mkdir()
+    }
+  }
 }
 
 tasks.register("createMigration", JavaExec) {
-    group = "hbc-database"
-    dependsOn([classes, setupDatabase])
+  group = "hbc-database"
+  dependsOn([classes, setupDatabase])
 
-    classpath sourceSets.main.runtimeClasspath
-    mainClass = "liquibase.integration.commandline.Main"
+  classpath sourceSets.main.runtimeClasspath
+  mainClass = "liquibase.integration.commandline.Main"
 
-    args "--username=${username}"
-    args "--password=${password}"
-    args "--url=${url}"
-    args "--driver=${driver}"
-    args "--changeLogFile=src/main/resources/changelogs/changelog-${now()}.yml"
-    args "--referenceUrl=hibernate:spring:${projectGroup}.integration.db" +
-            "?dialect=org.hibernate.dialect.SQLServerDialect" +
-            "&hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy"
-    args "--referenceDriver=liquibase.ext.hibernate.database.connection.HibernateDriver"
-    args "diffChangeLog"
+  args "--username=${username}"
+  args "--password=${password}"
+  args "--url=${url}"
+  args "--driver=${driver}"
+  args "--changeLogFile=src/main/resources/changelogs/changelog-${now()}.yml"
+  args "--referenceUrl=hibernate:spring:${projectGroup}.integration.db" +
+          "?dialect=org.hibernate.dialect.SQLServerDialect" +
+          "&hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy"
+  args "--referenceDriver=liquibase.ext.hibernate.database.connection.HibernateDriver"
+  args "diffChangeLog"
 }
 
 tasks.register("applyMigration", JavaExec) {
-    group = "hbc-database"
-    dependsOn([setupDatabase])
+  group = "hbc-database"
+  dependsOn([setupDatabase])
+  classpath sourceSets.main.runtimeClasspath
+  mainClass = "liquibase.integration.commandline.Main"
 
-    classpath sourceSets.main.runtimeClasspath
-    mainClass = "liquibase.integration.commandline.Main"
-
-    args "--username=${username}"
-    args "--password=${password}"
-    args "--url=${url}"
-    args "--driver=${driver}"
-    args "--changeLogFile=src/main/resources/master-changelog.yml"
-    args "update"
+  args "--username=${username}"
+  args "--password=${password}"
+  args "--url=${url}"
+  args "--driver=${driver}"
+  args "--changeLogFile=src/main/resources/master-changelog.yml"
+  args "update"
 }
 
 static String now() {
-    return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())
+  return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())
 }

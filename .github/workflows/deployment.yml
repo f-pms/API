@@ -1,0 +1,27 @@
+# This is a basic workflow that is manually triggered
+
+name: Deployment
+
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      version:
+        description: 'Version to deploy'
+        default: '0.0.1'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: connect to remote server
+        uses: npgy/cloudflared-ssh-action@v2.0
+        with:
+          host: ${{ vars.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          private_key: ${{ secrets.SSH_PRIVKEY }}
+          port: ${{ secrets.SSH_PORT }}
+          commands: docker run -p 9200:8080 -e environment=dev -d huybui479/rms:{{inputs.version}}
