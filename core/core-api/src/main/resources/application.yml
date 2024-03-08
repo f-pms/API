@@ -24,6 +24,9 @@ hbc:
   mail:
     from: PMS <pms@ohtgo.me>
     subject: Alarm notification
+  push:
+    url: https://ntfy.ohtgo.me
+    auth: YWRtaW46UEBzc3cwcmQwMDA=
 
 server:
   tomcat:
