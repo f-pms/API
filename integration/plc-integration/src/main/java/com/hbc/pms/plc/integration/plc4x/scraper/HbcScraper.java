@@ -287,7 +287,7 @@ public class HbcScraper implements Scraper {
               }
             },
             Instant.now().plusSeconds(1),
-            Duration.ofMillis(1000));
+            Duration.ofMillis(10000));
   }
 
   @Override
