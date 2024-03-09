@@ -18,7 +18,7 @@ public class PlcResultHandler implements ResultHandler {
 
   @Override
   public void handle(String s, String s1, Map<String, IoResponse> map) {
-    log.info("Getting response map with size {}", map.size());
+    log.debug("Getting response map with size {}", map.size());
     for (var handler : rmsHandlers) {
       try {
         handler.handle(map);
