@@ -1,7 +1,6 @@
 package com.hbc.pms.core.api.controller.v1.request;
 
 import com.hbc.pms.core.model.enums.AlarmActionType;
-import com.hbc.pms.core.model.enums.AlarmType;
 import jakarta.validation.constraints.AssertTrue;
 import java.util.List;
 import java.util.Set;
