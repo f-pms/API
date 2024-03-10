@@ -35,7 +35,7 @@ public class EmailChannel extends AbstractChannel {
     if (emails.isEmpty()) {
       return;
     }
-    
+
     var message = new SimpleMailMessage();
     message.setFrom(from);
     message.setTo(emails.toArray(String[]::new));
