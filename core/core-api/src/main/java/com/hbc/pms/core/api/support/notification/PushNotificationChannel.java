@@ -22,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class PushChannel extends AbstractChannel {
+public class PushNotificationChannel extends AbstractChannel {
 
   private final RestTemplate restTemplate = new RestTemplate();
 
@@ -32,16 +32,19 @@ public class PushChannel extends AbstractChannel {
   @Value("${hbc.push.auth}")
   private String auth;
 
+  @Value("${hbc.push.title}")
+  private String title;
+
   @Override
   protected boolean filter(AlarmAction action) {
-    return AlarmActionType.PUSH.equals(action.getType());
+    return AlarmActionType.PUSH_NOTIFICATION.equals(action.getType());
   }
 
   @Override
   protected void send(AlarmHistory history, AlarmCondition condition, AlarmAction action) {
     var header = new HttpHeaders();
     header.add("Authorization", "Basic " + auth);
-    header.add("Title", "RMS");
+    header.add("Title", title);
     header.add(
         "Priority",
         Match(condition.getSeverity())

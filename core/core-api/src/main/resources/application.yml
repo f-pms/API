@@ -7,10 +7,10 @@ spring:
   mvc.throw-exception-if-no-handler-found: true
   web.resources.add-mappings: false
   mail:
-    host: mail.smtp2go.com
-    port: 2525
-    username: pms@ohtgo.me
-    password: P@ssw0rd000
+    host: ${hbc.mail.host}
+    port: ${hbc.mail.port}
+    username: ${hbc.mail.username}
+    password: ${hbc.mail.password}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
@@ -22,11 +22,16 @@ hbc:
       enabled: true
   origins: ${CORS_ORIGINS:http://localhost:5173}
   mail:
-    from: PMS <pms@ohtgo.me>
-    subject: Alarm notification
+    host: ${MAIL_HOST:mail.smtp2go.com}
+    port: ${MAIL_PORT:2525}
+    username: ${MAIL_USERNAME:pms@ohtgo.me}
+    password: ${MAIL_PASSWORD:P@ssw0rd000}
+    from: ${MAIL_FROM:PMS <pms@ohtgo.me>}
+    subject: ${MAIL_SUBJECT:Alarm notification}
   push:
-    url: https://ntfy.ohtgo.me
-    auth: YWRtaW46UEBzc3cwcmQwMDA=
+    url: ${PUSH_URL:https://ntfy.ohtgo.me}
+    auth: ${PUSH_AUTH:YWRtaW46UEBzc3cwcmQwMDA=}
+    title: ${PUSH_TITLE:RMS}
 
 server:
   tomcat:

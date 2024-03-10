@@ -32,6 +32,10 @@ public class EmailChannel extends AbstractChannel {
   @Override
   protected void send(AlarmHistory history, AlarmCondition condition, AlarmAction action) {
     var emails = action.getRecipients();
+    if (emails.isEmpty()) {
+      return;
+    }
+    
     var message = new SimpleMailMessage();
     message.setFrom(from);
     message.setTo(emails.toArray(String[]::new));
