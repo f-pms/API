@@ -5,16 +5,22 @@ plugins {
   id 'com.bmuschko.docker-java-application' version '9.4.0' apply(false)
   id 'pl.allegro.tech.build.axion-release' version '1.15.1'
   id 'groovy'
+  id "org.sonarqube" version '3.5.0.2730'
+  id "jacoco"
 }
 allprojects {
   group = "${projectGroup}"
   apply from: "${rootDir}/gradle/axion.gradle"
+
   java {
     sourceCompatibility = project.javaVersion
   }
 
   repositories {
     mavenCentral()
+  }
+  test {
+    useJUnitPlatform()
   }
 }
 rootProject.afterEvaluate() {
@@ -28,6 +34,10 @@ subprojects {
   apply plugin: 'groovy'
   apply plugin: 'org.springframework.boot'
   apply plugin: 'io.spring.dependency-management'
+  apply plugin: 'jacoco'
+  apply plugin: 'org.sonarqube'
+  apply from: "${rootDir}/gradle/test.gradle"
+
   bootJar.enabled = false
   jar.enabled = true
 
@@ -41,8 +51,5 @@ subprojects {
     testImplementation platform("org.spockframework:spock-bom:2.4-M1-groovy-4.0")
     testImplementation "org.spockframework:spock-core"
     testImplementation "org.spockframework:spock-spring"
-  }
-  test {
-    useJUnitPlatform()
   }
 }
