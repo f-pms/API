@@ -20,10 +20,8 @@ public class BaseAlarmConditionCommand {
   @Range(min = 1, max = 3600, message = "Time Delay must be from 1 to 3600 seconds")
   private int timeDelay;
 
-  @NotNull(message = "Min is required")
   private Double min;
 
-  @NotNull(message = "Max is required")
   private Double max;
 
   private boolean isCustomAlarmType() {

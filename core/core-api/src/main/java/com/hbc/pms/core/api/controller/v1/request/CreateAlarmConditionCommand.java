@@ -13,7 +13,6 @@ import lombok.EqualsAndHashCode;
 public class CreateAlarmConditionCommand extends BaseAlarmConditionCommand {
   private Long sensorConfigurationId;
   private String message;
-  private AlarmType type;
   private List<AlarmActionCommand> actions;
 
   @Data
