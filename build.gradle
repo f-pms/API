@@ -53,10 +53,3 @@ subprojects {
   }
 }
 
-sonar {
-  properties {
-    property "sonar.projectKey", "f-pms_API"
-    property "sonar.organization", "f-pms"
-    property "sonar.host.url", "https://sonarcloud.io"
-  }
-}
