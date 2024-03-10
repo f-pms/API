@@ -4,6 +4,7 @@ import com.hbc.pms.core.model.enums.AlarmSeverity;
 import com.hbc.pms.core.model.enums.AlarmType;
 import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
@@ -19,7 +20,10 @@ public class BaseAlarmConditionCommand {
   @Range(min = 1, max = 3600, message = "Time Delay must be from 1 to 3600 seconds")
   private int timeDelay;
 
+  @NotNull(message = "Min is required")
   private Double min;
+
+  @NotNull(message = "Max is required")
   private Double max;
 
   private boolean isCustomAlarmType() {
