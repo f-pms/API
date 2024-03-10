@@ -5,7 +5,7 @@ plugins {
   id 'com.bmuschko.docker-java-application' version '9.4.0' apply(false)
   id 'pl.allegro.tech.build.axion-release' version '1.15.1'
   id 'groovy'
-  id "org.sonarqube" version '3.5.0.2730'
+  id "org.sonarqube" version '4.4.1.3373'
   id "jacoco"
 }
 allprojects {
@@ -35,7 +35,6 @@ subprojects {
   apply plugin: 'org.springframework.boot'
   apply plugin: 'io.spring.dependency-management'
   apply plugin: 'jacoco'
-  apply plugin: 'org.sonarqube'
   apply from: "${rootDir}/gradle/test.gradle"
 
   bootJar.enabled = false
@@ -51,5 +50,13 @@ subprojects {
     testImplementation platform("org.spockframework:spock-bom:2.4-M1-groovy-4.0")
     testImplementation "org.spockframework:spock-core"
     testImplementation "org.spockframework:spock-spring"
+  }
+}
+
+sonar {
+  properties {
+    property "sonar.projectKey", "f-pms_API"
+    property "sonar.organization", "f-pms"
+    property "sonar.host.url", "https://sonarcloud.io"
   }
 }
