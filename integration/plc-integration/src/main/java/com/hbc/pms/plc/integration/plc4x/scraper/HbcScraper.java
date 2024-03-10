@@ -281,8 +281,8 @@ public class HbcScraper implements Scraper {
                         statistics.getMin() * 1e-6,
                         statistics.getMean() * 1e-6,
                         statistics.getPercentile(50) * 1e-6);
-                if (LOGGER.isDebugEnabled()) {
-                  LOGGER.debug(msg);
+                if (LOGGER.isInfoEnabled()) {
+                  LOGGER.info(msg);
                 }
               }
             },
