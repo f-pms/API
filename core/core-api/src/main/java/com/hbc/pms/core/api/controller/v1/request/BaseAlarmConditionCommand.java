@@ -4,7 +4,6 @@ import com.hbc.pms.core.model.enums.AlarmSeverity;
 import com.hbc.pms.core.model.enums.AlarmType;
 import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
