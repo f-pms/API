@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 import java.util.concurrent.ThreadLocalRandom
+import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils
 
 @Component
 class TestDataFixture {
@@ -64,7 +65,7 @@ class TestDataFixture {
   }
 
   static BlueprintEntity createBlueprint() {
-    return BlueprintEntity.builder().name("Test-" + ThreadLocalRandom.current().nextInt(100))
+    return BlueprintEntity.builder().name("Test-" + RandomStringUtils.random(10, true, true)/* ThreadLocalRandom.current().nextInt(100)*/)
             .description("desc")
             .build()
   }
