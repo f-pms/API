@@ -29,7 +29,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     then:
     response.statusCode.is2xxSuccessful()
     List<AlarmConditionResponse> listCondition = response.body.data as List<AlarmConditionResponse>
-    listCondition.size() == 2
+    listCondition.size() == 1
   }
 
   def "Create a new alarm - OK"() {
