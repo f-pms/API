@@ -27,7 +27,7 @@ class FunctionalTestSpec extends AbstractFunctionalSpec {
   SensorConfiguration sensorConfiguration
 
   def setup() {
-    Blueprint blueprint = Blueprint.builder().name("Test")
+    Blueprint blueprint = Blueprint.builder().name("Tsafestt")
             .description("desc")
             .build()
     var createdBlueprint = blueprintPersistenceService.create(blueprint)

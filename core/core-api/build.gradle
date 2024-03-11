@@ -37,6 +37,7 @@ dependencies {
   testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
   testImplementation "org.junit.jupiter:junit-jupiter:${jUnitVersion}"
   testImplementation project(":support:spock-test")
+  testImplementation "io.rest-assured:rest-assured:5.4.0"
 }
 
 tasks.withType(Test) {

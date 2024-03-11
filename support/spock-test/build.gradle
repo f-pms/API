@@ -3,6 +3,7 @@ dependencies {
   implementation "org.spockframework:spock-core"
   implementation "org.spockframework:spock-spring"
   implementation "org.springframework.boot:spring-boot-starter-websocket"
+
   api("org.apache.plc4x:plc4j-transport-test:${plc4xVersion}")
   api("org.apache.plc4x:plc4j-driver-mock:${plc4xVersion}")
   api("org.apache.plc4x:plc4j-api:${plc4xVersion}")
