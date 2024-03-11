@@ -1,5 +1,10 @@
 package com.hbc.pms.core.api.support.error;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor(force = true)
 public class ErrorMessage {
 
   private final String code;
@@ -20,15 +25,4 @@ public class ErrorMessage {
     this.data = data;
   }
 
-  public String getCode() {
-    return code;
-  }
-
-  public String getMessage() {
-    return message;
-  }
-
-  public Object getData() {
-    return data;
-  }
 }

@@ -22,14 +22,16 @@ import java.util.concurrent.ThreadLocalRandom
 class TestDataFixture {
   static String PLC_ADDRESS_REAL_01 = "%DB9:13548:REAL"
   static String PLC_ADDRESS_REAL_02 = "%DB9:13552:REAL"
+
   @Autowired
   AlarmConditionPersistenceService alarmConditionPersistenceService
 
-
   @Autowired
   BlueprintRepository blueprintRepository
+
   @Autowired
   AlarmConditionRepository alarmConditionRepository
+
   @Autowired
   SensorConfigurationRepository sensorConfigurationRepository
 
