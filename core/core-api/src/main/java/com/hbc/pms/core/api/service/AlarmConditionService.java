@@ -44,10 +44,6 @@ public class AlarmConditionService {
 
     mapper.map(updateCommand, existedCondition);
 
-    // Force set min and max based on UpdateAlarmConditionCommand since they are nullable.
-    existedCondition.setMin(updateCommand.getMin());
-    existedCondition.setMax(updateCommand.getMax());
-
     return alarmConditionPersistenceService.update(existedCondition);
   }
 
