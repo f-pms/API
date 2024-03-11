@@ -3,7 +3,9 @@ package com.hbc.pms.core.api.support.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hbc.pms.core.api.support.error.ErrorMessage;
 import com.hbc.pms.core.api.support.error.ErrorType;
+import lombok.Getter;
 
+@Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<S> {
 
@@ -35,15 +37,5 @@ public class ApiResponse<S> {
     return new ApiResponse<>(ResultType.ERROR, null, new ErrorMessage(error, errorData));
   }
 
-  public ResultType getResult() {
-    return result;
-  }
 
-  public Object getData() {
-    return data;
-  }
-
-  public ErrorMessage getError() {
-    return error;
-  }
 }

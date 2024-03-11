@@ -1,13 +1,19 @@
 package com.hbc.pms.core.api.services
 
+import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
+import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import groovy.util.logging.Slf4j
+import org.springframework.beans.factory.annotation.Autowired
 
 @Slf4j
 class WebsocketServiceSpec extends FunctionalTestSpec {
+  @Autowired
+  SensorConfigurationRepository configurationRepository
 
   def "Websocket sends correct PLC values"() {
-    def target = "%DB9:13548:REAL"
+    def target = TestDataFixture.PLC_ADDRESS_REAL_01
+    def sensorConfiguration = configurationRepository.findAllByAddress(target).first()
     when: "Set tag to 5f"
     plcValueTestFactory.setCurrentValue(target, 5f)
 
@@ -20,4 +26,5 @@ class WebsocketServiceSpec extends FunctionalTestSpec {
     then: "Received event with value = 15.0"
     assertPlcTagWithValue(sensorConfiguration.id, "15.0")
   }
+
 }
