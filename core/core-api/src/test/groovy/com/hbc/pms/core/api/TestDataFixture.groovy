@@ -55,6 +55,7 @@ class TestDataFixture {
 
   void cleanup() {
     alarmConditionRepository.deleteAll()
+    sensorConfigurationRepository.deleteAll()
   }
 
   static SensorConfigurationEntity createSensorConfiguration(Long blueprintId, String address) {

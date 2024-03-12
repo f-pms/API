@@ -14,6 +14,7 @@ import com.hbc.pms.integration.db.repository.AlarmConditionRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
 import org.springframework.beans.factory.annotation.Autowired
+import spock.lang.Ignore
 
 class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
   @Autowired
@@ -191,7 +192,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     3601  | _
   }
 
- /* //Add more implementation to pass this test
+  @Ignore
   def "Create new alarm condition - CUSTOM condition with min greater than or equal max - Bad request"() {
     given:
     def sensorConfiguration
@@ -228,7 +229,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     def conditionCountAfter = alarmConditionRepository.findAll().size()
     conditionCountBefore == conditionCountAfter
   }
-*/
+
   def "Create new alarm action - OK"() {
     given:
     def condition = alarmConditionRepository.findAll().first()
