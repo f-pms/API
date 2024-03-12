@@ -4,19 +4,25 @@ import com.hbc.pms.core.api.service.AlarmConditionPersistenceService
 import com.hbc.pms.core.api.service.BlueprintPersistenceService
 import com.hbc.pms.core.api.service.SensorConfigurationPersistenceService
 import com.hbc.pms.core.api.utils.StringUtils
+import com.hbc.pms.core.model.enums.AlarmActionType
 import com.hbc.pms.core.model.enums.AlarmSeverity
+import com.hbc.pms.core.model.enums.AlarmStatus
 import com.hbc.pms.core.model.enums.AlarmType
+import com.hbc.pms.integration.db.entity.AlarmActionEntity
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity
+import com.hbc.pms.integration.db.entity.AlarmHistoryEntity
 import com.hbc.pms.integration.db.entity.BlueprintEntity
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity
+import com.hbc.pms.integration.db.repository.AlarmActionRepository
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository
+import com.hbc.pms.integration.db.repository.AlarmHistoryRepository
 import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.plc.api.PlcConnector
+import java.time.OffsetDateTime
+import java.util.concurrent.ThreadLocalRandom
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-
-import java.util.concurrent.ThreadLocalRandom
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils
 
 @Component
@@ -34,6 +40,12 @@ class TestDataFixture {
   AlarmConditionRepository alarmConditionRepository
 
   @Autowired
+  AlarmHistoryRepository alarmHistoryRepository
+
+  @Autowired
+  AlarmActionRepository alarmActionRepository
+
+  @Autowired
   SensorConfigurationRepository sensorConfigurationRepository
 
   @Autowired
@@ -49,11 +61,15 @@ class TestDataFixture {
     var createdBlueprint = blueprintRepository.save(createBlueprint())
     var sensor = sensorConfigurationRepository.save(createSensorConfiguration(createdBlueprint.id, PLC_ADDRESS_REAL_01))
     sensorConfigurationRepository.save(createSensorConfiguration(createdBlueprint.id, PLC_ADDRESS_REAL_02))
-    alarmConditionRepository.save(createCondition(sensor))
+    var alarmCondition = alarmConditionRepository.save(createCondition(sensor))
+    alarmActionRepository.save(createAction(alarmCondition))
+    alarmHistoryRepository.save(createHistory(alarmCondition))
     connector.updateScheduler()
   }
 
   void cleanup() {
+    alarmHistoryRepository.deleteAll()
+    alarmActionRepository.deleteAll()
     alarmConditionRepository.deleteAll()
     sensorConfigurationRepository.deleteAll()
   }
@@ -68,6 +84,22 @@ class TestDataFixture {
   static BlueprintEntity createBlueprint() {
     return BlueprintEntity.builder().name("Test-" + RandomStringUtils.random(10, true, true)/* ThreadLocalRandom.current().nextInt(100)*/)
             .description("desc")
+            .build()
+  }
+
+  static AlarmHistoryEntity createHistory(AlarmConditionEntity alarmCondition) {
+    return AlarmHistoryEntity.builder()
+            .status(AlarmStatus.SOLVED)
+            .triggeredAt(OffsetDateTime.now())
+            .condition(alarmCondition)
+            .build()
+  }
+
+  static AlarmActionEntity createAction(AlarmConditionEntity alarmCondition) {
+    return AlarmActionEntity.builder()
+            .condition(alarmCondition)
+            .type(AlarmActionType.POPUP)
+            .message("Popup Action message")
             .build()
   }
 
