@@ -15,7 +15,6 @@ public class RestClient {
     this.restTemplate = restTemplate;
   }
 
-
   public <T> ResponseEntity<T> get(String url, Class<T> responseType) {
     return restTemplate.getForEntity(url, responseType);
   }
