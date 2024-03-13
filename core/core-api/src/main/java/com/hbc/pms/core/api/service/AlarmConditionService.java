@@ -1,7 +1,6 @@
 package com.hbc.pms.core.api.service;
 
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
-import com.hbc.pms.core.api.controller.v1.request.UpdateActionMessagesCommand;
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.response.AlarmConditionResponse;
 import com.hbc.pms.core.api.support.error.CoreApiException;

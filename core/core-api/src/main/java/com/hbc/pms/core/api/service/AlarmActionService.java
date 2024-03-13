@@ -53,10 +53,11 @@ public class AlarmActionService {
   public List<AlarmAction> updateActionMessages(Long conditionId, String message) {
     var existedCondition = alarmConditionPersistenceService.getById(conditionId);
     var actions = existedCondition.getActions();
-    actions.forEach(action -> {
-      action.setMessage(message);
-      alarmActionPersistenceService.update(existedCondition.getId(), action);
-    });
+    actions.forEach(
+        action -> {
+          action.setMessage(message);
+          alarmActionPersistenceService.update(existedCondition.getId(), action);
+        });
     return actions;
   }
 }
