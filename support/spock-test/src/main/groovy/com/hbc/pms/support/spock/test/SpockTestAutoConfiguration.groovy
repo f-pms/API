@@ -12,6 +12,7 @@ import spock.mock.DetachedMockFactory
 
 @Configuration
 @ComponentScan
+
 class SpockTestAutoConfiguration {
   def detachedMockFactory = new DetachedMockFactory()
 
@@ -35,5 +36,6 @@ class SpockTestAutoConfiguration {
   EventCollector eventCollector() {
     return new DefaultEventCollector()
   }
+
 
 }

@@ -12,9 +12,11 @@ import org.apache.plc4x.java.spi.values.PlcREAL
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.messaging.support.AbstractSubscribableChannel
+import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
 @Slf4j
+@ContextConfiguration
 class AbstractFunctionalSpec extends Specification {
   @Autowired
   SimpMessagingTemplate simpMessagingTemplate
