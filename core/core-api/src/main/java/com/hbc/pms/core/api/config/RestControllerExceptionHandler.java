@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 public class RestControllerExceptionHandler {
@@ -29,6 +30,14 @@ public class RestControllerExceptionHandler {
   @ExceptionHandler({ValidationException.class})
   public ApiResponse<RuntimeException> handleMapperException(ValidationException ex) {
     return ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getErrorMessages());
+  }
+
+  @ResponseBody
+  @ResponseStatus(org.springframework.http.HttpStatus.BAD_REQUEST)
+  @ExceptionHandler({MethodArgumentTypeMismatchException.class})
+  public ApiResponse<RuntimeException> handleMethodArgumentTypeMismatchException(
+      MethodArgumentTypeMismatchException ex) {
+    return ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getMessage());
   }
 
   @ResponseBody
