@@ -11,20 +11,21 @@ class WebsocketServiceSpec extends FunctionalTestSpec {
   @Autowired
   SensorConfigurationRepository configurationRepository
 
-  def "Websocket sends correct PLC values"() {
+  def "Websocket - Send correct PLC values"() {
+    given:
     def target = TestDataFixture.PLC_ADDRESS_REAL_01
     def sensorConfiguration = configurationRepository.findAllByAddress(target).first()
-    when: "Set tag to 5f"
-    plcValueTestFactory.setCurrentValue(target, 5f)
 
-    then: "Received event with value = 5.0"
-    assertPlcTagWithValue(sensorConfiguration.id, "5.0")
+    when: "Set tag to #val"
+    plcValueTestFactory.setCurrentValue(target, val)
 
-    when: "Set tag to 15f"
-    plcValueTestFactory.setCurrentValue(target, 15f)
+    then: "Received event with value = #val"
+    assertPlcTagWithValue(sensorConfiguration.id, val.toString())
 
-    then: "Received event with value = 15.0"
-    assertPlcTagWithValue(sensorConfiguration.id, "15.0")
+    where:
+    val  | _
+    5.0  | _
+    15.0 | _
   }
 
 }
