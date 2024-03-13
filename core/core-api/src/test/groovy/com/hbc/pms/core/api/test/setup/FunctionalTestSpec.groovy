@@ -12,18 +12,16 @@ import spock.util.concurrent.PollingConditions
 
 @SpringBootTest(classes = [CoreApiApplication], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-@EnableSharedInjection
 class FunctionalTestSpec extends AbstractFunctionalSpec {
   PollingConditions conditions = new PollingConditions(timeout: 20)
 
   @Autowired
-  @Shared
   TestDataFixture dataFixture
 
-  def setupSpec() {
+  def setup() {
     dataFixture.populate()
   }
-  def cleanupSpec(){
+  def cleanup(){
     dataFixture.cleanup()
   }
 

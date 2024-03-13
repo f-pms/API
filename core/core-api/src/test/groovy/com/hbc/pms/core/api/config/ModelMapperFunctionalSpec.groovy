@@ -84,7 +84,6 @@ class ModelMapperFunctionalSpec extends FunctionalTestSpec {
     when:
     def sensorConfig = mapper.map(sensorConfigCommand, SensorConfiguration.class)
 
-
     then:
     sensorConfig.getAddress() == expectedAddressVal
 
@@ -106,7 +105,6 @@ class ModelMapperFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def sensorConfig = mapper.map(sensorConfigCommand, SensorConfiguration.class)
-
 
     then:
     thrown(MappingException)
@@ -173,10 +171,6 @@ class ModelMapperFunctionalSpec extends FunctionalTestSpec {
     thrown(MappingException)
 
     where:
-    addressVal         | _
-    "%DB11a:112:REAL2" | _
-    "%DB112:a:REAL"    | _
-    "%DB11:112:REAL2"  | _
-    null               | _
+    addressVal << ["%DB11a:112:REAL2", "%DB112:a:REAL", "%DB11:112:REAL2" ,null]
   }
 }

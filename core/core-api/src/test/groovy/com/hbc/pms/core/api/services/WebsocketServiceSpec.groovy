@@ -11,21 +11,51 @@ class WebsocketServiceSpec extends FunctionalTestSpec {
   @Autowired
   SensorConfigurationRepository configurationRepository
 
-  def "Websocket - Send correct PLC values"() {
+  def "Monitoring Websocket - Send correct PLC values"() {
     given:
     def target = TestDataFixture.PLC_ADDRESS_REAL_01
     def sensorConfiguration = configurationRepository.findAllByAddress(target).first()
 
-    when: "Set tag to #val"
-    plcValueTestFactory.setCurrentValue(target, val)
+    when: "Set tag to #PLCVal"
+    plcValueTestFactory.setCurrentValue(target, PLCVal)
 
     then: "Received event with value = #val"
-    assertPlcTagWithValue(sensorConfiguration.id, val.toString())
+    assertPlcTagWithValue(sensorConfiguration.id, val)
 
     where:
-    val  | _
-    5.0  | _
-    15.0 | _
+    val  | PLCVal
+    "5.0"  | 5f
+    "15.0" | 15f
   }
+
+  def "Change plctag config -> send corect"() {
+
+  }
+
+  def "Add new tag -> send correct"() {
+
+  }
+
+  //sai so 1 - 2s coi thu
+  //dua ra file khac test alarm gom gui mail + push noti
+  //han che dung spy
+
+
+  def "Alarm Websocket - PREDEFINED Alarm with 2s checkInterval and 2s timeDelay not met - Not triggered"() {
+
+  }
+
+  def "Alarm Websocket - PREDEFINED Alarm with 2s checkInterval and 2s timeDelay met - Triggered correctly"() {
+
+  }
+
+  def "Alarm Websocket - CUSTOM Alarm with 2s checkInterval and 2s timeDelay not met - Not triggered"() {
+
+
+  }
+  def "Alarm Websocket - CUSTOM Alarm with 2s checkInterval and 2s timeDelay met - Triggered correctly"() {
+
+  }
+
 
 }
