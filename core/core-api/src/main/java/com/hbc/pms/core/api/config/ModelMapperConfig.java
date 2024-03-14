@@ -6,11 +6,8 @@ import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationComma
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
 import com.hbc.pms.core.api.utils.StringUtils;
 import com.hbc.pms.core.model.AlarmCondition;
-import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -41,10 +38,8 @@ public class ModelMapperConfig {
 
     addUpdateSensorConfigurationRequestToSensorConfigurationTypeMap();
     addSensorConfigurationToSensorConfigurationResponseTypeMap();
-//    addBlueprintToBlueprintResponseTypeMap();
     return modelMapper;
   }
-
 
   private void addCreateAlarmConditionCommandToAlarmConditionTypeMap() {
     modelMapper
@@ -128,33 +123,4 @@ public class ModelMapperConfig {
               }
             });
   }
-
-  //TODO: don't know why it works even without this now?
-  /*private void addBlueprintToBlueprintResponseTypeMap() {
-    modelMapper
-        .createTypeMap(Blueprint.class, BlueprintResponse.class)
-        .addMappings(
-            new PropertyMap<>() {
-              private final Converter<
-                      List<SensorConfiguration>,
-                      List<BlueprintResponse.SensorConfigurationResponse>>
-                  toSensorConfigurationRes =
-                      c ->
-                          c.getSource().stream()
-                              .dropWhile(
-                                  sc -> StringUtils.isIncorrectPLCAddressFormat(sc.getAddress()))
-                              .map(
-                                  e ->
-                                      modelMapper.map(
-                                          e, BlueprintResponse.SensorConfigurationResponse.class))
-                              .toList();
-
-              @Override
-              protected void configure() {
-                using(toSensorConfigurationRes)
-                    .map(source.getSensorConfigurations())
-                    .setSensorConfigurations(new ArrayList<>());
-              }
-            });
-  }*/
 }

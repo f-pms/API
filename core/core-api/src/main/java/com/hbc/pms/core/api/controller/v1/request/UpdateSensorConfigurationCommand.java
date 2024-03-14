@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UpdateSensorConfigurationCommand {
+
   private String address;
   private Integer db;
   private Integer offset;

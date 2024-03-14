@@ -17,6 +17,7 @@ import org.modelmapper.MappingException
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Ignore
+import spock.lang.PendingFeature
 
 class ModelMapperFunctionalSpec extends FunctionalTestSpec {
   @Autowired
@@ -50,7 +51,7 @@ class ModelMapperFunctionalSpec extends FunctionalTestSpec {
   }
 
   //TODO: wait for HuyN's input
-  @Ignore
+  @PendingFeature
   def "Mapper CreateAlarmConditionCommand to AlarmCondition - Map checkInterval to cron - Correct"() {
     given:
     def conditionCommand = CreateAlarmConditionCommand.builder().checkInterval(checkIntervalVal)
@@ -68,6 +69,7 @@ class ModelMapperFunctionalSpec extends FunctionalTestSpec {
   }
 
   //TODO: wait for HuyN's input
+  @PendingFeature
   def "Mapper UpdateAlarmConditionCommand to AlarmCondition mapper - Map checkInterval to cron - Corrected"() {
 
   }
@@ -83,6 +85,7 @@ class ModelMapperFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def sensorConfig = mapper.map(sensorConfigCommand, SensorConfiguration.class)
+
 
     then:
     sensorConfig.getAddress() == expectedAddressVal
@@ -105,6 +108,7 @@ class ModelMapperFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def sensorConfig = mapper.map(sensorConfigCommand, SensorConfiguration.class)
+
 
     then:
     thrown(MappingException)
@@ -171,6 +175,6 @@ class ModelMapperFunctionalSpec extends FunctionalTestSpec {
     thrown(MappingException)
 
     where:
-    addressVal << ["%DB11a:112:REAL2", "%DB112:a:REAL", "%DB11:112:REAL2" ,null]
+    addressVal << ["%DB11a:112:REAL2", "%DB112:a:REAL", "%DB11:112:REAL2", null]
   }
 }
