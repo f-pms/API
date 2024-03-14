@@ -147,10 +147,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     conditionCountBefore == conditionCountAfter
 
     where:
-    value | _
-    -1    | _
-    0     | _
-    3601  | _
+    value << [-1, 0, 3601]
   }
 
   def "Create new alarm condition - Invalid value (#value) for timeDelay - Bad request"() {
@@ -171,10 +168,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     conditionCountBefore == conditionCountAfter
 
     where:
-    value | _
-    -1    | _
-    0     | _
-    3601  | _
+    value << [-1, 0, 3601]
   }
 
   def "Create new alarm condition - CUSTOM condition with both min & max = null - Bad request"() {
@@ -196,10 +190,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     conditionCountBefore == conditionCountAfter
 
     where:
-    value | _
-    -1    | _
-    0     | _
-    3601  | _
+    value << [-1, 0, 3601]
   }
 
   @Ignore

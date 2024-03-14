@@ -23,9 +23,7 @@ class WebsocketServiceSpec extends FunctionalTestSpec {
     assertPlcTagWithValue(sensorConfiguration.id, val.toString())
 
     where:
-    val  | _
-    5.0  | _
-    15.0 | _
+    val << [5.0, 15.0]
   }
 
 }
