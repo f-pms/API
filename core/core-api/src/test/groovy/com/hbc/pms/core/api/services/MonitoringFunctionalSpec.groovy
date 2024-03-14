@@ -16,10 +16,10 @@ class MonitoringFunctionalSpec extends FunctionalTestSpec {
   SensorConfigurationRepository configurationRepository
 
   @Autowired
-  BlueprintRepository blueprintRepository
+  SensorConfigurationPersistenceService configurationPersistenceService
 
   @Autowired
-  SensorConfigurationPersistenceService configurationPersistenceService
+  BlueprintRepository blueprintRepository
 
   def "Monitoring Websocket - Send correct PLC values"() {
     given:
@@ -38,26 +38,24 @@ class MonitoringFunctionalSpec extends FunctionalTestSpec {
     "15.0" | 15f
   }
 
-  //TODO: need to update the Service's implementation, then test Service not Repository
-  @PendingFeature
   def "Monitoring Websocket - Update PLC Tag then monitor - Sent correct PLC values"() {
     given:
-    def sensorConfig
+    def sensorConfigEntity
             = configurationRepository.findAllByAddress(TestDataFixture.PLC_ADDRESS_REAL_01).first()
+    def sensorConfig
+            = configurationPersistenceService.get(sensorConfigEntity.id)
 
     when:
     "Set tag to $TestDataFixture.PLC_ADDRESS_REAL_02"
     String target = TestDataFixture.PLC_ADDRESS_REAL_02
     sensorConfig.setAddress(target)
-    configurationRepository.save(sensorConfig)
+    configurationPersistenceService.update(sensorConfigEntity.getBlueprint().getId(), sensorConfig)
     plcValueTestFactory.setCurrentValue(target, 5f)
 
     then: "Received event with value = #val"
     assertPlcTagWithValue(sensorConfig.id, "5.0")
   }
 
-  //TODO: need to update the Service's implementation, then test Service not Repository
-  @PendingFeature
   def "Monitoring Websocket - Add new PLC Tag then monitor - Sent correct PLC values"() {
     given:
     def target = TestDataFixture.PLC_ADDRESS_REAL_03
