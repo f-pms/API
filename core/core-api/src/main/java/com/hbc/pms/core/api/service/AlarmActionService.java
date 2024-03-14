@@ -4,9 +4,11 @@ import com.hbc.pms.core.api.support.error.CoreApiException;
 import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -45,5 +47,17 @@ public class AlarmActionService {
     mapper.map(updatingAction, existedAction);
 
     return alarmActionPersistenceService.update(conditionId, existedAction);
+  }
+
+  @Transactional
+  public List<AlarmAction> updateActionMessages(Long conditionId, String message) {
+    var existedCondition = alarmConditionPersistenceService.getById(conditionId);
+    var actions = existedCondition.getActions();
+    actions.forEach(
+        action -> {
+          action.setMessage(message);
+          alarmActionPersistenceService.update(existedCondition.getId(), action);
+        });
+    return actions;
   }
 }
