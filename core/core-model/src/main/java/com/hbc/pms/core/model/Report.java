@@ -6,6 +6,5 @@ import java.util.List;
 public class Report {
   private Long id;
   private OffsetDateTime recordingDate;
-  private ReportType type;
   private List<ReportRow> rows;
 }

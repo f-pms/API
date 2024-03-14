@@ -11,5 +11,4 @@ public class ReportRow {
   private Double newElectricValue2;
   private Double newElectricValue3;
   private Double newElectricValue4;
-  private Report report;
 }
