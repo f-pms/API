@@ -41,7 +41,6 @@ public class ModelMapperConfig {
     return modelMapper;
   }
 
-
   private void addCreateAlarmConditionCommandToAlarmConditionTypeMap() {
     modelMapper
         .createTypeMap(CreateAlarmConditionCommand.class, AlarmCondition.class)
