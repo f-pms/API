@@ -29,6 +29,8 @@ import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils
 class TestDataFixture {
   static String PLC_ADDRESS_REAL_01 = "%DB9:13548:REAL"
   static String PLC_ADDRESS_REAL_02 = "%DB9:13552:REAL"
+  static String PLC_ADDRESS_REAL_03 = "%DB9:13556:REAL"
+  static String PLC_ADDRESS_REAL_04 = "%DB9:13560:REAL"
 
   @Autowired
   AlarmConditionPersistenceService alarmConditionPersistenceService

@@ -9,15 +9,18 @@ import com.hbc.pms.core.model.SensorConfiguration;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity;
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository;
+import com.hbc.pms.plc.api.PlcConnector;
 import java.util.List;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class SensorConfigurationPersistenceService {
+  private final PlcConnector connector;
 
   private static final String SENSOR_CONFIG_NOT_FOUND_LITERAL =
       "Sensor configuration not found with id: ";
@@ -74,7 +77,6 @@ public class SensorConfigurationPersistenceService {
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
-    sensorConfigurationRepository.save(entity);
     return true;
   }
 
