@@ -74,6 +74,7 @@ public class SensorConfigurationPersistenceService {
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
+    //TODO: LTT check existence of the PLC Tag
     sensorConfigurationRepository.save(entity);
     return true;
   }
@@ -82,6 +83,7 @@ public class SensorConfigurationPersistenceService {
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
 
+    //TODO: LTT check existence of the PLC Tag
     var oSensorConfiguration = sensorConfigurationRepository.findById(entity.getId());
     if (oSensorConfiguration.isEmpty()) {
       throw new CoreApiException(

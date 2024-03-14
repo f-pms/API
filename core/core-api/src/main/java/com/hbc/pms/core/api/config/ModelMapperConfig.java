@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.config;
 
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
+import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
@@ -41,6 +42,7 @@ public class ModelMapperConfig {
     addCreateActionCommandToActionTypeMap();
     addCreateAlarmConditionCommandToAlarmConditionTypeMap();
     addUpdateAlarmConditionCommandToAlarmConditionTypeMap();
+    addSensorConfigurationConfigToSensorConfigurationTypeMap();
 
     addUpdateSensorConfigurationRequestToSensorConfigurationTypeMap();
     addSensorConfigurationToSensorConfigurationResponseTypeMap();
@@ -98,6 +100,30 @@ public class ModelMapperConfig {
   private void addUpdateSensorConfigurationRequestToSensorConfigurationTypeMap() {
     modelMapper
         .createTypeMap(UpdateSensorConfigurationRequest.class, SensorConfiguration.class)
+        .addMappings(
+            new PropertyMap<>() {
+              private final Converter<String, String> fromAddress =
+                  c -> {
+                    String address = c.getSource().toUpperCase();
+                    if (StringUtils.isIncorrectPLCAddressFormat(address)) {
+                      throw new ValidationException(
+                          Collections.singletonList(
+                              new ErrorMessage("Invalid PLC " + "Address: " + address)));
+                    }
+
+                    return address;
+                  };
+
+              @Override
+              protected void configure() {
+                using(fromAddress).map(source.getAddress()).setAddress("");
+              }
+            });
+  }
+
+  private void addSensorConfigurationConfigToSensorConfigurationTypeMap() {
+    modelMapper
+        .createTypeMap(SensorConfigurationRequest.class, SensorConfiguration.class)
         .addMappings(
             new PropertyMap<>() {
               private final Converter<String, String> fromAddress =
