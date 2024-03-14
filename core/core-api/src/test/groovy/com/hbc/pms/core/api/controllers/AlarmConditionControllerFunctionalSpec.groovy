@@ -18,7 +18,7 @@ import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
 import java.util.concurrent.ThreadLocalRandom
 import org.springframework.beans.factory.annotation.Autowired
-import spock.lang.Ignore
+import spock.lang.PendingFeature
 
 class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
   @Autowired
@@ -203,7 +203,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     3601  | _
   }
 
-  @Ignore
+  @PendingFeature
   def "Create new alarm condition - CUSTOM condition with min greater than or equal max - Bad request"() {
     given:
     def sensorConfiguration
@@ -341,7 +341,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     response.body.error["code"] == ErrorCode.E400.toString()
   }
 
-  @Ignore
+  @PendingFeature
   def "Update alarm condition - Update min value only - OK and max must be null"() {
     given:
     def condition = alarmConditionRepository.findAll().first()
@@ -359,7 +359,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     response.body.data["max"] == null
   }
 
-  @Ignore
+  @PendingFeature
   def "Update alarm condition - Update max value only - OK and min must be null"() {
     given:
     def condition = alarmConditionRepository.findAll().first()
@@ -470,7 +470,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     actionCountBefore == actionCountAfter
   }
 
-  @Ignore
+  @PendingFeature
   def "Delete alarm action - Not existing alarm action - Bad request"() {
     given:
     def condition = alarmConditionRepository.findAll().first()

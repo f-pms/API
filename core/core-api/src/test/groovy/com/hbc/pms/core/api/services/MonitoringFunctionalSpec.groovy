@@ -8,7 +8,7 @@ import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
-import spock.lang.Ignore
+import spock.lang.PendingFeature
 
 @Slf4j
 class MonitoringFunctionalSpec extends FunctionalTestSpec {
@@ -39,7 +39,7 @@ class MonitoringFunctionalSpec extends FunctionalTestSpec {
   }
 
   //TODO: need to update the Service's implementation, then test Service not Repository
-  @Ignore
+  @PendingFeature
   def "Monitoring Websocket - Update PLC Tag then monitor - Sent correct PLC values"() {
     given:
     def sensorConfig
@@ -57,7 +57,7 @@ class MonitoringFunctionalSpec extends FunctionalTestSpec {
   }
 
   //TODO: need to update the Service's implementation, then test Service not Repository
-  @Ignore
+  @PendingFeature
   def "Monitoring Websocket - Add new PLC Tag then monitor - Sent correct PLC values"() {
     given:
     def target = TestDataFixture.PLC_ADDRESS_REAL_03

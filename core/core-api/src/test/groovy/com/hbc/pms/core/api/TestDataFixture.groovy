@@ -8,6 +8,7 @@ import com.hbc.pms.core.model.enums.AlarmActionType
 import com.hbc.pms.core.model.enums.AlarmSeverity
 import com.hbc.pms.core.model.enums.AlarmStatus
 import com.hbc.pms.core.model.enums.AlarmType
+import com.hbc.pms.core.model.enums.BlueprintType
 import com.hbc.pms.integration.db.entity.AlarmActionEntity
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity
 import com.hbc.pms.integration.db.entity.AlarmHistoryEntity
@@ -30,7 +31,7 @@ class TestDataFixture {
   static String PLC_ADDRESS_REAL_01 = "%DB9:13548:REAL"
   static String PLC_ADDRESS_REAL_02 = "%DB9:13552:REAL"
   static String PLC_ADDRESS_REAL_03 = "%DB9:13556:REAL"
-  static String PLC_ADDRESS_REAL_04 = "%DB9:13560:REAL"
+  static String PLC_ADDRESS_BOOL_01 = "%DB100:0:BOOL"
 
   @Autowired
   AlarmConditionPersistenceService alarmConditionPersistenceService
@@ -66,6 +67,8 @@ class TestDataFixture {
     var alarmCondition = alarmConditionRepository.save(createCondition(sensor))
     alarmActionRepository.save(createAction(alarmCondition))
     alarmHistoryRepository.save(createHistory(alarmCondition))
+
+    blueprintRepository.save(createPredefinedAlarmBlueprint())
     connector.updateScheduler()
   }
 
@@ -86,6 +89,14 @@ class TestDataFixture {
   static BlueprintEntity createBlueprint() {
     return BlueprintEntity.builder().name("Test-" + RandomStringUtils.random(10, true, true)/* ThreadLocalRandom.current().nextInt(100)*/)
             .description("desc")
+            .build()
+  }
+
+  static BlueprintEntity createPredefinedAlarmBlueprint() {
+    return BlueprintEntity.builder()
+            .name(AlarmType.PREDEFINED.toString())
+            .type(BlueprintType.ALARM)
+            .description("Predefined blueprint")
             .build()
   }
 
