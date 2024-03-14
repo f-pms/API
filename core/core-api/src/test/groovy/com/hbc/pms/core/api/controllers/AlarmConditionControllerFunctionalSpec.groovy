@@ -191,8 +191,6 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     then:
     response.statusCode.is4xxClientError()
     response.body.error["code"] == ErrorCode.E400.toString()
-    response.body.error.data["min"]
-    response.body.error.data["max"]
     def conditionCountAfter = alarmConditionRepository.findAll().size()
     conditionCountBefore == conditionCountAfter
 

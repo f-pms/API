@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
+import com.hbc.pms.core.api.controller.v1.request.UpdateActionMessagesCommand;
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.response.AlarmConditionResponse;
 import com.hbc.pms.core.api.service.AlarmActionPersistenceService;
@@ -52,6 +53,14 @@ public class AlarmConditionController {
   ApiResponse<AlarmCondition> update(
       @PathVariable Long id, @Valid @RequestBody UpdateAlarmConditionCommand body) {
     AlarmCondition result = alarmConditionService.updateAlarmCondition(id, body);
+
+    return ApiResponse.success(result);
+  }
+
+  @PutMapping("/{id}/message")
+  ApiResponse<List<AlarmAction>> updateActionMessages(
+      @PathVariable Long id, @Valid @RequestBody UpdateActionMessagesCommand body) {
+    List<AlarmAction> result = alarmActionService.updateActionMessages(id, body.getMessage());
 
     return ApiResponse.success(result);
   }

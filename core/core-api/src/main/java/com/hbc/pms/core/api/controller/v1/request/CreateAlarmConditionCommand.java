@@ -1,7 +1,6 @@
 package com.hbc.pms.core.api.controller.v1.request;
 
 import com.hbc.pms.core.model.enums.AlarmActionType;
-import com.hbc.pms.core.model.enums.AlarmType;
 import jakarta.validation.constraints.AssertTrue;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +12,6 @@ import lombok.EqualsAndHashCode;
 public class CreateAlarmConditionCommand extends BaseAlarmConditionCommand {
   private Long sensorConfigurationId;
   private String message;
-  private AlarmType type;
   private List<AlarmActionCommand> actions;
 
   @Data
