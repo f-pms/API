@@ -3,7 +3,7 @@ package com.hbc.pms.core.api.controller.v1;
 import com.hbc.pms.core.api.controller.v1.request.BlueprintRequest;
 import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest;
-import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationRequest;
+import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationCommand;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
 import com.hbc.pms.core.api.service.BlueprintPersistenceService;
 import com.hbc.pms.core.api.service.SensorConfigurationPersistenceService;
@@ -76,7 +76,7 @@ public class BlueprintController {
   public ApiResponse<Boolean> updateSensorConfiguration(
       @PathVariable Long blueprintId,
       @PathVariable Long sensorConfigurationId,
-      @RequestBody UpdateSensorConfigurationRequest body) {
+      @RequestBody UpdateSensorConfigurationCommand body) {
     body.aggregatePlcAddress();
     var sensorConfiguration = mapper.map(body, SensorConfiguration.class);
     sensorConfiguration.setId(sensorConfigurationId);

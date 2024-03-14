@@ -7,8 +7,8 @@ import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class CreateAlarmConditionCommand extends BaseAlarmConditionCommand {
   private Long sensorConfigurationId;
   private String message;
