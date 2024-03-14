@@ -1,8 +1,10 @@
 package com.hbc.pms.core.api.support.error;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(force = true)
 public class CoreApiException extends RuntimeException {
 
   private final ErrorType errorType;
