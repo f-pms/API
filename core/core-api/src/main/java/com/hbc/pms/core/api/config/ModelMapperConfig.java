@@ -12,6 +12,8 @@ import com.hbc.pms.core.model.SensorConfiguration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.hibernate.collection.spi.PersistentCollection;
+import org.modelmapper.Condition;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -19,6 +21,7 @@ import org.modelmapper.TypeMap;
 import org.modelmapper.ValidationException;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.ErrorMessage;
+import org.modelmapper.spi.MappingContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,8 +38,15 @@ public class ModelMapperConfig {
   public ModelMapper modelMapper() throws ValidationException {
     modelMapper
         .getConfiguration()
+        .setFieldMatchingEnabled(true)
+        .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
         .setMatchingStrategy(MatchingStrategies.STRICT)
         .setSkipNullEnabled(true);
+
+    // prevent ModelMapper do map the lazy loaded collection
+    modelMapper.getConfiguration()
+        .setPropertyCondition(context -> !(context.getSource() instanceof PersistentCollection)
+            || ((PersistentCollection<?>) context.getSource()).wasInitialized());
 
     addCreateActionCommandToActionTypeMap();
     addCreateAlarmConditionCommandToAlarmConditionTypeMap();
