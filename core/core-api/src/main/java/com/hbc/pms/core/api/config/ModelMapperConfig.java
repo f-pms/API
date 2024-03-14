@@ -2,20 +2,15 @@ package com.hbc.pms.core.api.config;
 
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
-import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationRequest;
+import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationCommand;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
 import com.hbc.pms.core.api.utils.StringUtils;
-import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
-import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
-import org.modelmapper.TypeMap;
 import org.modelmapper.ValidationException;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.ErrorMessage;
@@ -38,25 +33,12 @@ public class ModelMapperConfig {
         .setMatchingStrategy(MatchingStrategies.STRICT)
         .setSkipNullEnabled(true);
 
-    addCreateActionCommandToActionTypeMap();
     addCreateAlarmConditionCommandToAlarmConditionTypeMap();
     addUpdateAlarmConditionCommandToAlarmConditionTypeMap();
 
     addUpdateSensorConfigurationRequestToSensorConfigurationTypeMap();
     addSensorConfigurationToSensorConfigurationResponseTypeMap();
-    addBlueprintToBlueprintResponseTypeMap();
     return modelMapper;
-  }
-
-  private void addCreateActionCommandToActionTypeMap() {
-    TypeMap<CreateAlarmConditionCommand.AlarmActionCommand, AlarmAction> propertyMapper =
-        modelMapper.createTypeMap(
-            CreateAlarmConditionCommand.AlarmActionCommand.class, AlarmAction.class);
-    propertyMapper.addMappings(
-        mapping ->
-            mapping.map(
-                CreateAlarmConditionCommand.AlarmActionCommand::getRecipients,
-                AlarmAction::setRecipients));
   }
 
   private void addCreateAlarmConditionCommandToAlarmConditionTypeMap() {
@@ -97,7 +79,7 @@ public class ModelMapperConfig {
 
   private void addUpdateSensorConfigurationRequestToSensorConfigurationTypeMap() {
     modelMapper
-        .createTypeMap(UpdateSensorConfigurationRequest.class, SensorConfiguration.class)
+        .createTypeMap(UpdateSensorConfigurationCommand.class, SensorConfiguration.class)
         .addMappings(
             new PropertyMap<>() {
               private final Converter<String, String> fromAddress =
@@ -138,34 +120,6 @@ public class ModelMapperConfig {
               @Override
               protected void configure() {
                 using(toAddressParts).map(source.getAddress()).setFields(new Object[] {});
-              }
-            });
-  }
-
-  private void addBlueprintToBlueprintResponseTypeMap() {
-    modelMapper
-        .createTypeMap(Blueprint.class, BlueprintResponse.class)
-        .addMappings(
-            new PropertyMap<>() {
-              private final Converter<
-                      List<SensorConfiguration>,
-                      List<BlueprintResponse.SensorConfigurationResponse>>
-                  toSensorConfigurationRes =
-                      c ->
-                          c.getSource().stream()
-                              .dropWhile(
-                                  sc -> StringUtils.isIncorrectPLCAddressFormat(sc.getAddress()))
-                              .map(
-                                  e ->
-                                      modelMapper.map(
-                                          e, BlueprintResponse.SensorConfigurationResponse.class))
-                              .toList();
-
-              @Override
-              protected void configure() {
-                using(toSensorConfigurationRes)
-                    .map(source.getSensorConfigurations())
-                    .setSensorConfigurations(new ArrayList<>());
               }
             });
   }
