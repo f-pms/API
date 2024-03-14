@@ -1,7 +1,16 @@
 package com.hbc.pms.core.model;
 
 import com.hbc.pms.core.model.enums.ReportRowCategory;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class ReportRow {
   private Long id;
   private String indicator;
