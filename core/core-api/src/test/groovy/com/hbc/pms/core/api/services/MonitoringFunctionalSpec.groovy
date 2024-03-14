@@ -7,7 +7,7 @@ import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 
 @Slf4j
-class WebsocketServiceSpec extends FunctionalTestSpec {
+class MonitoringFunctionalSpec extends FunctionalTestSpec {
   @Autowired
   SensorConfigurationRepository configurationRepository
 
