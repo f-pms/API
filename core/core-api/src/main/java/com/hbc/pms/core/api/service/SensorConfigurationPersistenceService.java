@@ -74,7 +74,7 @@ public class SensorConfigurationPersistenceService {
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
-    //TODO: LTT check existence of the PLC Tag
+    // TODO: LTT check existence of the PLC Tag
     sensorConfigurationRepository.save(entity);
     return true;
   }
@@ -84,13 +84,13 @@ public class SensorConfigurationPersistenceService {
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
 
     // TODO: LTT check existence of the PLC Tag
-    var oSensorConfiguration = sensorConfigurationRepository.findById(entity.getId());
-    if (oSensorConfiguration.isEmpty()) {
+    var oldConfig = sensorConfigurationRepository.findById(entity.getId());
+    if (oldConfig.isEmpty()) {
       throw new CoreApiException(
           ErrorType.NOT_FOUND_ERROR, SENSOR_CONFIG_NOT_FOUND_LITERAL + entity.getId());
     }
 
-    var existedEntity = oSensorConfiguration.get();
+    var existedEntity = oldConfig.get();
     existedEntity.setAddress(entity.getAddress());
     sensorConfigurationRepository.save(existedEntity);
     return true;
@@ -98,12 +98,12 @@ public class SensorConfigurationPersistenceService {
 
   public boolean delete(SensorConfiguration sensorConfiguration) {
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
-    var oSensorConfiguration = sensorConfigurationRepository.findById(entity.getId());
-    if (oSensorConfiguration.isEmpty()) {
+    var oldConfig = sensorConfigurationRepository.findById(entity.getId());
+    if (oldConfig.isEmpty()) {
       throw new CoreApiException(
           ErrorType.NOT_FOUND_ERROR, SENSOR_CONFIG_NOT_FOUND_LITERAL + entity.getId());
     }
-    sensorConfigurationRepository.delete(oSensorConfiguration.get());
+    sensorConfigurationRepository.delete(oldConfig.get());
     return true;
   }
 }
