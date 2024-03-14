@@ -15,5 +15,6 @@ import lombok.NoArgsConstructor;
 public class Report {
   private Long id;
   private OffsetDateTime recordingDate;
+  private ReportType type;
   private List<ReportRow> rows;
 }

@@ -1,6 +1,5 @@
 package com.hbc.pms.core.model;
 
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,5 +13,4 @@ import lombok.NoArgsConstructor;
 public class ReportType {
   private Long id;
   private String name;
-  private List<Report> reports;
 }
