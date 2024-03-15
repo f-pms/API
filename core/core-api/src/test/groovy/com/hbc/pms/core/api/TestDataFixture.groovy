@@ -8,6 +8,7 @@ import com.hbc.pms.core.model.enums.AlarmActionType
 import com.hbc.pms.core.model.enums.AlarmSeverity
 import com.hbc.pms.core.model.enums.AlarmStatus
 import com.hbc.pms.core.model.enums.AlarmType
+import com.hbc.pms.core.model.enums.BlueprintType
 import com.hbc.pms.integration.db.entity.AlarmActionEntity
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity
 import com.hbc.pms.integration.db.entity.AlarmHistoryEntity
@@ -23,7 +24,6 @@ import java.time.OffsetDateTime
 import java.util.concurrent.ThreadLocalRandom
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils
 
 @Component
 class TestDataFixture {
@@ -31,16 +31,19 @@ class TestDataFixture {
   static String PLC_ADDRESS_REAL_02 = "%DB9:13552:REAL"
   static String PLC_ADDRESS_REAL_03 = "%DB9:13556:REAL"
   static String PLC_ADDRESS_BOOL_01 = "%DB100:0.0:BOOL"
-  
-  static String CUSTOM_ALARM_BLUEPRINT_ID
-  static String PREDEFINED_ALARM_BLUEPRINT_ID
-  static String CUSTOM_ALARM_CONDITION_ID
-  static String PREDEFINED_ALARM_CONDITION_ID
-  static String SENSOR_REAL_ID
-  static String SENSOR_BOOL_ID
-  static String HISTORY_WITH_EMAIL_ACTION_ID
-  static String HISTORY_WITH_POPUP_ACTION_ID
-  static String HISTORY_WITH_TWO_ACTIONS_ID
+
+  static Long MONITORING_BLUEPRINT_ID
+  static Long CUSTOM_ALARM_BLUEPRINT_ID
+  static Long PREDEFINED_ALARM_BLUEPRINT_ID
+  static Long CUSTOM_ALARM_CONDITION_ID
+  static Long PREDEFINED_ALARM_CONDITION_ID
+  static Long REAL_SENSOR_WITH_CONDITION_ID
+  static Long REAL_SENSOR_WITHOUT_CONDITION_ID
+  static Long BOOL_SENSOR_WITH_CONDITION_ID
+  static Long BOOL_SENSOR_WITHOUT_CONDITION_ID
+  static Long HISTORY_WITH_EMAIL_ACTION_ID
+  static Long HISTORY_WITH_POPUP_ACTION_ID
+  static Long HISTORY_WITH_TWO_ACTIONS_ID
 
   @Autowired
   AlarmConditionPersistenceService alarmConditionPersistenceService
@@ -58,7 +61,7 @@ class TestDataFixture {
   AlarmActionRepository alarmActionRepository
 
   @Autowired
-  SensorConfigurationRepository sensorConfigurationRepository
+  SensorConfigurationRepository configurationRepository
 
   @Autowired
   BlueprintPersistenceService blueprintPersistenceService
@@ -70,12 +73,33 @@ class TestDataFixture {
   PlcConnector connector
 
   void populate() {
-    var createdBlueprint = blueprintRepository.save(createBlueprint())
-    var sensor = sensorConfigurationRepository.save(createSensorConfiguration(createdBlueprint.id, PLC_ADDRESS_REAL_01))
-    sensorConfigurationRepository.save(createSensorConfiguration(createdBlueprint.id, PLC_ADDRESS_REAL_02))
-    var alarmCondition = alarmConditionRepository.save(createCondition(sensor))
-    alarmActionRepository.save(createAction(alarmCondition))
-    alarmHistoryRepository.save(createHistory(alarmCondition))
+    def monitoringBlueprint = blueprintRepository.save(createBlueprint(BlueprintType.MONITORING, "Monitoring"))
+    MONITORING_BLUEPRINT_ID = monitoringBlueprint.getId()
+
+    def predefinedAlarmBlueprint = blueprintRepository.save(createBlueprint(BlueprintType.ALARM, AlarmType.PREDEFINED.toString()))
+    PREDEFINED_ALARM_BLUEPRINT_ID = predefinedAlarmBlueprint.getId()
+
+    def customAlarmBlueprint = blueprintRepository.save(createBlueprint(BlueprintType.ALARM, AlarmType.CUSTOM.toString()))
+    CUSTOM_ALARM_BLUEPRINT_ID = customAlarmBlueprint.getId()
+
+    def realMonitoringConfig
+            = configurationRepository.save(createSensorConfiguration(monitoringBlueprint, PLC_ADDRESS_REAL_01))
+    REAL_SENSOR_WITH_CONDITION_ID = realMonitoringConfig.getId()
+
+    def realMonitoringConfig2 = configurationRepository.save(createSensorConfiguration(monitoringBlueprint, PLC_ADDRESS_REAL_02))
+    REAL_SENSOR_WITHOUT_CONDITION_ID = realMonitoringConfig2.getId()
+
+    def boolMonitoringConfig
+            = configurationRepository.save(createSensorConfiguration(monitoringBlueprint, PLC_ADDRESS_BOOL_01))
+    BOOL_SENSOR_WITH_CONDITION_ID = boolMonitoringConfig.getId()
+
+    def customAlarmCondition = alarmConditionRepository.save(createCondition(realMonitoringConfig))
+
+//    var sensor = configurationRepository.save(createSensorConfiguration(createdBlueprint.id, PLC_ADDRESS_REAL_01))
+//    configurationRepository.save(createSensorConfiguration(createdBlueprint.id, PLC_ADDRESS_REAL_02))
+//    var alarmCondition = alarmConditionRepository.save(createCondition(sensor))
+//    alarmActionRepository.save(createAction(alarmCondition))
+//    alarmHistoryRepository.save(createHistory(alarmCondition))
 
     connector.updateScheduler()
   }
@@ -84,19 +108,22 @@ class TestDataFixture {
     alarmHistoryRepository.deleteAll()
     alarmActionRepository.deleteAll()
     alarmConditionRepository.deleteAll()
-    sensorConfigurationRepository.deleteAll()
+    configurationRepository.deleteAll()
+    blueprintRepository.deleteAll()
   }
 
-  static SensorConfigurationEntity createSensorConfiguration(Long blueprintId, String address) {
+  static SensorConfigurationEntity createSensorConfiguration(BlueprintEntity blueprint, String address) {
     return SensorConfigurationEntity.builder()
             .address(address)
-            .blueprint(BlueprintEntity.builder().id(blueprintId).build())
+            .blueprint(blueprint)
             .build()
   }
 
-  static BlueprintEntity createBlueprint() {
-    return BlueprintEntity.builder().name("Test-" + RandomStringUtils.random(10, true, true)/* ThreadLocalRandom.current().nextInt(100)*/)
-            .description("desc")
+  static BlueprintEntity createBlueprint(BlueprintType type, String name) {
+    return BlueprintEntity.builder()
+            .type(type)
+            .name(name)
+            .description("Description of $type - $name blueprint")
             .build()
   }
 

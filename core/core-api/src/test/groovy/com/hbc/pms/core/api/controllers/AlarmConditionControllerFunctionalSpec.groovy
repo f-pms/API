@@ -17,7 +17,6 @@ import com.hbc.pms.integration.db.repository.AlarmHistoryRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
 import java.util.concurrent.ThreadLocalRandom
-import org.junit.Ignore
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.PendingFeature
 
@@ -116,7 +115,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
   def "Create new alarm condition - OK"() {
     given:
     def sensorConfiguration
-            = sensorConfigurationRepository.findAllByAddress(TestDataFixture.PLC_ADDRESS_REAL_02).first()
+            = sensorConfigurationRepository.findById(TestDataFixture.REAL_SENSOR_WITHOUT_CONDITION_ID).get()
     def createConditionCommand = createDefaultAlarmConditionCommand(sensorConfiguration)
 
     when:
