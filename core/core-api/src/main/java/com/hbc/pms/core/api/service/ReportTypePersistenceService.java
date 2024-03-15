@@ -20,12 +20,4 @@ public class ReportTypePersistenceService {
         .map(entity -> mapper.map(entity, ReportType.class))
         .toList();
   }
-
-
-  public List<ReportType> getAllWithReports() {
-    var entities = reportTypeRepository.findAllWithReports();
-    return StreamSupport.stream(entities.spliterator(), false)
-        .map(entity -> mapper.map(entity, ReportType.class))
-        .toList();
-  }
 }
