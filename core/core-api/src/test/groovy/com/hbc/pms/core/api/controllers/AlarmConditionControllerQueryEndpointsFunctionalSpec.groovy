@@ -12,8 +12,7 @@ import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
 import org.springframework.beans.factory.annotation.Autowired
 
-
-class AlarmConditionControllerQueryActionsFunctionalSpec extends FunctionalTestSpec {
+class AlarmConditionControllerQueryEndpointsFunctionalSpec extends FunctionalTestSpec {
   @Autowired
   TestDataFixture dataFixture
 

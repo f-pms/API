@@ -1,9 +1,12 @@
 package com.hbc.pms.core.api
 
+import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand
+import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand
 import com.hbc.pms.core.api.service.AlarmConditionPersistenceService
 import com.hbc.pms.core.api.service.BlueprintPersistenceService
 import com.hbc.pms.core.api.service.SensorConfigurationPersistenceService
 import com.hbc.pms.core.api.utils.StringUtils
+import com.hbc.pms.core.model.enums.AlarmActionType
 import com.hbc.pms.core.model.enums.AlarmSeverity
 import com.hbc.pms.core.model.enums.AlarmType
 import com.hbc.pms.core.model.enums.BlueprintType
@@ -157,5 +160,40 @@ class TestDataFixture {
             .type(alarmType)
             .sensorConfiguration(sensorConfig)
             .build()
+  }
+
+  static def createDefaultAlarmActionCommand() {
+    return new CreateAlarmConditionCommand.AlarmActionCommand(type: AlarmActionType.EMAIL,
+            message: "Email action's message",
+            recipients: new HashSet<String>() {
+              {
+                add("thisisemail@gmail.com")
+                add("haiz@metqua.com")
+              }
+            })
+  }
+
+  static def createDefaultAlarmConditionCommand(sensorConfiguration) {
+    return new CreateAlarmConditionCommand(sensorConfigurationId: sensorConfiguration.id,
+            message: "High temperature detected",
+            severity: AlarmSeverity.HIGH,
+            type: AlarmType.CUSTOM,
+            checkInterval: 30,
+            timeDelay: 60,
+            min: 20.0,
+            max: 30.0,
+            isEnabled: true,
+            actions: [createDefaultAlarmActionCommand()])
+  }
+
+  static def createDefaultUpdateConditionCommand() {
+    return new UpdateAlarmConditionCommand(
+            severity: AlarmSeverity.HIGH,
+            type: AlarmType.CUSTOM,
+            checkInterval: ThreadLocalRandom.current().nextInt(1, 3601),
+            timeDelay: ThreadLocalRandom.current().nextInt(1, 3601),
+            min: ThreadLocalRandom.current().nextDouble(1, 40),
+            max: ThreadLocalRandom.current().nextDouble(40, 100),
+            isEnabled: true)
   }
 }
