@@ -50,7 +50,13 @@ tasks.named("check") {
   dependsOn(testing.suites.named("functionalTest"))
 }
 test {
-  finalizedBy jacocoTestReport // report is always generated after tests run
+  finalizedBy jacocoTestReport
+}
+functionalTest {
+  finalizedBy jacocoTestReport
+}
+functionalTest {
+  finalizedBy jacocoTestReport
 }
 jacocoTestReport {
   dependsOn test
