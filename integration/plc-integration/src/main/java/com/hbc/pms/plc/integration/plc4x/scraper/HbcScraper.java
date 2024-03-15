@@ -243,7 +243,7 @@ public class HbcScraper implements Scraper {
           }
           tasks.put(job, triggeredScraperTask);
           ScheduledFuture<?> future =
-            scheduler.schedule(triggeredScraperTask, new CronTrigger(job.getCron()));
+              scheduler.schedule(triggeredScraperTask, new CronTrigger(job.getCron()));
 
           // Store the handle for stopping, etc.
           scraperTaskMap.put(triggeredScraperTask, future);
