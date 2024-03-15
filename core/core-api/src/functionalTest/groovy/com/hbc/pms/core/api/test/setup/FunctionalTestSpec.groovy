@@ -19,7 +19,8 @@ class FunctionalTestSpec extends AbstractFunctionalSpec {
   def setup() {
     dataFixture.populate()
   }
-  def cleanup(){
+
+  def cleanup() {
     dataFixture.cleanup()
   }
 
