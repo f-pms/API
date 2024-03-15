@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class Report {
   private Long id;
+  private String sumJson;
   private OffsetDateTime recordingDate;
   private ReportType type;
   private List<ReportRow> rows;

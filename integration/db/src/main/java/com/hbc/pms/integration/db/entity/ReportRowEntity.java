@@ -33,6 +33,8 @@ public class ReportRowEntity {
 
   @Column private String indicator;
 
+  @Column private Long shift;
+
   @Column
   @Enumerated(EnumType.STRING)
   private ReportRowCategory category;

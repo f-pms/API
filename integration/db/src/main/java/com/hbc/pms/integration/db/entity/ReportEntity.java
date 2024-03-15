@@ -32,6 +32,8 @@ public class ReportEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column private String sumJson;
+
   @CreationTimestamp
   @Column(updatable = false)
   private OffsetDateTime recordingDate;
