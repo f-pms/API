@@ -40,10 +40,6 @@ class AlarmFunctionalSpec extends FunctionalTestSpec {
   static final def DELAY_SEC_PREDEFINED_ALARM = 5
   static final def DELAY_SEC_CUSTOM_ALARM = 8
 
-  def setup() {
-    conditions = new PollingConditions(timeout: DELAY_SEC_PREDEFINED_ALARM)
-  }
-
   def setupSpec() {
     blueprintRepository.save(createPredefinedAlarmBlueprint())
     blueprintRepository.save(createCustomAlarmBlueprint())
@@ -74,9 +70,10 @@ class AlarmFunctionalSpec extends FunctionalTestSpec {
     plcValueTestFactory.setCurrentValue(target, true)
 
     then:
-    Thread.sleep(DELAY_SEC_PREDEFINED_ALARM * 1000)
-    def historyCountAfter = historyRepository.findAll().size()
-    historyCountAfter == historyCountBefore + 1
+    conditions.within(DELAY_SEC_PREDEFINED_ALARM, {
+      def historyCountAfter = historyRepository.findAll().size()
+      historyCountAfter == historyCountBefore + 1
+    })
   }
 
   def "Alarm Websocket - CUSTOM Alarm with min and max range and not met - Not triggered"() {

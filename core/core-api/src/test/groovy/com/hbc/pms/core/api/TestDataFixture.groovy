@@ -31,6 +31,16 @@ class TestDataFixture {
   static String PLC_ADDRESS_REAL_02 = "%DB9:13552:REAL"
   static String PLC_ADDRESS_REAL_03 = "%DB9:13556:REAL"
   static String PLC_ADDRESS_BOOL_01 = "%DB100:0.0:BOOL"
+  
+  static String CUSTOM_ALARM_BLUEPRINT_ID
+  static String PREDEFINED_ALARM_BLUEPRINT_ID
+  static String CUSTOM_ALARM_CONDITION_ID
+  static String PREDEFINED_ALARM_CONDITION_ID
+  static String SENSOR_REAL_ID
+  static String SENSOR_BOOL_ID
+  static String HISTORY_WITH_EMAIL_ACTION_ID
+  static String HISTORY_WITH_POPUP_ACTION_ID
+  static String HISTORY_WITH_TWO_ACTIONS_ID
 
   @Autowired
   AlarmConditionPersistenceService alarmConditionPersistenceService
@@ -108,7 +118,7 @@ class TestDataFixture {
 
   static AlarmConditionEntity createCondition(SensorConfigurationEntity sensorConfiguration) {
     return AlarmConditionEntity.builder()
-            .isEnabled(true)
+            .isEnabled(false)
             .max(ThreadLocalRandom.current().nextDouble(50, 100))
             .min(ThreadLocalRandom.current().nextDouble(10, 40))
             .cron(StringUtils.buildCronFromSeconds(10))
