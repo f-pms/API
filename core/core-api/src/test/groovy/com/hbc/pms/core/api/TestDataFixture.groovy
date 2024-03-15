@@ -8,22 +8,15 @@ import com.hbc.pms.core.model.enums.AlarmActionType
 import com.hbc.pms.core.model.enums.AlarmSeverity
 import com.hbc.pms.core.model.enums.AlarmStatus
 import com.hbc.pms.core.model.enums.AlarmType
-import com.hbc.pms.integration.db.entity.AlarmActionEntity
-import com.hbc.pms.integration.db.entity.AlarmConditionEntity
-import com.hbc.pms.integration.db.entity.AlarmHistoryEntity
-import com.hbc.pms.integration.db.entity.BlueprintEntity
-import com.hbc.pms.integration.db.entity.SensorConfigurationEntity
-import com.hbc.pms.integration.db.repository.AlarmActionRepository
-import com.hbc.pms.integration.db.repository.AlarmConditionRepository
-import com.hbc.pms.integration.db.repository.AlarmHistoryRepository
-import com.hbc.pms.integration.db.repository.BlueprintRepository
-import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
+import com.hbc.pms.integration.db.entity.*
+import com.hbc.pms.integration.db.repository.*
 import com.hbc.pms.plc.api.PlcConnector
-import java.time.OffsetDateTime
-import java.util.concurrent.ThreadLocalRandom
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils
+
+import java.time.OffsetDateTime
+import java.util.concurrent.ThreadLocalRandom
 
 @Component
 class TestDataFixture {

@@ -1,13 +1,13 @@
 package com.hbc.pms.core.api.services
 
+import com.hbc.pms.core.api.IntegrationTestSpec
 import com.hbc.pms.core.api.TestDataFixture
-import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 
 @Slf4j
-class WebsocketServiceSpec extends FunctionalTestSpec {
+class WebsocketServiceSpec extends IntegrationTestSpec {
   @Autowired
   SensorConfigurationRepository configurationRepository
 

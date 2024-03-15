@@ -1,14 +1,64 @@
+configurations {
+  functionalTestImplementation.extendsFrom testImplementation
+  functionalTestRuntime.extendsFrom testRuntime
+  integrationTestImplementation.extendsFrom testImplementation
+  integrationTestRuntime.extendsFrom testRuntime
+}
+testing {
+  suites {
+
+    configureEach {
+      useJUnitJupiter()
+      dependencies {
+        implementation project()
+      }
+    }
+    integrationTest(JvmTestSuite) {
+      dependencies {
+        implementation(sourceSets.test.runtimeClasspath)
+        implementation(sourceSets.test.output)
+      }
+
+      targets {
+        all {
+          testTask.configure {
+            shouldRunAfter(test)
+          }
+        }
+      }
+    }
+    functionalTest(JvmTestSuite) {
+      dependencies {
+        implementation(sourceSets.test.runtimeClasspath)
+        implementation(sourceSets.test.output)
+      }
+
+      targets {
+        configureEach {
+          testTask.configure {
+            shouldRunAfter(integrationTest)
+          }
+        }
+      }
+    }
+  }
+}
+
+tasks.named("check") {
+  dependsOn(testing.suites.named("test"))
+  dependsOn(testing.suites.named("integrationTest"))
+  dependsOn(testing.suites.named("functionalTest"))
+}
+test {
+  finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+  dependsOn test
+  dependsOn functionalTest
+  dependsOn integrationTest
+}
 jacocoTestReport {
   reports {
     xml.required = true
   }
 }
-
-
-test {
-  finalizedBy jacocoTestReport // report is always generated after tests run
-}
-jacocoTestReport {
-  dependsOn test // tests are required to run before generating the report
-}
-
