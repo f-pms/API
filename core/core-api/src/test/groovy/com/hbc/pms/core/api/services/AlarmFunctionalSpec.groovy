@@ -27,7 +27,6 @@ class AlarmFunctionalSpec extends FunctionalTestSpec {
   AlarmConditionRepository conditionRepository
 
   @Autowired
-  @Shared
   BlueprintRepository blueprintRepository
 
   @Autowired
@@ -39,11 +38,6 @@ class AlarmFunctionalSpec extends FunctionalTestSpec {
   static final def ONE_SECOND_CRON = "*/1 * * * * *"
   static final def DELAY_SEC_PREDEFINED_ALARM = 5
   static final def DELAY_SEC_CUSTOM_ALARM = 8
-
-  def setupSpec() {
-    blueprintRepository.save(createPredefinedAlarmBlueprint())
-    blueprintRepository.save(createCustomAlarmBlueprint())
-  }
 
   def "Alarm Websocket - PREDEFINED Alarm with 1s checkInterval and 1s timeDelay not met - Not triggered"() {
     given:

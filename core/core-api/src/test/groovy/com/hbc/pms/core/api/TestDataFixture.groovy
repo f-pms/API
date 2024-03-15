@@ -27,6 +27,7 @@ import org.springframework.stereotype.Component
 class TestDataFixture {
   static String PLC_ADDRESS_REAL_01 = "%DB9:13548:REAL"
   static String PLC_ADDRESS_REAL_02 = "%DB9:13552:REAL"
+  static String PLC_ADDRESS_REAL_03 = "%DB9:13556:REAL"
   static String PLC_ADDRESS_BOOL_01 = "%DB100:0.0:BOOL"
   static String PLC_ADDRESS_BOOL_02 = "%DB100:1.0:BOOL"
 
