@@ -84,19 +84,28 @@ class TestDataFixture {
             .build()
   }
 
-  static AlarmHistoryEntity createHistory(AlarmConditionEntity alarmCondition) {
+  static AlarmHistoryEntity createHistory(AlarmConditionEntity alarmCondition, AlarmStatus status) {
     return AlarmHistoryEntity.builder()
-            .status(AlarmStatus.SOLVED)
+            .status(status)
             .triggeredAt(OffsetDateTime.now())
             .condition(alarmCondition)
             .build()
   }
 
-  static AlarmActionEntity createAction(AlarmConditionEntity alarmCondition) {
+  static AlarmActionEntity createPopupAction(AlarmConditionEntity alarmCondition) {
     return AlarmActionEntity.builder()
             .condition(alarmCondition)
             .type(AlarmActionType.POPUP)
             .message("Popup Action message")
+            .build()
+  }
+
+  static AlarmActionEntity createEmailAction(AlarmConditionEntity alarmCondition, Set<String> recipients) {
+    return AlarmActionEntity.builder()
+            .condition(alarmCondition)
+            .type(AlarmActionType.EMAIL)
+            .message("Email Action message")
+            .recipients(recipients)
             .build()
   }
 
@@ -105,9 +114,9 @@ class TestDataFixture {
             .isEnabled(false)
             .max(ThreadLocalRandom.current().nextDouble(50, 100))
             .min(ThreadLocalRandom.current().nextDouble(10, 40))
-            .cron(StringUtils.buildCronFromSeconds(10))
+            .cron(StringUtils.buildCronFromSeconds(1))
             .severity(AlarmSeverity.HIGH)
-            .timeDelay(ThreadLocalRandom.current().nextInt(5, 10))
+            .timeDelay(1)
             .type(alarmType)
             .sensorConfiguration(sensorConfig)
             .build()

@@ -32,5 +32,4 @@ public class RestClient {
   public void delete(String url) {
     restTemplate.delete(url);
   }
-
 }

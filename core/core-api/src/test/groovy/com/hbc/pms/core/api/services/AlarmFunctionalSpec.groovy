@@ -177,22 +177,6 @@ class AlarmFunctionalSpec extends FunctionalTestSpec {
     })
   }
 
-  static BlueprintEntity createPredefinedAlarmBlueprint() {
-    return BlueprintEntity.builder()
-            .name(AlarmType.PREDEFINED.toString())
-            .type(BlueprintType.ALARM)
-            .description("Predefined blueprint")
-            .build()
-  }
-
-  static BlueprintEntity createCustomAlarmBlueprint() {
-    return BlueprintEntity.builder()
-            .name(AlarmType.CUSTOM.toString())
-            .type(BlueprintType.ALARM)
-            .description("Custom blueprint")
-            .build()
-  }
-
   void populateTestAlarm(AlarmType alarmType, String address, Double min, Double max) {
     def target = address
     conditionRepository.deleteAll()
@@ -205,6 +189,7 @@ class AlarmFunctionalSpec extends FunctionalTestSpec {
             .blueprint(blueprint)
             .build()
     configurationRepository.save(sensorConfig)
+
     //TODO: temporarily workaround, change later when updated the sensorConfigPersistenceService impl
     connector.updateScheduler()
 

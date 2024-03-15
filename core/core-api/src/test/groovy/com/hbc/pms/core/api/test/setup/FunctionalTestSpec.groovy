@@ -5,6 +5,7 @@ import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.support.spock.test.AbstractFunctionalSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.test.context.ActiveProfiles
 import spock.util.concurrent.PollingConditions
 
@@ -16,10 +17,14 @@ class FunctionalTestSpec extends AbstractFunctionalSpec {
   @Autowired
   TestDataFixture dataFixture
 
+//  @LocalServerPort
+//  Integer port
+
   def setup() {
     dataFixture.populateDefaultBlueprints()
   }
-  def cleanup(){
+
+  def cleanup() {
     dataFixture.cleanup()
   }
 

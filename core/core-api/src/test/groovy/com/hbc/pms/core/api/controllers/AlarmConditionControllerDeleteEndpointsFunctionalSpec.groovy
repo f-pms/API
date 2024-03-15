@@ -1,9 +1,8 @@
 package com.hbc.pms.core.api.controllers
 
 import com.hbc.pms.core.api.TestDataFixture
-import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand
 import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
-import com.hbc.pms.core.model.enums.AlarmSeverity
+import com.hbc.pms.core.model.enums.AlarmStatus
 import com.hbc.pms.core.model.enums.AlarmType
 import com.hbc.pms.integration.db.repository.AlarmActionRepository
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository
@@ -11,7 +10,6 @@ import com.hbc.pms.integration.db.repository.AlarmHistoryRepository
 import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
-import java.util.concurrent.ThreadLocalRandom
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.PendingFeature
 
@@ -44,8 +42,8 @@ class AlarmConditionControllerDeleteEndpointsFunctionalSpec extends FunctionalTe
                     TestDataFixture.createSensorConfiguration(monitorBlueprint, TestDataFixture.PLC_ADDRESS_REAL_01)
             )
     def condition = conditionRepository.save(TestDataFixture.createDefaultConditionEntity(AlarmType.CUSTOM, sensorConfig))
-    alarmHistoryRepository.save(TestDataFixture.createHistory(condition))
-    alarmActionRepository.save(TestDataFixture.createAction(condition))
+    alarmHistoryRepository.save(TestDataFixture.createHistory(condition, AlarmStatus.SOLVED))
+    alarmActionRepository.save(TestDataFixture.createPopupAction(condition))
   }
 
   def "Delete alarm condition - OK and cascade deleted alarm histories"() {
