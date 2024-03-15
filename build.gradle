@@ -31,6 +31,14 @@ rootProject.afterEvaluate() {
     doNotTrackState("Walkarounds")
   }
 }
+allprojects {
+  sonarqube {
+    properties {
+      // property "sonar.log.level", "INFO"
+      property "sonar.log.level", "TRACE"
+    }
+  }
+}
 subprojects {
   apply plugin: 'java-library'
   apply plugin: 'groovy'
