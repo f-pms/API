@@ -331,7 +331,6 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     response.body.error["code"] == ErrorCode.E400.toString()
   }
 
-  @PendingFeature
   def "Update alarm condition - Update min value only - OK and max must be null"() {
     given:
     def condition = alarmConditionRepository.findAll().first()
@@ -349,7 +348,6 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     response.body.data["max"] == null
   }
 
-  @PendingFeature
   def "Update alarm condition - Update max value only - OK and min must be null"() {
     given:
     def condition = alarmConditionRepository.findAll().first()
