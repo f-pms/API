@@ -15,10 +15,13 @@ import lombok.NoArgsConstructor;
 public class ReportCriteria {
   private Long reportTypeId;
 
-  // set min, max sql server datetime
+  // set min sql server datetime
   // https://learn.microsoft.com/en-us/sql/t-sql/data-types/datetimeoffset-transact-sql
   @Builder.Default
   private OffsetDateTime startDate = OffsetDateTime.of(1, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+
+  // set max sql server datetime
+  // https://learn.microsoft.com/en-us/sql/t-sql/data-types/datetimeoffset-transact-sql
   @Builder.Default
   private OffsetDateTime endDate = OffsetDateTime.of(9999, 12, 31, 23, 59, 0, 0, ZoneOffset.UTC);
 }

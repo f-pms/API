@@ -1,5 +1,7 @@
 package com.hbc.pms.integration.db.specifications;
 
+import static java.util.Objects.nonNull;
+
 import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.integration.db.entity.ReportEntity;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -7,12 +9,8 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-
-
-import static java.util.Objects.nonNull;
 
 @AllArgsConstructor
 public class ReportSpecification implements Specification<ReportEntity> {
