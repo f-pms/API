@@ -6,7 +6,9 @@ configurations {
 }
 testing {
   suites {
-
+    test{
+      testType.set(TestSuiteType.UNIT_TEST)
+    }
     configureEach {
       useJUnitJupiter()
       dependencies {
@@ -14,6 +16,7 @@ testing {
       }
     }
     integrationTest(JvmTestSuite) {
+      testType.set(TestSuiteType.INTEGRATION_TEST)
       dependencies {
         implementation(sourceSets.test.runtimeClasspath)
         implementation(sourceSets.test.output)
@@ -28,6 +31,8 @@ testing {
       }
     }
     functionalTest(JvmTestSuite) {
+      testType.set(TestSuiteType.FUNCTIONAL_TEST)
+
       dependencies {
         implementation(sourceSets.test.runtimeClasspath)
         implementation(sourceSets.test.output)
@@ -43,7 +48,31 @@ testing {
     }
   }
 }
+//reporting {
+//  reports {
+//    testCodeCoverageReport(JacocoCoverageReport) {
+//      testType = TestSuiteType.UNIT_TEST
+//      reportTask {
+//        executionData.builtBy(tasks.test, tasks.named("integrationTest"),tasks.named("functionalTest"))
+//        executionData.from([
+//                project.layout.buildDirectory.file("jacoco/test.exec"),
+//                project.layout.buildDirectory.file("jacoco/integrationTest.exec"),
+//                project.layout.buildDirectory.file("jacoco/functionalTest.exec")]
+//        )
+//      }
+//
+//    }
+//  }
+//}
 
+tasks.testCodeCoverageReport {
+  executionData.builtBy(tasks.test, tasks.named("integrationTest"),tasks.named("functionalTest"))
+  executionData.from(
+          project.layout.buildDirectory.file("jacoco/test.exec"),
+          project.layout.buildDirectory.file("jacoco/integrationTest.exec"),
+          project.layout.buildDirectory.file("jacoco/functionalTest.exec")
+  )
+}
 tasks.named("check") {
   dependsOn(testing.suites.named("test"))
   dependsOn(testing.suites.named("integrationTest"))
