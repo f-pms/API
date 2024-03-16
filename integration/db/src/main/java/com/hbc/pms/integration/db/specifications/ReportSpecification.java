@@ -4,6 +4,8 @@ import static java.util.Objects.nonNull;
 
 import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.integration.db.entity.ReportEntity;
+import com.hbc.pms.integration.db.entity.ReportEntity_;
+import com.hbc.pms.integration.db.entity.ReportTypeEntity_;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -18,13 +20,17 @@ public class ReportSpecification implements Specification<ReportEntity> {
 
   @Override
   public Predicate toPredicate(
-      Root<ReportEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+      Root<ReportEntity> reportRoot, CriteriaQuery<?> query, CriteriaBuilder builder) {
     var predicates = new ArrayList<>();
     predicates.add(
-        builder.between(root.get("recordingDate"), criteria.getStartDate(), criteria.getEndDate()));
+        builder.between(
+            reportRoot.get(ReportEntity_.RECORDING_DATE),
+            criteria.getStartDate(),
+            criteria.getEndDate()));
     if (nonNull(criteria.getReportTypeId())) {
-      var typeRoot = root.join("type");
-      predicates.add(builder.equal(typeRoot.get("id"), criteria.getReportTypeId()));
+      var reportTypeRoot = reportRoot.join(ReportEntity_.TYPE);
+      predicates.add(
+          builder.equal(reportTypeRoot.get(ReportTypeEntity_.ID), criteria.getReportTypeId()));
     }
     return builder.and(predicates.toArray(Predicate[]::new));
   }
