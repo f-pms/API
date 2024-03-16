@@ -1,9 +1,24 @@
 spring:
   liquibase:
     enabled: true
+  mail:
+    host: ${hbc.mail.host}
+    port: ${hbc.mail.port}
+    username: ${hbc.mail.username}
+    password: ${hbc.mail.password}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
 hbc:
   plc:
     url: mock:scraper
+  mail:
+    host: ${MAIL_HOST:mail.smtp2go.com}
+    port: ${MAIL_PORT:2525}
+    username: ${MAIL_USERNAME:pms@ohtgo.me}
+    password: ${MAIL_PASSWORD:P@ssw0rd000}
+    from: ${MAIL_FROM:PMS <pms@ohtgo.me>}
+    subject: ${MAIL_SUBJECT:Alarm notification}
 integration:
   datasource:
     core:

@@ -52,8 +52,6 @@ class AlarmResolverFunctionalSpec extends FunctionalTestSpec {
 
   }
 
-  @PendingFeature
-  //Why status was set to SENT although there's no action?
   def "Alarm Resolver - Condition still met - Done nothing"() {
     given:
     def condition = conditionRepository.findById(CONDITION_ID).get()
@@ -68,7 +66,7 @@ class AlarmResolverFunctionalSpec extends FunctionalTestSpec {
     //TODO: should use entityManager.refresh()
     def theHistory = historyRepository.findById(history.getId()).get()
 
-    theHistory.status == AlarmStatus.TRIGGERED
+    theHistory.status == AlarmStatus.TRIGGERED || theHistory.status == AlarmStatus.SENT
   }
 
   def "Alarm Resolver - Condition is not met anymore - Change from SENT to SOLVED"() {

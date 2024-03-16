@@ -17,8 +17,8 @@ class FunctionalTestSpec extends AbstractFunctionalSpec {
   @Autowired
   TestDataFixture dataFixture
 
-//  @LocalServerPort
-//  Integer port
+  @LocalServerPort
+  Integer port
 
   def setup() {
     dataFixture.populateDefaultBlueprints()
