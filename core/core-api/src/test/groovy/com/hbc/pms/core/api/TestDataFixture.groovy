@@ -100,6 +100,14 @@ class TestDataFixture {
             .build()
   }
 
+  static AlarmActionEntity createPushNotiAction(AlarmConditionEntity alarmCondition) {
+    return AlarmActionEntity.builder()
+            .condition(alarmCondition)
+            .type(AlarmActionType.PUSH_NOTIFICATION)
+            .message("Push Notification Action message")
+            .build()
+  }
+
   static AlarmActionEntity createEmailAction(AlarmConditionEntity alarmCondition, Set<String> recipients) {
     return AlarmActionEntity.builder()
             .condition(alarmCondition)

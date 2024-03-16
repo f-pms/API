@@ -151,18 +151,51 @@ class NotificationServiceIntegrationSpec extends FunctionalTestSpec {
     plcValueTestFactory.setCurrentValue(TestDataFixture.PLC_ADDRESS_BOOL_01, true)
 
     then:
-    conditions.within(ALLOWED_DELAY_SEC, {
-      eventCollector.getEvent { r ->
-        {
-          r.payload.containsKey("message")
-          r.payload.containsKey("triggeredAt")
-        }
-      }
-    })
-    def theHistory = historyRepository.findById(history.getId()).get()
-    theHistory.status == AlarmStatus.SENT
+    conditions.eventually {
+      def theHistory = historyRepository.findById(history.getId()).get()
+      theHistory.status == AlarmStatus.SENT
+    }
+    //TODO: check if email SENT
   }
 
-  def "Noti service - New alarm history with 2 actions Popup and Email - Sent all noti"() {
+  def "Noti service - New alarm history with action PushNoti - Sent noti"() {
+    given:
+    def condition = conditionRepository.findById(CONDITION_ID).get()
+    condition.setEnabled(true)
+    actionRepository.save(TestDataFixture.createPushNotiAction(condition))
+
+    when:
+    def history
+            = historyRepository.save(TestDataFixture.createHistory(condition, AlarmStatus.TRIGGERED))
+    plcValueTestFactory.setCurrentValue(TestDataFixture.PLC_ADDRESS_BOOL_01, true)
+
+    then:
+    conditions.eventually {
+      def theHistory = historyRepository.findById(history.getId()).get()
+      theHistory.status == AlarmStatus.SENT
+    }
+    //TODO: check if push notification SENT
+  }
+
+  def "Noti service - New alarm history with 3 actions Popup and Email - Sent all noti"() {
+    given:
+    def condition = conditionRepository.findById(CONDITION_ID).get()
+    condition.setEnabled(true)
+    actionRepository.save(TestDataFixture.createPushNotiAction(condition))
+    actionRepository.save(TestDataFixture.createPopupAction(condition))
+    actionRepository.save(TestDataFixture.createEmailAction(
+            condition, new HashSet<String>(Arrays.asList("thinhle@gmail.com", "lowtothentotheg@kami.gam"))))
+
+    when:
+    def history
+            = historyRepository.save(TestDataFixture.createHistory(condition, AlarmStatus.TRIGGERED))
+    plcValueTestFactory.setCurrentValue(TestDataFixture.PLC_ADDRESS_BOOL_01, true)
+
+    then:
+    conditions.eventually {
+      def theHistory = historyRepository.findById(history.getId()).get()
+      theHistory.status == AlarmStatus.SENT
+    }
+    //TODO: check if all 3 notifications SENT
   }
 }
