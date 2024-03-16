@@ -3,6 +3,7 @@ package com.hbc.pms.integration.db.specifications;
 import static java.util.Objects.nonNull;
 
 import com.hbc.pms.core.model.criteria.ReportCriteria;
+import com.hbc.pms.core.model.enums.ReportOrder;
 import com.hbc.pms.integration.db.entity.ReportEntity;
 import com.hbc.pms.integration.db.entity.ReportEntity_;
 import com.hbc.pms.integration.db.entity.ReportTypeEntity_;
@@ -21,17 +22,31 @@ public class ReportSpecification implements Specification<ReportEntity> {
   @Override
   public Predicate toPredicate(
       Root<ReportEntity> reportRoot, CriteriaQuery<?> query, CriteriaBuilder builder) {
-    var predicates = new ArrayList<>();
+    var reportTypeRoot = reportRoot.join(ReportEntity_.TYPE);
+    var predicates = new ArrayList<Predicate>();
     predicates.add(
         builder.between(
             reportRoot.get(ReportEntity_.RECORDING_DATE),
             criteria.getStartDate(),
             criteria.getEndDate()));
     if (nonNull(criteria.getReportTypeId())) {
-      var reportTypeRoot = reportRoot.join(ReportEntity_.TYPE);
       predicates.add(
           builder.equal(reportTypeRoot.get(ReportTypeEntity_.ID), criteria.getReportTypeId()));
     }
+
+    switch (criteria.getSortBy()) {
+      case RECORDING_DATE -> {
+        var field = reportRoot.get(ReportEntity_.RECORDING_DATE);
+        query.orderBy(
+            criteria.getOrder() == ReportOrder.ASC ? builder.asc(field) : builder.desc(field));
+      }
+      case TYPE -> {
+        var field = reportTypeRoot.get(ReportTypeEntity_.NAME);
+        query.orderBy(
+            criteria.getOrder() == ReportOrder.ASC ? builder.asc(field) : builder.desc(field));
+      }
+    }
+
     return builder.and(predicates.toArray(Predicate[]::new));
   }
 }
