@@ -34,11 +34,6 @@ public class ReportPersistenceService {
         .toList();
   }
 
-  public Report create(Report report) {
-    var entity = mapper.map(report, ReportEntity.class);
-    return mapper.map(reportRepository.save(entity), Report.class);
-  }
-
   public Report getById(Long id) {
     var oEntity = reportRepository.findByIdWithRows(id);
     if (oEntity.isEmpty()) {
