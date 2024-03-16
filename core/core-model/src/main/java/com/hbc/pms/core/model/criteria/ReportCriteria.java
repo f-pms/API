@@ -27,9 +27,7 @@ public class ReportCriteria {
   @Builder.Default
   private OffsetDateTime endDate = OffsetDateTime.of(9999, 12, 31, 23, 59, 0, 0, ZoneOffset.UTC);
 
-  @Builder.Default
-  private ReportSort sortBy = ReportSort.NONE;
+  @Builder.Default private ReportSort sortBy = ReportSort.NONE;
 
-  @Builder.Default
-  private ReportOrder order = ReportOrder.ASC;
+  @Builder.Default private ReportOrder order = ReportOrder.ASC;
 }

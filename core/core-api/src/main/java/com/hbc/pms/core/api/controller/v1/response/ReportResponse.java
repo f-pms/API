@@ -2,7 +2,6 @@ package com.hbc.pms.core.api.controller.v1.response;
 
 import static java.util.Objects.isNull;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,8 +26,7 @@ public class ReportResponse {
   private ReportType type;
   private List<ReportRow> rows;
 
-  @JsonIgnore
-  private String sumJson;
+  @JsonIgnore private String sumJson;
 
   public Map<String, Long> getSum() {
     return Try.of(this::deserializeSum).getOrElse(Map.of());
