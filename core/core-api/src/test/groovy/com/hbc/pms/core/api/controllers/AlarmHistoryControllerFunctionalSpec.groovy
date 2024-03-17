@@ -14,7 +14,7 @@ import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
 import org.springframework.beans.factory.annotation.Autowired
 
-class AlarmHistoriesControllerFunctionalSpec extends FunctionalTestSpec {
+class AlarmHistoryControllerFunctionalSpec extends FunctionalTestSpec {
   @Autowired
   BlueprintRepository blueprintRepository
 
@@ -49,8 +49,10 @@ class AlarmHistoriesControllerFunctionalSpec extends FunctionalTestSpec {
   def "History controller - Get all - OK"() {
     given:
     def condition = conditionRepository.findById(CONDITION_ID).get()
-    historyRepository.save(TestDataFixture.createHistory(condition, AlarmStatus.SOLVED))
-    historyRepository.save(TestDataFixture.createHistory(condition, AlarmStatus.SOLVED))
+    def history1Id = historyRepository
+            .save(TestDataFixture.createHistory(condition, AlarmStatus.SOLVED)).getId()
+    def history2Id = historyRepository
+            .save(TestDataFixture.createHistory(condition, AlarmStatus.SOLVED)).getId()
 
     when:
     def response
@@ -60,7 +62,9 @@ class AlarmHistoriesControllerFunctionalSpec extends FunctionalTestSpec {
 
     then:
     response.statusCode.is2xxSuccessful()
-    List<AlarmConditionResponse> listConditions = response.body.data as List<AlarmConditionResponse>
-    listConditions.size() == 2
+    List<AlarmHistoryResponse> listHistories = response.body.data as List<AlarmHistoryResponse>
+    listHistories.size() == 2
+    listHistories.any { it["id"] == history1Id }
+    listHistories.any { it["id"] == history2Id }
   }
 }
