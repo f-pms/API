@@ -9,10 +9,13 @@ import com.hbc.pms.core.model.SensorConfiguration;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity;
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.ValidationException;
+import org.modelmapper.spi.ErrorMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +27,7 @@ public class SensorConfigurationPersistenceService {
   private final ModelMapper mapper;
   private final SensorConfigurationRepository sensorConfigurationRepository;
   private final AlarmConditionPersistenceService alarmConditionPersistenceService;
+  private final PlcService plcService;
 
   public List<SensorConfiguration> getAll(SearchBlueprintCommand searchCommand) {
     return StreamSupport.stream(
@@ -72,10 +76,17 @@ public class SensorConfigurationPersistenceService {
   }
 
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
+    var address = sensorConfiguration.getAddress();
+    if (!plcService.isTagExisted(address)) {
+      throw new ValidationException(
+          Collections.singletonList(
+              new ErrorMessage("Address " + address + " does not exist in the PLC")));
+    }
+
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
-    // TODO: LTT check existence of the PLC Tag
     sensorConfigurationRepository.save(entity);
+
     return true;
   }
 

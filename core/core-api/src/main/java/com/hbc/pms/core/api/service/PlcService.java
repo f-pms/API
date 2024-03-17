@@ -23,4 +23,8 @@ public class PlcService {
   public IoResponse validate(String address) throws ExecutionException, InterruptedException {
     return s7Connector.validate(address);
   }
+
+  public boolean isTagExisted(String address) {
+    return true;
+  }
 }
