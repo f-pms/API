@@ -8,6 +8,7 @@ import com.hbc.pms.core.api.utils.StringUtils;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.SensorConfiguration;
 import java.util.Collections;
+import org.hibernate.collection.spi.PersistentCollection;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -30,8 +31,18 @@ public class ModelMapperConfig {
   public ModelMapper modelMapper() throws ValidationException {
     modelMapper
         .getConfiguration()
+        .setFieldMatchingEnabled(true)
+        .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
         .setMatchingStrategy(MatchingStrategies.STRICT)
         .setSkipNullEnabled(true);
+
+    // prevent ModelMapper do map the lazy loaded collection
+    modelMapper
+        .getConfiguration()
+        .setPropertyCondition(
+            context ->
+                !(context.getSource() instanceof PersistentCollection)
+                    || ((PersistentCollection<?>) context.getSource()).wasInitialized());
 
     addCreateAlarmConditionCommandToAlarmConditionTypeMap();
     addUpdateAlarmConditionCommandToAlarmConditionTypeMap();
