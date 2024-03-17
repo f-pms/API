@@ -70,22 +70,20 @@ class ModelMapperFunctionalSpec extends FunctionalTestSpec {
 
   //TODO: wait for HuyN's input
   @PendingFeature
-  def "Mapper UpdateAlarmConditionCommand to AlarmCondition mapper - Map checkInterval to cron - Corrected"() {
-
-  }
+  def "Mapper UpdateAlarmConditionCommand to AlarmCondition mapper - Map checkInterval to cron - Corrected"() {}
 
   def "Mapper UpdateSensorConfigurationCommand to SensorConfiguration - Check address - Correct"() {
     given:
-    def sensorConfigCommand = new UpdateSensorConfigurationCommand()
-    sensorConfigCommand.setAddress(addressVal)
-    sensorConfigCommand.setDb(dbVal)
-    sensorConfigCommand.setOffset(offsetVal)
-    sensorConfigCommand.setDataType(dataTypeVal)
+    def sensorConfigCommand = UpdateSensorConfigurationCommand.builder()
+            .address(addressVal)
+            .db(dbVal)
+            .offset(offsetVal)
+            .dataType(dataTypeVal)
+            .build()
     sensorConfigCommand.aggregatePlcAddress()
 
     when:
     def sensorConfig = mapper.map(sensorConfigCommand, SensorConfiguration.class)
-
 
     then:
     sensorConfig.getAddress() == expectedAddressVal
@@ -99,12 +97,12 @@ class ModelMapperFunctionalSpec extends FunctionalTestSpec {
 
   def "Mapper UpdateSensorConfigurationCommand to SensorConfiguration - Map invalid addresses - Correct"() {
     given:
-    def sensorConfigCommand = new UpdateSensorConfigurationCommand()
-    sensorConfigCommand.setAddress(addressVal)
-    sensorConfigCommand.setDb(dbVal)
-    sensorConfigCommand.setOffset(offsetVal)
-    sensorConfigCommand.setDataType(dataTypeVal)
-    sensorConfigCommand.aggregatePlcAddress()
+    def sensorConfigCommand = UpdateSensorConfigurationCommand.builder()
+            .address(addressVal)
+            .db(dbVal)
+            .offset(offsetVal)
+            .dataType(dataTypeVal)
+            .build()
 
     when:
     def sensorConfig = mapper.map(sensorConfigCommand, SensorConfiguration.class)
