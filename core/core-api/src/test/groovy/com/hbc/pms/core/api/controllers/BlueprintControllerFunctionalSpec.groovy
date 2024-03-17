@@ -2,7 +2,6 @@ package com.hbc.pms.core.api.controllers
 
 import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest
-import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationCommand
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse
 import com.hbc.pms.core.api.support.error.ErrorCode
@@ -101,7 +100,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     }
   }
 
-  def "Get all blueprints by blueprintType - Not existed type - OK with empty list"() {
+  def "Get all blueprints by blueprintType - Not existed type - Bad request error"() {
     when:
     def response
             = restClient.get("/blueprints?blueprintType=Random", ApiResponse<List<BlueprintResponse>>)
