@@ -12,7 +12,7 @@ public class UpdateSensorConfigurationCommand {
 
   private String address;
   private Integer db;
-  private Integer offset;
+  private Double offset;
   private String dataType;
 
   public void aggregatePlcAddress() {
