@@ -1,0 +1,192 @@
+databaseChangeLog:
+- changeSet:
+    id: 1710577279959-1
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: reportPK
+            name: id
+            type: bigint
+        - column:
+            name: recording_date
+            type: datetimeoffset(6)
+        - column:
+            name: sum_json
+            type: varchar(255)
+        - column:
+            constraints:
+              nullable: false
+            name: type_id
+            type: bigint
+        tableName: report
+- changeSet:
+    id: 1710577279959-2
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: report_rowPK
+            name: id
+            type: bigint
+        - column:
+            name: category
+            type: varchar(255)
+        - column:
+            name: indicator
+            type: varchar(255)
+        - column:
+            name: new_electric_value1
+            type: float(53)
+        - column:
+            name: new_electric_value2
+            type: float(53)
+        - column:
+            name: new_electric_value3
+            type: float(53)
+        - column:
+            name: new_electric_value4
+            type: float(53)
+        - column:
+            name: old_electric_value
+            type: float(53)
+        - column:
+            name: shift
+            type: bigint
+        - column:
+            constraints:
+              nullable: false
+            name: report_id
+            type: bigint
+        tableName: report_row
+- changeSet:
+    id: 1710577279959-3
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: report_schedulePK
+            name: id
+            type: bigint
+        - column:
+            name: category
+            type: varchar(255)
+        - column:
+            name: indicator
+            type: varchar(255)
+        - column:
+            name: period
+            type: varchar(255)
+        - column:
+            constraints:
+              nullable: false
+            name: sensor_configuration_id
+            type: bigint
+        - column:
+            constraints:
+              nullable: false
+            name: type_id
+            type: bigint
+        tableName: report_schedule
+- changeSet:
+    id: 1710577279959-4
+    author: HTG (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: report_typePK
+            name: id
+            type: bigint
+        - column:
+            name: name
+            type: varchar(255)
+        tableName: report_type
+- changeSet:
+    id: 1710577279959-5
+    author: HTG (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: sensor_configuration_id
+        constraintName: UC_REPORT_SCHEDULESENSOR_CONFIGURATION_ID_COL
+        tableName: report_schedule
+- changeSet:
+    id: 1710577279959-6
+    author: HTG (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: type_id
+        constraintName: UC_REPORT_SCHEDULETYPE_ID_COL
+        tableName: report_schedule
+- changeSet:
+    id: 1710577279959-7
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: type_id
+        baseTableName: report
+        constraintName: FK2o163duceaxageubkx73glqf0
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: report_type
+        validate: true
+- changeSet:
+    id: 1710577279959-8
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: sensor_configuration_id
+        baseTableName: report_schedule
+        constraintName: FK6tirskcl0or1bsaxaxr4tepwc
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: sensor_configuration
+        validate: true
+- changeSet:
+    id: 1710577279959-9
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: type_id
+        baseTableName: report_schedule
+        constraintName: FKimg1tb4qv5u6rc44be4iemv4r
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: report_type
+        validate: true
+- changeSet:
+    id: 1710577279959-10
+    author: HTG (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: report_id
+        baseTableName: report_row
+        constraintName: FKqrrqxjni5h0awfsk1ft83fk09
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: report
+        validate: true
+

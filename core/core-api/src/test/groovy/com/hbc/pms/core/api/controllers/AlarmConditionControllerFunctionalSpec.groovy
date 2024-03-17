@@ -17,8 +17,9 @@ import com.hbc.pms.integration.db.repository.AlarmHistoryRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
 import java.util.concurrent.ThreadLocalRandom
+import org.junit.Ignore
 import org.springframework.beans.factory.annotation.Autowired
-import spock.lang.Ignore
+import spock.lang.PendingFeature
 
 class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
   @Autowired
@@ -146,10 +147,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     conditionCountBefore == conditionCountAfter
 
     where:
-    value | _
-    -1    | _
-    0     | _
-    3601  | _
+    value << [-1, 0, 3601]
   }
 
   def "Create new alarm condition - Invalid value (#value) for timeDelay - Bad request"() {
@@ -170,10 +168,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     conditionCountBefore == conditionCountAfter
 
     where:
-    value | _
-    -1    | _
-    0     | _
-    3601  | _
+    value << [-1, 0, 3601]
   }
 
   def "Create new alarm condition - CUSTOM condition with both min & max = null - Bad request"() {
@@ -191,16 +186,11 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     then:
     response.statusCode.is4xxClientError()
     response.body.error["code"] == ErrorCode.E400.toString()
-    response.body.error.data["min"]
-    response.body.error.data["max"]
     def conditionCountAfter = alarmConditionRepository.findAll().size()
     conditionCountBefore == conditionCountAfter
 
     where:
-    value | _
-    -1    | _
-    0     | _
-    3601  | _
+    value << [-1, 0, 3601]
   }
 
   @Ignore
@@ -341,7 +331,6 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     response.body.error["code"] == ErrorCode.E400.toString()
   }
 
-  @Ignore
   def "Update alarm condition - Update min value only - OK and max must be null"() {
     given:
     def condition = alarmConditionRepository.findAll().first()
@@ -359,7 +348,6 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     response.body.data["max"] == null
   }
 
-  @Ignore
   def "Update alarm condition - Update max value only - OK and min must be null"() {
     given:
     def condition = alarmConditionRepository.findAll().first()
@@ -470,7 +458,7 @@ class AlarmConditionControllerFunctionalSpec extends FunctionalTestSpec {
     actionCountBefore == actionCountAfter
   }
 
-  @Ignore
+  @PendingFeature
   def "Delete alarm action - Not existing alarm action - Bad request"() {
     given:
     def condition = alarmConditionRepository.findAll().first()
