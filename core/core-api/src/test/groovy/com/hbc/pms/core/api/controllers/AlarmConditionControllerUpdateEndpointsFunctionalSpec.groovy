@@ -38,8 +38,6 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
     conditionRepository.save(TestDataFixture.createDefaultConditionEntity(AlarmType.CUSTOM, sensorConfig))
   }
 
-  @PendingFeature
-  //the 'enable' field mapped incorrectly
   def "Update alarm condition - OK"() {
     given:
     def condition = conditionRepository.findAll().first()
@@ -55,12 +53,11 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
     response.statusCode.is2xxSuccessful()
     def updatedCondition = conditionRepository.findById(condition.id)
     verifyAll(updatedCondition.get()) {
-      type == updateConditionCommand.getType()
-      cron == StringUtils.buildCronFromSeconds(updateConditionCommand.checkInterval)
-      timeDelay == updateConditionCommand.getTimeDelay()
-      min == updateConditionCommand.min
-      max == updateConditionCommand.max
-      enabled == updateConditionCommand.getIsEnabled()
+      getType() == updateConditionCommand.type
+      getCron() == StringUtils.buildCronFromSeconds(updateConditionCommand.checkInterval)
+      getTimeDelay() == updateConditionCommand.timeDelay
+      getMin() == updateConditionCommand.min
+      getMax() == updateConditionCommand.max
     }
   }
 

@@ -62,9 +62,8 @@ class AlarmHistoryControllerFunctionalSpec extends FunctionalTestSpec {
 
     then:
     response.statusCode.is2xxSuccessful()
-    List<AlarmHistoryResponse> listHistories = response.body.data as List<AlarmHistoryResponse>
+    def listHistories = response.body.data as List<AlarmHistoryResponse>
     listHistories.size() == 2
-    listHistories.any { it["id"] == history1Id }
-    listHistories.any { it["id"] == history2Id }
+    listHistories.every() { it["id"] as Long in Arrays.asList(history1Id, history2Id) }
   }
 }
