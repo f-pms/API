@@ -76,11 +76,13 @@ public class SensorConfigurationPersistenceService {
   }
 
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
-    var address = sensorConfiguration.getAddress();
-    if (!plcService.isTagExisted(address)) {
-      throw new ValidationException(
-          Collections.singletonList(
-              new ErrorMessage("Address " + address + " does not exist in the PLC")));
+    if (sensorConfiguration.getAddress() != null) {
+      var address = sensorConfiguration.getAddress();
+      if (!plcService.isTagExisted(address)) {
+        throw new ValidationException(
+            Collections.singletonList(
+                new ErrorMessage("Address " + address + " does not exist in the PLC")));
+      }
     }
 
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
@@ -91,10 +93,18 @@ public class SensorConfigurationPersistenceService {
   }
 
   public boolean update(Long blueprintId, SensorConfiguration sensorConfiguration) {
+    if (sensorConfiguration.getAddress() != null) {
+      var address = sensorConfiguration.getAddress();
+      if (!plcService.isTagExisted(address)) {
+        throw new ValidationException(
+            Collections.singletonList(
+                new ErrorMessage("Address " + address + " does not exist in the PLC")));
+      }
+    }
+
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
 
-    // TODO: LTT check existence of the PLC Tag
     var oldConfig = sensorConfigurationRepository.findById(entity.getId());
     if (oldConfig.isEmpty()) {
       throw new CoreApiException(
