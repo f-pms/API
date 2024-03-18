@@ -1,14 +1,85 @@
+configurations {
+  functionalTestImplementation.extendsFrom testImplementation
+  functionalTestRuntime.extendsFrom testRuntime
+  integrationTestImplementation.extendsFrom testImplementation
+  integrationTestRuntime.extendsFrom testRuntime
+}
+testing {
+  suites {
+    test{
+      testType.set(TestSuiteType.UNIT_TEST)
+    }
+    configureEach {
+      useJUnitJupiter()
+      dependencies {
+        implementation project()
+      }
+    }
+    integrationTest(JvmTestSuite) {
+      testType.set(TestSuiteType.INTEGRATION_TEST)
+      dependencies {
+        implementation(sourceSets.test.runtimeClasspath)
+        implementation(sourceSets.test.output)
+      }
+
+      targets {
+        all {
+          testTask.configure {
+            shouldRunAfter(test)
+          }
+        }
+      }
+    }
+    functionalTest(JvmTestSuite) {
+      testType.set(TestSuiteType.FUNCTIONAL_TEST)
+
+      dependencies {
+        implementation(sourceSets.test.runtimeClasspath)
+        implementation(sourceSets.test.output)
+      }
+
+      targets {
+        configureEach {
+          testTask.configure {
+            shouldRunAfter(integrationTest)
+          }
+        }
+      }
+    }
+  }
+}
+tasks.testCodeCoverageReport {
+  executionData.builtBy(tasks.test, tasks.named("integrationTest"),tasks.named("functionalTest"))
+  executionData.from(
+          project.layout.buildDirectory.file("jacoco/test.exec"),
+          project.layout.buildDirectory.file("jacoco/integrationTest.exec"),
+          project.layout.buildDirectory.file("jacoco/functionalTest.exec")
+  )
+}
+tasks.named("check") {
+  dependsOn(testing.suites.named("test"))
+  dependsOn(testing.suites.named("integrationTest"))
+  dependsOn(testing.suites.named("functionalTest"))
+}
+test {
+  finalizedBy jacocoTestReport
+}
+functionalTest {
+  finalizedBy jacocoTestReport
+}
+functionalTest {
+  finalizedBy jacocoTestReport
+}
+jacocoTestReport {
+  dependsOn test
+  dependsOn functionalTest
+  dependsOn integrationTest
+}
 jacocoTestReport {
   reports {
     xml.required = true
   }
 }
-
-
-test {
-  finalizedBy jacocoTestReport // report is always generated after tests run
+tasks.named('check') {
+  dependsOn tasks.named('testCodeCoverageReport', JacocoReport)
 }
-jacocoTestReport {
-  dependsOn test // tests are required to run before generating the report
-}
-
