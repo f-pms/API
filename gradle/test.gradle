@@ -48,23 +48,6 @@ testing {
     }
   }
 }
-//reporting {
-//  reports {
-//    testCodeCoverageReport(JacocoCoverageReport) {
-//      testType = TestSuiteType.UNIT_TEST
-//      reportTask {
-//        executionData.builtBy(tasks.test, tasks.named("integrationTest"),tasks.named("functionalTest"))
-//        executionData.from([
-//                project.layout.buildDirectory.file("jacoco/test.exec"),
-//                project.layout.buildDirectory.file("jacoco/integrationTest.exec"),
-//                project.layout.buildDirectory.file("jacoco/functionalTest.exec")]
-//        )
-//      }
-//
-//    }
-//  }
-//}
-
 tasks.testCodeCoverageReport {
   executionData.builtBy(tasks.test, tasks.named("integrationTest"),tasks.named("functionalTest"))
   executionData.from(
