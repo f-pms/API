@@ -11,9 +11,10 @@ import com.hbc.pms.core.model.enums.BlueprintType
 import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
-import java.util.concurrent.ThreadLocalRandom
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.PendingFeature
+
+import java.util.concurrent.ThreadLocalRandom
 
 class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
   @Autowired

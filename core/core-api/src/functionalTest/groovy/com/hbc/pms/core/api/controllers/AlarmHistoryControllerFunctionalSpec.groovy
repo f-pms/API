@@ -1,7 +1,6 @@
 package com.hbc.pms.core.api.controllers
 
-import com.hbc.pms.core.api.TestDataFixture
-import com.hbc.pms.core.api.controller.v1.response.AlarmConditionResponse
+
 import com.hbc.pms.core.api.controller.v1.response.AlarmHistoryResponse
 import com.hbc.pms.core.api.support.response.ApiResponse
 import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
@@ -13,6 +12,7 @@ import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
 import org.springframework.beans.factory.annotation.Autowired
+
 
 class AlarmHistoryControllerFunctionalSpec extends FunctionalTestSpec {
   @Autowired

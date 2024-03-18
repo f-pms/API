@@ -2,50 +2,24 @@ package com.hbc.pms.core.api.services
 
 import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.controller.v1.WebSocketController
-import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand
 import com.hbc.pms.core.api.service.AlarmConditionService
 import com.hbc.pms.core.api.service.AlarmPersistenceService
 import com.hbc.pms.core.api.service.WebSocketService
 import com.hbc.pms.core.api.support.notification.PopupChannel
 import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
-import com.hbc.pms.core.model.enums.AlarmActionType
-import com.hbc.pms.core.model.enums.AlarmSeverity
 import com.hbc.pms.core.model.enums.AlarmStatus
 import com.hbc.pms.core.model.enums.AlarmType
-import com.hbc.pms.core.model.enums.BlueprintType
-import com.hbc.pms.integration.db.entity.SensorConfigurationEntity
-import com.hbc.pms.integration.db.repository.AlarmActionRepository
-import com.hbc.pms.integration.db.repository.AlarmConditionRepository
-import com.hbc.pms.integration.db.repository.AlarmHistoryRepository
-import com.hbc.pms.integration.db.repository.BlueprintRepository
-import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
+import com.hbc.pms.integration.db.repository.*
 import com.hbc.pms.plc.api.PlcConnector
 import groovy.util.logging.Slf4j
-import java.lang.reflect.Type
-import java.util.concurrent.BlockingQueue
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicReference
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.messaging.converter.StringMessageConverter
 import org.springframework.messaging.simp.SimpMessagingTemplate
-import org.springframework.messaging.simp.stomp.StompFrameHandler
-import org.springframework.messaging.simp.stomp.StompHeaders
 import org.springframework.messaging.simp.stomp.StompSession
-import org.springframework.messaging.simp.stomp.StompSessionHandler
-import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter
 import org.springframework.web.socket.WebSocketHttpHeaders
-import org.springframework.web.socket.client.WebSocketClient
-import org.springframework.web.socket.client.standard.StandardWebSocketClient
 import org.springframework.web.socket.messaging.WebSocketStompClient
 import org.springframework.web.socket.sockjs.client.SockJsClient
-import org.springframework.web.socket.sockjs.client.WebSocketTransport
-import org.testcontainers.shaded.org.hamcrest.core.StringContains
-import spock.lang.Ignore
-import spock.lang.Shared
 
-//@Ignore
 @Slf4j
 class NotificationServiceIntegrationSpec extends FunctionalTestSpec {
   @Autowired

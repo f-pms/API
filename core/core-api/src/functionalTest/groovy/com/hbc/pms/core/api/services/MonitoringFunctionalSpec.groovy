@@ -9,7 +9,6 @@ import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.plc.api.PlcConnector
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
-import spock.lang.PendingFeature
 
 @Slf4j
 class MonitoringFunctionalSpec extends FunctionalTestSpec {

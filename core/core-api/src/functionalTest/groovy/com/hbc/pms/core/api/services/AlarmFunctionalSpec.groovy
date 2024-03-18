@@ -6,7 +6,6 @@ import com.hbc.pms.core.model.enums.AlarmSeverity
 import com.hbc.pms.core.model.enums.AlarmType
 import com.hbc.pms.core.model.enums.BlueprintType
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity
-import com.hbc.pms.integration.db.entity.BlueprintEntity
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository
 import com.hbc.pms.integration.db.repository.AlarmHistoryRepository
@@ -15,8 +14,6 @@ import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.plc.api.PlcConnector
 import org.spockframework.spring.EnableSharedInjection
 import org.springframework.beans.factory.annotation.Autowired
-import spock.lang.Shared
-import spock.util.concurrent.PollingConditions
 
 @EnableSharedInjection
 class AlarmFunctionalSpec extends FunctionalTestSpec {

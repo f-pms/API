@@ -12,7 +12,6 @@ import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
 import org.springframework.beans.factory.annotation.Autowired
-import spock.lang.PendingFeature
 
 class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTestSpec {
   @Autowired

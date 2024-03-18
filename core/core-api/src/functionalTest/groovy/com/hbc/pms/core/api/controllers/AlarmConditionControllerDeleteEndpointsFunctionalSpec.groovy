@@ -4,11 +4,7 @@ import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.core.model.enums.AlarmStatus
 import com.hbc.pms.core.model.enums.AlarmType
-import com.hbc.pms.integration.db.repository.AlarmActionRepository
-import com.hbc.pms.integration.db.repository.AlarmConditionRepository
-import com.hbc.pms.integration.db.repository.AlarmHistoryRepository
-import com.hbc.pms.integration.db.repository.BlueprintRepository
-import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
+import com.hbc.pms.integration.db.repository.*
 import com.hbc.pms.support.spock.test.RestClient
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.PendingFeature
