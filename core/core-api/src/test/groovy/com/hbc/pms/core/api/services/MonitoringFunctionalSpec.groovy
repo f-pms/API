@@ -52,8 +52,6 @@ class MonitoringFunctionalSpec extends FunctionalTestSpec {
     "15.0" | 15f
   }
 
-  @PendingFeature
-  //missing connector.updateScheduler() in the service impl
   def "Monitoring Websocket - Update PLC Tag then monitor - Sent correct PLC values"() {
     given:
     def sensorConfigEntity
@@ -72,8 +70,6 @@ class MonitoringFunctionalSpec extends FunctionalTestSpec {
     assertPlcTagWithValue(sensorConfig.id, "5.0")
   }
 
-  @PendingFeature
-  //missing connector.updateScheduler() in the service impl
   def "Monitoring Websocket - Add new PLC Tag then monitor - Sent correct PLC values"() {
     given:
     def target = TestDataFixture.PLC_ADDRESS_REAL_03
