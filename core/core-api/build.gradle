@@ -39,7 +39,7 @@ dependencies {
   testImplementation project(":support:spock-test")
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
   useJUnitPlatform()
 }
 springBoot {

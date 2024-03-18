@@ -16,7 +16,6 @@ import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import org.modelmapper.MappingException
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
-import spock.lang.Ignore
 import spock.lang.PendingFeature
 
 class ModelMapperFunctionalSpec extends FunctionalTestSpec {

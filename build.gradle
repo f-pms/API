@@ -7,6 +7,8 @@ plugins {
   id 'groovy'
   id "org.sonarqube" version '4.4.1.3373'
   id "jacoco"
+  id "jvm-test-suite"
+  id "jacoco-report-aggregation"
 }
 allprojects {
   group = "${projectGroup}"
@@ -29,12 +31,14 @@ rootProject.afterEvaluate() {
     doNotTrackState("Walkarounds")
   }
 }
+
 subprojects {
   apply plugin: 'java-library'
   apply plugin: 'groovy'
   apply plugin: 'org.springframework.boot'
   apply plugin: 'io.spring.dependency-management'
   apply plugin: 'jacoco'
+  apply plugin: 'jacoco-report-aggregation'
   apply from: "${rootDir}/gradle/test.gradle"
 
   bootJar.enabled = false
