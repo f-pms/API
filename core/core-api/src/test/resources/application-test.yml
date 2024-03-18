@@ -13,10 +13,10 @@ hbc:
   plc:
     url: mock:scraper
   mail:
-    host: ${MAIL_HOST:mail.smtp2go.com}
+    host: ${MAIL_HOST:mail.random.com}
     port: ${MAIL_PORT:2525}
-    username: ${MAIL_USERNAME:pms@ohtgo.me}
-    password: ${MAIL_PASSWORD:P@ssw0rd000}
+    username: ${MAIL_USERNAME:pms@random.org}
+    password: ${MAIL_PASSWORD:RandomPassword}
     from: ${MAIL_FROM:PMS <pms@ohtgo.me>}
     subject: ${MAIL_SUBJECT:Alarm notification}
 integration:

@@ -76,6 +76,7 @@ public class SensorConfigurationPersistenceService {
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
+    connector.updateScheduler();
     return true;
   }
 
@@ -92,6 +93,7 @@ public class SensorConfigurationPersistenceService {
     var existedEntity = oSensorConfiguration.get();
     existedEntity.setAddress(entity.getAddress());
     sensorConfigurationRepository.save(existedEntity);
+    connector.updateScheduler();
     return true;
   }
 
