@@ -34,8 +34,7 @@ rootProject.afterEvaluate() {
 allprojects {
   sonarqube {
     properties {
-      // property "sonar.log.level", "INFO"
-      property "sonar.log.level", "TRACE"
+      property "sonar.log.level", "DEBUG"
     }
   }
 }
