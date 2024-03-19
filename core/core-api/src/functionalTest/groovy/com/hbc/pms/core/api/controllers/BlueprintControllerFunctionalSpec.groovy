@@ -184,8 +184,6 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
   //No feature is using this endpoint yet
   def "Update blueprint - Not existed blueprint - Not found and Bad request"() {}
 
-  @PendingFeature
-  // can't create sensor configuration
   def "Create sensor config - OK"() {
     given:
     def configRequest = createSensorConfigurationRequest()
@@ -194,7 +192,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     when:
     def response = restClient
             .post(
-                    "/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID/sensor-configurations", configRequest,
+                    "/blueprints/$TestDataFixture.CUSTOM_ALARM_BLUEPRINT_ID/sensor-configurations", configRequest,
                     ApiResponse<Boolean>)
 
     then:

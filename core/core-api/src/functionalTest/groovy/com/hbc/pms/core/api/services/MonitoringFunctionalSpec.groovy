@@ -76,12 +76,16 @@ class MonitoringFunctionalSpec extends FunctionalTestSpec {
             = SensorConfiguration.builder()
             .address(target)
             .build()
-    configurationPersistenceService.create(TestDataFixture.MONITORING_BLUEPRINT_ID, sensorConfig)
+    configurationPersistenceService.create(TestDataFixture.CUSTOM_ALARM_BLUEPRINT_ID, sensorConfig)
+
+    //TODO: workaround until changing the return value of the create method
+    def createdSensorConfig
+            = configurationRepository.findAllByAddress(target).first()
 
     when:
     plcValueTestFactory.setCurrentValue(target, 5f)
 
     then: "Received event with value = #val"
-    assertPlcTagWithValue(sensorConfig.id, "5.0")
+    assertPlcTagWithValue(createdSensorConfig.id, "5.0")
   }
 }
