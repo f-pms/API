@@ -49,6 +49,7 @@ class AbstractFunctionalSpec extends Specification {
   def cleanup() {
     eventCollector.clear()
   }
+
   @Autowired
   MockDevice mockDevice
   RandomDataGenerator random = new RandomDataGenerator()

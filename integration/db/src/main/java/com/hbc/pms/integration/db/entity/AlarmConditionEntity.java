@@ -36,7 +36,7 @@ public class AlarmConditionEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column private boolean isEnabled; // TODO: will implement
+  @Column private boolean isEnabled;
 
   @Column
   @Enumerated(EnumType.STRING)
