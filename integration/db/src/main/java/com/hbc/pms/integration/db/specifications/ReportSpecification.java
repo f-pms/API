@@ -1,5 +1,7 @@
 package com.hbc.pms.integration.db.specifications;
 
+import static java.util.Objects.nonNull;
+
 import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.core.model.enums.ReportOrder;
 import com.hbc.pms.integration.db.entity.ReportEntity;
@@ -28,7 +30,7 @@ public class ReportSpecification implements Specification<ReportEntity> {
             criteria.getStartDate(),
             criteria.getEndDate()));
 
-    if (!criteria.getTypeIds().isEmpty()) {
+    if (nonNull(criteria.getTypeIds()) && !criteria.getTypeIds().isEmpty()) {
       var in = builder.in(reportTypeRoot.get(ReportTypeEntity_.ID));
       criteria.getTypeIds().forEach(in::value);
       predicates.add(in);

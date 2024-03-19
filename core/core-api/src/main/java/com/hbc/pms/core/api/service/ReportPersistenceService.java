@@ -19,11 +19,13 @@ public class ReportPersistenceService {
   private final ModelMapper mapper;
   private final ReportRepository reportRepository;
 
-  public Page<List<Report>> getAll(ReportCriteria criteria, Pageable pagination) {
+  public Page<Report> getAll(ReportCriteria criteria, Pageable pagination) {
     var spec = new ReportSpecification(criteria);
     var page = reportRepository.findAll(spec, pagination);
-    return new Page<>(
-        page.getTotalPages(), page.map(entity -> mapper.map(entity, Report.class)).toList());
+    return Page.<Report>builder()
+        .total(page.getTotalPages())
+        .content(page.map(entity -> mapper.map(entity, Report.class)).toList())
+        .build();
   }
 
   public List<Report> getAll(ReportCriteria criteria) {
