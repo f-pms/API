@@ -9,10 +9,13 @@ import com.hbc.pms.core.model.SensorConfiguration;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity;
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.ValidationException;
+import org.modelmapper.spi.ErrorMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +27,7 @@ public class SensorConfigurationPersistenceService {
   private final ModelMapper mapper;
   private final SensorConfigurationRepository sensorConfigurationRepository;
   private final AlarmConditionPersistenceService alarmConditionPersistenceService;
+  private final PlcService plcService;
 
   public List<SensorConfiguration> getAll(SearchBlueprintCommand searchCommand) {
     return StreamSupport.stream(
@@ -72,23 +76,42 @@ public class SensorConfigurationPersistenceService {
   }
 
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
+    if (sensorConfiguration.getAddress() != null) {
+      var address = sensorConfiguration.getAddress();
+      if (!plcService.isTagExisted(address)) {
+        throw new ValidationException(
+            Collections.singletonList(
+                new ErrorMessage("Address " + address + " does not exist in the PLC")));
+      }
+    }
+
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
     sensorConfigurationRepository.save(entity);
+
     return true;
   }
 
   public boolean update(Long blueprintId, SensorConfiguration sensorConfiguration) {
+    if (sensorConfiguration.getAddress() != null) {
+      var address = sensorConfiguration.getAddress();
+      if (!plcService.isTagExisted(address)) {
+        throw new ValidationException(
+            Collections.singletonList(
+                new ErrorMessage("Address " + address + " does not exist in the PLC")));
+      }
+    }
+
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
 
-    var oSensorConfiguration = sensorConfigurationRepository.findById(entity.getId());
-    if (oSensorConfiguration.isEmpty()) {
+    var oldConfig = sensorConfigurationRepository.findById(entity.getId());
+    if (oldConfig.isEmpty()) {
       throw new CoreApiException(
           ErrorType.NOT_FOUND_ERROR, SENSOR_CONFIG_NOT_FOUND_LITERAL + entity.getId());
     }
 
-    var existedEntity = oSensorConfiguration.get();
+    var existedEntity = oldConfig.get();
     existedEntity.setAddress(entity.getAddress());
     sensorConfigurationRepository.save(existedEntity);
     return true;
@@ -96,12 +119,12 @@ public class SensorConfigurationPersistenceService {
 
   public boolean delete(SensorConfiguration sensorConfiguration) {
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
-    var oSensorConfiguration = sensorConfigurationRepository.findById(entity.getId());
-    if (oSensorConfiguration.isEmpty()) {
+    var oldConfig = sensorConfigurationRepository.findById(entity.getId());
+    if (oldConfig.isEmpty()) {
       throw new CoreApiException(
           ErrorType.NOT_FOUND_ERROR, SENSOR_CONFIG_NOT_FOUND_LITERAL + entity.getId());
     }
-    sensorConfigurationRepository.delete(oSensorConfiguration.get());
+    sensorConfigurationRepository.delete(oldConfig.get());
     return true;
   }
 }
