@@ -15,7 +15,7 @@ class IntegrationTestSpec extends AbstractFunctionalSpec {
   TestDataFixture dataFixture
 
   def setup() {
-    dataFixture.populate()
+//    dataFixture.populate()
   }
 
   def cleanup() {

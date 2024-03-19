@@ -6,7 +6,7 @@ configurations {
 }
 testing {
   suites {
-    test{
+    test {
       testType.set(TestSuiteType.UNIT_TEST)
     }
     configureEach {
@@ -49,7 +49,7 @@ testing {
   }
 }
 tasks.testCodeCoverageReport {
-  executionData.builtBy(tasks.test, tasks.named("integrationTest"),tasks.named("functionalTest"))
+  executionData.builtBy(tasks.test, tasks.named("integrationTest"), tasks.named("functionalTest"))
   executionData.from(
           project.layout.buildDirectory.file("jacoco/test.exec"),
           project.layout.buildDirectory.file("jacoco/integrationTest.exec"),

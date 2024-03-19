@@ -149,7 +149,7 @@ public class ModelMapperConfig {
                     var parts = c.getSource().split(":");
                     return new Object[] {
                       Integer.parseInt(parts[0].substring(3)),
-                      Integer.parseInt(parts[1]),
+                      Double.parseDouble(parts[1]),
                       parts[2].toUpperCase()
                     };
                   };

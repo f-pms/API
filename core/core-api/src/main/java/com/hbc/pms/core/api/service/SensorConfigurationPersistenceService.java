@@ -9,6 +9,7 @@ import com.hbc.pms.core.model.SensorConfiguration;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity;
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository;
+import com.hbc.pms.plc.api.PlcConnector;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.StreamSupport;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SensorConfigurationPersistenceService {
+  private final PlcConnector connector;
 
   private static final String SENSOR_CONFIG_NOT_FOUND_LITERAL =
       "Sensor configuration not found with id: ";
@@ -88,7 +90,7 @@ public class SensorConfigurationPersistenceService {
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
     sensorConfigurationRepository.save(entity);
-
+    connector.updateScheduler();
     return true;
   }
 
@@ -114,6 +116,7 @@ public class SensorConfigurationPersistenceService {
     var existedEntity = oldConfig.get();
     existedEntity.setAddress(entity.getAddress());
     sensorConfigurationRepository.save(existedEntity);
+    connector.updateScheduler();
     return true;
   }
 
