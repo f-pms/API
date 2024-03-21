@@ -34,7 +34,7 @@ public class ReportResponse {
     }
 
     var map = new HashMap<String, Double>();
-    var indicatorFormatter = "%s.%s";
+    var indicatorFormatter = "%s_%s";
     rows.forEach(
         row -> {
           var indicator = row.getIndicator();
