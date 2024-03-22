@@ -28,23 +28,53 @@ public class ReportResponse {
     return Try.of(this::deserializeSum).getOrElse(Map.of());
   }
 
-  public Map<String, Double> getRowsMap() {
+  public List<Map<String, Double>> getRowsMaps() {
     if (isNull(rows)) {
-      return Map.of();
+      return null;
     }
 
-    var map = new HashMap<String, Double>();
+    var shift1Map = new HashMap<String, Double>();
+    var shift2Map = new HashMap<String, Double>();
     var indicatorFormatter = "%s_%s";
     rows.forEach(
         row -> {
           var indicator = row.getIndicator();
-          map.put(String.format(indicatorFormatter, indicator, "0"), row.getOldElectricValue());
-          map.put(String.format(indicatorFormatter, indicator, "1"), row.getNewElectricValue1());
-          map.put(String.format(indicatorFormatter, indicator, "2"), row.getNewElectricValue2());
-          map.put(String.format(indicatorFormatter, indicator, "3"), row.getNewElectricValue3());
-          map.put(String.format(indicatorFormatter, indicator, "4"), row.getNewElectricValue4());
+          var shift = row.getShift();
+          if (shift == 1) {
+            shift1Map.put(
+                String.format(indicatorFormatter, indicator, "0", shift),
+                row.getOldElectricValue());
+            shift1Map.put(
+                String.format(indicatorFormatter, indicator, "1", shift),
+                row.getNewElectricValue1());
+            shift1Map.put(
+                String.format(indicatorFormatter, indicator, "2", shift),
+                row.getNewElectricValue2());
+            shift1Map.put(
+                String.format(indicatorFormatter, indicator, "3", shift),
+                row.getNewElectricValue3());
+            shift1Map.put(
+                String.format(indicatorFormatter, indicator, "4", shift),
+                row.getNewElectricValue4());
+          } else if (shift == 2) {
+            shift2Map.put(
+                String.format(indicatorFormatter, indicator, "0", shift),
+                row.getOldElectricValue());
+            shift2Map.put(
+                String.format(indicatorFormatter, indicator, "1", shift),
+                row.getNewElectricValue1());
+            shift2Map.put(
+                String.format(indicatorFormatter, indicator, "2", shift),
+                row.getNewElectricValue2());
+            shift2Map.put(
+                String.format(indicatorFormatter, indicator, "3", shift),
+                row.getNewElectricValue3());
+            shift2Map.put(
+                String.format(indicatorFormatter, indicator, "4", shift),
+                row.getNewElectricValue4());
+          }
         });
-    return map;
+    return List.of(shift1Map, shift2Map);
   }
 
   private Map<String, Double> deserializeSum() throws JsonProcessingException {
