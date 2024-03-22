@@ -1,0 +1,6 @@
+package com.hbc.pms.core.model.enums;
+
+public enum Role {
+  ADMIN,
+  SUPERVISOR
+}

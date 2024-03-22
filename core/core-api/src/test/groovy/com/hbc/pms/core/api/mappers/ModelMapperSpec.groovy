@@ -1,29 +1,30 @@
-package com.hbc.pms.core.api.config
+package com.hbc.pms.core.api.mappers
 
 import com.hbc.pms.core.api.TestDataFixture
+import com.hbc.pms.core.api.config.ModelMapperConfig
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationCommand
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse
 import com.hbc.pms.core.api.controller.v1.response.SensorConfigurationResponse
-import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.core.model.AlarmCondition
 import com.hbc.pms.core.model.Blueprint
 import com.hbc.pms.core.model.SensorConfiguration
 import com.hbc.pms.core.model.enums.AlarmActionType
 import com.hbc.pms.core.model.enums.AlarmSeverity
 import com.hbc.pms.core.model.enums.AlarmType
-import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import org.modelmapper.MappingException
 import org.modelmapper.ModelMapper
-import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.PendingFeature
+import spock.lang.Shared
+import spock.lang.Specification
 
-class ModelMapperFunctionalSpec extends FunctionalTestSpec {
-  @Autowired
+class ModelMapperSpec extends Specification {
+  @Shared
   private ModelMapper mapper
 
-  @Autowired
-  SensorConfigurationRepository sensorConfigurationRepository
+  void setupSpec() {
+    mapper = new ModelMapperConfig().modelMapper()
+  }
 
   def createDefaultAlarmActionCommand() {
     return new CreateAlarmConditionCommand.AlarmActionCommand(type: AlarmActionType.EMAIL,
