@@ -20,7 +20,8 @@ public class ReportResponse {
   private Long id;
   private OffsetDateTime recordingDate;
   private ReportType type;
-  private List<ReportRow> rows;
+
+  @JsonIgnore private List<ReportRow> rows;
 
   @JsonIgnore private String sumJson;
 
@@ -48,13 +49,13 @@ public class ReportResponse {
                 String.format(indicatorFormatter, indicator, "1", shift),
                 row.getNewElectricValue1());
             shift1Map.put(
-                String.format(indicatorFormatter, indicator, "2", shift),
+                String.format(indicatorFormatter, indicator, "3", shift),
                 row.getNewElectricValue2());
             shift1Map.put(
-                String.format(indicatorFormatter, indicator, "3", shift),
+                String.format(indicatorFormatter, indicator, "5", shift),
                 row.getNewElectricValue3());
             shift1Map.put(
-                String.format(indicatorFormatter, indicator, "4", shift),
+                String.format(indicatorFormatter, indicator, "7", shift),
                 row.getNewElectricValue4());
           } else if (shift == 2) {
             shift2Map.put(
@@ -64,13 +65,13 @@ public class ReportResponse {
                 String.format(indicatorFormatter, indicator, "1", shift),
                 row.getNewElectricValue1());
             shift2Map.put(
-                String.format(indicatorFormatter, indicator, "2", shift),
+                String.format(indicatorFormatter, indicator, "3", shift),
                 row.getNewElectricValue2());
             shift2Map.put(
-                String.format(indicatorFormatter, indicator, "3", shift),
+                String.format(indicatorFormatter, indicator, "5", shift),
                 row.getNewElectricValue3());
             shift2Map.put(
-                String.format(indicatorFormatter, indicator, "4", shift),
+                String.format(indicatorFormatter, indicator, "7", shift),
                 row.getNewElectricValue4());
           }
         });

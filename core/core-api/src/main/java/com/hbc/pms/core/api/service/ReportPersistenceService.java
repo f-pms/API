@@ -23,7 +23,8 @@ public class ReportPersistenceService {
     var spec = new ReportSpecification(criteria);
     var page = reportRepository.findAll(spec, pagination);
     return Page.<Report>builder()
-        .total(page.getTotalPages())
+        .pageTotal(page.getTotalPages())
+        .recordTotal(page.getTotalElements())
         .content(page.map(entity -> mapper.map(entity, Report.class)).toList())
         .build();
   }

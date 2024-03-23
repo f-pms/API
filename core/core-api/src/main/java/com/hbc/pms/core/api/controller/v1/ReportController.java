@@ -38,7 +38,8 @@ public class ReportController {
     var reports = reportPersistenceService.getAll(filter, PageRequest.of(page - 1, size));
     return ApiResponse.success(
         Page.<ReportResponse>builder()
-            .total(reports.getTotal())
+            .pageTotal(reports.getPageTotal())
+            .recordTotal(reports.getRecordTotal())
             .content(
                 reports.getContent().stream()
                     .map(el -> mapper.map(el, ReportResponse.class))

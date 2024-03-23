@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Page<T> {
-  private final int total;
+  private final long pageTotal;
+  private final long recordTotal;
   private final List<T> content;
 }
