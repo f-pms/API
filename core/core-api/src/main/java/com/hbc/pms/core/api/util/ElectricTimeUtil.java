@@ -39,9 +39,7 @@ public class ElectricTimeUtil {
   public static String getTimeGroup(DayOfWeek dayOfWeek, LocalTime time) {
     if (dayOfWeek == DayOfWeek.SUNDAY) {
       // No peak hours on Sunday
-      return isBetween(time, LocalTime.of(4, 0), LocalTime.of(22, 0))
-          ? "STANDARD"
-          : "OFFPEAK";
+      return isBetween(time, LocalTime.of(4, 0), LocalTime.of(22, 0)) ? "STANDARD" : "OFFPEAK";
     } else {
       // Weekday or Saturday
       if (isBetween(time, LocalTime.of(6, 0), LocalTime.of(9, 30))) {
