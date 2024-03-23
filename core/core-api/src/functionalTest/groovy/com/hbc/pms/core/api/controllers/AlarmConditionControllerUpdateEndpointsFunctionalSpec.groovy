@@ -45,7 +45,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
     when:
     def response
             = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
-            updateConditionCommand,
+            updateConditionCommand, dataFixture.ADMIN_USER,
             ApiResponse<AlarmConditionResponse>)
 
     then:
@@ -69,7 +69,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
     when:
     def response
             = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
-            updateConditionCommand,
+            updateConditionCommand, dataFixture.ADMIN_USER,
             ApiResponse<AlarmConditionResponse>)
 
     then:
@@ -86,7 +86,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
     when:
     def response
             = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
-            updateConditionCommand,
+            updateConditionCommand, dataFixture.ADMIN_USER,
             ApiResponse<AlarmConditionResponse>)
 
     then:
@@ -103,7 +103,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
     when:
     def response
             = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
-            updateConditionCommand,
+            updateConditionCommand, dataFixture.ADMIN_USER,
             ApiResponse<AlarmConditionResponse>)
 
     then:
@@ -119,6 +119,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
     def response
             = restClient.put("${ALARM_CONDITION_PATH}/123",
             updateConditionCommand,
+            dataFixture.ADMIN_USER,
             ApiResponse<AlarmConditionResponse>)
 
     then:

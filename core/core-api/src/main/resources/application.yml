@@ -42,5 +42,3 @@ server:
     threads:
       max: 600
       min-spare: 100
-
-logging.level.org.springframework.security: DEBUG
