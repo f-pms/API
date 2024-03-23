@@ -4,6 +4,7 @@ import com.hbc.pms.core.model.enums.ReportOrder;
 import com.hbc.pms.core.model.enums.ReportSort;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class ReportCriteria {
-  private Long reportTypeId;
+  private List<Long> typeIds;
 
   // set min sql server datetime
   // https://learn.microsoft.com/en-us/sql/t-sql/data-types/datetimeoffset-transact-sql
