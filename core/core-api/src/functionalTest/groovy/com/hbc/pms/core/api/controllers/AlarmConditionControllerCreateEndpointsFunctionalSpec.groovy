@@ -11,6 +11,7 @@ import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
 
 class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTestSpec {
   @Autowired
@@ -59,7 +60,7 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.post("/alarm-conditions", createConditionCommand, ApiResponse.class)
+            = postCreateAlarmCondition(ALARM_CONDITION_PATH, createConditionCommand)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -80,7 +81,7 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.post("/alarm-conditions", createConditionCommand, ApiResponse.class)
+            = postCreateAlarmCondition(ALARM_CONDITION_PATH, createConditionCommand)
 
     then:
     response.statusCode.is4xxClientError()
@@ -103,7 +104,7 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.post("/alarm-conditions", createConditionCommand, ApiResponse.class)
+            = postCreateAlarmCondition(ALARM_CONDITION_PATH, createConditionCommand)
 
     then:
     response.statusCode.is4xxClientError()
@@ -128,7 +129,7 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.post("/alarm-conditions", createConditionCommand, ApiResponse.class)
+            = postCreateAlarmCondition(ALARM_CONDITION_PATH, createConditionCommand)
 
     then:
     response.statusCode.is4xxClientError()
@@ -152,7 +153,7 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.post("/alarm-conditions", createConditionCommand, ApiResponse.class)
+            = postCreateAlarmCondition(ALARM_CONDITION_PATH, createConditionCommand)
 
     then:
     response.statusCode.is4xxClientError()
@@ -171,7 +172,7 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.post("/alarm-conditions", createConditionCommand, ApiResponse.class)
+            = postCreateAlarmCondition(ALARM_CONDITION_PATH, createConditionCommand)
 
     then:
     response.statusCode.is4xxClientError()
@@ -188,9 +189,7 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.post("/alarm-conditions/${condition.getId()}/actions",
-            createActionCommand,
-            ApiResponse.class)
+            = postCreateAlarmCondition("${ALARM_CONDITION_PATH}/${condition.getId()}/actions", createActionCommand)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -206,10 +205,7 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
     def actionCountBefore = actionRepository.findAll().size()
 
     when:
-    def response
-            = restClient.post("/alarm-conditions/123/actions",
-            createActionCommand,
-            ApiResponse.class)
+    def response = postCreateAlarmCondition("${ALARM_CONDITION_PATH}/123/actions", createActionCommand)
 
     then:
     response.statusCode.is4xxClientError()
@@ -227,16 +223,16 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
     def actionCountBefore = actionRepository.findAll().size()
 
     when:
-    def response
-            = restClient.post("/alarm-conditions/${condition.id}/actions",
-            createActionCommand,
-            ApiResponse.class)
-
+    def response = postCreateAlarmCondition("${ALARM_CONDITION_PATH}/${condition.id}/actions", createActionCommand)
     then:
     response.statusCode.is4xxClientError()
     response.body.error["code"] == ErrorCode.E400.toString()
     response.body.error.data["validRecipients"]
     def actionCountAfter = actionRepository.findAll().size()
     actionCountBefore == actionCountAfter
+  }
+
+  private ResponseEntity<ApiResponse> postCreateAlarmCondition(String path, Object command) {
+    return restClient.post(path, command, dataFixture.ADMIN_USER, ApiResponse.class)
   }
 }

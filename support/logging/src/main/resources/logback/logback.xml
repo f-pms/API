@@ -11,7 +11,6 @@
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
-    <logger level="INFO" name="org.springframework"/>
     <logger level="INFO" name="com.hbc.pms"/>
 
     <root level="INFO">

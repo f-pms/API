@@ -1,7 +1,7 @@
 package com.hbc.pms.core.api.mappers
 
 import com.hbc.pms.core.api.TestDataFixture
-import com.hbc.pms.core.api.config.ModelMapperConfig
+import com.hbc.pms.core.api.config.mapper.ModelMapperConfig
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationCommand
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse

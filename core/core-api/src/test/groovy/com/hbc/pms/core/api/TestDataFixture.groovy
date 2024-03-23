@@ -2,7 +2,9 @@ package com.hbc.pms.core.api
 
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand
+import com.hbc.pms.core.api.service.auth.UserPersistenceService
 import com.hbc.pms.core.api.utils.StringUtils
+import com.hbc.pms.core.model.User
 import com.hbc.pms.core.model.enums.*
 import com.hbc.pms.integration.db.entity.*
 import com.hbc.pms.integration.db.repository.*
@@ -39,7 +41,42 @@ class TestDataFixture {
   @Autowired
   SensorConfigurationRepository configurationRepository
 
-  void populateDefaultBlueprints() {
+  @Autowired
+  UserPersistenceService userPersistenceService
+
+  @Autowired
+  UserRepository userRepository
+  User ADMIN_USER
+  User SUPERVISOR_USER
+
+  void populate() {
+    populateUsers()
+    populateBlueprints()
+  }
+
+  void cleanup() {
+    alarmHistoryRepository.deleteAll()
+    alarmActionRepository.deleteAll()
+    alarmConditionRepository.deleteAll()
+    configurationRepository.deleteAll()
+    blueprintRepository.deleteAll()
+    userRepository.deleteAll()
+  }
+
+  void populateUsers() {
+    ADMIN_USER = userPersistenceService.create(User.builder()
+            .username("admin")
+            .password("123")
+            .role(Role.ADMIN)
+            .build())
+    SUPERVISOR_USER = userPersistenceService.create(User.builder()
+            .username("supervisor")
+            .password("123")
+            .role(Role.SUPERVISOR)
+            .build())
+  }
+
+  void populateBlueprints() {
     def monitoringBlueprint = blueprintRepository.save(createBlueprint(BlueprintType.MONITORING, "Monitoring"))
     MONITORING_BLUEPRINT_ID = monitoringBlueprint.getId()
 
@@ -49,15 +86,6 @@ class TestDataFixture {
     def customAlarmBlueprint = blueprintRepository.save(createBlueprint(BlueprintType.ALARM, AlarmType.CUSTOM.toString()))
     CUSTOM_ALARM_BLUEPRINT_ID = customAlarmBlueprint.getId()
   }
-
-  void cleanup() {
-    alarmHistoryRepository.deleteAll()
-    alarmActionRepository.deleteAll()
-    alarmConditionRepository.deleteAll()
-    configurationRepository.deleteAll()
-    blueprintRepository.deleteAll()
-  }
-
   static SensorConfigurationEntity createSensorConfiguration(BlueprintEntity blueprint, String address) {
     return SensorConfigurationEntity.builder()
             .address(address)

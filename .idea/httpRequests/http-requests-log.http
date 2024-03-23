@@ -1,3 +1,21 @@
+GET http://localhost:8080/v3/api-docs.yaml
+Accept: application/vnd.oai.openapi
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-03-22T222117.200.yaml
+
+###
+
+POST http://localhost:8080/users/
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
 POST http://localhost:8080/post
 Content-Length: 0
 Connection: Keep-Alive

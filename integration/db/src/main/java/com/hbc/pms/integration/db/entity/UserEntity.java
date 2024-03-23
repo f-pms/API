@@ -34,6 +34,7 @@ public class UserEntity {
   @Column(nullable = false)
   private String password;
 
+  @Column
   @Enumerated(EnumType.STRING)
   private Role role;
 }

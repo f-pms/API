@@ -12,6 +12,7 @@ import spock.util.concurrent.PollingConditions
 @SpringBootTest(classes = [CoreApiApplication], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("functional-test")
 class FunctionalTestSpec extends AbstractFunctionalSpec {
+  protected static String ALARM_CONDITION_PATH = "/alarm-conditions"
   PollingConditions conditions = new PollingConditions(timeout: 20)
 
   @Autowired
@@ -21,7 +22,7 @@ class FunctionalTestSpec extends AbstractFunctionalSpec {
   Integer port
 
   def setup() {
-    dataFixture.populateDefaultBlueprints()
+    dataFixture.populate()
   }
 
   def cleanup() {

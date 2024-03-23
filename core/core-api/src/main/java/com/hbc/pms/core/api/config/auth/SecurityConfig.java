@@ -1,6 +1,5 @@
 package com.hbc.pms.core.api.config.auth;
 
-import com.hbc.pms.core.api.service.auth.UserService;
 import com.hbc.pms.support.auth.JwtAuthFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -22,41 +20,35 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @AllArgsConstructor
 public class SecurityConfig {
-  private final UserService userDetailsService;
+  private static final String[] WHITE_LIST_URLS = {
+    "/swagger-resources",
+    "/swagger-resources/**",
+    "/swagger-ui/**",
+    "/swagger-ui.html",
+    "/v3/api-docs**"
+  };
+  private final UserDetailsService userDetailsService;
   private final JwtAuthFilter jwtAuthFilter;
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+  private final PasswordEncoder passwordEncoder;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable);
     http.authorizeHttpRequests(
         request -> {
-          request.requestMatchers("/login", "/actuator/**").permitAll();
-          request.anyRequest().authenticated();
+          request.requestMatchers(WHITE_LIST_URLS).permitAll();
+          request.anyRequest().permitAll();
         });
-    http.formLogin(
-        fL ->
-            fL.loginPage("/login")
-                .usernameParameter("email")
-                .permitAll()
-                .defaultSuccessUrl("/", true)
-                .failureUrl("/login-error"));
     http.authenticationProvider(authenticationProvider())
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-        .build();
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }
-
   @Bean
   public AuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
     authenticationProvider.setUserDetailsService(userDetailsService);
-    authenticationProvider.setPasswordEncoder(passwordEncoder());
+    authenticationProvider.setPasswordEncoder(passwordEncoder);
     return authenticationProvider;
   }
 }

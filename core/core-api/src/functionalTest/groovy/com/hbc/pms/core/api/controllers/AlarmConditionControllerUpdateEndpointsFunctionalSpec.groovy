@@ -44,7 +44,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.put("/alarm-conditions/${condition.id}",
+            = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
             updateConditionCommand,
             ApiResponse<AlarmConditionResponse>)
 
@@ -68,7 +68,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.put("/alarm-conditions/${condition.id}",
+            = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
             updateConditionCommand,
             ApiResponse<AlarmConditionResponse>)
 
@@ -85,7 +85,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.put("/alarm-conditions/${condition.id}",
+            = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
             updateConditionCommand,
             ApiResponse<AlarmConditionResponse>)
 
@@ -102,7 +102,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.put("/alarm-conditions/${condition.id}",
+            = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
             updateConditionCommand,
             ApiResponse<AlarmConditionResponse>)
 
@@ -117,7 +117,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.put("/alarm-conditions/123",
+            = restClient.put("${ALARM_CONDITION_PATH}/123",
             updateConditionCommand,
             ApiResponse<AlarmConditionResponse>)
 
