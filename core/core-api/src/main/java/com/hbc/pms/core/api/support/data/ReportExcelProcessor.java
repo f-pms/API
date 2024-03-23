@@ -53,7 +53,10 @@ public class ReportExcelProcessor {
 
   public XSSFWorkbook cloneWorkbook(String alias) throws IOException, InvalidFormatException {
     var templatePath = ResourceUtils.getFile(String.format(TEMPLATE_FILE_PATH, alias)).toPath();
-    var tmpPath = Paths.get(System.getProperty("java.io.tmpdir"), System.currentTimeMillis() + templatePath.getFileName().toString());
+    var tmpPath =
+        Paths.get(
+            System.getProperty("java.io.tmpdir"),
+            System.currentTimeMillis() + templatePath.getFileName().toString());
     Files.copy(templatePath, tmpPath);
     return new XSSFWorkbook(tmpPath.toFile());
   }
@@ -74,12 +77,13 @@ public class ReportExcelProcessor {
   public void resetDevelopmentCells(XSSFWorkbook workbook, int shift) {
     var sheet = workbook.getSheetAt(shift - 1);
     var indicators = getIndicatorsMap(sheet);
-    indicators.forEach((indicator, address) -> {
-      clearComment(sheet, address);
-      if (indicator.startsWith(SUM_SPECIFIC_PREFIX)) {
-        resetCell(sheet, address);
-      }
-    });
+    indicators.forEach(
+        (indicator, address) -> {
+          clearComment(sheet, address);
+          if (indicator.startsWith(SUM_SPECIFIC_PREFIX)) {
+            resetCell(sheet, address);
+          }
+        });
   }
 
   public void save(XSSFWorkbook workbook) {
