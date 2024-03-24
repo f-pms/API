@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.CellType;
@@ -62,52 +64,9 @@ public class ReportExcelProcessor {
     return new XSSFWorkbook(tmpPath.toFile());
   }
 
-  public Map<String, Double> processSumsMap(
-      XSSFWorkbook workbook,
-      ReportRowShift shift,
-      OffsetDateTime recordingDate,
-      List<ReportRow> rows) {
-    var sheet = workbook.getSheetAt(shift.equals(ReportRowShift.I) ? 0 : 1);
-
-    var localDateTime = ElectricTimeUtil.convertOffsetDateTimeToLocalTime(recordingDate);
-    var dayOfWeek = localDateTime.getDayOfWeek();
-    var indicators = getIndicatorsMap(sheet);
-
-    rows.forEach(row -> fillBaseValue(sheet, indicators, dayOfWeek, shift, row));
-    XSSFFormulaEvaluator.evaluateAllFormulaCells(workbook); // force revaluate all formulas
-    return getSumsMap(sheet, indicators);
-  }
-
-  public void resetDevelopmentCells(XSSFWorkbook workbook, int shift) {
-    var sheet = workbook.getSheetAt(shift - 1);
-    var indicators = getIndicatorsMap(sheet);
-    indicators.forEach(
-        (indicator, address) -> {
-          clearComment(sheet, address);
-          if (indicator.startsWith(SUM_SPECIFIC_PREFIX)) {
-            resetCell(sheet, address);
-          }
-        });
-  }
-
-  public void save(XSSFWorkbook workbook) {
-    try {
-      var path =
-          Paths.get(
-              String.valueOf(ResourceUtils.getFile(REPORT_DIR_PATH)),
-              System.currentTimeMillis() + ".xlsx");
-      var fos = new FileOutputStream(path.toString());
-      workbook.write(fos);
-      fos.close();
-      workbook.close();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  private Map<String, CellAddress> getIndicatorsMap(XSSFSheet sheet) {
+  public Map<String, CellAddress> getIndicatorsMap(Context context) {
     var indicators = new HashMap<String, CellAddress>();
-    var comments = sheet.getCellComments();
+    var comments = context.getSheet().getCellComments();
     comments.forEach(
         (address, comment) -> {
           var content = comment.getString().toString();
@@ -121,102 +80,137 @@ public class ReportExcelProcessor {
     return indicators;
   }
 
+  public Map<String, Double> processSumsMap(
+      Context context, Map<String, CellAddress> indicators, OffsetDateTime recordingDate) {
+    var localDateTime = ElectricTimeUtil.convertOffsetDateTimeToLocalTime(recordingDate);
+    var dayOfWeek = localDateTime.getDayOfWeek();
+
+    context.rows.forEach(row -> fillBaseValue(context, indicators, dayOfWeek, row));
+
+    // force revaluate all formulas
+    XSSFFormulaEvaluator.evaluateAllFormulaCells(context.getWorkbook());
+
+    return getSumsMap(context.getSheet(), indicators);
+  }
+
+  public void resetDevelopmentCells(Context context, Map<String, CellAddress> indicators) {
+    indicators.forEach(
+        (indicator, address) -> {
+          clearComment(context.getSheet(), address);
+          if (indicator.startsWith(SUM_SPECIFIC_PREFIX)) {
+            resetCell(context.getSheet(), address);
+          }
+        });
+  }
+
+  public void save(XSSFWorkbook workbook) {
+    try {
+      // TODO: use a better way to generate file name
+      var path =
+          Paths.get(
+              String.valueOf(ResourceUtils.getFile(REPORT_DIR_PATH)),
+              System.currentTimeMillis() + ".xlsx");
+      var fos = new FileOutputStream(path.toString());
+      workbook.write(fos);
+      fos.close();
+      workbook.close();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   private void fillBaseValue(
-      XSSFSheet sheet,
-      Map<String, CellAddress> indicators,
-      DayOfWeek dayOfWeek,
-      ReportRowShift shift,
-      ReportRow row) {
+      Context context, Map<String, CellAddress> indicators, DayOfWeek dayOfWeek, ReportRow row) {
     var indicator = row.getIndicator();
 
     fill(
-        sheet,
+        context.getSheet(),
         indicators.get(
             indicator
                 + "_0_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift.equals(ReportRowShift.I)
+                    context.getShift().equals(ReportRowShift.I)
                         ? SHIFT_1_PERIOD_1_START_TIME
                         : SHIFT_2_PERIOD_1_START_TIME)),
         row.getOldElectricValue());
     fill(
-        sheet,
+        context.getSheet(),
         indicators.get(
             indicator
                 + "_1_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift.equals(ReportRowShift.I)
+                    context.getShift().equals(ReportRowShift.I)
                         ? SHIFT_1_PERIOD_1_END_TIME
                         : SHIFT_2_PERIOD_1_END_TIME)),
         row.getNewElectricValue1());
 
     fill(
-        sheet,
+        context.getSheet(),
         indicators.get(
             indicator
                 + "_2_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift.equals(ReportRowShift.I)
+                    context.getShift().equals(ReportRowShift.I)
                         ? SHIFT_1_PERIOD_2_START_TIME
                         : SHIFT_2_PERIOD_2_START_TIME)),
         row.getNewElectricValue1());
     fill(
-        sheet,
+        context.getSheet(),
         indicators.get(
             indicator
                 + "_3_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift.equals(ReportRowShift.I)
+                    context.getShift().equals(ReportRowShift.I)
                         ? SHIFT_1_PERIOD_2_END_TIME
                         : SHIFT_2_PERIOD_2_END_TIME)),
         row.getNewElectricValue2());
 
     fill(
-        sheet,
+        context.getSheet(),
         indicators.get(
             indicator
                 + "_4_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift.equals(ReportRowShift.I)
+                    context.getShift().equals(ReportRowShift.I)
                         ? SHIFT_1_PERIOD_3_START_TIME
                         : SHIFT_2_PERIOD_3_START_TIME)),
         row.getNewElectricValue2());
     fill(
-        sheet,
+        context.getSheet(),
         indicators.get(
             indicator
                 + "_5_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift.equals(ReportRowShift.I)
+                    context.getShift().equals(ReportRowShift.I)
                         ? SHIFT_1_PERIOD_3_END_TIME
                         : SHIFT_2_PERIOD_3_END_TIME)),
         row.getNewElectricValue3());
 
     fill(
-        sheet,
+        context.getSheet(),
         indicators.get(
             indicator
                 + "_6_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift.equals(ReportRowShift.I)
+                    context.getShift().equals(ReportRowShift.I)
                         ? SHIFT_1_PERIOD_4_START_TIME
                         : SHIFT_2_PERIOD_4_START_TIME)),
         row.getNewElectricValue3());
     fill(
-        sheet,
+        context.getSheet(),
         indicators.get(
             indicator
                 + "_7_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift.equals(ReportRowShift.I)
+                    context.getShift().equals(ReportRowShift.I)
                         ? SHIFT_1_PERIOD_4_END_TIME
                         : SHIFT_2_PERIOD_4_END_TIME)),
         row.getNewElectricValue4());
@@ -274,5 +268,17 @@ public class ReportExcelProcessor {
   private void resetCell(XSSFSheet sheet, CellAddress address) {
     var cell = sheet.getRow(address.getRow()).getCell(address.getColumn());
     cell.setCellType(CellType.BLANK);
+  }
+
+  @Builder
+  @Getter
+  public static class Context {
+    private XSSFWorkbook workbook;
+    private ReportRowShift shift;
+    private List<ReportRow> rows;
+
+    public XSSFSheet getSheet() {
+      return workbook.getSheetAt(shift.equals(ReportRowShift.I) ? 0 : 1);
+    }
   }
 }
