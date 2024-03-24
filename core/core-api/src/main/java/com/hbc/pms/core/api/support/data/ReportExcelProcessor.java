@@ -75,6 +75,10 @@ public class ReportExcelProcessor {
             return;
           }
           var indicator = matcher.group("indicator");
+          if (indicators.containsKey(indicator)) {
+            log.error("Duplicate indicator={} at address={}", indicator, address.formatAsString());
+            throw new RuntimeException("Duplicate indicator in Excel template");
+          }
           indicators.put(indicator, address);
         });
     return indicators;
