@@ -18,6 +18,7 @@ import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_2_PERIOD_4_END_TI
 import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_2_PERIOD_4_START_TIME;
 import static java.util.Objects.isNull;
 
+import com.hbc.pms.core.api.support.error.ReportExcelProcessorException;
 import com.hbc.pms.core.api.util.ElectricTimeUtil;
 import com.hbc.pms.core.model.ReportRow;
 import com.hbc.pms.core.model.enums.ReportRowShift;
@@ -77,7 +78,7 @@ public class ReportExcelProcessor {
           var indicator = matcher.group("indicator");
           if (indicators.containsKey(indicator)) {
             log.error("Duplicate indicator={} at address={}", indicator, address.formatAsString());
-            throw new RuntimeException("Duplicate indicator in Excel template");
+            throw new ReportExcelProcessorException("Duplicate indicator in Excel template");
           }
           indicators.put(indicator, address);
         });
