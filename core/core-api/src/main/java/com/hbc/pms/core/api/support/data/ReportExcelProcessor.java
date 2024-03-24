@@ -20,6 +20,7 @@ import static java.util.Objects.isNull;
 
 import com.hbc.pms.core.api.util.ElectricTimeUtil;
 import com.hbc.pms.core.model.ReportRow;
+import com.hbc.pms.core.model.enums.ReportRowShift;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -62,8 +63,11 @@ public class ReportExcelProcessor {
   }
 
   public Map<String, Double> processSumsMap(
-      XSSFWorkbook workbook, int shift, OffsetDateTime recordingDate, List<ReportRow> rows) {
-    var sheet = workbook.getSheetAt(shift - 1);
+      XSSFWorkbook workbook,
+      ReportRowShift shift,
+      OffsetDateTime recordingDate,
+      List<ReportRow> rows) {
+    var sheet = workbook.getSheetAt(shift.equals(ReportRowShift.I) ? 0 : 1);
 
     var localDateTime = ElectricTimeUtil.convertOffsetDateTimeToLocalTime(recordingDate);
     var dayOfWeek = localDateTime.getDayOfWeek();
@@ -121,7 +125,7 @@ public class ReportExcelProcessor {
       XSSFSheet sheet,
       Map<String, CellAddress> indicators,
       DayOfWeek dayOfWeek,
-      int shift,
+      ReportRowShift shift,
       ReportRow row) {
     var indicator = row.getIndicator();
 
@@ -132,7 +136,9 @@ public class ReportExcelProcessor {
                 + "_0_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift == 1 ? SHIFT_1_PERIOD_1_START_TIME : SHIFT_2_PERIOD_1_START_TIME)),
+                    shift.equals(ReportRowShift.I)
+                        ? SHIFT_1_PERIOD_1_START_TIME
+                        : SHIFT_2_PERIOD_1_START_TIME)),
         row.getOldElectricValue());
     fill(
         sheet,
@@ -140,7 +146,10 @@ public class ReportExcelProcessor {
             indicator
                 + "_1_"
                 + ElectricTimeUtil.getTimeGroup(
-                    dayOfWeek, shift == 1 ? SHIFT_1_PERIOD_1_END_TIME : SHIFT_2_PERIOD_1_END_TIME)),
+                    dayOfWeek,
+                    shift.equals(ReportRowShift.I)
+                        ? SHIFT_1_PERIOD_1_END_TIME
+                        : SHIFT_2_PERIOD_1_END_TIME)),
         row.getNewElectricValue1());
 
     fill(
@@ -150,7 +159,9 @@ public class ReportExcelProcessor {
                 + "_2_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift == 1 ? SHIFT_1_PERIOD_2_START_TIME : SHIFT_2_PERIOD_2_START_TIME)),
+                    shift.equals(ReportRowShift.I)
+                        ? SHIFT_1_PERIOD_2_START_TIME
+                        : SHIFT_2_PERIOD_2_START_TIME)),
         row.getNewElectricValue1());
     fill(
         sheet,
@@ -158,7 +169,10 @@ public class ReportExcelProcessor {
             indicator
                 + "_3_"
                 + ElectricTimeUtil.getTimeGroup(
-                    dayOfWeek, shift == 1 ? SHIFT_1_PERIOD_2_END_TIME : SHIFT_2_PERIOD_2_END_TIME)),
+                    dayOfWeek,
+                    shift.equals(ReportRowShift.I)
+                        ? SHIFT_1_PERIOD_2_END_TIME
+                        : SHIFT_2_PERIOD_2_END_TIME)),
         row.getNewElectricValue2());
 
     fill(
@@ -168,7 +182,9 @@ public class ReportExcelProcessor {
                 + "_4_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift == 1 ? SHIFT_1_PERIOD_3_START_TIME : SHIFT_2_PERIOD_3_START_TIME)),
+                    shift.equals(ReportRowShift.I)
+                        ? SHIFT_1_PERIOD_3_START_TIME
+                        : SHIFT_2_PERIOD_3_START_TIME)),
         row.getNewElectricValue2());
     fill(
         sheet,
@@ -176,7 +192,10 @@ public class ReportExcelProcessor {
             indicator
                 + "_5_"
                 + ElectricTimeUtil.getTimeGroup(
-                    dayOfWeek, shift == 1 ? SHIFT_1_PERIOD_3_END_TIME : SHIFT_2_PERIOD_3_END_TIME)),
+                    dayOfWeek,
+                    shift.equals(ReportRowShift.I)
+                        ? SHIFT_1_PERIOD_3_END_TIME
+                        : SHIFT_2_PERIOD_3_END_TIME)),
         row.getNewElectricValue3());
 
     fill(
@@ -186,7 +205,9 @@ public class ReportExcelProcessor {
                 + "_6_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    shift == 1 ? SHIFT_1_PERIOD_4_START_TIME : SHIFT_2_PERIOD_4_START_TIME)),
+                    shift.equals(ReportRowShift.I)
+                        ? SHIFT_1_PERIOD_4_START_TIME
+                        : SHIFT_2_PERIOD_4_START_TIME)),
         row.getNewElectricValue3());
     fill(
         sheet,
@@ -194,7 +215,10 @@ public class ReportExcelProcessor {
             indicator
                 + "_7_"
                 + ElectricTimeUtil.getTimeGroup(
-                    dayOfWeek, shift == 1 ? SHIFT_1_PERIOD_4_END_TIME : SHIFT_2_PERIOD_4_END_TIME)),
+                    dayOfWeek,
+                    shift.equals(ReportRowShift.I)
+                        ? SHIFT_1_PERIOD_4_END_TIME
+                        : SHIFT_2_PERIOD_4_END_TIME)),
         row.getNewElectricValue4());
   }
 
