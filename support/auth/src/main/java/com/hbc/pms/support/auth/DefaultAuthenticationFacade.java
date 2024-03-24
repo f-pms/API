@@ -26,6 +26,6 @@ public class DefaultAuthenticationFacade implements AuthenticationFacade {
   }
 
   public String getUserId() {
-    return getAuthentication().getClaims().get(StandardClaimNames.USER_ID).toString();
+    return getAuthentication().getClaims().get(AuthConstants.USER_ID).toString();
   }
 }

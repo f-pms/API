@@ -1,5 +1,7 @@
 package com.hbc.pms.support.auth;
 
+import static com.hbc.pms.support.auth.AuthConstants.LOGIN_PATH;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -14,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -22,11 +25,14 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 @AllArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
   public static final String AUTH_COOKIE_NAME = "ACCESS_TOKEN";
-
   private final JwtService jwtService;
-
   private final UserDetailsService userService;
   private final HandlerExceptionResolver handlerExceptionResolver;
+
+  @Override
+  protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
+    return new AntPathRequestMatcher(LOGIN_PATH).matches(request);
+  }
 
   @Override
   protected void doFilterInternal(
@@ -36,19 +42,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
     String jwt = null;
     String userEmail;
-
+    Cookie[] cookies = request.getCookies();
     final String authHeader = request.getHeader("Authorization");
     if (authHeader != null && authHeader.startsWith("Bearer ")) {
       jwt = authHeader.substring(7);
     }
-
-    if (jwt == null) {
-      Optional<Cookie> cookies =
-          Arrays.stream(request.getCookies())
+    if (jwt == null && cookies != null) {
+      Optional<Cookie> authCookie =
+          Arrays.stream(cookies)
               .filter(cookie -> cookie.getName().equals(AUTH_COOKIE_NAME))
               .findFirst();
-      if (cookies.isPresent()) {
-        jwt = cookies.get().getValue();
+      if (authCookie.isPresent()) {
+        jwt = authCookie.get().getValue();
       }
     }
 

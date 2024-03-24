@@ -3,6 +3,7 @@ package com.hbc.pms.core.api.config;
 import com.hbc.pms.core.api.support.error.CoreApiException;
 import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.api.support.response.ApiResponse;
+import io.jsonwebtoken.JwtException;
 import java.util.HashMap;
 import java.util.Map;
 import org.modelmapper.ValidationException;
@@ -78,4 +79,8 @@ public class RestControllerExceptionHandler {
   @ResponseStatus(HttpStatus.FORBIDDEN)
   @ExceptionHandler(AccessDeniedException.class)
   public void handleAccessDenied() {}
+  @ResponseBody
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  @ExceptionHandler(JwtException.class)
+  public void handleUnauthorized() {}
 }

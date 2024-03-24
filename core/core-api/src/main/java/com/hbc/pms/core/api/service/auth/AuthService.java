@@ -3,8 +3,8 @@ package com.hbc.pms.core.api.service.auth;
 import com.hbc.pms.core.api.controller.v1.request.auth.AuthResponse;
 import com.hbc.pms.core.api.controller.v1.request.auth.LoginCommand;
 import com.hbc.pms.core.model.User;
+import com.hbc.pms.support.auth.AuthConstants;
 import com.hbc.pms.support.auth.JwtService;
-import com.hbc.pms.support.auth.StandardClaimNames;
 import java.util.HashMap;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,7 +29,7 @@ public class AuthService {
 
   private HashMap<String, Object> buildClaimsFromUser(User target) {
     HashMap<String, Object> claims = new HashMap<>();
-    claims.put(StandardClaimNames.USER_ID, target.getId());
+    claims.put(AuthConstants.USER_ID, target.getId());
     return claims;
   }
 }

@@ -1,5 +1,7 @@
 package com.hbc.pms.core.api.config.auth;
 
+import static com.hbc.pms.support.auth.AuthConstants.LOGIN_PATH;
+
 import com.hbc.pms.support.auth.JwtAuthFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +27,8 @@ public class SecurityConfig {
     "/swagger-resources/**",
     "/swagger-ui/**",
     "/swagger-ui.html",
-    "/v3/api-docs**"
+    "/v3/api-docs**",
+    LOGIN_PATH
   };
   private final UserDetailsService userDetailsService;
   private final JwtAuthFilter jwtAuthFilter;
@@ -37,7 +40,7 @@ public class SecurityConfig {
     http.authorizeHttpRequests(
         request -> {
           request.requestMatchers(WHITE_LIST_URLS).permitAll();
-          request.anyRequest().permitAll();
+          request.anyRequest().authenticated();
         });
     http.authenticationProvider(authenticationProvider())
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

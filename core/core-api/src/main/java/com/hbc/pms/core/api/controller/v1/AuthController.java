@@ -24,7 +24,9 @@ public class AuthController {
   public ApiResponse<AuthResponse> login(
       @RequestBody LoginCommand loginCommand, HttpServletResponse httpServletResponse) {
     AuthResponse authResponse = authService.authenticate(loginCommand);
-    httpServletResponse.addCookie(new Cookie(AUTH_COOKIE_NAME, authResponse.getToken()));
+    Cookie authCookie = new Cookie(AUTH_COOKIE_NAME, authResponse.getToken());
+    authCookie.setPath("/");
+    httpServletResponse.addCookie(authCookie);
     return ApiResponse.success(authResponse);
   }
 }

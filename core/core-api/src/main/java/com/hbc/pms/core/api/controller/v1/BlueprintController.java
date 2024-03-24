@@ -1,5 +1,7 @@
 package com.hbc.pms.core.api.controller.v1;
 
+import static com.hbc.pms.core.api.config.auth.AuthorizationExpressions.HAS_ROLE_ADMIN;
+
 import com.hbc.pms.core.api.controller.v1.request.BlueprintRequest;
 import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest;
@@ -13,6 +15,7 @@ import com.hbc.pms.core.model.SensorConfiguration;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +43,7 @@ public class BlueprintController {
   }
 
   @PostMapping
+  @PreAuthorize(HAS_ROLE_ADMIN)
   public ApiResponse<BlueprintResponse> create(@RequestBody BlueprintRequest body) {
     var blueprint = mapper.map(body, Blueprint.class);
     var response =
@@ -55,6 +59,7 @@ public class BlueprintController {
   }
 
   @PutMapping("/{blueprintId}")
+  @PreAuthorize(HAS_ROLE_ADMIN)
   public ApiResponse<BlueprintResponse> update(
       @PathVariable Long blueprintId, @RequestBody BlueprintRequest body) {
     var blueprint = mapper.map(body, Blueprint.class);
@@ -65,6 +70,7 @@ public class BlueprintController {
   }
 
   @PostMapping("/{blueprintId}/sensor-configurations")
+  @PreAuthorize(HAS_ROLE_ADMIN)
   public ApiResponse<Boolean> createSensorConfiguration(
       @PathVariable Long blueprintId, @RequestBody SensorConfigurationRequest body) {
     var sensorConfiguration = mapper.map(body, SensorConfiguration.class);
@@ -73,6 +79,7 @@ public class BlueprintController {
   }
 
   @PutMapping("/{blueprintId}/sensor-configurations/{sensorConfigurationId}")
+  @PreAuthorize(HAS_ROLE_ADMIN)
   public ApiResponse<Boolean> updateSensorConfiguration(
       @PathVariable Long blueprintId,
       @PathVariable Long sensorConfigurationId,
