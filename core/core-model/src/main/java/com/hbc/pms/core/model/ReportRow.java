@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class ReportRow {
   private Long id;
   private String indicator;
+  private Long shift;
   private ReportRowCategory category;
   private Double oldElectricValue;
   private Double newElectricValue1;

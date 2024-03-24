@@ -29,9 +29,11 @@ public class ReportSpecification implements Specification<ReportEntity> {
             reportRoot.get(ReportEntity_.RECORDING_DATE),
             criteria.getStartDate(),
             criteria.getEndDate()));
-    if (nonNull(criteria.getReportTypeId())) {
-      predicates.add(
-          builder.equal(reportTypeRoot.get(ReportTypeEntity_.ID), criteria.getReportTypeId()));
+
+    if (nonNull(criteria.getTypeIds()) && !criteria.getTypeIds().isEmpty()) {
+      var in = builder.in(reportTypeRoot.get(ReportTypeEntity_.ID));
+      criteria.getTypeIds().forEach(in::value);
+      predicates.add(in);
     }
 
     switch (criteria.getSortBy()) {
