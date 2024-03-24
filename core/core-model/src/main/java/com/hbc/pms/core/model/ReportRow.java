@@ -1,6 +1,6 @@
 package com.hbc.pms.core.model;
 
-import com.hbc.pms.core.model.enums.ReportRowCategory;
+import com.hbc.pms.core.model.enums.ReportRowShift;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,8 +14,7 @@ import lombok.NoArgsConstructor;
 public class ReportRow {
   private Long id;
   private String indicator;
-  private Long shift;
-  private ReportRowCategory category;
+  private ReportRowShift shift;
   private Double oldElectricValue;
   private Double newElectricValue1;
   private Double newElectricValue2;

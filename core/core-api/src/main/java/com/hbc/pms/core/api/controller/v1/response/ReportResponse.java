@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hbc.pms.core.model.ReportRow;
 import com.hbc.pms.core.model.ReportType;
+import com.hbc.pms.core.model.enums.ReportRowShift;
 import io.vavr.control.Try;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -36,44 +37,22 @@ public class ReportResponse {
 
     var shift1Map = new HashMap<String, Double>();
     var shift2Map = new HashMap<String, Double>();
-    var indicatorFormatter = "%s_%s";
+    var indicatorPattern = "%s_%s";
     rows.forEach(
         row -> {
           var indicator = row.getIndicator();
           var shift = row.getShift();
-          if (shift == 1) {
-            shift1Map.put(
-                String.format(indicatorFormatter, indicator, "0", shift),
-                row.getOldElectricValue());
-            shift1Map.put(
-                String.format(indicatorFormatter, indicator, "1", shift),
-                row.getNewElectricValue1());
-            shift1Map.put(
-                String.format(indicatorFormatter, indicator, "3", shift),
-                row.getNewElectricValue2());
-            shift1Map.put(
-                String.format(indicatorFormatter, indicator, "5", shift),
-                row.getNewElectricValue3());
-            shift1Map.put(
-                String.format(indicatorFormatter, indicator, "7", shift),
-                row.getNewElectricValue4());
-          } else if (shift == 2) {
-            shift2Map.put(
-                String.format(indicatorFormatter, indicator, "0", shift),
-                row.getOldElectricValue());
-            shift2Map.put(
-                String.format(indicatorFormatter, indicator, "1", shift),
-                row.getNewElectricValue1());
-            shift2Map.put(
-                String.format(indicatorFormatter, indicator, "3", shift),
-                row.getNewElectricValue2());
-            shift2Map.put(
-                String.format(indicatorFormatter, indicator, "5", shift),
-                row.getNewElectricValue3());
-            shift2Map.put(
-                String.format(indicatorFormatter, indicator, "7", shift),
-                row.getNewElectricValue4());
-          }
+          var shiftMap = shift.equals(ReportRowShift.I) ? shift1Map : shift2Map;
+          shiftMap.put(
+              String.format(indicatorPattern, indicator, "0", shift), row.getOldElectricValue());
+          shiftMap.put(
+              String.format(indicatorPattern, indicator, "1", shift), row.getNewElectricValue1());
+          shiftMap.put(
+              String.format(indicatorPattern, indicator, "3", shift), row.getNewElectricValue2());
+          shiftMap.put(
+              String.format(indicatorPattern, indicator, "5", shift), row.getNewElectricValue3());
+          shiftMap.put(
+              String.format(indicatorPattern, indicator, "7", shift), row.getNewElectricValue4());
         });
     return List.of(shift1Map, shift2Map);
   }

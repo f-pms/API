@@ -30,6 +30,10 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
   runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
   runtimeOnly 'com.h2database:h2'
+
+  implementation 'org.apache.poi:poi:5.2.5'
+  implementation 'org.apache.poi:poi-ooxml:5.2.5'
+
   testImplementation "org.springframework.boot:spring-boot-starter-test"
   testImplementation "org.awaitility:awaitility"
   testImplementation "org.testcontainers:mssqlserver:1.19.4"
