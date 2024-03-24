@@ -1,6 +1,6 @@
 package com.hbc.pms.integration.db.entity;
 
-import com.hbc.pms.core.model.enums.ReportRowCategory;
+import com.hbc.pms.core.model.enums.ReportRowShift;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,11 +33,9 @@ public class ReportRowEntity {
 
   @Column private String indicator;
 
-  @Column private Long shift;
-
   @Column
   @Enumerated(EnumType.STRING)
-  private ReportRowCategory category;
+  private ReportRowShift shift;
 
   @Column private Double oldElectricValue;
 

@@ -1,0 +1,34 @@
+databaseChangeLog:
+- changeSet:
+    id: 1711257250446-2
+    author: HTG (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: shift
+            type: varchar(255)
+        tableName: report_schedule
+- changeSet:
+    id: 1711257250446-3
+    author: HTG (generated)
+    changes:
+    - dropColumn:
+        columnName: category
+        tableName: report_row
+- changeSet:
+    id: 1711257250446-4
+    author: HTG (generated)
+    changes:
+    - dropColumn:
+        columnName: category
+        tableName: report_schedule
+- changeSet:
+    id: 1711257250446-1
+    author: HTG (generated)
+    changes:
+    - modifyDataType:
+        columnName: shift
+        newDataType: varchar(255)
+        tableName: report_row
+
