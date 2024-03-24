@@ -1,0 +1,38 @@
+databaseChangeLog:
+- changeSet:
+    id: 1711097758021-1
+    author: huybu (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: userPK
+            name: id
+            type: bigint
+        - column:
+            constraints:
+              nullable: false
+            name: password
+            type: varchar(255)
+        - column:
+            name: role
+            type: varchar(255)
+        - column:
+            constraints:
+              nullable: false
+            name: username
+            type: varchar(255)
+        tableName: user
+- changeSet:
+    id: 1711097758021-2
+    author: huybu (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: username
+        constraintName: UC_USERUSERNAME_COL
+        tableName: user
+

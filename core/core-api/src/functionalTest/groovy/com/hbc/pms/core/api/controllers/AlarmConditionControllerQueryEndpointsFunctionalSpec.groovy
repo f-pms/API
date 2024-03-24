@@ -50,7 +50,7 @@ class AlarmConditionControllerQueryEndpointsFunctionalSpec extends FunctionalTes
   def "Get all alarm conditions - OK"() {
     when:
     def response
-            = restClient.get("/alarm-conditions", ApiResponse<List<AlarmConditionResponse>>)
+            = restClient.get("${ALARM_CONDITION_PATH}", dataFixture.ADMIN_USER, ApiResponse<List<AlarmConditionResponse>>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -62,7 +62,7 @@ class AlarmConditionControllerQueryEndpointsFunctionalSpec extends FunctionalTes
   def "Get alarm condition by Id - OK"() {
     when:
     def response
-            = restClient.get("/alarm-conditions/$DEFAULT_CONDITION_ID", ApiResponse<AlarmConditionResponse>)
+            = restClient.get("${ALARM_CONDITION_PATH}/$DEFAULT_CONDITION_ID", dataFixture.ADMIN_USER, ApiResponse<AlarmConditionResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -71,7 +71,7 @@ class AlarmConditionControllerQueryEndpointsFunctionalSpec extends FunctionalTes
   def "Get alarm condition by Id - Not found and Bad request"() {
     when:
     def response
-            = restClient.get("/alarm-conditions/12", ApiResponse<RuntimeException>)
+            = restClient.get("${ALARM_CONDITION_PATH}/12", dataFixture.ADMIN_USER, ApiResponse<RuntimeException>)
 
     then:
     response.statusCode.is4xxClientError()
@@ -81,7 +81,7 @@ class AlarmConditionControllerQueryEndpointsFunctionalSpec extends FunctionalTes
   def "Get alarm condition by Id - Invalid format input - Bad request"() {
     when:
     def response
-            = restClient.get("/alarm-conditions/abc",
+            = restClient.get("${ALARM_CONDITION_PATH}/abc", dataFixture.ADMIN_USER,
             ApiResponse<List<AlarmConditionResponse>>)
 
     then:

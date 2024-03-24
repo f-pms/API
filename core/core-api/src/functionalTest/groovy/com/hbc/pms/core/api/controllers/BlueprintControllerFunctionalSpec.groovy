@@ -33,7 +33,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def response
-            = restClient.get("/blueprints", ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -52,7 +52,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def response
-            = restClient.get("/blueprints?blueprintName=PREDEFINED", ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints?blueprintName=PREDEFINED", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -71,7 +71,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def response
-            = restClient.get("/blueprints?blueprintType=ALARM", ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints?blueprintType=ALARM", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -90,7 +90,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def response
-            = restClient.get("/blueprints?blueprintType=ALARM&blueprintName=PREDEFINED", ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints?blueprintType=ALARM&blueprintName=PREDEFINED", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -104,7 +104,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
   def "Get all blueprints by blueprintType - Not existed type - Bad request error"() {
     when:
     def response
-            = restClient.get("/blueprints?blueprintType=Random", ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints?blueprintType=Random", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
 
     then:
     response.statusCode.is4xxClientError()
@@ -114,7 +114,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
   def "Get all blueprints by blueprintName - Not existed name - OK with empty list"() {
     when:
     def response
-            = restClient.get("/blueprints?blueprintName=Random", ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints?blueprintName=Random", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -125,7 +125,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
   def "Get blueprint by Id - OK"() {
     when:
     def response
-            = restClient.get("/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID", ApiResponse<BlueprintResponse>)
+            = restClient.get("/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID", dataFixture.ADMIN_USER, ApiResponse<BlueprintResponse>)
     def blueprintEntity = blueprintRepository.findById(TestDataFixture.MONITORING_BLUEPRINT_ID).get()
     configurationRepository.save(
             TestDataFixture.createSensorConfiguration(blueprintEntity, TestDataFixture.PLC_ADDRESS_BOOL_01))
@@ -147,7 +147,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
   def "Get blueprint by Id - Not found and Bad request"() {
     when:
     def response
-            = restClient.get("/blueprints/123", ApiResponse<RuntimeException>)
+            = restClient.get("/blueprints/123", dataFixture.ADMIN_USER, ApiResponse<RuntimeException>)
 
     then:
     response.statusCode.is4xxClientError()
@@ -157,7 +157,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
   def "Get blueprint by Id - Invalid format input - Bad request"() {
     when:
     def response
-            = restClient.get("/blueprints/abc", ApiResponse<RuntimeException>)
+            = restClient.get("/blueprints/abc", dataFixture.ADMIN_USER, ApiResponse<RuntimeException>)
 
     then:
     response.statusCode.is4xxClientError()
@@ -192,7 +192,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     when:
     def response = restClient
             .post(
-                    "/blueprints/$TestDataFixture.CUSTOM_ALARM_BLUEPRINT_ID/sensor-configurations", configRequest,
+                    "/blueprints/$TestDataFixture.CUSTOM_ALARM_BLUEPRINT_ID/sensor-configurations", configRequest, dataFixture.ADMIN_USER,
                     ApiResponse<Boolean>)
 
     then:
@@ -224,7 +224,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .put(
                     "/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID/sensor-configurations/$sensorConfig.id",
-                    updateConfigRequest, ApiResponse<Boolean>)
+                    updateConfigRequest, dataFixture.ADMIN_USER, ApiResponse<Boolean>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -256,7 +256,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .put(
                     "/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID/sensor-configurations/$sensorConfig.id",
-                    updateConfigRequest, ApiResponse<Boolean>)
+                    updateConfigRequest, dataFixture.ADMIN_USER, ApiResponse<Boolean>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -290,7 +290,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .put(
                     "/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID/sensor-configurations/$sensorConfig.id",
-                    updateConfigRequest, ApiResponse<Boolean>)
+                    updateConfigRequest, dataFixture.ADMIN_USER, ApiResponse<Boolean>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -320,7 +320,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .put(
                     "/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID/sensor-configurations/$sensorConfig.id",
-                    updateConfigRequest, ApiResponse<Boolean>)
+                    updateConfigRequest, dataFixture.ADMIN_USER, ApiResponse<Boolean>)
 
     then:
     response.statusCode.is5xxServerError()
@@ -343,7 +343,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .put(
                     "/blueprints/123/sensor-configurations/$sensorConfig.id",
-                    updateConfigRequest, ApiResponse<Boolean>)
+                    updateConfigRequest, dataFixture.ADMIN_USER, ApiResponse<Boolean>)
 
     then:
     response.statusCode.is4xxClientError()
@@ -368,7 +368,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .put(
                     "/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID/sensor-configurations/123456",
-                    updateConfigRequest, ApiResponse<Boolean>)
+                    updateConfigRequest, dataFixture.ADMIN_USER, ApiResponse<Boolean>)
 
     then:
     response.statusCode.is4xxClientError()

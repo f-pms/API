@@ -61,15 +61,7 @@ tasks.named("check") {
   dependsOn(testing.suites.named("integrationTest"))
   dependsOn(testing.suites.named("functionalTest"))
 }
-test {
-  finalizedBy jacocoTestReport
-}
-functionalTest {
-  finalizedBy jacocoTestReport
-}
-functionalTest {
-  finalizedBy jacocoTestReport
-}
+
 jacocoTestReport {
   dependsOn test
   dependsOn functionalTest

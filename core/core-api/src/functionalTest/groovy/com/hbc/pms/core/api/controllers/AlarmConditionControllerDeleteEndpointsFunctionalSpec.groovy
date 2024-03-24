@@ -48,7 +48,7 @@ class AlarmConditionControllerDeleteEndpointsFunctionalSpec extends FunctionalTe
     def histories = condition.getHistories()
 
     when:
-    restClient.delete("/alarm-conditions/${condition.id}")
+    restClient.delete("${ALARM_CONDITION_PATH}/${condition.id}", dataFixture.ADMIN_USER)
 
     then:
     def deletedCondition = conditionRepository.findById(condition.id)
@@ -65,7 +65,7 @@ class AlarmConditionControllerDeleteEndpointsFunctionalSpec extends FunctionalTe
     def conditionCountBefore = conditionRepository.findAll().size()
 
     when:
-    restClient.delete("/alarm-conditions/123")
+    restClient.delete("${ALARM_CONDITION_PATH}/123", dataFixture.ADMIN_USER)
 
     then:
     def conditionCountAfter = conditionRepository.findAll().size()
@@ -78,7 +78,7 @@ class AlarmConditionControllerDeleteEndpointsFunctionalSpec extends FunctionalTe
     def action = condition.getActions().get(0)
 
     when:
-    restClient.delete("/alarm-conditions/${condition.id}/actions/${action.id}")
+    restClient.delete("${ALARM_CONDITION_PATH}/${condition.id}/actions/${action.id}", dataFixture.ADMIN_USER)
 
     then:
     def updatedCondition = conditionRepository.findById(condition.id)
@@ -93,7 +93,7 @@ class AlarmConditionControllerDeleteEndpointsFunctionalSpec extends FunctionalTe
     def actionCountBefore = condition.getActions().size()
 
     when:
-    restClient.delete("/alarm-conditions/${condition.id}/actions/123")
+    restClient.delete("${ALARM_CONDITION_PATH}/${condition.id}/actions/123", dataFixture.ADMIN_USER)
 
     then:
     def actionCountAfter
@@ -109,11 +109,12 @@ class AlarmConditionControllerDeleteEndpointsFunctionalSpec extends FunctionalTe
     def actionCountBefore = condition.getActions().size()
 
     when:
-    restClient.delete("/alarm-conditions/123/actions/${action.id}")
+    restClient.delete("${ALARM_CONDITION_PATH}/123/actions/${action.id}", dataFixture.ADMIN_USER)
 
     then:
     def actionCountAfter
             = conditionRepository.findById(condition.id).get().getActions().size()
     actionCountBefore == actionCountAfter
   }
+
 }

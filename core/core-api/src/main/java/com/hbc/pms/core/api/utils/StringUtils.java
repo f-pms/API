@@ -24,4 +24,9 @@ public class StringUtils {
 
     return MessageFormat.format("*/{0} *{1} * * * *", seconds, minutes != 0 ? "/" + minutes : "");
   }
+
+  public static boolean isStringEncoded(String stringToCheck) {
+    Pattern bcryptPattern = Pattern.compile("\\A\\$2(a|y|b)?\\$(\\d\\d)\\$[./0-9A-Za-z]{53}");
+    return bcryptPattern.matcher(stringToCheck).matches();
+  }
 }

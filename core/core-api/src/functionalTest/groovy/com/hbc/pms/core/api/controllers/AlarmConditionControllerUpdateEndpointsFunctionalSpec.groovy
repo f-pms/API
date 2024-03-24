@@ -44,8 +44,8 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.put("/alarm-conditions/${condition.id}",
-            updateConditionCommand,
+            = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
+            updateConditionCommand, dataFixture.ADMIN_USER,
             ApiResponse<AlarmConditionResponse>)
 
     then:
@@ -68,8 +68,8 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.put("/alarm-conditions/${condition.id}",
-            updateConditionCommand,
+            = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
+            updateConditionCommand, dataFixture.ADMIN_USER,
             ApiResponse<AlarmConditionResponse>)
 
     then:
@@ -85,8 +85,8 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.put("/alarm-conditions/${condition.id}",
-            updateConditionCommand,
+            = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
+            updateConditionCommand, dataFixture.ADMIN_USER,
             ApiResponse<AlarmConditionResponse>)
 
     then:
@@ -102,8 +102,8 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.put("/alarm-conditions/${condition.id}",
-            updateConditionCommand,
+            = restClient.put("${ALARM_CONDITION_PATH}/${condition.id}",
+            updateConditionCommand, dataFixture.ADMIN_USER,
             ApiResponse<AlarmConditionResponse>)
 
     then:
@@ -117,8 +117,9 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = restClient.put("/alarm-conditions/123",
+            = restClient.put("${ALARM_CONDITION_PATH}/123",
             updateConditionCommand,
+            dataFixture.ADMIN_USER,
             ApiResponse<AlarmConditionResponse>)
 
     then:

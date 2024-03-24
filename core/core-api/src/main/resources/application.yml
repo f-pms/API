@@ -32,7 +32,10 @@ hbc:
     url: ${PUSH_URL:https://ntfy.ohtgo.me}
     auth: ${PUSH_AUTH:YWRtaW46UEBzc3cwcmQwMDA=}
     title: ${PUSH_TITLE:RMS}
-
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET:ZGNtLXRoYW5nLW5hby1kZWNvZGUtY2FpLW5heS1uaGFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYQ==}
+      expiration-time: ${JWT_EXPIRATION_TIME:86400000}
 server:
   tomcat:
     max-connections: 20000

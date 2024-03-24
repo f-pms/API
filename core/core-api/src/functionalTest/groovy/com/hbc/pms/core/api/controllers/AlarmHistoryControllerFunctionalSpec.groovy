@@ -60,6 +60,7 @@ class AlarmHistoryControllerFunctionalSpec extends FunctionalTestSpec {
     when:
     def response
             = restClient.get("/alarm-histories",
+            dataFixture.ADMIN_USER,
             ApiResponse<List<AlarmHistoryResponse>>
     )
 
