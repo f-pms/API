@@ -79,6 +79,7 @@ public class RestControllerExceptionHandler {
   @ResponseStatus(HttpStatus.FORBIDDEN)
   @ExceptionHandler(AccessDeniedException.class)
   public void handleAccessDenied() {}
+
   @ResponseBody
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
   @ExceptionHandler(JwtException.class)
