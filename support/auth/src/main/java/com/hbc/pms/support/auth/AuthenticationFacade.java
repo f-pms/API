@@ -1,6 +1,5 @@
 package com.hbc.pms.support.auth;
 
-
 public interface AuthenticationFacade {
   DetailedAuthenticationToken getAuthentication();
 

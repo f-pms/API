@@ -18,6 +18,7 @@ public class RestClient {
     this.restTemplate = restTemplate;
     this.jwtService = jwtService;
   }
+
   public <T> ResponseEntity<T> get(String url, Class<T> responseType) {
     return restTemplate.getForEntity(url, responseType);
   }
