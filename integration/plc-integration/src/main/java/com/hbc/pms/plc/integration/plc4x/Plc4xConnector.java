@@ -1,36 +1,22 @@
 package com.hbc.pms.plc.integration.plc4x;
 
-import static com.hbc.pms.plc.integration.plc4x.PlcUtil.convertPlcResponseToMap;
-import static com.hbc.pms.plc.integration.plc4x.PlcUtil.getIoResponse;
+import static com.hbc.pms.plc.api.PlcConstant.DEVICE_NAME;
 
-import com.hbc.pms.plc.api.IoResponse;
 import com.hbc.pms.plc.api.PlcConnector;
 import com.hbc.pms.plc.api.exceptions.MaximumScraperReachException;
+import com.hbc.pms.plc.api.exceptions.WritePlcException;
 import com.hbc.pms.plc.api.scraper.ResultHandler;
 import com.hbc.pms.plc.api.scraper.ScrapeConfiguration;
 import com.hbc.pms.plc.integration.plc4x.scraper.HbcScraper;
-import jakarta.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.plc4x.java.api.PlcConnection;
 import org.apache.plc4x.java.api.PlcConnectionManager;
-import org.apache.plc4x.java.api.PlcDriverManager;
-import org.apache.plc4x.java.api.exceptions.PlcConnectionException;
-import org.apache.plc4x.java.api.exceptions.PlcInvalidTagException;
-import org.apache.plc4x.java.api.messages.PlcReadRequest;
-import org.apache.plc4x.java.api.messages.PlcReadResponse;
-import org.apache.plc4x.java.s7.readwrite.connection.S7HDefaultNettyPlcConnection;
-import org.apache.plc4x.java.s7.readwrite.connection.S7HMuxImpl;
-import org.apache.plc4x.java.s7.readwrite.tag.S7Tag;
+import org.apache.plc4x.java.api.types.PlcResponseCode;
 import org.apache.plc4x.java.scraper.Scraper;
+import org.apache.plc4x.java.spi.values.PlcIECValue;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -79,6 +65,20 @@ public class Plc4xConnector implements PlcConnector {
       log.info("Current active scraper: {}", numberOfActiveScraper.incrementAndGet());
     } finally {
       lock.unlock();
+    }
+  }
+
+  public PlcResponseCode write(String address, PlcIECValue<?> value) throws WritePlcException {
+    try {
+      var connectionUrl =
+          scrapeConfiguration.getPlcConfiguration().getDeviceConnections().get(DEVICE_NAME);
+      var connection = cachedPlcConnectionManager.getConnection(connectionUrl);
+      var writeRequest =
+          connection.writeRequestBuilder().addTagAddress(address, address, value).build();
+      var response = writeRequest.execute().get();
+      return response.getResponseCode(address);
+    } catch (Exception ex) {
+      throw new WritePlcException(ex.getMessage(), ex.getCause());
     }
   }
 }

@@ -20,7 +20,7 @@ public class PlcResultHandler implements ResultHandler {
   @Override
   public void handle(
       String job, String alias, OffsetDateTime startTime, Map<String, IoResponse> results) {
-    log.debug("Getting response map with size {}", results.size());
+    log.debug("Getting response for job={}, alias={}, start-time={}, size={}", job, alias, startTime, results.size());
     for (var handler : rmsHandlers) {
       try {
         handler.handle(startTime, results);
