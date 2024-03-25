@@ -18,10 +18,10 @@ public class PlcConfiguration {
   }
 
   @Bean
-  CronScrapeJob mainJob(
-      PlcDataSource plcDataSource, com.hbc.pms.plc.api.PlcConfiguration plcConfiguration) {
+  CronScrapeJob monitoringJob(
+      PlcMonitoringDataSource plcDataSource, com.hbc.pms.plc.api.PlcConfiguration plcConfiguration) {
     return HbcScrapeJob.builder()
-        .jobName("main-processor")
+        .jobName("monitoring-processor")
         .plcConfiguration(plcConfiguration)
         .hbcScrapeJobDataSource(plcDataSource)
         .alias("HBC")
