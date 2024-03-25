@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.plc4x.java.api.PlcConnection;
@@ -38,6 +39,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @Primary
+@RequiredArgsConstructor
 public class Plc4xConnector implements PlcConnector {
 
   private final ReentrantLock lock = new ReentrantLock();
@@ -46,54 +48,11 @@ public class Plc4xConnector implements PlcConnector {
   private final ResultHandler resultHandler;
   private final ScrapeConfiguration scrapeConfiguration;
   private final PlcConnectionManager cachedPlcConnectionManager;
-  private PlcConnection plcConnection;
   private Scraper scraper;
-
-  public Plc4xConnector(
-      ResultHandler resultHandler,
-      ScrapeConfiguration scrapeConfiguration,
-      PlcConnectionManager cachedPlcConnectionManager) {
-    this.resultHandler = resultHandler;
-    this.scrapeConfiguration = scrapeConfiguration;
-    this.cachedPlcConnectionManager = cachedPlcConnectionManager;
-  }
-
-  @SuppressWarnings("java:S1135")
-  @PostConstruct
-  private void init() throws PlcConnectionException {
-    String firstConnectionString =
-        scrapeConfiguration.getPlcConfiguration().getDeviceConnections().values().stream()
-            .findFirst()
-            .orElseThrow();
-    plcConnection =
-        PlcDriverManager.getDefault().getConnectionManager().getConnection(firstConnectionString);
-  }
 
   @EventListener
   public void onApplicationEvent(ContextRefreshedEvent event) {
     runScheduler();
-  }
-
-  @SneakyThrows
-  public boolean tryToConnect() {
-    if (plcConnection != null && !isConnected()) {
-      try {
-        log.info("Try to reconnect to PLC");
-        plcConnection.close();
-        init();
-      } catch (PlcConnectionException plcConnectionException) {
-        log.error("Failed to connect to PLC", plcConnectionException);
-        return false;
-      }
-    }
-    return isConnected();
-  }
-
-  public boolean isConnected() {
-    if (plcConnection instanceof S7HDefaultNettyPlcConnection s7HDefaultNettyPlcConnection) {
-      return s7HDefaultNettyPlcConnection.getChannel().attr(S7HMuxImpl.IS_CONNECTED).get();
-    }
-    return false;
   }
 
   public void updateScheduler() {
@@ -121,38 +80,5 @@ public class Plc4xConnector implements PlcConnector {
     } finally {
       lock.unlock();
     }
-  }
-
-  @Override
-  @SneakyThrows
-  public Map<String, IoResponse> executeBlockRequest(List<String> variableNames) {
-    if (!tryToConnect()) {
-      return Map.of();
-    }
-    Map<String, IoResponse> stringIoResponseMap = new HashMap<>();
-    if (!plcConnection.getMetadata().canRead()) {
-      log.error("This connection doesn't support reading.");
-      return stringIoResponseMap;
-    }
-    PlcReadRequest.Builder builder = plcConnection.readRequestBuilder();
-    for (var address : variableNames) {
-      try {
-        builder.addTag(address, S7Tag.of(address));
-      } catch (PlcInvalidTagException e) {
-        log.error(e.getMessage());
-      }
-    }
-    final PlcReadRequest rr = builder.build();
-    PlcReadResponse result = rr.execute().get(4000, TimeUnit.MILLISECONDS);
-    stringIoResponseMap.putAll(convertPlcResponseToMap(result));
-    return stringIoResponseMap;
-  }
-
-  @Override
-  public IoResponse validate(String address) throws ExecutionException, InterruptedException {
-    PlcReadRequest.Builder builder = plcConnection.readRequestBuilder();
-    builder.addTag(address, S7Tag.of(address));
-    PlcReadResponse readResponse = builder.build().execute().get();
-    return getIoResponse(readResponse, address);
   }
 }

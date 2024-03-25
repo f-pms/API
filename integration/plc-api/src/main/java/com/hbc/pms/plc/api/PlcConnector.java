@@ -6,10 +6,6 @@ import java.util.concurrent.ExecutionException;
 
 public interface PlcConnector {
 
-  Map<String, IoResponse> executeBlockRequest(List<String> variableNames);
-
-  IoResponse validate(String address) throws ExecutionException, InterruptedException;
-
   void runScheduler();
 
   void updateScheduler();
