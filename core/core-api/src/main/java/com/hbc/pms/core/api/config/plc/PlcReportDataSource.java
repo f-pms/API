@@ -18,9 +18,8 @@ public class PlcReportDataSource implements HbcScrapeJobDataSource {
 
   @Override
   public Map<String, String> getTags() {
-    var reportTypes = List.of(BlueprintType.REPORT);
     return blueprintService.getAll().stream()
-        .filter(blueprint -> reportTypes.contains(blueprint.getType()))
+        .filter(blueprint -> blueprint.getType().equals(BlueprintType.REPORT))
         .flatMap(blueprint -> blueprint.getAddresses().stream())
         .collect(Collectors.toMap(Function.identity(), Function.identity(), (a1, a2) -> a1));
   }
