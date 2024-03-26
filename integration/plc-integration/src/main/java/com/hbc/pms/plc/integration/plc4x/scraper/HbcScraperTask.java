@@ -132,14 +132,13 @@ public class HbcScraperTask implements ScraperTask {
       CompletableFuture.runAsync(
           () -> {
             try {
-              var context = HandlerContext.builder()
+              var context =
+                  HandlerContext.builder()
                       .jobName(jobName)
-                          .alias(connectionAlias)
-                              .startTime(startTime)
-                                  .build();
-              resultHandler.handle(
-                  context,
-                  PlcUtil.convertPlcResponseToMap(plcReadResponse));
+                      .alias(connectionAlias)
+                      .startTime(startTime)
+                      .build();
+              resultHandler.handle(context, PlcUtil.convertPlcResponseToMap(plcReadResponse));
             } catch (NotSupportedPlcResponseException e) {
               throw new RuntimeException(e);
             }

@@ -4,7 +4,6 @@ import com.hbc.pms.core.api.event.RmsHandler;
 import com.hbc.pms.plc.api.IoResponse;
 import com.hbc.pms.plc.api.scraper.HandlerContext;
 import com.hbc.pms.plc.api.scraper.ResultHandler;
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;

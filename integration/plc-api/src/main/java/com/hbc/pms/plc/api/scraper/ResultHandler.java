@@ -1,7 +1,6 @@
 package com.hbc.pms.plc.api.scraper;
 
 import com.hbc.pms.plc.api.IoResponse;
-import java.time.OffsetDateTime;
 import java.util.Map;
 
 @FunctionalInterface

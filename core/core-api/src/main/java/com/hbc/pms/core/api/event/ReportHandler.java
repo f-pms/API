@@ -3,7 +3,6 @@ package com.hbc.pms.core.api.event;
 import static com.hbc.pms.core.api.constant.PlcConstant.REPORT_JOB_NAME;
 import static java.util.stream.Collectors.groupingBy;
 
-
 import com.hbc.pms.core.api.service.BlueprintPersistenceService;
 import com.hbc.pms.core.api.service.ReportSchedulePersistenceService;
 import com.hbc.pms.core.api.service.ReportService;
@@ -18,7 +17,6 @@ import io.vavr.control.Try;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.plc4x.java.spi.values.PlcBOOL;

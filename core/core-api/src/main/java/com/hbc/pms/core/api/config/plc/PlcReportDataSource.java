@@ -3,7 +3,6 @@ package com.hbc.pms.core.api.config.plc;
 import com.hbc.pms.core.api.service.BlueprintPersistenceService;
 import com.hbc.pms.core.model.enums.BlueprintType;
 import com.hbc.pms.plc.api.scraper.HbcScrapeJobDataSource;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;

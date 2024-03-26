@@ -2,7 +2,6 @@ package com.hbc.pms.core.api.service;
 
 import static java.util.stream.Collectors.groupingBy;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.ReportRow;
@@ -10,7 +9,6 @@ import com.hbc.pms.core.model.ReportSchedule;
 import com.hbc.pms.core.model.ReportType;
 import com.hbc.pms.core.model.enums.ReportRowPeriod;
 import com.hbc.pms.plc.api.IoResponse;
-import com.hbc.pms.plc.api.PlcConnector;
 import io.vavr.control.Try;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
