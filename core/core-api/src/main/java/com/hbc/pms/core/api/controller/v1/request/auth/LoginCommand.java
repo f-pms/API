@@ -1,9 +1,10 @@
 package com.hbc.pms.core.api.controller.v1.request.auth;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class LoginCommand {
-  private String username;
-  private String password;
+  @NotNull private String username;
+  @NotNull private String password;
 }

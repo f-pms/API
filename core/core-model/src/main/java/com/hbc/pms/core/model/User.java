@@ -19,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails {
   private Long id;
   private String username;
+  private String fullName;
+  private String email;
   private String password;
   private Role role;
 
