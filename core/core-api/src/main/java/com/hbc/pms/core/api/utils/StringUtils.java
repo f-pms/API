@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 public class StringUtils {
 
   public static boolean isIncorrectPLCAddressFormat(String address) {
-    Pattern pattern =
-        Pattern.compile(PLC_TAG_EXPRESSION);
+    Pattern pattern = Pattern.compile(PLC_TAG_EXPRESSION);
     // Copied from S7Tag.java
 
     Matcher matcher = pattern.matcher(address);
