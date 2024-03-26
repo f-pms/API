@@ -6,11 +6,15 @@ import com.hbc.pms.core.api.support.data.DataProcessor;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.enums.BlueprintType;
 import com.hbc.pms.plc.api.IoResponse;
+import com.hbc.pms.plc.api.scraper.HandlerContext;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+
+import static com.hbc.pms.core.api.constant.PlcConstant.MONITORING_JOB_NAME;
 
 @Service
 @RequiredArgsConstructor
@@ -21,11 +25,14 @@ public class MonitorHandler implements RmsHandler {
   private final WebSocketService webSocketService;
 
   @Override
-  public void handle(OffsetDateTime startTime, Map<String, IoResponse> response) {
-    var monitoringTypes = List.of(BlueprintType.MONITORING, BlueprintType.ALARM);
+  public void handle(HandlerContext context, Map<String, IoResponse> response) {
+    if (!context.getJobName().equals(MONITORING_JOB_NAME)) {
+      return;
+    }
+
     List<Blueprint> blueprintsToFetch =
         blueprintService.getAll().stream()
-            .filter(blueprint -> monitoringTypes.contains(blueprint.getType()))
+            .filter(blueprint -> blueprint.getType().equals(BlueprintType.MONITORING))
             .toList();
     var processedData = dataProcessor.process(response, blueprintsToFetch);
     for (Blueprint blueprint : blueprintsToFetch) {

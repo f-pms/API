@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
-import static com.hbc.pms.plc.api.PlcConstant.DEVICE_NAME;
+import static com.hbc.pms.plc.api.PlcConnectionConstant.DEVICE_NAME;
 
 @Configuration
 public class PlcConfiguration {

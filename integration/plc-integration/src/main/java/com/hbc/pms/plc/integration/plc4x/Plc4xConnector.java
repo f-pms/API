@@ -1,6 +1,6 @@
 package com.hbc.pms.plc.integration.plc4x;
 
-import static com.hbc.pms.plc.api.PlcConstant.DEVICE_NAME;
+import static com.hbc.pms.plc.api.PlcConnectionConstant.DEVICE_NAME;
 
 import com.hbc.pms.plc.api.PlcConnector;
 import com.hbc.pms.plc.api.exceptions.MaximumScraperReachException;

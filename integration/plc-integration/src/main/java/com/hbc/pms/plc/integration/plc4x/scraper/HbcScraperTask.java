@@ -1,6 +1,7 @@
 package com.hbc.pms.plc.integration.plc4x.scraper;
 
 import com.hbc.pms.plc.api.exceptions.NotSupportedPlcResponseException;
+import com.hbc.pms.plc.api.scraper.HandlerContext;
 import com.hbc.pms.plc.api.scraper.ResultHandler;
 import com.hbc.pms.plc.integration.plc4x.PlcUtil;
 import java.time.OffsetDateTime;
@@ -131,10 +132,13 @@ public class HbcScraperTask implements ScraperTask {
       CompletableFuture.runAsync(
           () -> {
             try {
+              var context = HandlerContext.builder()
+                      .jobName(jobName)
+                          .alias(connectionAlias)
+                              .startTime(startTime)
+                                  .build();
               resultHandler.handle(
-                  jobName,
-                  connectionAlias,
-                  startTime,
+                  context,
                   PlcUtil.convertPlcResponseToMap(plcReadResponse));
             } catch (NotSupportedPlcResponseException e) {
               throw new RuntimeException(e);
