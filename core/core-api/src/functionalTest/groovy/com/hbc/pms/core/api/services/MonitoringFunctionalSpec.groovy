@@ -76,7 +76,7 @@ class MonitoringFunctionalSpec extends FunctionalTestSpec {
             = SensorConfiguration.builder()
             .address(target)
             .build()
-    configurationPersistenceService.create(TestDataFixture.CUSTOM_ALARM_BLUEPRINT_ID, sensorConfig)
+    configurationPersistenceService.create(TestDataFixture.MONITORING_BLUEPRINT_ID, sensorConfig)
 
     //TODO: workaround until changing the return value of the create method
     def createdSensorConfig
