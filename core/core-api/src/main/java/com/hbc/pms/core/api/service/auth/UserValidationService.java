@@ -1,11 +1,11 @@
 package com.hbc.pms.core.api.service.auth;
 
-import com.hbc.pms.core.api.support.error.CoreApiException;
-import com.hbc.pms.core.api.support.error.ErrorType;
-import com.hbc.pms.core.api.support.error.ForbiddenException;
 import com.hbc.pms.core.model.User;
 import com.hbc.pms.core.model.enums.Role;
 import com.hbc.pms.support.auth.AuthenticationFacade;
+import com.hbc.pms.support.web.error.CoreApiException;
+import com.hbc.pms.support.web.error.ErrorType;
+import com.hbc.pms.support.web.error.ForbiddenException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

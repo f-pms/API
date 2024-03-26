@@ -1,9 +1,9 @@
 package com.hbc.pms.core.api.service;
 
-import com.hbc.pms.core.api.support.error.CoreApiException;
-import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
+import com.hbc.pms.support.web.error.CoreApiException;
+import com.hbc.pms.support.web.error.ErrorType;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

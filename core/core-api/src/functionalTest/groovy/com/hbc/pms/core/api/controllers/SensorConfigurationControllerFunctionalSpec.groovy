@@ -3,13 +3,13 @@ package com.hbc.pms.core.api.controllers
 import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse
 import com.hbc.pms.core.api.controller.v1.response.SensorConfigurationResponse
-import com.hbc.pms.core.api.support.error.ErrorCode
-import com.hbc.pms.core.api.support.response.ApiResponse
 import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.core.model.enums.BlueprintType
 import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
+import com.hbc.pms.support.web.error.ErrorCode
+import com.hbc.pms.support.web.response.ApiResponse
 import org.springframework.beans.factory.annotation.Autowired
 
 class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {

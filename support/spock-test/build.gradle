@@ -1,5 +1,6 @@
 dependencies {
   implementation(project(":support:auth"))
+  implementation(project(":support:web"))
   implementation platform("org.spockframework:spock-bom:2.4-M1-groovy-4.0")
   implementation "org.spockframework:spock-core"
   implementation "org.spockframework:spock-spring"

@@ -9,9 +9,9 @@ import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationComma
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
 import com.hbc.pms.core.api.service.BlueprintPersistenceService;
 import com.hbc.pms.core.api.service.SensorConfigurationPersistenceService;
-import com.hbc.pms.core.api.support.response.ApiResponse;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
+import com.hbc.pms.support.web.response.ApiResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

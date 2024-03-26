@@ -4,17 +4,16 @@ import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationCommand
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse
-import com.hbc.pms.core.api.support.error.ErrorCode
-import com.hbc.pms.core.api.support.response.ApiResponse
 import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.core.model.enums.BlueprintType
 import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
+import com.hbc.pms.support.web.error.ErrorCode
+import com.hbc.pms.support.web.response.ApiResponse
+import java.util.concurrent.ThreadLocalRandom
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.PendingFeature
-
-import java.util.concurrent.ThreadLocalRandom
 
 class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
   @Autowired

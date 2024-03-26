@@ -1,4 +1,4 @@
-package com.hbc.pms.core.api.support.error;
+package com.hbc.pms.support.web.error;
 
 public enum ErrorCode {
   E500,

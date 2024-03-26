@@ -1,8 +1,8 @@
 package com.hbc.pms.core.api.config;
 
-import com.hbc.pms.core.api.support.error.CoreApiException;
-import com.hbc.pms.core.api.support.error.ErrorType;
-import com.hbc.pms.core.api.support.response.ApiResponse;
+import com.hbc.pms.support.web.error.CoreApiException;
+import com.hbc.pms.support.web.error.ErrorType;
+import com.hbc.pms.support.web.response.ApiResponse;
 import io.jsonwebtoken.JwtException;
 import java.util.HashMap;
 import java.util.Map;

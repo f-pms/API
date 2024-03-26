@@ -1,7 +1,10 @@
 package com.hbc.pms.support.spock.test;
 
 import com.hbc.pms.support.auth.JwtService;
+import com.hbc.pms.support.web.response.ApiResponse;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.ResolvableType;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -48,9 +51,16 @@ public class RestClient {
     return restTemplate.postForEntity(url, entity, responseType);
   }
 
+
   public <T> ResponseEntity<T> post(
       String url, Object request, UserDetails userDetails, Class<T> responseType) {
-    return post(url, request, constructHeadersFromUser(userDetails), responseType);
+    HttpEntity<Object> entity = new HttpEntity<>(request, constructHeadersFromUser(userDetails));
+    return restTemplate.exchange(
+        url,
+        HttpMethod.POST,
+        entity,
+        ParameterizedTypeReference.forType(
+            ResolvableType.forClassWithGenerics(ApiResponse.class, responseType).getType()));
   }
 
   public <T> ResponseEntity<T> put(

@@ -2,8 +2,8 @@ package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.response.AlarmHistoryResponse;
 import com.hbc.pms.core.api.service.AlarmPersistenceService;
-import com.hbc.pms.core.api.support.response.ApiResponse;
 import com.hbc.pms.core.model.enums.AlarmStatus;
+import com.hbc.pms.support.web.response.ApiResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
