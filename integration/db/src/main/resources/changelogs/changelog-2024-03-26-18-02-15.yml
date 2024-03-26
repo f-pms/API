@@ -1,0 +1,9 @@
+databaseChangeLog:
+- changeSet:
+    id: 1711450944965-1
+    author: HTG (generated)
+    changes:
+    - dropUniqueConstraint:
+        constraintName: UC_REPORT_SCHEDULETYPE_ID_COL
+        tableName: report_schedule
+
