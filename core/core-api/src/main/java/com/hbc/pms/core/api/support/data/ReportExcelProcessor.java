@@ -22,6 +22,7 @@ import com.hbc.pms.core.api.support.error.ReportExcelProcessorException;
 import com.hbc.pms.core.api.util.ElectricTimeUtil;
 import com.hbc.pms.core.model.ReportRow;
 import com.hbc.pms.core.model.enums.ReportRowShift;
+import io.vavr.control.Try;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -122,6 +123,10 @@ public class ReportExcelProcessor {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
+  }
+
+  public void close(XSSFWorkbook workbook) {
+    Try.run(workbook::close);
   }
 
   private void fillBaseValue(

@@ -5,6 +5,7 @@ import com.hbc.pms.core.api.support.error.CoreApiException;
 import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.criteria.ReportCriteria;
+import com.hbc.pms.integration.db.entity.ReportEntity;
 import com.hbc.pms.integration.db.repository.ReportRepository;
 import com.hbc.pms.integration.db.specifications.ReportSpecification;
 import java.util.List;
@@ -42,5 +43,20 @@ public class ReportPersistenceService {
       throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, "Report not found with id: " + id);
     }
     return mapper.map(oEntity, Report.class);
+  }
+
+  public Report create(Report report) {
+    var entity = mapper.map(report, ReportEntity.class);
+    return mapper.map(reportRepository.save(entity), Report.class);
+  }
+
+  public Report update(Long id, Report report) {
+    var oEntity = reportRepository.findById(id);
+    if (oEntity.isEmpty()) {
+      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, "Report not found with id: " + id);
+    }
+    var entity = oEntity.get();
+    mapper.map(mapper.map(report, ReportEntity.class), entity);
+    return mapper.map(reportRepository.save(entity), Report.class);
   }
 }

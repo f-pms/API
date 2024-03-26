@@ -1,0 +1,10 @@
+databaseChangeLog:
+- changeSet:
+    id: 1711461728795-1
+    author: HTG (generated)
+    changes:
+    - modifyDataType:
+        columnName: sum_json
+        newDataType: varchar(6500)
+        tableName: report
+

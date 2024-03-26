@@ -21,14 +21,9 @@ public class ReportResponse {
   private Long id;
   private OffsetDateTime recordingDate;
   private ReportType type;
+  private List<Map<String, Double>> sums;
 
   @JsonIgnore private List<ReportRow> rows;
-
-  @JsonIgnore private String sumJson;
-
-  public Map<String, Double> getSum() {
-    return Try.of(this::deserializeSum).getOrElse(Map.of());
-  }
 
   public List<Map<String, Double>> getRowsMaps() {
     if (isNull(rows)) {
@@ -55,10 +50,5 @@ public class ReportResponse {
               String.format(indicatorPattern, indicator, "7", shift), row.getNewElectricValue4());
         });
     return List.of(shift1Map, shift2Map);
-  }
-
-  private Map<String, Double> deserializeSum() throws JsonProcessingException {
-    var mapper = new ObjectMapper();
-    return mapper.readValue(sumJson, new TypeReference<>() {});
   }
 }
