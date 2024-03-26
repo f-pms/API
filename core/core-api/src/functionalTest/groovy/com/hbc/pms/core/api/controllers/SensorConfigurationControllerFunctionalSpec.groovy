@@ -1,15 +1,14 @@
 package com.hbc.pms.core.api.controllers
 
+import com.hbc.pms.core.api.FunctionalTestSpec
 import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse
 import com.hbc.pms.core.api.controller.v1.response.SensorConfigurationResponse
-import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.core.model.enums.BlueprintType
 import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
 import com.hbc.pms.support.web.error.ErrorCode
-import com.hbc.pms.support.web.response.ApiResponse
 import org.springframework.beans.factory.annotation.Autowired
 
 class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
@@ -45,14 +44,14 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
     def configCountBefore = configEntities.size()
 
     when:
-    def response = restClient.get("/sensor-configurations", dataFixture.ADMIN_USER, ApiResponse<List<SensorConfigurationResponse>>)
+    def response = restClient.get("/sensor-configurations", dataFixture.ADMIN_USER, List<SensorConfigurationResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
     def configs = response.body.data as List<SensorConfigurationResponse>
     configs.size() == configCountBefore
     configs.every {
-      it["id"] as Long in configEntities.asList().stream().map(be -> be.getId()).toList()
+      it.id as Long in configEntities.asList().stream().map(be -> be.getId()).toList()
     }
   }
 
@@ -64,7 +63,7 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
     def configCountBefore = configEntities.size()
 
     when:
-    def response = restClient.get("/sensor-configurations?blueprintType=MONITORING", dataFixture.ADMIN_USER, ApiResponse<List<SensorConfigurationResponse>>)
+    def response = restClient.get("/sensor-configurations?blueprintType=MONITORING", dataFixture.ADMIN_USER, List<SensorConfigurationResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -79,11 +78,11 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
     when:
     def response
             = restClient.get("/sensor-configurations?blueprintType=Random", dataFixture.ADMIN_USER,
-            ApiResponse<List<SensorConfigurationResponse>>)
+            List<SensorConfigurationResponse>)
 
     then:
     response.statusCode.is4xxClientError()
-    response.body.error["code"] == ErrorCode.E400.toString()
+    response.body.error.code == ErrorCode.E400.toString()
   }
 
   def "Get sensor configurations - By blueprintName - OK"() {
@@ -94,14 +93,14 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
     def configCountBefore = configEntities.size()
 
     when:
-    def response = restClient.get("/sensor-configurations?blueprintName=PREDEFINED", dataFixture.ADMIN_USER, ApiResponse<List<SensorConfigurationResponse>>)
+    def response = restClient.get("/sensor-configurations?blueprintName=PREDEFINED", dataFixture.ADMIN_USER, List<SensorConfigurationResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
     def configs = response.body.data as List<SensorConfigurationResponse>
     configs.size() == configCountBefore
     configs.every {
-      it["id"] as Long in configEntities.asList().stream().map(be -> be.getId()).toList()
+      it.id as Long in configEntities.asList().stream().map(be -> be.getId()).toList()
     }
   }
 
@@ -109,7 +108,7 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
     when:
     def response
             = restClient.get("/sensor-configurations?blueprintName=Random", dataFixture.ADMIN_USER,
-            ApiResponse<List<SensorConfigurationResponse>>)
+            List<SensorConfigurationResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -125,14 +124,14 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def response
-            = restClient.get("/sensor-configurations?blueprintType=ALARM&blueprintName=PREDEFINED", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/sensor-configurations?blueprintType=ALARM&blueprintName=PREDEFINED", dataFixture.ADMIN_USER, List<BlueprintResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
     def blueprints = response.body.data as List<SensorConfigurationResponse>
     blueprints.size() == configCountBefore
     blueprints.every {
-      it["id"] as Long in configEntities.asList().stream().map(sc -> sc.getId()).toList()
+      it.id as Long in configEntities.asList().stream().map(sc -> sc.getId()).toList()
     }
   }
 }

@@ -1,8 +1,8 @@
 package com.hbc.pms.core.api.controllers
 
+import com.hbc.pms.core.api.FunctionalTestSpec
 import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.controller.v1.response.AlarmHistoryResponse
-import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.core.model.enums.AlarmStatus
 import com.hbc.pms.core.model.enums.AlarmType
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository
@@ -10,7 +10,6 @@ import com.hbc.pms.integration.db.repository.AlarmHistoryRepository
 import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
-import com.hbc.pms.support.web.response.ApiResponse
 import org.springframework.beans.factory.annotation.Autowired
 
 class AlarmHistoryControllerFunctionalSpec extends FunctionalTestSpec {
@@ -60,13 +59,13 @@ class AlarmHistoryControllerFunctionalSpec extends FunctionalTestSpec {
     def response
             = restClient.get("/alarm-histories",
             dataFixture.ADMIN_USER,
-            ApiResponse<List<AlarmHistoryResponse>>
+            List<AlarmHistoryResponse>
     )
 
     then:
     response.statusCode.is2xxSuccessful()
     def listHistories = response.body.data as List<AlarmHistoryResponse>
     listHistories.size() == 2
-    listHistories.every() { it["id"] as Long in Arrays.asList(history1Id, history2Id) }
+    listHistories.every() { it.id as Long in Arrays.asList(history1Id, history2Id) }
   }
 }

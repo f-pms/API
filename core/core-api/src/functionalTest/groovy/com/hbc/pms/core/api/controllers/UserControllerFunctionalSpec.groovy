@@ -1,13 +1,11 @@
 package com.hbc.pms.core.api.controllers
 
+import com.hbc.pms.core.api.FunctionalTestSpec
 import com.hbc.pms.core.api.controller.v1.request.auth.CreateUserCommand
-import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.core.model.User
 import com.hbc.pms.core.model.enums.Role
 import com.hbc.pms.integration.db.repository.UserRepository
 import com.hbc.pms.support.spock.test.RestClient
-import com.hbc.pms.support.web.error.ErrorMessage
-import com.hbc.pms.support.web.response.ApiResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.userdetails.UserDetails
@@ -34,7 +32,7 @@ class UserControllerFunctionalSpec extends FunctionalTestSpec {
     def validCommand = validCreateCommandBuilder.build()
     UserDetails userDetails = dataFixture."${user}"
     when: "Post create as an admin with the valid command"
-    def response = restClient.post(USER_PATH, validCommand, userDetails, ApiResponse<User>)
+    def response = restClient.post(USER_PATH, validCommand, userDetails, User)
 
     then:
     response.statusCode.value() == expectedStatusCode.value()
@@ -56,12 +54,18 @@ class UserControllerFunctionalSpec extends FunctionalTestSpec {
     def invalidCommand = validCreateCommandBuilder.build()
     invalidCommand.setEmail("invalid email")
     invalidCommand.setPassword("")
+    invalidCommand.setUsername("s")
 
     when: "Post create as an admin with the valid command"
-    def response = restClient.post(USER_PATH, invalidCommand, userDetails, ErrorMessage)
+    def response = restClient.post(USER_PATH, invalidCommand, userDetails, Object)
 
     then:
     response.statusCode.value() == expectedStatusCode.value()
+    Map<String, String> errorCodes = response.body.error.data as Map<String, String>
+    assert errorCodes.size() == 3
+    assert errorCodes.containsKey("email")
+    assert errorCodes.containsKey("password")
+    assert errorCodes.containsKey("username")
     where:
     user         | expectedStatusCode
     "ADMIN_USER" | HttpStatus.BAD_REQUEST

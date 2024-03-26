@@ -22,39 +22,29 @@ public class RestClient {
     this.jwtService = jwtService;
   }
 
-  public <T> ResponseEntity<T> get(String url, Class<T> responseType) {
-    return restTemplate.getForEntity(url, responseType);
+  public <T> ResponseEntity<ApiResponse<T>> get(String url, Class<T> responseType) {
+    return get(url, new HttpHeaders(), responseType);
   }
 
-  public <T> ResponseEntity<T> get(String url, HttpHeaders headers, Class<T> responseType) {
+  public <T> ResponseEntity<ApiResponse<T>> get(
+      String url, HttpHeaders headers, Class<T> responseType) {
     HttpEntity<String> entity = new HttpEntity<>(headers);
-    return restTemplate.exchange(url, HttpMethod.GET, entity, responseType);
+    return restTemplate.exchange(
+        url,
+        HttpMethod.GET,
+        entity,
+        ParameterizedTypeReference.forType(
+            ResolvableType.forClassWithGenerics(ApiResponse.class, responseType).getType()));
   }
 
-  public <T> ResponseEntity<T> get(String url, UserDetails userDetails, Class<T> responseType) {
+  public <T> ResponseEntity<ApiResponse<T>> get(
+      String url, UserDetails userDetails, Class<T> responseType) {
     return get(url, constructHeadersFromUser(userDetails), responseType);
   }
 
-  public <T> ResponseEntity<T> post(String url, Object request, Class<T> responseType) {
-    return restTemplate.postForEntity(url, request, responseType);
-  }
-
-  public <T> ResponseEntity<T> put(String url, Object request, Class<T> responseType) {
-    HttpHeaders headers = new HttpHeaders();
-    HttpEntity<Object> requestEntity = new HttpEntity<>(request, headers);
-    return restTemplate.exchange(url, HttpMethod.PUT, requestEntity, responseType);
-  }
-
-  public <T> ResponseEntity<T> post(
+  public <T> ResponseEntity<ApiResponse<T>> post(
       String url, Object request, HttpHeaders headers, Class<T> responseType) {
     HttpEntity<Object> entity = new HttpEntity<>(request, headers);
-    return restTemplate.postForEntity(url, entity, responseType);
-  }
-
-
-  public <T> ResponseEntity<T> post(
-      String url, Object request, UserDetails userDetails, Class<T> responseType) {
-    HttpEntity<Object> entity = new HttpEntity<>(request, constructHeadersFromUser(userDetails));
     return restTemplate.exchange(
         url,
         HttpMethod.POST,
@@ -63,13 +53,32 @@ public class RestClient {
             ResolvableType.forClassWithGenerics(ApiResponse.class, responseType).getType()));
   }
 
-  public <T> ResponseEntity<T> put(
-      String url, Object request, HttpHeaders headers, Class<T> responseType) {
-    HttpEntity<Object> entity = new HttpEntity<>(request, headers);
-    return restTemplate.exchange(url, HttpMethod.PUT, entity, responseType);
+  public <T> ResponseEntity<ApiResponse<T>> post(
+      String url, Object request, UserDetails userDetails, Class<T> responseType) {
+    return post(url, request, constructHeadersFromUser(userDetails), responseType);
   }
 
-  public <T> ResponseEntity<T> put(
+  public <T> ResponseEntity<ApiResponse<T>> post(
+      String url, Object request, Class<T> responseType) {
+    return post(url, request, new HttpHeaders(), responseType);
+  }
+
+  public <T> ResponseEntity<ApiResponse<T>> put(String url, Object request, Class<T> responseType) {
+    return put(url, request, new HttpHeaders(), responseType);
+  }
+
+  public <T> ResponseEntity<ApiResponse<T>> put(
+      String url, Object request, HttpHeaders headers, Class<T> responseType) {
+    HttpEntity<Object> entity = new HttpEntity<>(request, headers);
+    return restTemplate.exchange(
+        url,
+        HttpMethod.PUT,
+        entity,
+        ParameterizedTypeReference.forType(
+            ResolvableType.forClassWithGenerics(ApiResponse.class, responseType).getType()));
+  }
+
+  public <T> ResponseEntity<ApiResponse<T>> put(
       String url, Object request, UserDetails userDetails, Class<T> responseType) {
     return put(url, request, constructHeadersFromUser(userDetails), responseType);
   }

@@ -1,5 +1,11 @@
 databaseChangeLog:
   - changeSet:
+      id: 1711445438911-0
+      author: huybu
+      changes:
+        - delete:
+            tableName: user
+  - changeSet:
       id: 1711445438911-1
       author: huybu (generated)
       changes:

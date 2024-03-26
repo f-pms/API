@@ -1,8 +1,8 @@
 package com.hbc.pms.core.api.services
 
+import com.hbc.pms.core.api.FunctionalTestSpec
 import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.service.SensorConfigurationPersistenceService
-import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.core.model.SensorConfiguration
 import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository

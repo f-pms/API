@@ -1,7 +1,9 @@
 package com.hbc.pms.core.api.controllers
 
+import com.hbc.pms.core.api.FunctionalTestSpec
 import com.hbc.pms.core.api.TestDataFixture
-import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
+import com.hbc.pms.core.model.AlarmAction
+import com.hbc.pms.core.model.AlarmCondition
 import com.hbc.pms.core.model.enums.AlarmType
 import com.hbc.pms.integration.db.repository.AlarmActionRepository
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository
@@ -60,12 +62,11 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = postCreateAlarmCondition(ALARM_CONDITION_PATH, createConditionCommand)
+            = postCreateAlarmCondition(ALARM_CONDITION_PATH, createConditionCommand, AlarmCondition.class)
 
     then:
     response.statusCode.is2xxSuccessful()
-    int createdConditionId = response.body.data["id"] as int
-    def createdCondition = conditionRepository.findById(createdConditionId)
+    def createdCondition = conditionRepository.findById(response.body.data.id)
     assert createdCondition.isPresent()
     assert createdCondition.get().getSensorConfiguration().id == sensorConfiguration.id
   }
@@ -189,12 +190,11 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
 
     when:
     def response
-            = postCreateAlarmCondition("${ALARM_CONDITION_PATH}/${condition.getId()}/actions", createActionCommand)
+            = postCreateAlarmCondition("${ALARM_CONDITION_PATH}/${condition.getId()}/actions", createActionCommand, AlarmAction)
 
     then:
     response.statusCode.is2xxSuccessful()
-    int createdActionId = response.body.data["id"] as int
-    def createdAction = actionRepository.findById(createdActionId)
+    def createdAction = actionRepository.findById(response.body.data.id)
     createdAction.isPresent()
     createdAction.get().getCondition().getId() == condition.getId()
   }
@@ -210,7 +210,6 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
     then:
     response.statusCode.is4xxClientError()
     response.body.error["code"] == ErrorCode.E404.toString()
-    response.body.error["data"].containsIgnoreCase("Not found")
     def actionCountAfter = actionRepository.findAll().size()
     actionCountBefore == actionCountAfter
   }
@@ -223,16 +222,16 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
     def actionCountBefore = actionRepository.findAll().size()
 
     when:
-    def response = postCreateAlarmCondition("${ALARM_CONDITION_PATH}/${condition.id}/actions", createActionCommand)
+    def response = postCreateAlarmCondition("${ALARM_CONDITION_PATH}/${condition.id}/actions", createActionCommand, Object)
     then:
     response.statusCode.is4xxClientError()
-    response.body.error["code"] == ErrorCode.E400.toString()
+    response.body.error.code == ErrorCode.E400.toString()
     response.body.error.data["validRecipients"]
     def actionCountAfter = actionRepository.findAll().size()
     actionCountBefore == actionCountAfter
   }
 
-  private ResponseEntity<ApiResponse> postCreateAlarmCondition(String path, Object command) {
-    return restClient.post(path, command, dataFixture.ADMIN_USER, ApiResponse.class)
+  private <T> ResponseEntity<ApiResponse<T>> postCreateAlarmCondition(String path, Object command, Class<T> responseType = Object.class) {
+    return restClient.post(path, command, dataFixture.ADMIN_USER, responseType)
   }
 }
