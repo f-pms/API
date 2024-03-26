@@ -34,9 +34,7 @@ public class ReportHandler implements RmsHandler {
   private final ReportExcelProcessor processor;
   private final BlueprintPersistenceService blueprintService;
 
-  @Lazy
-  @Autowired
-  private PlcConnector plcConnector; // fix circular dependency
+  @Lazy @Autowired private PlcConnector plcConnector; // fix circular dependency
 
   @Override
   public void handle(HandlerContext context, Map<String, IoResponse> response) {
@@ -44,13 +42,16 @@ public class ReportHandler implements RmsHandler {
       return;
     }
 
-    var reportAddresses = blueprintService.getAll()
-        .stream().filter(blueprint -> blueprint.getType().equals(BlueprintType.REPORT))
-        .flatMap(blueprint -> blueprint.getAddresses().stream())
-        .toList();
+    var reportAddresses =
+        blueprintService.getAll().stream()
+            .filter(blueprint -> blueprint.getType().equals(BlueprintType.REPORT))
+            .flatMap(blueprint -> blueprint.getAddresses().stream())
+            .toList();
 
-    var checkerAddress = reportAddresses.stream().filter(address -> address.endsWith(BOOL_PATTERN)).findFirst();
-    if (checkerAddress.isEmpty() || !response.get(checkerAddress.get()).getPlcValue().getBoolean()) {
+    var checkerAddress =
+        reportAddresses.stream().filter(address -> address.endsWith(BOOL_PATTERN)).findFirst();
+    if (checkerAddress.isEmpty()
+        || !response.get(checkerAddress.get()).getPlcValue().getBoolean()) {
       return;
     }
 

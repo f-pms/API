@@ -19,7 +19,12 @@ public class PlcResultHandler implements ResultHandler {
 
   @Override
   public void handle(HandlerContext context, Map<String, IoResponse> results) {
-    log.info("Getting response for job-name={}, alias={}, start-time={}, size={}", context.getJobName(), context.getAlias(), context.getStartTime(), results.size());
+    log.debug(
+        "Getting response for job-name={}, alias={}, start-time={}, size={}",
+        context.getJobName(),
+        context.getAlias(),
+        context.getStartTime(),
+        results.size());
     for (var handler : rmsHandlers) {
       try {
         handler.handle(context, results);
