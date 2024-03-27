@@ -41,10 +41,7 @@ import org.springframework.scheduling.support.CronTrigger;
 public class HbcScraper implements Scraper {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HbcScraper.class);
-  private static final String MX_DOMAIN = "org.apache.plc4x.java";
-
   private static final int DEFAULT_FUTURE_TIME_OUT = 6000;
-
   private final ThreadPoolTaskScheduler scheduler;
   private final ExecutorService executorService;
   private final ResultHandler resultHandler;
@@ -116,15 +113,6 @@ public class HbcScraper implements Scraper {
                 .namingPattern("triggeredscraper-executor-thread-%d")
                 .daemon(true)
                 .build());
-  }
-
-  /**
-   * Min Idle per Key is set to 1 for situations where the network is broken. Then, on reconnect we
-   * can fail all getConnection calls (in the ScraperTask) fast until (in the background) the idle
-   * connection is created and the getConnection call returns fast.
-   */
-  private static CachedPlcConnectionManager createCachedPlcConnectionManager() {
-    return CachedPlcConnectionManager.getBuilder().build();
   }
 
   /**

@@ -1,5 +1,6 @@
 package com.hbc.pms.core.model;
 
+import com.hbc.pms.core.model.enums.BlueprintType;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ public class Blueprint {
   private Long id;
   private String name;
   private String description;
+  private BlueprintType type;
   private List<SensorConfiguration> sensorConfigurations;
 
   public List<String> getAddresses() {

@@ -1,10 +1,14 @@
 package com.hbc.pms.core.api.event;
 
+import static com.hbc.pms.core.api.constant.PlcConstant.MONITORING_JOB_NAME;
+
 import com.hbc.pms.core.api.service.BlueprintPersistenceService;
 import com.hbc.pms.core.api.service.WebSocketService;
 import com.hbc.pms.core.api.support.data.DataProcessor;
 import com.hbc.pms.core.model.Blueprint;
+import com.hbc.pms.core.model.enums.BlueprintType;
 import com.hbc.pms.plc.api.IoResponse;
+import com.hbc.pms.plc.api.scraper.HandlerContext;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +23,15 @@ public class MonitorHandler implements RmsHandler {
   private final WebSocketService webSocketService;
 
   @Override
-  public void handle(Map<String, IoResponse> response) {
-    List<Blueprint> blueprintsToFetch = blueprintService.getAll().stream().toList();
+  public void handle(HandlerContext context, Map<String, IoResponse> response) {
+    if (!context.getJobName().equals(MONITORING_JOB_NAME)) {
+      return;
+    }
+
+    List<Blueprint> blueprintsToFetch =
+        blueprintService.getAll().stream()
+            .filter(blueprint -> blueprint.getType().equals(BlueprintType.MONITORING))
+            .toList();
     var processedData = dataProcessor.process(response, blueprintsToFetch);
     for (Blueprint blueprint : blueprintsToFetch) {
       webSocketService.fireSendStationData(

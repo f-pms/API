@@ -1,8 +1,10 @@
 package com.hbc.pms.plc.integration.plc4x.scraper;
 
 import com.hbc.pms.plc.api.exceptions.NotSupportedPlcResponseException;
+import com.hbc.pms.plc.api.scraper.HandlerContext;
 import com.hbc.pms.plc.api.scraper.ResultHandler;
 import com.hbc.pms.plc.integration.plc4x.PlcUtil;
+import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -99,6 +101,7 @@ public class HbcScraperTask implements ScraperTask {
       }
 
       PlcReadResponse plcReadResponse;
+      OffsetDateTime startTime;
       try {
         PlcReadRequest.Builder readRequestBuilder = connection.readRequestBuilder();
         for (Map.Entry<String, String> entry : tags.entrySet()) {
@@ -108,6 +111,7 @@ public class HbcScraperTask implements ScraperTask {
           readRequestBuilder.addTagAddress(entry.getKey(), entry.getValue());
         }
         // build and send request and store result in read response
+        startTime = OffsetDateTime.now();
         plcReadResponse =
             readRequestBuilder.build().execute().get(requestTimeoutMs, TimeUnit.MILLISECONDS);
       } catch (ExecutionException e) {
@@ -128,8 +132,13 @@ public class HbcScraperTask implements ScraperTask {
       CompletableFuture.runAsync(
           () -> {
             try {
-              resultHandler.handle(
-                  jobName, connectionAlias, PlcUtil.convertPlcResponseToMap(plcReadResponse));
+              var context =
+                  HandlerContext.builder()
+                      .jobName(jobName)
+                      .alias(connectionAlias)
+                      .startTime(startTime)
+                      .build();
+              resultHandler.handle(context, PlcUtil.convertPlcResponseToMap(plcReadResponse));
             } catch (NotSupportedPlcResponseException e) {
               throw new RuntimeException(e);
             }
