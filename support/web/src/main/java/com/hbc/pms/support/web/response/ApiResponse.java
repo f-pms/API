@@ -1,8 +1,8 @@
-package com.hbc.pms.core.api.support.response;
+package com.hbc.pms.support.web.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.hbc.pms.core.api.support.error.ErrorMessage;
-import com.hbc.pms.core.api.support.error.ErrorType;
+import com.hbc.pms.support.web.error.ErrorMessage;
+import com.hbc.pms.support.web.error.ErrorType;
 import lombok.Getter;
 
 @Getter

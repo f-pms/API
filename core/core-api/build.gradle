@@ -10,6 +10,7 @@ dependencies {
   implementation project(":integration:plc-integration")
   implementation project(":support:logging")
   implementation project(":support:auth")
+  implementation project(":support:web")
   implementation project(":integration:plc-api")
 
   implementation 'org.springframework.boot:spring-boot-starter-web'

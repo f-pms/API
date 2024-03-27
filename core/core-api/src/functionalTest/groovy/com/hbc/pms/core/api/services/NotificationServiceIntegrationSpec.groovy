@@ -1,12 +1,12 @@
 package com.hbc.pms.core.api.services
 
+import com.hbc.pms.core.api.FunctionalTestSpec
 import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.controller.v1.WebSocketController
 import com.hbc.pms.core.api.service.AlarmConditionService
 import com.hbc.pms.core.api.service.AlarmPersistenceService
 import com.hbc.pms.core.api.service.WebSocketService
 import com.hbc.pms.core.api.support.notification.PopupChannel
-import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.core.model.enums.AlarmStatus
 import com.hbc.pms.core.model.enums.AlarmType
 import com.hbc.pms.integration.db.repository.*

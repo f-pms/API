@@ -5,7 +5,7 @@ import static com.hbc.pms.support.auth.JwtAuthFilter.AUTH_COOKIE_NAME;
 import com.hbc.pms.core.api.controller.v1.request.auth.AuthResponse;
 import com.hbc.pms.core.api.controller.v1.request.auth.LoginCommand;
 import com.hbc.pms.core.api.service.auth.AuthService;
-import com.hbc.pms.core.api.support.response.ApiResponse;
+import com.hbc.pms.support.web.response.ApiResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

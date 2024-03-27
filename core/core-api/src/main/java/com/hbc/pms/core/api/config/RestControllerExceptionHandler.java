@@ -1,8 +1,8 @@
 package com.hbc.pms.core.api.config;
 
-import com.hbc.pms.core.api.support.error.CoreApiException;
-import com.hbc.pms.core.api.support.error.ErrorType;
-import com.hbc.pms.core.api.support.response.ApiResponse;
+import com.hbc.pms.support.web.error.CoreApiException;
+import com.hbc.pms.support.web.error.ErrorType;
+import com.hbc.pms.support.web.response.ApiResponse;
 import io.jsonwebtoken.JwtException;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class RestControllerExceptionHandler {
   @ResponseBody
   @ResponseStatus(org.springframework.http.HttpStatus.BAD_REQUEST)
   @ExceptionHandler({ValidationException.class})
-  public ApiResponse<RuntimeException> handleMapperException(ValidationException ex) {
+  public ApiResponse<?> handleMapperException(ValidationException ex) {
     return ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getErrorMessages());
   }
 

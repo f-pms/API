@@ -1,16 +1,16 @@
 package com.hbc.pms.core.api.controllers
 
+import com.hbc.pms.core.api.FunctionalTestSpec
 import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationCommand
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse
-import com.hbc.pms.core.api.support.error.ErrorCode
-import com.hbc.pms.core.api.support.response.ApiResponse
-import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.core.model.enums.BlueprintType
 import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
+import com.hbc.pms.support.web.error.ErrorCode
+import com.hbc.pms.support.web.response.ApiResponse
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.PendingFeature
 
@@ -33,14 +33,14 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def response
-            = restClient.get("/blueprints", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints", dataFixture.ADMIN_USER, List<BlueprintResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
     def blueprints = response.body.data as List<BlueprintResponse>
     blueprints.size() == blueprintEntityCount
     blueprints.every {
-      it["id"] as Long in blueprintEntities.asList().stream().map(be -> be.getId()).toList()
+      it.id as Long in blueprintEntities.asList().stream().map(be -> be.getId()).toList()
     }
   }
 
@@ -52,14 +52,14 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def response
-            = restClient.get("/blueprints?blueprintName=PREDEFINED", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints?blueprintName=PREDEFINED", dataFixture.ADMIN_USER, List<BlueprintResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
     def blueprints = response.body.data as List<BlueprintResponse>
     blueprints.size() == blueprintEntityCount
     blueprints.every {
-      it["id"] as Long in blueprintEntities.asList().stream().map(be -> be.getId()).toList()
+      it.id as Long in blueprintEntities.asList().stream().map(be -> be.getId()).toList()
     }
   }
 
@@ -71,14 +71,14 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def response
-            = restClient.get("/blueprints?blueprintType=ALARM", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints?blueprintType=ALARM", dataFixture.ADMIN_USER, List<BlueprintResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
     def blueprints = response.body.data as List<BlueprintResponse>
     blueprints.size() == blueprintEntityCount
     blueprints.every {
-      it["id"] as Long in blueprintEntities.asList().stream().map(be -> be.getId()).toList()
+      it.id as Long in blueprintEntities.asList().stream().map(be -> be.getId()).toList()
     }
   }
 
@@ -90,49 +90,49 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def response
-            = restClient.get("/blueprints?blueprintType=ALARM&blueprintName=PREDEFINED", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints?blueprintType=ALARM&blueprintName=PREDEFINED", dataFixture.ADMIN_USER, List<BlueprintResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
     def blueprints = response.body.data as List<BlueprintResponse>
     blueprints.size() == blueprintEntityCount
     blueprints.every {
-      it["id"] as Long in blueprintEntities.asList().stream().map(be -> be.getId()).toList()
+      it.id as Long in blueprintEntities.asList().stream().map(be -> be.getId()).toList()
     }
   }
 
   def "Get all blueprints by blueprintType - Not existed type - Bad request error"() {
     when:
     def response
-            = restClient.get("/blueprints?blueprintType=Random", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints?blueprintType=Random", dataFixture.ADMIN_USER, List<BlueprintResponse>)
 
     then:
     response.statusCode.is4xxClientError()
-    response.body.error["code"] == ErrorCode.E400.toString()
+    response.body.error.code == ErrorCode.E400.toString()
   }
 
   def "Get all blueprints by blueprintName - Not existed name - OK with empty list"() {
     when:
     def response
-            = restClient.get("/blueprints?blueprintName=Random", dataFixture.ADMIN_USER, ApiResponse<List<BlueprintResponse>>)
+            = restClient.get("/blueprints?blueprintName=Random", dataFixture.ADMIN_USER, List<BlueprintResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
-    def blueprints = response.body.data as List<BlueprintResponse>
+    def blueprints = response.body.data
     blueprints.size() == 0
   }
 
   def "Get blueprint by Id - OK"() {
     when:
     def response
-            = restClient.get("/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID", dataFixture.ADMIN_USER, ApiResponse<BlueprintResponse>)
+            = restClient.get("/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID", dataFixture.ADMIN_USER, BlueprintResponse)
     def blueprintEntity = blueprintRepository.findById(TestDataFixture.MONITORING_BLUEPRINT_ID).get()
     configurationRepository.save(
             TestDataFixture.createSensorConfiguration(blueprintEntity, TestDataFixture.PLC_ADDRESS_BOOL_01))
 
     then:
     response.statusCode.is2xxSuccessful()
-    verifyAll(response.body.data as BlueprintResponse) {
+    verifyAll(response.body.data) {
       it.getId() == TestDataFixture.MONITORING_BLUEPRINT_ID
       it.getName() == blueprintEntity.name
       it.getDescription() == blueprintEntity.description
@@ -147,21 +147,21 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
   def "Get blueprint by Id - Not found and Bad request"() {
     when:
     def response
-            = restClient.get("/blueprints/123", dataFixture.ADMIN_USER, ApiResponse<RuntimeException>)
+            = restClient.get("/blueprints/123", dataFixture.ADMIN_USER, RuntimeException)
 
     then:
     response.statusCode.is4xxClientError()
-    response.body.error["code"] == ErrorCode.E404.toString()
+    response.body.error.code == ErrorCode.E404.toString()
   }
 
   def "Get blueprint by Id - Invalid format input - Bad request"() {
     when:
     def response
-            = restClient.get("/blueprints/abc", dataFixture.ADMIN_USER, ApiResponse<RuntimeException>)
+            = restClient.get("/blueprints/abc", dataFixture.ADMIN_USER, RuntimeException)
 
     then:
     response.statusCode.is4xxClientError()
-    response.body.error["code"] == ErrorCode.E400.toString()
+    response.body.error.code == ErrorCode.E400.toString()
   }
 
   @PendingFeature
@@ -193,7 +193,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .post(
                     "/blueprints/$TestDataFixture.CUSTOM_ALARM_BLUEPRINT_ID/sensor-configurations", configRequest, dataFixture.ADMIN_USER,
-                    ApiResponse<Boolean>)
+                    Boolean)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -224,7 +224,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .put(
                     "/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID/sensor-configurations/$sensorConfig.id",
-                    updateConfigRequest, dataFixture.ADMIN_USER, ApiResponse<Boolean>)
+                    updateConfigRequest, dataFixture.ADMIN_USER, Boolean)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -256,7 +256,7 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .put(
                     "/blueprints/$TestDataFixture.MONITORING_BLUEPRINT_ID/sensor-configurations/$sensorConfig.id",
-                    updateConfigRequest, dataFixture.ADMIN_USER, ApiResponse<Boolean>)
+                    updateConfigRequest, dataFixture.ADMIN_USER, Boolean)
 
     then:
     response.statusCode.is2xxSuccessful()
