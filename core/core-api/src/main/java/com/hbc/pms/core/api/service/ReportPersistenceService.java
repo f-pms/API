@@ -1,13 +1,13 @@
 package com.hbc.pms.core.api.service;
 
 import com.hbc.pms.core.api.controller.v1.common.Page;
-import com.hbc.pms.core.api.support.error.CoreApiException;
-import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.integration.db.entity.ReportEntity;
 import com.hbc.pms.integration.db.repository.ReportRepository;
 import com.hbc.pms.integration.db.specifications.ReportSpecification;
+import com.hbc.pms.support.web.error.CoreApiException;
+import com.hbc.pms.support.web.error.ErrorType;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

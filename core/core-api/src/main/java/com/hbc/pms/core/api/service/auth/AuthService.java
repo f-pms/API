@@ -30,6 +30,7 @@ public class AuthService {
   private HashMap<String, Object> buildClaimsFromUser(User target) {
     HashMap<String, Object> claims = new HashMap<>();
     claims.put(AuthConstants.USER_ID, target.getId());
+    claims.put(AuthConstants.USER_ROLE, target.getRole().name());
     return claims;
   }
 }

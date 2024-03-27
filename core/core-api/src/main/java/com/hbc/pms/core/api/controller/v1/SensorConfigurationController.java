@@ -3,7 +3,7 @@ package com.hbc.pms.core.api.controller.v1;
 import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.api.controller.v1.response.SensorConfigurationResponse;
 import com.hbc.pms.core.api.service.SensorConfigurationPersistenceService;
-import com.hbc.pms.core.api.support.response.ApiResponse;
+import com.hbc.pms.support.web.response.ApiResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

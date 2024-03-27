@@ -1,7 +1,6 @@
-package com.hbc.pms.core.api.test.setup
+package com.hbc.pms.core.api
 
-import com.hbc.pms.core.api.CoreApiApplication
-import com.hbc.pms.core.api.TestDataFixture
+
 import com.hbc.pms.support.spock.test.AbstractFunctionalSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

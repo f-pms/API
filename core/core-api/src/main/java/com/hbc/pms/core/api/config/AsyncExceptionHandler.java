@@ -1,6 +1,6 @@
 package com.hbc.pms.core.api.config;
 
-import com.hbc.pms.core.api.support.error.CoreApiException;
+import com.hbc.pms.support.web.error.CoreApiException;
 import java.lang.reflect.Method;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;

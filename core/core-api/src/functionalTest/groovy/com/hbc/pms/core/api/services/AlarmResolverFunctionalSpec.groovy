@@ -1,7 +1,7 @@
 package com.hbc.pms.core.api.services
 
+import com.hbc.pms.core.api.FunctionalTestSpec
 import com.hbc.pms.core.api.TestDataFixture
-import com.hbc.pms.core.api.test.setup.FunctionalTestSpec
 import com.hbc.pms.core.model.enums.AlarmStatus
 import com.hbc.pms.core.model.enums.AlarmType
 import com.hbc.pms.integration.db.repository.*

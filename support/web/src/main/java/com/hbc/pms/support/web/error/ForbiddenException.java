@@ -1,4 +1,4 @@
-package com.hbc.pms.core.api.support.error;
+package com.hbc.pms.support.web.error;
 
 public class ForbiddenException extends CoreApiException {
   public ForbiddenException() {

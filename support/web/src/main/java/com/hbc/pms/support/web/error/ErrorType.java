@@ -1,4 +1,4 @@
-package com.hbc.pms.core.api.support.error;
+package com.hbc.pms.support.web.error;
 
 import lombok.Getter;
 import org.springframework.boot.logging.LogLevel;

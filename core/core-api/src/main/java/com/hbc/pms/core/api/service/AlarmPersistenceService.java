@@ -1,7 +1,5 @@
 package com.hbc.pms.core.api.service;
 
-import com.hbc.pms.core.api.support.error.CoreApiException;
-import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.AlarmHistory;
 import com.hbc.pms.core.model.enums.AlarmStatus;
@@ -9,6 +7,8 @@ import com.hbc.pms.integration.db.entity.AlarmConditionEntity;
 import com.hbc.pms.integration.db.entity.AlarmHistoryEntity;
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository;
 import com.hbc.pms.integration.db.repository.AlarmHistoryRepository;
+import com.hbc.pms.support.web.error.CoreApiException;
+import com.hbc.pms.support.web.error.ErrorType;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.StreamSupport;

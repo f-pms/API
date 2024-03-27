@@ -1,4 +1,4 @@
-package com.hbc.pms.core.api.support.response;
+package com.hbc.pms.support.web.response;
 
 public enum ResultType {
   SUCCESS,

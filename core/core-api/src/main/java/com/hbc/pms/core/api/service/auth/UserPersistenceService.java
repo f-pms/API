@@ -2,11 +2,11 @@ package com.hbc.pms.core.api.service.auth;
 
 import static com.hbc.pms.core.api.utils.StringUtils.isStringEncoded;
 
-import com.hbc.pms.core.api.support.error.CoreApiException;
-import com.hbc.pms.core.api.support.error.ErrorType;
 import com.hbc.pms.core.model.User;
 import com.hbc.pms.integration.db.entity.UserEntity;
 import com.hbc.pms.integration.db.repository.UserRepository;
+import com.hbc.pms.support.web.error.CoreApiException;
+import com.hbc.pms.support.web.error.ErrorType;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;

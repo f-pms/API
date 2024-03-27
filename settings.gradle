@@ -16,4 +16,5 @@ include 'support:logging'
 include 'support:spock-test'
 findProject(':support:spock-test')?.name = 'spock-test'
 include 'support:auth'
+include 'support:web'
 

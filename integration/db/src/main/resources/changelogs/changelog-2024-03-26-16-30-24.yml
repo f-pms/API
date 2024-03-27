@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1711445438911-0
+      author: huybu
+      changes:
+        - delete:
+            tableName: user
+  - changeSet:
+      id: 1711445438911-1
+      author: huybu (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: varchar(255)
+            tableName: user
+  - changeSet:
+      id: 1711445438911-2
+      author: huybu (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: full_name
+                  type: varchar(255)
+            tableName: user
+  - changeSet:
+      id: 1711445438911-3
+      author: huybu (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: UC_USEREMAIL_COL
+            tableName: user
+
