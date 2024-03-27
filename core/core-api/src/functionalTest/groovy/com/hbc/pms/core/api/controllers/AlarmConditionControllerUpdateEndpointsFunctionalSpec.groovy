@@ -3,7 +3,7 @@ package com.hbc.pms.core.api.controllers
 import com.hbc.pms.core.api.FunctionalTestSpec
 import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.controller.v1.response.AlarmConditionResponse
-import com.hbc.pms.core.api.utils.StringUtils
+import com.hbc.pms.core.api.util.StringUtil
 import com.hbc.pms.core.model.enums.AlarmType
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository
 import com.hbc.pms.integration.db.repository.BlueprintRepository
@@ -52,7 +52,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
     def updatedCondition = conditionRepository.findById(condition.id)
     verifyAll(updatedCondition.get()) {
       getType() == updateConditionCommand.type
-      getCron() == StringUtils.buildCronFromSeconds(updateConditionCommand.checkInterval)
+      getCron() == StringUtil.buildCronFromSeconds(updateConditionCommand.checkInterval)
       getTimeDelay() == updateConditionCommand.timeDelay
       getMin() == updateConditionCommand.min
       getMax() == updateConditionCommand.max

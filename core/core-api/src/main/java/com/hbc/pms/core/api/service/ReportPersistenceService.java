@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class ReportPersistenceService {
   private final ModelMapper mapper;
   private final ReportRepository reportRepository;
+  private static final String REPORT_NOT_FOUND_LITERAL =
+      "Report not found with id: ";
 
   public Page<Report> getAll(ReportCriteria criteria, Pageable pagination) {
     var spec = new ReportSpecification(criteria);
@@ -37,10 +39,18 @@ public class ReportPersistenceService {
         .toList();
   }
 
-  public Report getById(Long id) {
+  public Report getByIdWithRows(Long id) {
     var oEntity = reportRepository.findByIdWithRows(id);
     if (oEntity.isEmpty()) {
-      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, "Report not found with id: " + id);
+      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, REPORT_NOT_FOUND_LITERAL + id);
+    }
+    return mapper.map(oEntity, Report.class);
+  }
+
+  public Report getById(Long id) {
+    var oEntity = reportRepository.findById(id);
+    if (oEntity.isEmpty()) {
+      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, REPORT_NOT_FOUND_LITERAL + id);
     }
     return mapper.map(oEntity, Report.class);
   }
@@ -53,7 +63,7 @@ public class ReportPersistenceService {
   public Report update(Long id, Report report) {
     var oEntity = reportRepository.findById(id);
     if (oEntity.isEmpty()) {
-      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, "Report not found with id: " + id);
+      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, REPORT_NOT_FOUND_LITERAL + id);
     }
     var entity = oEntity.get();
     mapper.map(mapper.map(report, ReportEntity.class), entity);

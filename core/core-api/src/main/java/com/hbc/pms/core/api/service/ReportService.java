@@ -3,6 +3,8 @@ package com.hbc.pms.core.api.service;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hbc.pms.core.api.constant.ChartConstant;
+import com.hbc.pms.core.api.controller.v1.response.OneDayChartResponse;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.ReportRow;
 import com.hbc.pms.core.model.ReportSchedule;
@@ -12,8 +14,10 @@ import com.hbc.pms.plc.api.IoResponse;
 import io.vavr.control.Try;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.stereotype.Service;
@@ -55,6 +59,22 @@ public class ReportService {
     var mapper = new ObjectMapper();
     report.setSumJson(Try.of(() -> mapper.writeValueAsString(sums)).getOrElse(""));
     reportPersistenceService.update(report.getId(), report);
+  }
+
+  public List<Map<String, Double>> getOneDayChartData(Long reportId) {
+    var report = reportPersistenceService.getById(reportId);
+    var sumJson = report.getSums();
+    return sumJson.stream()
+        .map(
+            x ->
+                x.entrySet().stream()
+                    .filter(
+                        e ->
+                            ChartConstant.REPORT_TYPE_TO_KEYS
+                                .get(report.getType().getId())
+                                .contains(e.getKey()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)))
+        .toList();
   }
 
   private void createRowForPeriod(

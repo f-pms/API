@@ -3,7 +3,7 @@ package com.hbc.pms.core.api
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand
 import com.hbc.pms.core.api.service.auth.UserPersistenceService
-import com.hbc.pms.core.api.utils.StringUtils
+import com.hbc.pms.core.api.util.StringUtil
 import com.hbc.pms.core.model.User
 import com.hbc.pms.core.model.enums.AlarmActionType
 import com.hbc.pms.core.model.enums.AlarmSeverity
@@ -156,7 +156,7 @@ class TestDataFixture {
             .isEnabled(false)
             .max(ThreadLocalRandom.current().nextDouble(50, 100))
             .min(ThreadLocalRandom.current().nextDouble(10, 40))
-            .cron(StringUtils.buildCronFromSeconds(1))
+            .cron(StringUtil.buildCronFromSeconds(1))
             .severity(AlarmSeverity.HIGH)
             .timeDelay(1)
             .type(alarmType)
