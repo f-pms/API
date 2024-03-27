@@ -19,8 +19,7 @@ import org.springframework.stereotype.Service;
 public class ReportPersistenceService {
   private final ModelMapper mapper;
   private final ReportRepository reportRepository;
-  private static final String REPORT_NOT_FOUND_LITERAL =
-      "Report not found with id: ";
+  private static final String REPORT_NOT_FOUND_LITERAL = "Report not found with id: ";
 
   public Page<Report> getAll(ReportCriteria criteria, Pageable pagination) {
     var spec = new ReportSpecification(criteria);
