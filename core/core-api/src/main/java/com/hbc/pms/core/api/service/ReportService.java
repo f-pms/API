@@ -4,16 +4,19 @@ import static java.util.stream.Collectors.groupingBy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hbc.pms.core.api.constant.ChartConstant;
-import com.hbc.pms.core.api.controller.v1.response.OneDayChartResponse;
+import com.hbc.pms.core.api.controller.v1.request.SearchMultiDayChartCommand;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.ReportRow;
 import com.hbc.pms.core.model.ReportSchedule;
 import com.hbc.pms.core.model.ReportType;
+import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.core.model.enums.ReportRowPeriod;
 import com.hbc.pms.plc.api.IoResponse;
 import io.vavr.control.Try;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,22 +64,6 @@ public class ReportService {
     reportPersistenceService.update(report.getId(), report);
   }
 
-  public List<Map<String, Double>> getOneDayChartData(Long reportId) {
-    var report = reportPersistenceService.getById(reportId);
-    var sumJson = report.getSums();
-    return sumJson.stream()
-        .map(
-            x ->
-                x.entrySet().stream()
-                    .filter(
-                        e ->
-                            ChartConstant.REPORT_TYPE_TO_KEYS
-                                .get(report.getType().getId())
-                                .contains(e.getKey()))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)))
-        .toList();
-  }
-
   private void createRowForPeriod(
       Map<String, IoResponse> response,
       ReportRow.ReportRowBuilder rowBuilder,
@@ -100,5 +87,50 @@ public class ReportService {
                 case NEW4 -> rowBuilder.newElectricValue4(electricValue);
               }
             });
+  }
+
+  public List<Map<String, Double>> getOneDayChartData(Long reportId) {
+    var report = reportPersistenceService.getById(reportId);
+    var sumJson = report.getSums();
+    return sumJson.stream()
+        .map(
+            x ->
+                x.entrySet().stream()
+                    .filter(
+                        e ->
+                            ChartConstant.REPORT_TYPE_TO_KEYS
+                                .get(report.getType().getId())
+                                .contains(e.getKey()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)))
+        .toList();
+  }
+
+  public Map<String, Double> getMultiDaySummaryChartData(SearchMultiDayChartCommand searchCommand) {
+    var reportCriteria =
+        ReportCriteria.builder()
+            .startDate(searchCommand.getStart().toInstant().atOffset(ZoneOffset.UTC))
+            .endDate(searchCommand.getEnd().toInstant().atOffset(ZoneOffset.UTC))
+            .build();
+
+    var reports = reportPersistenceService.getAll(reportCriteria);
+
+    var result =
+        ChartConstant.COMMON_KEYS_LIST.stream()
+            .map(key -> Map.entry(key, 0.0))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    for (Report report : reports) {
+      var sumJson = report.getSums();
+
+      for (Map.Entry<String, Double> entry : result.entrySet()) {
+        var key = entry.getKey();
+        var value = entry.getValue();
+        var twoShiftSum = sumJson.get(0).get(key) + sumJson.get(1).get(key);
+
+        entry.setValue(value + twoShiftSum);
+      }
+    }
+
+    return result;
   }
 }
