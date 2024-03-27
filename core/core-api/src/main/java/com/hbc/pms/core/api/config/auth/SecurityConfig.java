@@ -28,7 +28,6 @@ public class SecurityConfig {
     "/swagger-ui/**",
     "/swagger-ui.html",
     "/v3/api-docs/**",
-    "/reports/**",
     LOGIN_PATH
   };
   private final UserDetailsService userDetailsService;
