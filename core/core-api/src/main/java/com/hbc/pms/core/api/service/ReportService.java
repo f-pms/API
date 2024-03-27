@@ -87,7 +87,7 @@ public class ReportService {
             });
   }
 
-  public List<Map<String, Double>> getOneDayChartData(Long reportId) {
+  public List<Map<String, Double>> getOneDayChartFigures(Long reportId) {
     var report = reportPersistenceService.getById(reportId);
     var sumJson = report.getSums();
     return sumJson.stream()
@@ -103,7 +103,8 @@ public class ReportService {
         .toList();
   }
 
-  public Map<String, Double> getMultiDaySummaryChartData(SearchMultiDayChartCommand searchCommand) {
+  public Map<String, Double> getMultiDaySummaryChartFigures(
+      SearchMultiDayChartCommand searchCommand) {
     var reportCriteria =
         ReportCriteria.builder()
             .startDate(searchCommand.getStart().toInstant().atOffset(ZoneOffset.UTC))

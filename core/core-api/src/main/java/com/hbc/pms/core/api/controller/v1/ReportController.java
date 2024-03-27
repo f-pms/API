@@ -59,13 +59,13 @@ public class ReportController {
   }
 
   @GetMapping("/{id}/charts/one-day")
-  public ApiResponse<List<Map<String, Double>>> getOneDayChartData(@PathVariable Long id) {
-    return ApiResponse.success(reportService.getOneDayChartData(id));
+  public ApiResponse<List<Map<String, Double>>> getOneDayChartFigures(@PathVariable Long id) {
+    return ApiResponse.success(reportService.getOneDayChartFigures(id));
   }
 
   @GetMapping("/charts/multi-day/summary")
-  public ApiResponse<Map<String, Double>> getMultiDaySummaryChartData(
+  public ApiResponse<Map<String, Double>> getMultiDaySummaryChartFigures(
       @Valid SearchMultiDayChartCommand searchCommand) {
-    return ApiResponse.success(reportService.getMultiDaySummaryChartData(searchCommand));
+    return ApiResponse.success(reportService.getMultiDaySummaryChartFigures(searchCommand));
   }
 }
