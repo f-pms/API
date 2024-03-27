@@ -42,7 +42,9 @@ public class PlcConfiguration {
         .plcConfiguration(plcConfiguration)
         .hbcScrapeJobDataSource(plcDataSource)
         .alias(DEVICE_NAME)
-        .cron("0 */1 * * * *") // TODO: will update later, just keep it for testing purpose
+        // TODO: will update later, just keep it for testing purpose.
+        // TODO: Correct cron "0 0-5 6 * * *"
+        .cron("0 */1 * * * *")
         .build();
   }
 }
