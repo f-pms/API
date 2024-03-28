@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.controller.v1.request;
 
+import com.hbc.pms.core.api.controller.v1.enums.ChartQueryType;
 import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 import lombok.Data;
@@ -17,20 +18,5 @@ public class SearchMultiDayChartCommand {
   @DateTimeFormat(pattern = "dd-MM-yyyy")
   private Date end;
 
-  @NotNull private QueryType queryType;
-
-  @NotNull private ChartType chartType;
-
-  public enum ChartType {
-    PIE,
-    MULTI_LINE,
-    STACKED_BAR,
-  }
-
-  public enum QueryType {
-    DAY,
-    WEEK,
-    MONTH,
-    YEAR
-  }
+  @NotNull private ChartQueryType queryType;
 }

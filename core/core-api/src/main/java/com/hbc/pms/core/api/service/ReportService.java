@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.stereotype.Service;
@@ -91,18 +90,7 @@ public class ReportService {
 
   public List<Map<String, Double>> getOneDayChartFigures(Long reportId) {
     var report = reportPersistenceService.getById(reportId);
-    var sumJson = report.getSums();
-    return sumJson.stream()
-        .map(
-            x ->
-                x.entrySet().stream()
-                    .filter(
-                        e ->
-                            ChartConstant.REPORT_TYPE_TO_KEYS
-                                .get(report.getType().getId())
-                                .contains(e.getKey()))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)))
-        .toList();
+    return report.getSums();
   }
 
   public Map<String, Double> getMultiDaySummaryChartFigures(
@@ -114,22 +102,23 @@ public class ReportService {
             .build();
 
     var reports = reportPersistenceService.getAll(reportCriteria);
-
-    var result =
-        ChartConstant.COMMON_KEYS_LIST.stream()
-            .map(key -> Map.entry(key, 0.0))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    var result = new HashMap<String, Double>();
 
     for (Report report : reports) {
-      var sumJson = report.getSums();
+      var sums = report.getSums();
+      var shift1Sum = sums.get(0);
+      var shift2Sum = sums.get(1);
 
-      for (Map.Entry<String, Double> entry : result.entrySet()) {
-        var key = entry.getKey();
-        var value = entry.getValue();
-        var twoShiftSum = sumJson.get(0).get(key) + sumJson.get(1).get(key);
-
-        entry.setValue(value + twoShiftSum);
-      }
+      ChartConstant.COMMON_INDICATORS.forEach(
+          indicator -> {
+            result.putIfAbsent(indicator, 0.0);
+            result.computeIfPresent(
+                indicator,
+                (key, value) ->
+                    value
+                        + shift1Sum.getOrDefault(indicator, 0.0)
+                        + shift2Sum.getOrDefault(indicator, 0.0));
+          });
     }
 
     return calculateTwoShiftsSumsByKeys(reports, ChartConstant.COMMON_KEYS_LIST);
