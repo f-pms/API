@@ -39,6 +39,7 @@ subprojects {
   apply plugin: 'io.spring.dependency-management'
   apply plugin: 'jacoco'
   apply plugin: 'jacoco-report-aggregation'
+  apply plugin: 'org.sonarqube'
   apply from: "${rootDir}/gradle/test.gradle"
 
   bootJar.enabled = false
