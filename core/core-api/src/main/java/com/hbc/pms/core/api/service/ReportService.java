@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.groupingBy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hbc.pms.core.api.constant.ChartConstant;
+import com.hbc.pms.core.api.controller.v1.enums.ChartQueryType;
 import com.hbc.pms.core.api.controller.v1.request.SearchMultiDayChartCommand;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.ReportRow;
@@ -14,11 +15,13 @@ import com.hbc.pms.core.model.enums.ReportRowPeriod;
 import com.hbc.pms.plc.api.IoResponse;
 import io.vavr.control.Try;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.stereotype.Service;
@@ -93,129 +96,146 @@ public class ReportService {
     return report.getSums();
   }
 
-  public Map<String, Double> getMultiDaySummaryChartFigures(
+  public Map<String, Double> getMultiDayChartSummaryFigures(
       SearchMultiDayChartCommand searchCommand) {
     var reportCriteria =
         ReportCriteria.builder()
-            .startDate(searchCommand.getStart().toInstant().atOffset(ZoneOffset.UTC))
-            .endDate(searchCommand.getEnd().toInstant().atOffset(ZoneOffset.UTC))
+            .startDate(searchCommand.getStart())
+            .endDate(searchCommand.getEnd())
             .build();
 
     var reports = reportPersistenceService.getAll(reportCriteria);
-    var result = new HashMap<String, Double>();
 
-    for (Report report : reports) {
-      var sums = report.getSums();
-      var shift1Sum = sums.get(0);
-      var shift2Sum = sums.get(1);
-
-      ChartConstant.COMMON_INDICATORS.forEach(
-          indicator -> {
-            result.putIfAbsent(indicator, 0.0);
-            result.computeIfPresent(
-                indicator,
-                (key, value) ->
-                    value
-                        + shift1Sum.getOrDefault(indicator, 0.0)
-                        + shift2Sum.getOrDefault(indicator, 0.0));
-          });
-    }
-
-    return calculateTwoShiftsSumsByKeys(reports, ChartConstant.COMMON_KEYS_LIST);
-  }
-
-  private Map<String, Double> calculateTwoShiftsSumsByKeys(
-      List<Report> reports, List<String> keys) {
-    Map<String, Double> result =
-        keys.stream()
-            .map(key -> Map.entry(key, 0.0))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-    for (Report report : reports) {
-      var sumJson = report.getSums();
-
-      for (Map.Entry<String, Double> entry : result.entrySet()) {
-        var key = entry.getKey();
-        var value = entry.getValue();
-        var twoShiftSum = sumJson.get(0).get(key) + sumJson.get(1).get(key);
-
-        entry.setValue(value + twoShiftSum);
-      }
-    }
-
-    return result;
+    return aggregateSumByIndicators(reports, ChartConstant.COMMON_INDICATORS);
   }
 
   public Map<String, Map<String, List<Double>>> getMultiDayChartFigures(
       SearchMultiDayChartCommand searchCommand) {
     var reportCriteria =
         ReportCriteria.builder()
-            .startDate(searchCommand.getStart().toInstant().atOffset(ZoneOffset.UTC))
-            .endDate(searchCommand.getEnd().toInstant().atOffset(ZoneOffset.UTC))
+            .startDate(searchCommand.getStart())
+            .endDate(searchCommand.getEnd())
             .build();
 
     var reports = reportPersistenceService.getAll(reportCriteria);
-    var reportTypes = reportTypePersistenceService.getAll();
-    Map<String, Map<String, List<Double>>> result =
-        reportTypes.stream()
-            .map(type -> Map.entry(type.getName(), new HashMap<String, List<Double>>()))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    var reportsByTypes =
+        reports.stream().collect(Collectors.groupingBy(x -> x.getType().getName()));
+    var result = new HashMap<String, Map<String, List<Double>>>();
 
     switch (searchCommand.getChartType()) {
       case PIE:
-        for (ReportType type : reportTypes) {
-          var reportsByType =
-              reports.stream().filter(x -> x.getType().getId().equals(type.getId())).toList();
-          var sum = calculateTwoShiftsSumsByKeys(reportsByType, List.of(ChartConstant.SUM_TOTAL));
-          result.put(
-              type.getName(),
-              sum.entrySet().stream()
-                  .collect(Collectors.toMap(Map.Entry::getKey, e -> List.of(e.getValue()))));
+        for (Map.Entry<String, List<Report>> entry : reportsByTypes.entrySet()) {
+          var currentType = entry.getKey();
+          var currentReports = entry.getValue();
+
+          result.putIfAbsent(currentType, new HashMap<>());
+          var indicatorValuesMap = result.get(currentType);
+          var sumByIndicators =
+              aggregateSumByIndicators(currentReports, List.of(ChartConstant.SUM_TOTAL));
+          indicatorValuesMap.putIfAbsent(
+              ChartConstant.SUM_TOTAL, sumByIndicators.values().stream().toList());
         }
         break;
-      case MULTI_LINE:
-        for (ReportType type : reportTypes) {
-          var rangeStart = searchCommand.getStart().toInstant().atOffset(ZoneOffset.UTC);
-          var rangeEnd = rangeStart.plusDays(1);
-//          var reportsByType =
-//              reports.stream().filter(x -> x.getType().getId().equals(type.getId())).toList();
-          var indicatorsList = List.of(ChartConstant.SUM_TOTAL);
+      case MULTI_LINE, STACKED_BAR:
+        for (Map.Entry<String, List<Report>> entry : reportsByTypes.entrySet()) {
+          var currentType = entry.getKey();
+          var currentReports = entry.getValue();
+          var indicatorList = currentReports.get(0).getSums().get(0).keySet().stream().toList();
 
-          while (rangeEnd.isBefore(searchCommand.getEnd().toInstant().atOffset(ZoneOffset.UTC))) {
-            var reportCriteria2 =
-                ReportCriteria.builder()
-                    .startDate(searchCommand.getStart().toInstant().atOffset(ZoneOffset.UTC))
-                    .endDate(searchCommand.getEnd().toInstant().atOffset(ZoneOffset.UTC))
-                    .typeIds(List.of(type.getId()))
-                    .build();
+          var reportChunks =
+              partitionReportsByTimeUnit(
+                  currentReports,
+                  searchCommand.getQueryType(),
+                  searchCommand.getStart(),
+                  searchCommand.getEnd());
 
+          result.putIfAbsent(currentType, new HashMap<>());
 
+          var indicatorValuesMap = result.get(currentType);
 
-            var reportsByDate = reportPersistenceService.getAll(reportCriteria2);
-//            var reportsByDate =
-//                reportsByType.stream()
-//                    .filter(
-//                        x ->
-//                            x.getRecordingDate().isAfter(rangeStart)
-//                                || x.getRecordingDate().equals(rangeStart)
-//                                    && x.getRecordingDate().isBefore(rangeEnd))
-//                    .toList();
-            var sum = calculateTwoShiftsSumsByKeys(reportsByDate, List.of(ChartConstant.SUM_TOTAL));
+          indicatorList.forEach(x -> indicatorValuesMap.putIfAbsent(x, new ArrayList<>()));
 
-            for (String indic : indicatorsList) {
-              var valuesList = result.get(type.getName()).get(indic);
-              if (valuesList == null) {
-                valuesList = new ArrayList<>();
-              }
-              valuesList.add(sum.get(indic));
-              result.get(type.getName()).put(indic, valuesList);
-            }
-            rangeEnd = rangeEnd.plusDays(1);
-          }
+          reportChunks.forEach(
+              (k, v) -> {
+                var aggregatedSum = aggregateSumByIndicators(v, indicatorList);
+
+                indicatorValuesMap.forEach((k3, v3) -> v3.add(aggregatedSum.get(k3)));
+              });
+
+          var labels = reportChunks.keySet().stream().toList();
         }
         break;
-      case STACKED_BAR:
-        return null;
+    }
+
+    return result;
+  }
+
+  private Map<String, List<Report>> partitionReportsByTimeUnit(
+      List<Report> reports, ChartQueryType queryType, OffsetDateTime start, OffsetDateTime end) {
+    var dateTmp = start;
+
+    var partitionsMap = new LinkedHashMap<String, List<Report>>();
+
+    var upperBound = getNextUpperBound(dateTmp, queryType);
+
+    while (upperBound.isBefore(end.plusDays(1))) {
+      var partition = new ArrayList<Report>();
+      for (Report report : reports) {
+        if ((report.getRecordingDate().isAfter(dateTmp)
+                || report.getRecordingDate().equals(dateTmp))
+            && report.getRecordingDate().isBefore(upperBound)) {
+          partition.add(report);
+        }
+      }
+
+      partitionsMap.put(getLabel(dateTmp, upperBound, queryType), partition);
+      dateTmp = upperBound;
+      upperBound = getNextUpperBound(dateTmp, queryType);
+    }
+    return partitionsMap;
+  }
+
+  private boolean isBetweenDates(OffsetDateTime date, OffsetDateTime start, OffsetDateTime end) {
+    return date.isAfter(start) || date.equals(start) && date.isBefore(end);
+  }
+
+  private String getLabel(OffsetDateTime start, OffsetDateTime end, ChartQueryType queryType) {
+    return switch (queryType) {
+      case DAY, WEEK, MONTH ->
+          start.format(DateTimeFormatter.ofPattern("dd/MM"))
+              + " - "
+              + end.format(DateTimeFormatter.ofPattern("dd/MM"));
+      case YEAR ->
+          start.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
+              + " - "
+              + end.format(DateTimeFormatter.ofPattern("dd/MM/yy"));
+    };
+  }
+
+  private OffsetDateTime getNextUpperBound(OffsetDateTime date, ChartQueryType queryType) {
+    return switch (queryType) {
+      case DAY -> date.plusDays(1);
+      case WEEK -> date.plusWeeks(1);
+      case MONTH -> date.plusMonths(1);
+      case YEAR -> date.plusYears(1);
+    };
+  }
+
+  private Double calculateTwoShiftsSum(List<Map<String, Double>> sums, String indicator) {
+    return sums.get(0).getOrDefault(indicator, 0.0) + sums.get(1).getOrDefault(indicator, 0.0);
+  }
+
+  private Map<String, Double> aggregateSumByIndicators(
+      List<Report> reports, List<String> indicators) {
+    var result = new HashMap<String, Double>();
+
+    for (Report report : reports) {
+      indicators.forEach(
+          indic -> {
+            result.putIfAbsent(indic, 0.0);
+            result.computeIfPresent(
+                indic, (key, value) -> value + calculateTwoShiftsSum(report.getSums(), indic));
+          });
     }
     return result;
   }

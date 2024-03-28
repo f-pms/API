@@ -64,9 +64,9 @@ public class ReportController {
   }
 
   @GetMapping("/charts/multi-day/summary")
-  public ApiResponse<Map<String, Double>> getMultiDaySummaryChartFigures(
+  public ApiResponse <Map<String, Double>> getMultiDayChartFiguresBySummary(
       @Valid SearchMultiDayChartCommand searchCommand) {
-    return ApiResponse.success(reportService.getMultiDaySummaryChartFigures(searchCommand));
+    return ApiResponse.success(reportService.getMultiDayChartSummaryFigures(searchCommand));
   }
 
   @GetMapping("/charts/multi-day")

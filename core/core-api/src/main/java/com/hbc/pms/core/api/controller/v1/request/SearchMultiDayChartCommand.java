@@ -1,22 +1,18 @@
 package com.hbc.pms.core.api.controller.v1.request;
 
 import com.hbc.pms.core.api.controller.v1.enums.ChartQueryType;
+import com.hbc.pms.core.api.controller.v1.enums.ChartType;
 import jakarta.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class SearchMultiDayChartCommand {
-  // TODO: validation start & end
+  @NotNull private OffsetDateTime start;
 
-  @NotNull
-  @DateTimeFormat(pattern = "dd-MM-yyyy")
-  private Date start;
+  @NotNull private OffsetDateTime end;
 
-  @NotNull
-  @DateTimeFormat(pattern = "dd-MM-yyyy")
-  private Date end;
+  private ChartQueryType queryType;
 
-  @NotNull private ChartQueryType queryType;
+  private ChartType chartType;
 }
