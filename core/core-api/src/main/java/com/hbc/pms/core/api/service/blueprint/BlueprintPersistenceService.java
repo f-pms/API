@@ -1,4 +1,4 @@
-package com.hbc.pms.core.api.service;
+package com.hbc.pms.core.api.service.blueprint;
 
 import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.model.Blueprint;

@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 
 class UserControllerFunctionalSpec extends FunctionalTestSpec {
-  protected static String USER_PATH = "/users/"
+  protected static String USER_PATH = "/users"
   @Autowired
   RestClient restClient
   @Autowired
