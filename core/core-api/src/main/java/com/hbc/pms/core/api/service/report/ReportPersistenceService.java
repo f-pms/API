@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ReportPersistenceService extends AbstractPersistenceService<ReportEntity> {
   private static final String REPORT_NOT_FOUND_LITERAL = "Report not found with id: ";
-  private final ModelMapper mapper;
   private final ReportRepository reportRepository;
 
   public Page<Report> getAll(ReportCriteria criteria, Pageable pagination) {
@@ -37,7 +36,7 @@ public class ReportPersistenceService extends AbstractPersistenceService<ReportE
     if (oEntity.isEmpty()) {
       throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, REPORT_NOT_FOUND_LITERAL + id);
     }
-    return mapper.map(oEntity.get(), Report.class);
+    return mapToModel(oEntity.get(), Report.class);
   }
 
   public Report getById(Long id) {
@@ -50,7 +49,7 @@ public class ReportPersistenceService extends AbstractPersistenceService<ReportE
 
   public Report create(Report report) {
     var entity = mapper.map(report, ReportEntity.class);
-    return mapper.map(reportRepository.save(entity), Report.class);
+    return mapToModel(reportRepository.save(entity), Report.class);
   }
 
   public Report update(Long id, Report report) {
@@ -59,7 +58,7 @@ public class ReportPersistenceService extends AbstractPersistenceService<ReportE
       throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, REPORT_NOT_FOUND_LITERAL + id);
     }
     var entity = oEntity.get();
-    mapper.map(mapper.map(report, ReportEntity.class), entity);
-    return mapper.map(reportRepository.save(entity), Report.class);
+    mapper.map(mapToEntity(report, ReportEntity.class), entity);
+    return mapToModel(reportRepository.save(entity), Report.class);
   }
 }
