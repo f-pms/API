@@ -7,4 +7,7 @@ import org.hibernate.validator.constraints.Length;
 public class UpdateUserCommand {
   @Length(min = 3, max = 30)
   private String password;
+
+  @Length(min = 3, max = 50)
+  private String fullName;
 }

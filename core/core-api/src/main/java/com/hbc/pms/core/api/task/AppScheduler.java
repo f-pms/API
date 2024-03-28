@@ -1,8 +1,8 @@
 package com.hbc.pms.core.api.task;
 
-import com.hbc.pms.core.api.service.AlarmPersistenceService;
-import com.hbc.pms.core.api.service.AlarmService;
-import com.hbc.pms.core.api.service.NotificationService;
+import com.hbc.pms.core.api.service.alarm.AlarmPersistenceService;
+import com.hbc.pms.core.api.service.alarm.AlarmService;
+import com.hbc.pms.core.api.service.alarm.NotificationService;
 import com.hbc.pms.core.model.enums.AlarmStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

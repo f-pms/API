@@ -6,9 +6,9 @@ import static com.hbc.pms.core.api.util.DateTimeUtil.REPORT_DATE_TIME_FORMATTER;
 import static com.hbc.pms.core.api.util.DateTimeUtil.convertOffsetDateTimeToLocalDateTime;
 import static java.util.stream.Collectors.groupingBy;
 
-import com.hbc.pms.core.api.service.BlueprintPersistenceService;
-import com.hbc.pms.core.api.service.ReportSchedulePersistenceService;
-import com.hbc.pms.core.api.service.ReportService;
+import com.hbc.pms.core.api.service.blueprint.BlueprintPersistenceService;
+import com.hbc.pms.core.api.service.report.ReportSchedulePersistenceService;
+import com.hbc.pms.core.api.service.report.ReportService;
 import com.hbc.pms.core.api.support.data.ReportExcelProcessor;
 import com.hbc.pms.core.model.ReportSchedule;
 import com.hbc.pms.core.model.enums.BlueprintType;
