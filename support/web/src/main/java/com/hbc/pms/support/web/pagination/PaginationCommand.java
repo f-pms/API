@@ -5,10 +5,10 @@ import org.springframework.data.domain.PageRequest;
 
 @Data
 public class PaginationCommand {
-  protected int page;
-  protected int size;
+  protected int page = 1;
+  protected int size = 10;
 
   public PageRequest toPageable() {
-    return PageRequest.of(page, size);
+    return PageRequest.of(page - 1, size);
   }
 }

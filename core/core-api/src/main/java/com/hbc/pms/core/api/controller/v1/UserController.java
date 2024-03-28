@@ -32,6 +32,7 @@ public class UserController {
   private final ModelMapper modelMapper;
 
   @GetMapping
+  @PreAuthorize(HAS_ROLE_ADMIN)
   public ApiResponse<QueryResult<User>> query(QueryUserCommand queryUserCommand) {
     return ApiResponse.success(userService.query(queryUserCommand));
   }
