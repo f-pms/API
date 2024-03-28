@@ -86,7 +86,9 @@ public class ReportHandler implements RmsHandler {
             var indicator2 = processor.getIndicatorsMap(context2);
             var sums1 = processor.processSumsMap(context1, indicator1, OffsetDateTime.now());
             var sums2 = processor.processSumsMap(context2, indicator2, OffsetDateTime.now());
-            processor.close(workbook);
+            processor.resetDevelopmentCells(context1, indicator1);
+            processor.resetDevelopmentCells(context2, indicator2);
+            processor.close(workbook); // need to save workbook to disk
             reportService.updateSumJson(report, List.of(sums1, sums2));
           } catch (Exception ex) {
             log.error("Failed to process daily report for type={}: {}", type, ex.getMessage());

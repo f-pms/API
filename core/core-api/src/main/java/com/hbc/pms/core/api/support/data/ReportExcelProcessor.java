@@ -109,13 +109,9 @@ public class ReportExcelProcessor {
         });
   }
 
-  public void save(XSSFWorkbook workbook) {
+  public void save(XSSFWorkbook workbook, String name) {
     try {
-      // TODO: use a better way to generate file name
-      var path =
-          Paths.get(
-              String.valueOf(ResourceUtils.getFile(REPORT_DIR_PATH)),
-              System.currentTimeMillis() + ".xlsx");
+      var path = Paths.get(String.valueOf(ResourceUtils.getFile(REPORT_DIR_PATH)), name + ".xlsx");
       var fos = new FileOutputStream(path.toString());
       workbook.write(fos);
       fos.close();
