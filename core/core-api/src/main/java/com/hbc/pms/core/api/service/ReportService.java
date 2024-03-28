@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hbc.pms.core.api.constant.ChartConstant;
 import com.hbc.pms.core.api.controller.v1.enums.ChartQueryType;
 import com.hbc.pms.core.api.controller.v1.request.SearchMultiDayChartCommand;
+import com.hbc.pms.core.api.controller.v1.response.MultiDayChartResponse;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.ReportRow;
 import com.hbc.pms.core.model.ReportSchedule;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -109,18 +111,17 @@ public class ReportService {
     return aggregateSumByIndicators(reports, ChartConstant.COMMON_INDICATORS);
   }
 
-  public Map<String, Map<String, List<Double>>> getMultiDayChartFigures(
-      SearchMultiDayChartCommand searchCommand) {
+  public MultiDayChartResponse getMultiDayChartFigures(SearchMultiDayChartCommand searchCommand) {
     var reportCriteria =
         ReportCriteria.builder()
             .startDate(searchCommand.getStart())
             .endDate(searchCommand.getEnd())
             .build();
 
-    var reports = reportPersistenceService.getAll(reportCriteria);
-    var reportsByTypes =
-        reports.stream().collect(Collectors.groupingBy(x -> x.getType().getName()));
-    var result = new HashMap<String, Map<String, List<Double>>>();
+    List<Report> reports = reportPersistenceService.getAll(reportCriteria);
+    Map<String, List<Report>> reportsByTypes = groupReportsByType(reports);
+    var chartData = new HashMap<String, Map<String, List<Double>>>();
+    var result = new MultiDayChartResponse();
 
     switch (searchCommand.getChartType()) {
       case PIE:
@@ -128,8 +129,8 @@ public class ReportService {
           var currentType = entry.getKey();
           var currentReports = entry.getValue();
 
-          result.putIfAbsent(currentType, new HashMap<>());
-          var indicatorValuesMap = result.get(currentType);
+          chartData.putIfAbsent(currentType, new HashMap<>());
+          var indicatorValuesMap = chartData.get(currentType);
           var sumByIndicators =
               aggregateSumByIndicators(currentReports, List.of(ChartConstant.SUM_TOTAL));
           indicatorValuesMap.putIfAbsent(
@@ -149,9 +150,9 @@ public class ReportService {
                   searchCommand.getStart(),
                   searchCommand.getEnd());
 
-          result.putIfAbsent(currentType, new HashMap<>());
+          chartData.putIfAbsent(currentType, new HashMap<>());
 
-          var indicatorValuesMap = result.get(currentType);
+          var indicatorValuesMap = chartData.get(currentType);
 
           indicatorList.forEach(x -> indicatorValuesMap.putIfAbsent(x, new ArrayList<>()));
 
@@ -163,53 +164,69 @@ public class ReportService {
               });
 
           var labels = reportChunks.keySet().stream().toList();
+          result.setLabelSteps(labels);
         }
         break;
+      default:
+        throw new IllegalStateException("Unexpected value: " + searchCommand.getChartType());
     }
+
+    result.setData(chartData);
 
     return result;
   }
 
+  private Map<String, List<Report>> groupReportsByType(List<Report> reports) {
+    return reports.stream().collect(groupingBy(report -> report.getType().getName()));
+  }
+
   private Map<String, List<Report>> partitionReportsByTimeUnit(
       List<Report> reports, ChartQueryType queryType, OffsetDateTime start, OffsetDateTime end) {
-    var dateTmp = start;
+    var currentDate = start;
 
     var partitionsMap = new LinkedHashMap<String, List<Report>>();
 
-    var upperBound = getNextUpperBound(dateTmp, queryType);
+    var upperBound = getNextUpperBound(currentDate, queryType);
 
     while (upperBound.isBefore(end.plusDays(1))) {
-      var partition = new ArrayList<Report>();
-      for (Report report : reports) {
-        if ((report.getRecordingDate().isAfter(dateTmp)
-                || report.getRecordingDate().equals(dateTmp))
-            && report.getRecordingDate().isBefore(upperBound)) {
-          partition.add(report);
-        }
-      }
+      List<Report> partition = filterReportsByTimePeriod(reports, currentDate, upperBound);
+      String label = getLabelForTimePeriod(currentDate, upperBound, queryType);
+      partitionsMap.put(label, partition);
 
-      partitionsMap.put(getLabel(dateTmp, upperBound, queryType), partition);
-      dateTmp = upperBound;
-      upperBound = getNextUpperBound(dateTmp, queryType);
+      currentDate = upperBound;
+      upperBound = getNextUpperBound(currentDate, queryType);
     }
     return partitionsMap;
   }
 
-  private boolean isBetweenDates(OffsetDateTime date, OffsetDateTime start, OffsetDateTime end) {
-    return date.isAfter(start) || date.equals(start) && date.isBefore(end);
+  private List<Report> filterReportsByTimePeriod(
+      List<Report> reports, OffsetDateTime startDate, OffsetDateTime endDate) {
+    return reports.stream()
+        .filter(report -> isBetweenDates(report.getRecordingDate(), startDate, endDate))
+        .toList();
   }
 
-  private String getLabel(OffsetDateTime start, OffsetDateTime end, ChartQueryType queryType) {
-    return switch (queryType) {
-      case DAY, WEEK, MONTH ->
-          start.format(DateTimeFormatter.ofPattern("dd/MM"))
-              + " - "
-              + end.format(DateTimeFormatter.ofPattern("dd/MM"));
-      case YEAR ->
-          start.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
-              + " - "
-              + end.format(DateTimeFormatter.ofPattern("dd/MM/yy"));
-    };
+  private boolean isBetweenDates(OffsetDateTime date, OffsetDateTime start, OffsetDateTime end) {
+    return (date.isAfter(start) || date.equals(start)) && date.isBefore(end);
+  }
+
+  private String getLabelForTimePeriod(
+      OffsetDateTime start, OffsetDateTime end, ChartQueryType queryType) {
+    String pattern =
+        switch (queryType) {
+          case DAY, WEEK, MONTH -> "dd/MM";
+          case YEAR -> "dd/MM/yy";
+        };
+
+    String formattedStart = formatDate(start, pattern);
+    String formattedEnd = formatDate(end, pattern);
+
+    return formattedStart + " - " + formattedEnd;
+  }
+
+  private String formatDate(OffsetDateTime date, String pattern) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+    return date.format(formatter);
   }
 
   private OffsetDateTime getNextUpperBound(OffsetDateTime date, ChartQueryType queryType) {
@@ -222,21 +239,20 @@ public class ReportService {
   }
 
   private Double calculateTwoShiftsSum(List<Map<String, Double>> sums, String indicator) {
-    return sums.get(0).getOrDefault(indicator, 0.0) + sums.get(1).getOrDefault(indicator, 0.0);
+    return sums.stream().mapToDouble(sum -> sum.getOrDefault(indicator, 0.0)).sum();
   }
 
   private Map<String, Double> aggregateSumByIndicators(
       List<Report> reports, List<String> indicators) {
-    var result = new HashMap<String, Double>();
 
-    for (Report report : reports) {
-      indicators.forEach(
-          indic -> {
-            result.putIfAbsent(indic, 0.0);
-            result.computeIfPresent(
-                indic, (key, value) -> value + calculateTwoShiftsSum(report.getSums(), indic));
-          });
-    }
-    return result;
+    return reports.stream()
+        .flatMap(
+            report ->
+                indicators.stream()
+                    .map(
+                        indicator ->
+                            Map.entry(
+                                indicator, calculateTwoShiftsSum(report.getSums(), indicator))))
+        .collect(groupingBy(Map.Entry::getKey, Collectors.summingDouble(Map.Entry::getValue)));
   }
 }

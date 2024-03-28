@@ -2,6 +2,7 @@ package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.common.Page;
 import com.hbc.pms.core.api.controller.v1.request.SearchMultiDayChartCommand;
+import com.hbc.pms.core.api.controller.v1.response.MultiDayChartResponse;
 import com.hbc.pms.core.api.controller.v1.response.ReportResponse;
 import com.hbc.pms.core.api.service.ReportPersistenceService;
 import com.hbc.pms.core.api.service.ReportService;
@@ -64,13 +65,13 @@ public class ReportController {
   }
 
   @GetMapping("/charts/multi-day/summary")
-  public ApiResponse <Map<String, Double>> getMultiDayChartFiguresBySummary(
+  public ApiResponse<Map<String, Double>> getMultiDayChartFiguresBySummary(
       @Valid SearchMultiDayChartCommand searchCommand) {
     return ApiResponse.success(reportService.getMultiDayChartSummaryFigures(searchCommand));
   }
 
   @GetMapping("/charts/multi-day")
-  public ApiResponse<Map<String, Map<String, List<Double>>>> getMultiDayChartFigures(
+  public ApiResponse<MultiDayChartResponse> getMultiDayChartFigures(
       @Valid SearchMultiDayChartCommand searchCommand) {
     return ApiResponse.success(reportService.getMultiDayChartFigures(searchCommand));
   }
