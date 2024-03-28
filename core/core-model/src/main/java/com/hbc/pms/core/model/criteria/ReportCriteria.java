@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class ReportCriteria {
-  private List<Long> typeIds;
+  @Builder.Default private List<Long> typeIds = List.of();
+  @Builder.Default private List<Long> ids = List.of();
 
   // set min sql server datetime
   // https://learn.microsoft.com/en-us/sql/t-sql/data-types/datetimeoffset-transact-sql

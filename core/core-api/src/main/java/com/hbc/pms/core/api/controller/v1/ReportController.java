@@ -46,6 +46,6 @@ public class ReportController {
   @GetMapping("details/{id}")
   public ApiResponse<ReportResponse> getDetailById(@PathVariable Long id) {
     return ApiResponse.success(
-        mapper.map(reportPersistenceService.getById(id), ReportResponse.class));
+        mapper.map(reportPersistenceService.getByIdWithRows(id), ReportResponse.class));
   }
 }

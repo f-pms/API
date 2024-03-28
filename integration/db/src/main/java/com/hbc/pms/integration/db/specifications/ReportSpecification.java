@@ -30,9 +30,15 @@ public class ReportSpecification implements Specification<ReportEntity> {
             criteria.getStartDate(),
             criteria.getEndDate()));
 
-    if (nonNull(criteria.getTypeIds()) && !criteria.getTypeIds().isEmpty()) {
+    if (!criteria.getTypeIds().isEmpty()) {
       var in = builder.in(reportTypeRoot.get(ReportTypeEntity_.ID));
       criteria.getTypeIds().forEach(in::value);
+      predicates.add(in);
+    }
+
+    if (!criteria.getIds().isEmpty()) {
+      var in = builder.in(reportRoot.get(ReportEntity_.ID));
+      criteria.getIds().forEach(in::value);
       predicates.add(in);
     }
 
