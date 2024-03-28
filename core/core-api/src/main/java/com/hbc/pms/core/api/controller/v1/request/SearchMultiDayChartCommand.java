@@ -19,6 +19,8 @@ public class SearchMultiDayChartCommand {
 
   @NotNull private QueryType queryType;
 
+  @NotNull private ChartType chartType;
+
   public enum ChartType {
     PIE,
     MULTI_LINE,
