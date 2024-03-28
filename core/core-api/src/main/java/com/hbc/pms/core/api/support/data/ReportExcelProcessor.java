@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.support.data;
 
+import static com.hbc.pms.core.api.constant.ReportConstant.EXCEL_FILE;
 import static com.hbc.pms.core.api.util.DateTimeUtil.convertOffsetDateTimeToLocalDateTime;
 import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_1_PERIOD_1_END_TIME;
 import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_1_PERIOD_1_START_TIME;
@@ -34,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.regex.Pattern;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,7 +57,6 @@ import org.springframework.util.ResourceUtils;
 @Slf4j
 public class ReportExcelProcessor {
   private static final String TEMPLATE_DIR_PATH = "excel-templates";
-  private static final String EXCEL_FILE = "%s.xlsx";
   private static final Pattern INDICATOR_PATTERN = Pattern.compile("\\((?<indicator>.*)\\)");
   private static final String SUM_PREFIX = "SUM_";
   private static final String SUM_SPECIFIC_PREFIX = SUM_PREFIX + "SPECIFIC_";
@@ -71,7 +72,7 @@ public class ReportExcelProcessor {
     var tmpPath =
         Paths.get(
             System.getProperty("java.io.tmpdir"),
-            System.currentTimeMillis() + filename);
+            UUID.randomUUID() + filename);
 
     try {
       FileUtils.copyInputStreamToFile(templateFile, tmpPath.toFile());
@@ -130,7 +131,7 @@ public class ReportExcelProcessor {
       if (!dirPath.toFile().exists()) {
         dirPath.toFile().mkdir();
       }
-      var excelPath = dirPath.resolve(String.format(EXCEL_FILE, name));
+      var excelPath = dirPath.resolve(name);
       var fos = new FileOutputStream(excelPath.toString());
       workbook.write(fos);
       fos.close();

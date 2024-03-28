@@ -1,21 +1,33 @@
 package com.hbc.pms.core.api.service;
 
+import static com.hbc.pms.core.api.constant.ReportConstant.EXCEL_FILE;
+import static com.hbc.pms.core.api.util.DateTimeUtil.REPORT_DATE_TIME_FORMATTER;
+import static com.hbc.pms.core.api.util.DateTimeUtil.convertOffsetDateTimeToLocalDateTime;
+import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hbc.pms.core.api.support.data.ReportExcelProcessor;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.ReportRow;
 import com.hbc.pms.core.model.ReportSchedule;
 import com.hbc.pms.core.model.ReportType;
+import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.core.model.enums.ReportRowPeriod;
+import com.hbc.pms.core.model.enums.ReportRowShift;
 import com.hbc.pms.plc.api.IoResponse;
 import io.vavr.control.Try;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service

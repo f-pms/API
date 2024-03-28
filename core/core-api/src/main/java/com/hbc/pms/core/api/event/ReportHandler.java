@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.event;
 
 import static com.hbc.pms.core.api.constant.PlcConstant.REPORT_JOB_NAME;
+import static com.hbc.pms.core.api.constant.ReportConstant.EXCEL_FILE;
 import static com.hbc.pms.core.api.util.DateTimeUtil.REPORT_DATE_TIME_FORMATTER;
 import static com.hbc.pms.core.api.util.DateTimeUtil.convertOffsetDateTimeToLocalDateTime;
 import static java.util.stream.Collectors.groupingBy;
@@ -92,11 +93,14 @@ public class ReportHandler implements RmsHandler {
             processor.resetDevelopmentCells(context1, indicator1);
             processor.resetDevelopmentCells(context2, indicator2);
             reportService.updateSumJson(report, List.of(sums1, sums2));
+
+            var fileName = String.format(EXCEL_FILE, REPORT_DATE_TIME_FORMATTER.format(
+                convertOffsetDateTimeToLocalDateTime(report.getRecordingDate())));
             processor.save(
                 workbook,
                 alias,
-                REPORT_DATE_TIME_FORMATTER.format(
-                    convertOffsetDateTimeToLocalDateTime(report.getRecordingDate())));
+                fileName
+                );
           } catch (Exception ex) {
             log.error("Failed to process daily report for type={}: {}", type, ex.getMessage());
           }
