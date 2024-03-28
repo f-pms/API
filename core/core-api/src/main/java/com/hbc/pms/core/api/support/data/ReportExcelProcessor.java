@@ -44,6 +44,7 @@ import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
@@ -53,11 +54,13 @@ import org.springframework.util.ResourceUtils;
 public class ReportExcelProcessor {
   private static final String TEMPLATE_DIR_PATH = "excel-templates";
   private static final String EXCEL_FILE = "%s.xlsx";
-  private static final String REPORT_DIR_PATH = "classpath:reports";
   private static final Pattern INDICATOR_PATTERN = Pattern.compile("\\((?<indicator>.*)\\)");
   private static final String SUM_PREFIX = "SUM_";
   private static final String SUM_SPECIFIC_PREFIX = SUM_PREFIX + "SPECIFIC_";
   private static final String IGNORE_POSTFIX = "__";
+
+  @Value("${hbc.report.dir}")
+  private String reportDir;
 
   public XSSFWorkbook cloneWorkbook(String alias) throws IOException, InvalidFormatException {
     var filename = String.format(EXCEL_FILE, alias);
@@ -119,15 +122,19 @@ public class ReportExcelProcessor {
         });
   }
 
-  public void save(XSSFWorkbook workbook, String name) {
+  public void save(XSSFWorkbook workbook, String dir, String name) {
     try {
-      var path = Paths.get(String.valueOf(ResourceUtils.getFile(REPORT_DIR_PATH)), name + ".xlsx");
-      var fos = new FileOutputStream(path.toString());
+      var dirPath = Paths.get(reportDir, dir);
+      if (!dirPath.toFile().exists()) {
+        dirPath.toFile().mkdir();
+      }
+      var excelPath = dirPath.resolve(String.format(EXCEL_FILE, name));
+      var fos = new FileOutputStream(excelPath.toString());
       workbook.write(fos);
       fos.close();
       workbook.close();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+    } catch (Exception ex) {
+      throw new ReportExcelProcessorException("Failed to save the workbook", ex.getCause());
     }
   }
 
