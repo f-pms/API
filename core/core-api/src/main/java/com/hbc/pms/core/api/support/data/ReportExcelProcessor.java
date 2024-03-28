@@ -25,7 +25,6 @@ import com.hbc.pms.core.model.enums.ReportRowShift;
 import io.vavr.control.Try;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.DayOfWeek;
 import java.time.OffsetDateTime;
@@ -37,19 +36,23 @@ import java.util.regex.Pattern;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
 @Component
 @Slf4j
 public class ReportExcelProcessor {
-  private static final String TEMPLATE_FILE_PATH = "classpath:excel-templates/%s.xlsx";
+  private static final String TEMPLATE_DIR_PATH = "excel-templates";
+  private static final String EXCEL_FILE = "%s.xlsx";
   private static final String REPORT_DIR_PATH = "classpath:reports";
   private static final Pattern INDICATOR_PATTERN = Pattern.compile("\\((?<indicator>.*)\\)");
   private static final String SUM_PREFIX = "SUM_";
@@ -57,12 +60,19 @@ public class ReportExcelProcessor {
   private static final String IGNORE_POSTFIX = "__";
 
   public XSSFWorkbook cloneWorkbook(String alias) throws IOException, InvalidFormatException {
-    var templatePath = ResourceUtils.getFile(String.format(TEMPLATE_FILE_PATH, alias)).toPath();
+    var filename = String.format(EXCEL_FILE, alias);
+    var templatePath = new ClassPathResource(Paths.get(TEMPLATE_DIR_PATH, filename).toString());
+    var templateFile = templatePath.getInputStream();
     var tmpPath =
         Paths.get(
             System.getProperty("java.io.tmpdir"),
-            System.currentTimeMillis() + templatePath.getFileName().toString());
-    Files.copy(templatePath, tmpPath);
+            System.currentTimeMillis() + filename);
+
+    try {
+      FileUtils.copyInputStreamToFile(templateFile, tmpPath.toFile());
+    } finally {
+      IOUtils.closeQuietly(templateFile);
+    }
     return new XSSFWorkbook(tmpPath.toFile());
   }
 
