@@ -3,15 +3,20 @@ package com.hbc.pms.core.api.service;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hbc.pms.core.api.constant.ChartConstant;
+import com.hbc.pms.core.api.controller.v1.request.SearchMultiDayChartCommand;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.ReportRow;
 import com.hbc.pms.core.model.ReportSchedule;
 import com.hbc.pms.core.model.ReportType;
+import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.core.model.enums.ReportRowPeriod;
 import com.hbc.pms.plc.api.IoResponse;
 import io.vavr.control.Try;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -80,5 +85,41 @@ public class ReportService {
                 case NEW4 -> rowBuilder.newElectricValue4(electricValue);
               }
             });
+  }
+
+  public List<Map<String, Double>> getOneDayChartFigures(Long reportId) {
+    var report = reportPersistenceService.getById(reportId);
+    return report.getSums();
+  }
+
+  public Map<String, Double> getMultiDaySummaryChartFigures(
+      SearchMultiDayChartCommand searchCommand) {
+    var reportCriteria =
+        ReportCriteria.builder()
+            .startDate(searchCommand.getStart().toInstant().atOffset(ZoneOffset.UTC))
+            .endDate(searchCommand.getEnd().toInstant().atOffset(ZoneOffset.UTC))
+            .build();
+
+    var reports = reportPersistenceService.getAll(reportCriteria);
+    var result = new HashMap<String, Double>();
+
+    for (Report report : reports) {
+      var sums = report.getSums();
+      var shift1Sum = sums.get(0);
+      var shift2Sum = sums.get(1);
+
+      ChartConstant.COMMON_INDICATORS.forEach(
+          indicator -> {
+            result.putIfAbsent(indicator, 0.0);
+            result.computeIfPresent(
+                indicator,
+                (key, value) ->
+                    value
+                        + shift1Sum.getOrDefault(indicator, 0.0)
+                        + shift2Sum.getOrDefault(indicator, 0.0));
+          });
+    }
+
+    return result;
   }
 }

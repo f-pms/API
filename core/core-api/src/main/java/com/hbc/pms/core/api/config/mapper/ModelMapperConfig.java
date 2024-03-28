@@ -5,7 +5,7 @@ import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationCommand;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
-import com.hbc.pms.core.api.utils.StringUtils;
+import com.hbc.pms.core.api.util.StringUtil;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.SensorConfiguration;
 import com.hbc.pms.core.model.User;
@@ -68,7 +68,7 @@ public class ModelMapperConfig {
               private final Converter<Integer, String> fromAddress =
                   c -> {
                     int seconds = c.getSource();
-                    return StringUtils.buildCronFromSeconds(seconds);
+                    return StringUtil.buildCronFromSeconds(seconds);
                   };
 
               @Override
@@ -86,7 +86,7 @@ public class ModelMapperConfig {
               private final Converter<Integer, String> fromAddress =
                   c -> {
                     int seconds = c.getSource();
-                    return StringUtils.buildCronFromSeconds(seconds);
+                    return StringUtil.buildCronFromSeconds(seconds);
                   };
 
               @Override
@@ -104,7 +104,7 @@ public class ModelMapperConfig {
               private final Converter<String, String> fromAddress =
                   c -> {
                     String address = c.getSource().toUpperCase();
-                    if (StringUtils.isIncorrectPLCAddressFormat(address)) {
+                    if (StringUtil.isIncorrectPLCAddressFormat(address)) {
                       throw new ValidationException(
                           Collections.singletonList(
                               new ErrorMessage("Invalid PLC " + "Address: " + address)));
@@ -128,7 +128,7 @@ public class ModelMapperConfig {
               private final Converter<String, String> fromAddress =
                   c -> {
                     String address = c.getSource().toUpperCase();
-                    if (StringUtils.isIncorrectPLCAddressFormat(address)) {
+                    if (StringUtil.isIncorrectPLCAddressFormat(address)) {
                       throw new ValidationException(
                           Collections.singletonList(
                               new ErrorMessage("Invalid PLC " + "Address: " + address)));
