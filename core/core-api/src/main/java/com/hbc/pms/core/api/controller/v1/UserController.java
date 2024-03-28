@@ -3,9 +3,11 @@ package com.hbc.pms.core.api.controller.v1;
 import static com.hbc.pms.core.api.config.auth.AuthorizationExpressions.HAS_ROLE_ADMIN;
 
 import com.hbc.pms.core.api.controller.v1.request.auth.CreateUserCommand;
+import com.hbc.pms.core.api.controller.v1.request.auth.QueryUserCommand;
 import com.hbc.pms.core.api.controller.v1.request.auth.UpdateUserCommand;
 import com.hbc.pms.core.api.service.auth.UserService;
 import com.hbc.pms.core.model.User;
+import com.hbc.pms.support.web.pagination.QueryResult;
 import com.hbc.pms.support.web.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +31,17 @@ public class UserController {
   private final UserService userService;
   private final ModelMapper modelMapper;
 
+  @GetMapping
+  public ApiResponse<QueryResult<User>> query(QueryUserCommand queryUserCommand) {
+    return ApiResponse.success(userService.query(queryUserCommand));
+  }
+
   @GetMapping("/{userId}")
   public ApiResponse<User> get(@PathVariable Long userId) {
     return ApiResponse.success(userService.findById(userId));
   }
 
-  @PostMapping("/")
+  @PostMapping
   @PreAuthorize(HAS_ROLE_ADMIN)
   public ApiResponse<User> create(@RequestBody @Valid CreateUserCommand createUserCommand) {
     return ApiResponse.success(userService.create(modelMapper.map(createUserCommand, User.class)));

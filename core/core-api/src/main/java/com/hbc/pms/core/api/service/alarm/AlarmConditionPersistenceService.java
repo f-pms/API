@@ -1,4 +1,4 @@
-package com.hbc.pms.core.api.service;
+package com.hbc.pms.core.api.service.alarm;
 
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity;
