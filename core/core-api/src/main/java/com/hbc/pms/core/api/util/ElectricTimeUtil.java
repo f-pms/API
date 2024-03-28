@@ -29,13 +29,6 @@ public class ElectricTimeUtil {
   public static final LocalTime SHIFT_2_PERIOD_4_START_TIME = LocalTime.of(4, 0);
   public static final LocalTime SHIFT_2_PERIOD_4_END_TIME = LocalTime.of(5, 59);
 
-  private static final ZoneId VIETNAM_ZONE_ID = ZoneId.of("Asia/Ho_Chi_Minh");
-
-  public static LocalDateTime convertOffsetDateTimeToLocalTime(OffsetDateTime offsetDateTime) {
-    ZonedDateTime zoned = offsetDateTime.atZoneSameInstant(VIETNAM_ZONE_ID);
-    return zoned.toLocalDateTime();
-  }
-
   public static String getTimeGroup(DayOfWeek dayOfWeek, LocalTime time) {
     if (dayOfWeek == DayOfWeek.SUNDAY) {
       // No peak hours on Sunday

@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.support.data;
 
+import static com.hbc.pms.core.api.util.DateTimeUtil.convertOffsetDateTimeToLocalDateTime;
 import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_1_PERIOD_1_END_TIME;
 import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_1_PERIOD_1_START_TIME;
 import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_1_PERIOD_2_END_TIME;
@@ -19,6 +20,7 @@ import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_2_PERIOD_4_START_
 import static java.util.Objects.isNull;
 
 import com.hbc.pms.core.api.support.error.ReportExcelProcessorException;
+import com.hbc.pms.core.api.util.DateTimeUtil;
 import com.hbc.pms.core.api.util.ElectricTimeUtil;
 import com.hbc.pms.core.model.ReportRow;
 import com.hbc.pms.core.model.enums.ReportRowShift;
@@ -101,7 +103,7 @@ public class ReportExcelProcessor {
 
   public Map<String, Double> processSumsMap(
       Context context, Map<String, CellAddress> indicators, OffsetDateTime recordingDate) {
-    var localDateTime = ElectricTimeUtil.convertOffsetDateTimeToLocalTime(recordingDate);
+    var localDateTime = convertOffsetDateTimeToLocalDateTime(recordingDate);
     var dayOfWeek = localDateTime.getDayOfWeek();
 
     context.rows.forEach(row -> fillBaseValue(context, indicators, dayOfWeek, row));

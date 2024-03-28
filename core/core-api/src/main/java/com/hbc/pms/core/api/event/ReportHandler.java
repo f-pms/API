@@ -1,6 +1,8 @@
 package com.hbc.pms.core.api.event;
 
 import static com.hbc.pms.core.api.constant.PlcConstant.REPORT_JOB_NAME;
+import static com.hbc.pms.core.api.util.DateTimeUtil.REPORT_DATE_TIME_FORMATTER;
+import static com.hbc.pms.core.api.util.DateTimeUtil.convertOffsetDateTimeToLocalDateTime;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.hbc.pms.core.api.service.BlueprintPersistenceService;
@@ -14,7 +16,6 @@ import com.hbc.pms.plc.api.IoResponse;
 import com.hbc.pms.plc.api.PlcConnector;
 import com.hbc.pms.plc.api.scraper.HandlerContext;
 import io.vavr.control.Try;
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -60,6 +61,8 @@ public class ReportHandler implements RmsHandler {
     types.forEach(
         (type, schedulesOfType) -> {
           try {
+            var alias = type.getName();
+
             // save to database
             var report = reportService.createReportByType(type);
             var rows = reportService.createReportRows(response, report.getId(), schedulesOfType);
@@ -84,12 +87,16 @@ public class ReportHandler implements RmsHandler {
                     .build();
             var indicator1 = processor.getIndicatorsMap(context1);
             var indicator2 = processor.getIndicatorsMap(context2);
-            var sums1 = processor.processSumsMap(context1, indicator1, OffsetDateTime.now());
-            var sums2 = processor.processSumsMap(context2, indicator2, OffsetDateTime.now());
+            var sums1 = processor.processSumsMap(context1, indicator1, report.getRecordingDate());
+            var sums2 = processor.processSumsMap(context2, indicator2, report.getRecordingDate());
             processor.resetDevelopmentCells(context1, indicator1);
             processor.resetDevelopmentCells(context2, indicator2);
-            processor.close(workbook); // need to save workbook to disk
             reportService.updateSumJson(report, List.of(sums1, sums2));
+            processor.save(
+                workbook,
+                alias,
+                REPORT_DATE_TIME_FORMATTER.format(
+                    convertOffsetDateTimeToLocalDateTime(report.getRecordingDate())));
           } catch (Exception ex) {
             log.error("Failed to process daily report for type={}: {}", type, ex.getMessage());
           }
