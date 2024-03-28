@@ -23,7 +23,7 @@ public class ReportPersistenceService extends AbstractPersistenceService<ReportE
 
   public Page<Report> getAll(ReportCriteria criteria, Pageable pagination) {
     var spec = new ReportSpecification(criteria);
-     return mapToModel(reportRepository.findAll(spec, pagination), Report.class);
+    return mapToModel(reportRepository.findAll(spec, pagination), Report.class);
   }
 
   public Collection<Report> getAll(ReportCriteria criteria) {
