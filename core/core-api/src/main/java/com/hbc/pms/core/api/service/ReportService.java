@@ -1,5 +1,8 @@
 package com.hbc.pms.core.api.service;
 
+import static com.hbc.pms.core.api.util.DateUtil.getDateRangeLabel;
+import static com.hbc.pms.core.api.util.DateUtil.getNextUpperBoundDate;
+import static com.hbc.pms.core.api.util.DateUtil.isBetweenDates;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,13 +19,11 @@ import com.hbc.pms.core.model.enums.ReportRowPeriod;
 import com.hbc.pms.plc.api.IoResponse;
 import io.vavr.control.Try;
 import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -125,47 +126,45 @@ public class ReportService {
 
     switch (searchCommand.getChartType()) {
       case PIE:
-        for (Map.Entry<String, List<Report>> entry : reportsByTypes.entrySet()) {
-          var currentType = entry.getKey();
-          var currentReports = entry.getValue();
-
-          chartData.putIfAbsent(currentType, new HashMap<>());
-          var indicatorValuesMap = chartData.get(currentType);
-          var sumByIndicators =
-              aggregateSumByIndicators(currentReports, List.of(ChartConstant.SUM_TOTAL));
-          indicatorValuesMap.putIfAbsent(
-              ChartConstant.SUM_TOTAL, sumByIndicators.values().stream().toList());
-        }
+        reportsByTypes.forEach(
+            (reportType, currentReports) -> {
+              chartData.putIfAbsent(reportType, new HashMap<>());
+              var indicatorValuesMap = chartData.get(reportType);
+              var sumByIndicators =
+                  aggregateSumByIndicators(currentReports, List.of(ChartConstant.SUM_TOTAL));
+              indicatorValuesMap.putIfAbsent(
+                  ChartConstant.SUM_TOTAL, sumByIndicators.values().stream().toList());
+            });
         break;
       case MULTI_LINE, STACKED_BAR:
-        for (Map.Entry<String, List<Report>> entry : reportsByTypes.entrySet()) {
-          var currentType = entry.getKey();
-          var currentReports = entry.getValue();
-          var indicatorList = currentReports.get(0).getSums().get(0).keySet().stream().toList();
+        reportsByTypes.forEach(
+            (reportType, currentReports) -> {
+              var indicatorList = currentReports.get(0).getSums().get(0).keySet().stream().toList();
 
-          var reportChunks =
-              partitionReportsByTimeUnit(
-                  currentReports,
-                  searchCommand.getQueryType(),
-                  searchCommand.getStart(),
-                  searchCommand.getEnd());
+              var reportChunks =
+                  partitionReportsByTimeUnit(
+                      currentReports,
+                      searchCommand.getQueryType(),
+                      searchCommand.getStart(),
+                      searchCommand.getEnd());
 
-          chartData.putIfAbsent(currentType, new HashMap<>());
+              chartData.putIfAbsent(reportType, new HashMap<>());
 
-          var indicatorValuesMap = chartData.get(currentType);
+              var indicatorValuesMap = chartData.get(reportType);
 
-          indicatorList.forEach(x -> indicatorValuesMap.putIfAbsent(x, new ArrayList<>()));
+              indicatorList.forEach(x -> indicatorValuesMap.putIfAbsent(x, new ArrayList<>()));
 
-          reportChunks.forEach(
-              (k, v) -> {
-                var aggregatedSum = aggregateSumByIndicators(v, indicatorList);
+              reportChunks.forEach(
+                  (label, reportsList) -> {
+                    var aggregatedSum = aggregateSumByIndicators(reportsList, indicatorList);
 
-                indicatorValuesMap.forEach((k3, v3) -> v3.add(aggregatedSum.get(k3)));
-              });
+                    indicatorValuesMap.forEach(
+                        (indicator, summedList) -> summedList.add(aggregatedSum.get(indicator)));
+                  });
 
-          var labels = reportChunks.keySet().stream().toList();
-          result.setLabelSteps(labels);
-        }
+              var labels = reportChunks.keySet().stream().toList();
+              result.setLabelSteps(labels);
+            });
         break;
       default:
         throw new IllegalStateException("Unexpected value: " + searchCommand.getChartType());
@@ -186,15 +185,15 @@ public class ReportService {
 
     var partitionsMap = new LinkedHashMap<String, List<Report>>();
 
-    var upperBound = getNextUpperBound(currentDate, queryType);
+    var upperBound = getNextUpperBoundDate(currentDate, queryType);
 
     while (upperBound.isBefore(end.plusDays(1))) {
       List<Report> partition = filterReportsByTimePeriod(reports, currentDate, upperBound);
-      String label = getLabelForTimePeriod(currentDate, upperBound, queryType);
+      String label = getDateRangeLabel(currentDate, upperBound, queryType);
       partitionsMap.put(label, partition);
 
       currentDate = upperBound;
-      upperBound = getNextUpperBound(currentDate, queryType);
+      upperBound = getNextUpperBoundDate(currentDate, queryType);
     }
     return partitionsMap;
   }
@@ -204,38 +203,6 @@ public class ReportService {
     return reports.stream()
         .filter(report -> isBetweenDates(report.getRecordingDate(), startDate, endDate))
         .toList();
-  }
-
-  private boolean isBetweenDates(OffsetDateTime date, OffsetDateTime start, OffsetDateTime end) {
-    return (date.isAfter(start) || date.equals(start)) && date.isBefore(end);
-  }
-
-  private String getLabelForTimePeriod(
-      OffsetDateTime start, OffsetDateTime end, ChartQueryType queryType) {
-    String pattern =
-        switch (queryType) {
-          case DAY, WEEK, MONTH -> "dd/MM";
-          case YEAR -> "dd/MM/yy";
-        };
-
-    String formattedStart = formatDate(start, pattern);
-    String formattedEnd = formatDate(end, pattern);
-
-    return formattedStart + " - " + formattedEnd;
-  }
-
-  private String formatDate(OffsetDateTime date, String pattern) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-    return date.format(formatter);
-  }
-
-  private OffsetDateTime getNextUpperBound(OffsetDateTime date, ChartQueryType queryType) {
-    return switch (queryType) {
-      case DAY -> date.plusDays(1);
-      case WEEK -> date.plusWeeks(1);
-      case MONTH -> date.plusMonths(1);
-      case YEAR -> date.plusYears(1);
-    };
   }
 
   private Double calculateTwoShiftsSum(List<Map<String, Double>> sums, String indicator) {
