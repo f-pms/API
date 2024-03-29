@@ -125,48 +125,46 @@ public class ReportService {
     var result = new MultiDayChartResponse();
 
     switch (searchCommand.getChartType()) {
-      case PIE:
-        reportsByTypes.forEach(
-            (reportType, currentReports) -> {
-              chartData.putIfAbsent(reportType, new HashMap<>());
-              var indicatorValuesMap = chartData.get(reportType);
-              var sumByIndicators =
-                  aggregateSumByIndicators(currentReports, List.of(ChartConstant.SUM_TOTAL));
-              indicatorValuesMap.putIfAbsent(
-                  ChartConstant.SUM_TOTAL, sumByIndicators.values().stream().toList());
-            });
-        break;
-      case MULTI_LINE, STACKED_BAR:
-        reportsByTypes.forEach(
-            (reportType, currentReports) -> {
-              var indicators = currentReports.get(0).getSums().get(0).keySet().stream().toList();
+      case PIE ->
+          reportsByTypes.forEach(
+              (reportType, currentReports) -> {
+                chartData.putIfAbsent(reportType, new HashMap<>());
+                var indicatorValuesMap = chartData.get(reportType);
+                var sumByIndicators =
+                    aggregateSumByIndicators(currentReports, List.of(ChartConstant.SUM_TOTAL));
+                indicatorValuesMap.putIfAbsent(
+                    ChartConstant.SUM_TOTAL, sumByIndicators.values().stream().toList());
+              });
+      case MULTI_LINE, STACKED_BAR ->
+          reportsByTypes.forEach(
+              (reportType, currentReports) -> {
+                var indicators = currentReports.get(0).getSums().get(0).keySet().stream().toList();
 
-              var reportChunks =
-                  partitionReportsByTimeUnit(
-                      currentReports,
-                      searchCommand.getQueryType(),
-                      searchCommand.getStart(),
-                      searchCommand.getEnd());
+                var reportChunks =
+                    partitionReportsByTimeUnit(
+                        currentReports,
+                        searchCommand.getQueryType(),
+                        searchCommand.getStart(),
+                        searchCommand.getEnd());
 
-              chartData.putIfAbsent(reportType, new HashMap<>());
+                chartData.putIfAbsent(reportType, new HashMap<>());
 
-              var indicatorValuesMap = chartData.get(reportType);
+                var indicatorValuesMap = chartData.get(reportType);
 
-              indicators.forEach(
-                  indicator -> indicatorValuesMap.putIfAbsent(indicator, new ArrayList<>()));
+                indicators.forEach(
+                    indicator -> indicatorValuesMap.putIfAbsent(indicator, new ArrayList<>()));
 
-              reportChunks.forEach(
-                  (label, reportsChunk) -> {
-                    var aggregatedSum = aggregateSumByIndicators(reportsChunk, indicators);
+                reportChunks.forEach(
+                    (label, reportsChunk) -> {
+                      var aggregatedSum = aggregateSumByIndicators(reportsChunk, indicators);
 
-                    indicatorValuesMap.forEach(
-                        (indicator, summedList) -> summedList.add(aggregatedSum.get(indicator)));
-                  });
+                      indicatorValuesMap.forEach(
+                          (indicator, summedList) -> summedList.add(aggregatedSum.get(indicator)));
+                    });
 
-              var labels = reportChunks.keySet().stream().toList();
-              result.setLabelSteps(labels);
-            });
-        break;
+                var labels = reportChunks.keySet().stream().toList();
+                result.setLabelSteps(labels);
+              });
     }
 
     result.setData(chartData);
