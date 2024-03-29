@@ -89,7 +89,7 @@ public class ReportDownloaderService {
         report ->
             futures.add(
                 CompletableFuture.runAsync(() -> generateReport(report.getId()), executor)));
-    CompletableFuture.allOf(futures.toArray(new CompletableFuture<?>[0])).join();
+    CompletableFuture.allOf(futures.toArray(CompletableFuture<?>[]::new)).join();
   }
 
   private void generateReport(Long id) {
