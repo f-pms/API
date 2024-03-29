@@ -1,6 +1,6 @@
 package com.hbc.pms.core.api.config;
 
-import java.util.List;
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -12,12 +12,14 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-  @Value("#{'${hbc.origins}'.split(',')}")
-  private List<String> allowedOrigins;
+  @Value("${hbc.origins}")
+  private String allowedOrigins;
 
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
-    registry.addEndpoint("/websocket").setAllowedOrigins(allowedOrigins.toArray(String[]::new));
+    registry
+        .addEndpoint("/websocket")
+        .setAllowedOrigins(Arrays.stream(allowedOrigins.split(",")).toArray(String[]::new));
   }
 
   @Override
