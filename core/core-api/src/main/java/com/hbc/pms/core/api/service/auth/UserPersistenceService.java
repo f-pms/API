@@ -1,6 +1,6 @@
 package com.hbc.pms.core.api.service.auth;
 
-import static com.hbc.pms.core.api.utils.StringUtils.isStringEncoded;
+import static com.hbc.pms.core.api.util.StringUtil.isStringEncoded;
 
 import com.hbc.pms.core.api.service.AbstractPersistenceService;
 import com.hbc.pms.core.model.User;

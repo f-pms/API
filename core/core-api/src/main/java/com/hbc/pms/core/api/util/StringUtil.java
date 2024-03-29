@@ -1,4 +1,4 @@
-package com.hbc.pms.core.api.utils;
+package com.hbc.pms.core.api.util;
 
 import static com.hbc.pms.core.api.constaint.RegexConstraints.PLC_TAG_EXPRESSION;
 
@@ -9,7 +9,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StringUtils {
+public class StringUtil {
 
   public static boolean isIncorrectPLCAddressFormat(String address) {
     Pattern pattern = Pattern.compile(PLC_TAG_EXPRESSION);

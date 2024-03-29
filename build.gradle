@@ -31,7 +31,7 @@ rootProject.afterEvaluate() {
     doNotTrackState("Walkarounds")
   }
 }
-apply plugin: "org.sonarqube"
+apply from: "${rootDir}/gradle/sonar.gradle"
 subprojects {
   apply plugin: 'java-library'
   apply plugin: 'groovy'

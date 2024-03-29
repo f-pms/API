@@ -6,6 +6,7 @@ import com.hbc.pms.support.auth.JwtAuthFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -37,9 +38,11 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable);
+    http.cors(AbstractHttpConfigurer::disable);
     http.authorizeHttpRequests(
         request -> {
           request.requestMatchers(WHITE_LIST_URLS).permitAll();
+          request.requestMatchers(HttpMethod.OPTIONS).permitAll();
           request.anyRequest().authenticated();
         });
     http.authenticationProvider(authenticationProvider())
