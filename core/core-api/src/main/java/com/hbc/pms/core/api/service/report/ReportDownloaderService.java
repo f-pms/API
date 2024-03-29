@@ -6,12 +6,18 @@ import static com.hbc.pms.core.api.util.DateTimeUtil.convertOffsetDateTimeToLoca
 import static java.util.Objects.isNull;
 
 
-import com.hbc.pms.core.api.service.report.ReportPersistenceService;
 import com.hbc.pms.core.api.support.data.ReportExcelProcessor;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.core.model.enums.ReportRowShift;
+import com.hbc.pms.support.web.error.CoreApiException;
+import com.hbc.pms.support.web.error.ErrorType;
 import io.vavr.control.Try;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -19,9 +25,14 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -33,22 +44,39 @@ public class ReportDownloaderService {
   @Value("${hbc.report.dir}")
   private String reportDir;
 
-  public List<String> downloadByIds(List<Long> ids) {
-    var criteria = ReportCriteria.builder().ids(ids).build();
-    return process(criteria);
+  public void download(List<Path> paths, HttpServletResponse response) {
+    response.setContentType("application/zip");
+    response.setHeader(
+        HttpHeaders.CONTENT_DISPOSITION,
+        ContentDisposition.attachment()
+            .filename("reports.zip", StandardCharsets.UTF_8)
+            .build()
+            .toString());
+    try {
+      var zipOutputStream = new ZipOutputStream(response.getOutputStream());
+      for (Path path : paths) {
+        var inputStream = Files.newInputStream(path);
+        var file = path.toFile();
+        var entry = new ZipEntry(file.getParentFile().getName() + "/" + file.getName());
+        zipOutputStream.putNextEntry(entry);
+        StreamUtils.copy(inputStream, zipOutputStream);
+        zipOutputStream.flush();
+        zipOutputStream.closeEntry();
+      }
+      zipOutputStream.finish();
+      zipOutputStream.close();
+    } catch (IOException e) {
+      throw new CoreApiException(ErrorType.DEFAULT_ERROR, "Failed to download Excel files");
+    }
   }
 
-  public List<String> downloadByDate(OffsetDateTime startDate, OffsetDateTime endDate) {
-    var criteria = ReportCriteria.builder().startDate(startDate).endDate(endDate).build();
-    return process(criteria);
-  }
-
-  private List<String> process(ReportCriteria criteria) {
+  public List<Path> getReportPaths(ReportCriteria criteria) {
     var reports = reportPersistenceService.getAll(criteria);
     var missingReports = reports.stream().filter(this::notFoundPredicate).toList();
     generateReports(missingReports);
     return reports.stream()
-        .map(report -> report.getType().getName() + "/" + this.getFileName(report))
+        .map(report -> Paths.get(reportDir, report.getType().getName(), this.getFileName(report)))
+        .filter(path -> path.toFile().exists())
         .toList();
   }
 
