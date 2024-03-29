@@ -62,7 +62,6 @@ public class ReportController {
   public void download(ReportCriteria criteria, HttpServletResponse response) {
     var paths = reportDownloaderService.getReportPaths(criteria);
     reportDownloaderService.download(paths, response);
-        mapper.map(reportPersistenceService.getByIdWithRows(id), ReportResponse.class));
   }
 
   @GetMapping("/{id}/charts/one-day")
