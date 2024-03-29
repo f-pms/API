@@ -94,13 +94,12 @@ public class ReportHandler implements RmsHandler {
             processor.resetDevelopmentCells(context2, indicator2);
             reportService.updateSumJson(report, List.of(sums1, sums2));
 
-            var fileName = String.format(EXCEL_FILE, REPORT_DATE_TIME_FORMATTER.format(
-                convertOffsetDateTimeToLocalDateTime(report.getRecordingDate())));
-            processor.save(
-                workbook,
-                alias,
-                fileName
-                );
+            var fileName =
+                String.format(
+                    EXCEL_FILE,
+                    REPORT_DATE_TIME_FORMATTER.format(
+                        convertOffsetDateTimeToLocalDateTime(report.getRecordingDate())));
+            processor.save(workbook, alias, fileName);
           } catch (Exception ex) {
             log.error("Failed to process daily report for type={}: {}", type, ex.getMessage());
           }
