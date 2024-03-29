@@ -67,10 +67,7 @@ public class ReportExcelProcessor {
     var filename = String.format(EXCEL_FILE, alias);
     var templatePath = new ClassPathResource(Paths.get(TEMPLATE_DIR_PATH, filename).toString());
     var templateFile = templatePath.getInputStream();
-    var tmpPath =
-        Paths.get(
-            System.getProperty("java.io.tmpdir"),
-            UUID.randomUUID() + filename);
+    var tmpPath = Paths.get(System.getProperty("java.io.tmpdir"), UUID.randomUUID() + filename);
 
     try {
       FileUtils.copyInputStreamToFile(templateFile, tmpPath.toFile());
