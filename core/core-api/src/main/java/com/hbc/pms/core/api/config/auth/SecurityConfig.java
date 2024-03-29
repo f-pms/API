@@ -38,6 +38,7 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable);
+    http.cors(AbstractHttpConfigurer::disable);
     http.authorizeHttpRequests(
         request -> {
           request.requestMatchers(WHITE_LIST_URLS).permitAll();
