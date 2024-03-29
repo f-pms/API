@@ -1,11 +1,7 @@
 package com.hbc.pms.core.api.util;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -28,13 +24,6 @@ public class ElectricTimeUtil {
   public static final LocalTime SHIFT_2_PERIOD_3_END_TIME = LocalTime.of(3, 59);
   public static final LocalTime SHIFT_2_PERIOD_4_START_TIME = LocalTime.of(4, 0);
   public static final LocalTime SHIFT_2_PERIOD_4_END_TIME = LocalTime.of(5, 59);
-
-  private static final ZoneId VIETNAM_ZONE_ID = ZoneId.of("Asia/Ho_Chi_Minh");
-
-  public static LocalDateTime convertOffsetDateTimeToLocalTime(OffsetDateTime offsetDateTime) {
-    ZonedDateTime zoned = offsetDateTime.atZoneSameInstant(VIETNAM_ZONE_ID);
-    return zoned.toLocalDateTime();
-  }
 
   public static String getTimeGroup(DayOfWeek dayOfWeek, LocalTime time) {
     if (dayOfWeek == DayOfWeek.SUNDAY) {

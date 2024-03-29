@@ -4,4 +4,8 @@ public class ReportExcelProcessorException extends RuntimeException {
   public ReportExcelProcessorException(String message) {
     super(message);
   }
+
+  public ReportExcelProcessorException(String message, Throwable cause) {
+    super(message, cause);
+  }
 }

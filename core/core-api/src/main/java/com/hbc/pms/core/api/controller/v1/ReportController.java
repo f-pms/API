@@ -3,6 +3,7 @@ package com.hbc.pms.core.api.controller.v1;
 import com.hbc.pms.core.api.controller.v1.request.SearchMultiDayChartCommand;
 import com.hbc.pms.core.api.controller.v1.response.MultiDayChartResponse;
 import com.hbc.pms.core.api.controller.v1.response.ReportResponse;
+import com.hbc.pms.core.api.service.report.ReportDownloaderService;
 import com.hbc.pms.core.api.service.report.ReportPersistenceService;
 import com.hbc.pms.core.api.service.report.ReportService;
 import com.hbc.pms.core.api.service.report.ReportTypePersistenceService;
@@ -11,6 +12,7 @@ import com.hbc.pms.core.model.ReportType;
 import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.support.web.pagination.QueryResult;
 import com.hbc.pms.support.web.response.ApiResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +33,7 @@ public class ReportController {
   private final ModelMapper mapper;
   private final ReportTypePersistenceService reportTypePersistenceService;
   private final ReportPersistenceService reportPersistenceService;
+  private final ReportDownloaderService reportDownloaderService;
   private final ReportService reportService;
 
   @GetMapping("types")
@@ -52,6 +55,13 @@ public class ReportController {
   @GetMapping("details/{id}")
   public ApiResponse<ReportResponse> getDetailById(@PathVariable Long id) {
     return ApiResponse.success(
+        mapper.map(reportPersistenceService.getByIdWithRows(id), ReportResponse.class));
+  }
+
+  @GetMapping("/download")
+  public void download(ReportCriteria criteria, HttpServletResponse response) {
+    var paths = reportDownloaderService.getReportPaths(criteria);
+    reportDownloaderService.download(paths, response);
         mapper.map(reportPersistenceService.getByIdWithRows(id), ReportResponse.class));
   }
 
