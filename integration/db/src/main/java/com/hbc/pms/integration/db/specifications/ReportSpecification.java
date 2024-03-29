@@ -1,6 +1,5 @@
 package com.hbc.pms.integration.db.specifications;
 
-
 import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.core.model.enums.ReportOrder;
 import com.hbc.pms.integration.db.entity.ReportEntity;
