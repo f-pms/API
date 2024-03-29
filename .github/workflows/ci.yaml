@@ -21,7 +21,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.base_ref }}
           fetch-depth: 0
       - name: Setup Java
         uses: actions/setup-java@v3
