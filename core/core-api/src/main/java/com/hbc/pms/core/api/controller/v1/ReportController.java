@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.response.ReportResponse;
+import com.hbc.pms.core.api.service.report.ReportDownloaderService;
 import com.hbc.pms.core.api.service.report.ReportPersistenceService;
 import com.hbc.pms.core.api.service.report.ReportTypePersistenceService;
 import com.hbc.pms.core.model.Report;
@@ -8,6 +9,7 @@ import com.hbc.pms.core.model.ReportType;
 import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.support.web.pagination.QueryResult;
 import com.hbc.pms.support.web.response.ApiResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -26,6 +28,7 @@ public class ReportController {
   private final ModelMapper mapper;
   private final ReportTypePersistenceService reportTypePersistenceService;
   private final ReportPersistenceService reportPersistenceService;
+  private final ReportDownloaderService reportDownloaderService;
 
   @GetMapping("types")
   public ApiResponse<List<ReportType>> getTypes() {
@@ -46,6 +49,12 @@ public class ReportController {
   @GetMapping("details/{id}")
   public ApiResponse<ReportResponse> getDetailById(@PathVariable Long id) {
     return ApiResponse.success(
-        mapper.map(reportPersistenceService.getById(id), ReportResponse.class));
+        mapper.map(reportPersistenceService.getByIdWithRows(id), ReportResponse.class));
+  }
+
+  @GetMapping("/download")
+  public void download(ReportCriteria criteria, HttpServletResponse response) {
+    var paths = reportDownloaderService.getReportPaths(criteria);
+    reportDownloaderService.download(paths, response);
   }
 }
