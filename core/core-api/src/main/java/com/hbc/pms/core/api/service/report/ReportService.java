@@ -139,7 +139,7 @@ public class ReportService {
       case MULTI_LINE, STACKED_BAR:
         reportsByTypes.forEach(
             (reportType, currentReports) -> {
-              var indicatorList = currentReports.get(0).getSums().get(0).keySet().stream().toList();
+              var indicators = currentReports.get(0).getSums().get(0).keySet().stream().toList();
 
               var reportChunks =
                   partitionReportsByTimeUnit(
@@ -152,11 +152,12 @@ public class ReportService {
 
               var indicatorValuesMap = chartData.get(reportType);
 
-              indicatorList.forEach(x -> indicatorValuesMap.putIfAbsent(x, new ArrayList<>()));
+              indicators.forEach(
+                  indicator -> indicatorValuesMap.putIfAbsent(indicator, new ArrayList<>()));
 
               reportChunks.forEach(
-                  (label, reportsList) -> {
-                    var aggregatedSum = aggregateSumByIndicators(reportsList, indicatorList);
+                  (label, reportsChunk) -> {
+                    var aggregatedSum = aggregateSumByIndicators(reportsChunk, indicators);
 
                     indicatorValuesMap.forEach(
                         (indicator, summedList) -> summedList.add(aggregatedSum.get(indicator)));
@@ -166,8 +167,6 @@ public class ReportService {
               result.setLabelSteps(labels);
             });
         break;
-      default:
-        throw new IllegalStateException("Unexpected value: " + searchCommand.getChartType());
     }
 
     result.setData(chartData);
