@@ -1,7 +1,11 @@
 name: CI
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
@@ -19,11 +23,6 @@ jobs:
         with:
           ref: ${{ github.base_ref }}
           fetch-depth: 0
-      - name: Git merge
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "Github Actions"
-          git merge origin/${{ github.head_ref }} --allow-unrelated-histories
       - name: Setup Java
         uses: actions/setup-java@v3
         with:

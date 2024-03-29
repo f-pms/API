@@ -1,4 +1,4 @@
-package com.hbc.pms.core.api.service;
+package com.hbc.pms.core.api.service.report;
 
 import static com.hbc.pms.core.api.util.DateUtil.getDateRangeLabel;
 import static com.hbc.pms.core.api.util.DateUtil.getNextUpperBoundDate;
@@ -107,7 +107,7 @@ public class ReportService {
             .endDate(searchCommand.getEnd())
             .build();
 
-    var reports = reportPersistenceService.getAll(reportCriteria);
+    var reports = reportPersistenceService.getAll(reportCriteria).stream().toList();
 
     return aggregateSumByIndicators(reports, ChartConstant.COMMON_INDICATORS);
   }
@@ -119,7 +119,7 @@ public class ReportService {
             .endDate(searchCommand.getEnd())
             .build();
 
-    List<Report> reports = reportPersistenceService.getAll(reportCriteria);
+    List<Report> reports = reportPersistenceService.getAll(reportCriteria).stream().toList();
     Map<String, List<Report>> reportsByTypes = groupReportsByType(reports);
     var chartData = new HashMap<String, Map<String, List<Double>>>();
     var result = new MultiDayChartResponse();

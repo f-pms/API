@@ -1,6 +1,6 @@
-package com.hbc.pms.core.api.service;
+package com.hbc.pms.core.api.service.report;
 
-import com.hbc.pms.core.api.controller.v1.common.Page;
+import com.hbc.pms.core.api.service.AbstractPersistenceService;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.integration.db.entity.ReportEntity;
@@ -8,34 +8,28 @@ import com.hbc.pms.integration.db.repository.ReportRepository;
 import com.hbc.pms.integration.db.specifications.ReportSpecification;
 import com.hbc.pms.support.web.error.CoreApiException;
 import com.hbc.pms.support.web.error.ErrorType;
-import java.util.List;
+import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ReportPersistenceService {
+public class ReportPersistenceService extends AbstractPersistenceService<ReportEntity> {
   private final ModelMapper mapper;
   private final ReportRepository reportRepository;
   private static final String REPORT_NOT_FOUND_LITERAL = "Report not found with id: ";
 
   public Page<Report> getAll(ReportCriteria criteria, Pageable pagination) {
     var spec = new ReportSpecification(criteria);
-    var page = reportRepository.findAll(spec, pagination);
-    return Page.<Report>builder()
-        .pageTotal(page.getTotalPages())
-        .recordTotal(page.getTotalElements())
-        .content(page.map(entity -> mapper.map(entity, Report.class)).toList())
-        .build();
+    return mapToModel(reportRepository.findAll(spec, pagination), Report.class);
   }
 
-  public List<Report> getAll(ReportCriteria criteria) {
+  public Collection<Report> getAll(ReportCriteria criteria) {
     var spec = new ReportSpecification(criteria);
-    return reportRepository.findAll(spec).stream()
-        .map(entity -> mapper.map(entity, Report.class))
-        .toList();
+    return mapToModel(reportRepository.findAll(spec), Report.class);
   }
 
   public Report getByIdWithRows(Long id) {
@@ -51,7 +45,7 @@ public class ReportPersistenceService {
     if (oEntity.isEmpty()) {
       throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, REPORT_NOT_FOUND_LITERAL + id);
     }
-    return mapper.map(oEntity, Report.class);
+    return mapToModel(oEntity.get(), Report.class);
   }
 
   public Report create(Report report) {

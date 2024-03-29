@@ -2,6 +2,7 @@ package com.hbc.pms.core.api.service.auth;
 
 import static com.hbc.pms.core.api.util.StringUtil.isStringEncoded;
 
+import com.hbc.pms.core.api.service.AbstractPersistenceService;
 import com.hbc.pms.core.model.User;
 import com.hbc.pms.integration.db.entity.UserEntity;
 import com.hbc.pms.integration.db.repository.UserRepository;
@@ -9,17 +10,22 @@ import com.hbc.pms.support.web.error.CoreApiException;
 import com.hbc.pms.support.web.error.ErrorType;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@AllArgsConstructor
 @Service
-public class UserPersistenceService {
+@AllArgsConstructor
+public class UserPersistenceService extends AbstractPersistenceService<UserEntity> {
   private final UserRepository userRepository;
-  private final ModelMapper mapper;
   private final PasswordEncoder passwordEncoder;
+
+  public Page<User> query(Pageable pageable) {
+    var page = userRepository.findAll(pageable);
+    return page.map(entity -> mapToModel(entity, User.class));
+  }
 
   public User findById(Long id) {
     UserEntity entity =

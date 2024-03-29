@@ -3,7 +3,6 @@ package com.hbc.pms.support.auth;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +16,7 @@ public class DefaultAuthenticationFacade implements AuthenticationFacade {
 
   public Set<String> getRoles() {
     return getAuthentication().getAuthorities().stream()
-        .map(GrantedAuthority::getAuthority)
+        .map(grantedAuthority -> grantedAuthority.getAuthority().split("_")[1])
         .collect(Collectors.toSet());
   }
 

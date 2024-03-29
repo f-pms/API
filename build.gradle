@@ -31,7 +31,7 @@ rootProject.afterEvaluate() {
     doNotTrackState("Walkarounds")
   }
 }
-
+apply plugin: "org.sonarqube"
 subprojects {
   apply plugin: 'java-library'
   apply plugin: 'groovy'
@@ -39,11 +39,11 @@ subprojects {
   apply plugin: 'io.spring.dependency-management'
   apply plugin: 'jacoco'
   apply plugin: 'jacoco-report-aggregation'
+  apply plugin: 'org.sonarqube'
   apply from: "${rootDir}/gradle/test.gradle"
 
   bootJar.enabled = false
   jar.enabled = true
-
   dependencies {
     implementation platform('org.apache.groovy:groovy-bom:4.0.18')
     implementation 'org.apache.groovy:groovy'

@@ -1,8 +1,9 @@
-package com.hbc.pms.core.api.service;
+package com.hbc.pms.core.api.service.alarm;
 
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.response.AlarmConditionResponse;
+import com.hbc.pms.core.api.service.blueprint.SensorConfigurationPersistenceService;
 import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.SensorConfiguration;
