@@ -1,5 +1,7 @@
 package com.hbc.pms.core.api.support.data;
 
+import static com.hbc.pms.core.api.constant.ReportConstant.EXCEL_FILE;
+import static com.hbc.pms.core.api.util.DateTimeUtil.convertOffsetDateTimeToLocalDateTime;
 import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_1_PERIOD_1_END_TIME;
 import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_1_PERIOD_1_START_TIME;
 import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_1_PERIOD_2_END_TIME;
@@ -25,7 +27,6 @@ import com.hbc.pms.core.model.enums.ReportRowShift;
 import io.vavr.control.Try;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.DayOfWeek;
 import java.time.OffsetDateTime;
@@ -33,36 +34,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.regex.Pattern;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
 @Component
 @Slf4j
 public class ReportExcelProcessor {
-  private static final String TEMPLATE_FILE_PATH = "classpath:excel-templates/%s.xlsx";
-  private static final String REPORT_DIR_PATH = "classpath:reports";
+  private static final String TEMPLATE_DIR_PATH = "excel-templates";
   private static final Pattern INDICATOR_PATTERN = Pattern.compile("\\((?<indicator>.*)\\)");
   private static final String SUM_PREFIX = "SUM_";
   private static final String SUM_SPECIFIC_PREFIX = SUM_PREFIX + "SPECIFIC_";
   private static final String IGNORE_POSTFIX = "__";
 
+  @Value("${hbc.report.dir}")
+  private String reportDir;
+
   public XSSFWorkbook cloneWorkbook(String alias) throws IOException, InvalidFormatException {
-    var templatePath = ResourceUtils.getFile(String.format(TEMPLATE_FILE_PATH, alias)).toPath();
-    var tmpPath =
-        Paths.get(
-            System.getProperty("java.io.tmpdir"),
-            System.currentTimeMillis() + templatePath.getFileName().toString());
-    Files.copy(templatePath, tmpPath);
+    var filename = String.format(EXCEL_FILE, alias);
+    var templatePath = new ClassPathResource(Paths.get(TEMPLATE_DIR_PATH, filename).toString());
+    var templateFile = templatePath.getInputStream();
+    var tmpPath = Paths.get(System.getProperty("java.io.tmpdir"), UUID.randomUUID() + filename);
+
+    try {
+      FileUtils.copyInputStreamToFile(templateFile, tmpPath.toFile());
+    } finally {
+      IOUtils.closeQuietly(templateFile);
+    }
     return new XSSFWorkbook(tmpPath.toFile());
   }
 
@@ -88,7 +99,7 @@ public class ReportExcelProcessor {
 
   public Map<String, Double> processSumsMap(
       Context context, Map<String, CellAddress> indicators, OffsetDateTime recordingDate) {
-    var localDateTime = ElectricTimeUtil.convertOffsetDateTimeToLocalTime(recordingDate);
+    var localDateTime = convertOffsetDateTimeToLocalDateTime(recordingDate);
     var dayOfWeek = localDateTime.getDayOfWeek();
 
     context.rows.forEach(row -> fillBaseValue(context, indicators, dayOfWeek, row));
@@ -109,19 +120,19 @@ public class ReportExcelProcessor {
         });
   }
 
-  public void save(XSSFWorkbook workbook) {
+  public void save(XSSFWorkbook workbook, String dir, String name) {
     try {
-      // TODO: use a better way to generate file name
-      var path =
-          Paths.get(
-              String.valueOf(ResourceUtils.getFile(REPORT_DIR_PATH)),
-              System.currentTimeMillis() + ".xlsx");
-      var fos = new FileOutputStream(path.toString());
+      var dirPath = Paths.get(reportDir, dir);
+      if (!dirPath.toFile().exists()) {
+        dirPath.toFile().mkdir();
+      }
+      var excelPath = dirPath.resolve(name);
+      var fos = new FileOutputStream(excelPath.toString());
       workbook.write(fos);
       fos.close();
       workbook.close();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+    } catch (Exception ex) {
+      throw new ReportExcelProcessorException("Failed to save the workbook", ex.getCause());
     }
   }
 
