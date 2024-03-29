@@ -3,7 +3,7 @@ apply plugin: "org.sonarqube"
 sonar {
   properties {
     // Insert other SonarQube properties here
-    property 'sonar.projectName', 'RMS)'
+    property 'sonar.projectName', 'RMS'
     property 'sonar.projectKey', 'f-pms_API'
   }
 }
