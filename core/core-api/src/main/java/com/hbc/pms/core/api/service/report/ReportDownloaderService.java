@@ -71,7 +71,12 @@ public class ReportDownloaderService {
     var missingReports = reports.stream().filter(this::notFoundPredicate).toList();
     generateReports(missingReports);
     return reports.stream()
-        .map(report -> Paths.get(reportConfiguration.getDir(), report.getType().getName(), this.getFileName(report)))
+        .map(
+            report ->
+                Paths.get(
+                    reportConfiguration.getDir(),
+                    report.getType().getName(),
+                    this.getFileName(report)))
         .filter(path -> path.toFile().exists())
         .toList();
   }

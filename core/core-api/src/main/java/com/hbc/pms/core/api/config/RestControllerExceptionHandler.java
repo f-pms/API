@@ -31,7 +31,6 @@ public class RestControllerExceptionHandler {
         ApiResponse.error(ex.getErrorType(), ex.getData()), ex.getErrorType().getStatus());
   }
 
-
   @ResponseBody
   @ResponseStatus(org.springframework.http.HttpStatus.BAD_REQUEST)
   @ExceptionHandler({ValidationException.class})
