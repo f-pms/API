@@ -12,16 +12,22 @@ public class DateUtil {
 
   public static String getDateRangeLabel(
       OffsetDateTime start, OffsetDateTime end, ChartQueryType queryType) {
-    String pattern =
-        switch (queryType) {
-          case DAY, WEEK, MONTH -> "dd/MM";
-          case YEAR -> "dd/MM/yy";
-        };
 
-    String formattedStart = formatDate(start, pattern);
-    String formattedEnd = formatDate(end, pattern);
+    switch (queryType) {
+      case DAY -> {
+        return formatDate(start, "dd/MM");
+      }
+      case WEEK, MONTH -> {
+        var pattern = "dd/MM";
+        return formatDate(start, pattern) + " - " + formatDate(end, pattern);
+      }
+      case YEAR -> {
+        var pattern = "dd/MM/yy";
+        return formatDate(start, pattern) + " - " + formatDate(end, pattern);
+      }
+    }
 
-    return formattedStart + " - " + formattedEnd;
+    return "";
   }
 
   private static String formatDate(OffsetDateTime date, String pattern) {

@@ -12,7 +12,7 @@ public class SearchMultiDayChartCommand {
 
   @NotNull private OffsetDateTime end;
 
-  private ChartQueryType queryType;
+  private ChartQueryType queryType = ChartQueryType.DAY;
 
-  private ChartType chartType;
+  private ChartType chartType = ChartType.PIE;
 }

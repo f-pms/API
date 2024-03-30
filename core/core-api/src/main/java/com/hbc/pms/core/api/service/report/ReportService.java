@@ -186,7 +186,7 @@ public class ReportService {
 
     while (upperBound.isBefore(end.plusDays(1))) {
       List<Report> partition = filterReportsByTimePeriod(reports, currentDate, upperBound);
-      String label = getDateRangeLabel(currentDate, upperBound, queryType);
+      String label = getDateRangeLabel(currentDate, upperBound.minusDays(1), queryType);
       partitionsMap.put(label, partition);
 
       currentDate = upperBound;
