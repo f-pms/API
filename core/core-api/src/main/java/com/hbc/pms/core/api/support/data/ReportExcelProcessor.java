@@ -132,7 +132,7 @@ public class ReportExcelProcessor {
       fos.close();
       workbook.close();
     } catch (Exception ex) {
-      throw new ReportExcelProcessorException("Failed to save the workbook", ex.getCause());
+      throw new ReportExcelProcessorException("Failed to save the workbook", ex);
     }
   }
 
