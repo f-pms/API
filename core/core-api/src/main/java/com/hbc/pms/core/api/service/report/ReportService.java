@@ -10,6 +10,7 @@ import com.hbc.pms.core.api.constant.ChartConstant;
 import com.hbc.pms.core.api.controller.v1.enums.ChartQueryType;
 import com.hbc.pms.core.api.controller.v1.request.SearchMultiDayChartCommand;
 import com.hbc.pms.core.api.controller.v1.response.MultiDayChartResponse;
+import com.hbc.pms.core.api.controller.v1.response.OneDayChartResponse;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.ReportRow;
 import com.hbc.pms.core.model.ReportSchedule;
@@ -94,9 +95,12 @@ public class ReportService {
             });
   }
 
-  public List<Map<String, Double>> getOneDayChartFigures(Long reportId) {
+  public OneDayChartResponse getOneDayChartFigures(Long reportId) {
     var report = reportPersistenceService.getById(reportId);
-    return report.getSums();
+    return OneDayChartResponse.builder()
+        .data(report.getSums())
+        .recordingDate(report.getRecordingDate())
+        .build();
   }
 
   public Map<String, Double> getMultiDayChartSummaryFigures(
