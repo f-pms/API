@@ -12,6 +12,7 @@ import spock.util.concurrent.PollingConditions
 @ActiveProfiles("functional-test")
 class FunctionalTestSpec extends AbstractFunctionalSpec {
   protected static String ALARM_CONDITION_PATH = "/alarm-conditions"
+  protected static String REPORT_PATH = "/reports"
   PollingConditions conditions = new PollingConditions(timeout: 20)
 
   @Autowired

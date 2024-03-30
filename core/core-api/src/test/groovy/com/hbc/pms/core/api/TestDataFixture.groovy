@@ -15,11 +15,13 @@ import com.hbc.pms.integration.db.entity.AlarmActionEntity
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity
 import com.hbc.pms.integration.db.entity.AlarmHistoryEntity
 import com.hbc.pms.integration.db.entity.BlueprintEntity
+import com.hbc.pms.integration.db.entity.ReportTypeEntity
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity
 import com.hbc.pms.integration.db.repository.AlarmActionRepository
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository
 import com.hbc.pms.integration.db.repository.AlarmHistoryRepository
 import com.hbc.pms.integration.db.repository.BlueprintRepository
+import com.hbc.pms.integration.db.repository.ReportTypeRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.integration.db.repository.UserRepository
 import java.time.OffsetDateTime
@@ -38,6 +40,9 @@ class TestDataFixture {
   static Long MONITORING_BLUEPRINT_ID
   static Long CUSTOM_ALARM_BLUEPRINT_ID
   static Long PREDEFINED_ALARM_BLUEPRINT_ID
+
+  @Autowired
+  ReportTypeRepository reportTypeRepository
 
   @Autowired
   BlueprintRepository blueprintRepository
@@ -65,6 +70,7 @@ class TestDataFixture {
   void populate() {
     populateUsers()
     populateBlueprints()
+    populateReportTypes()
   }
 
   void cleanup() {
@@ -74,6 +80,11 @@ class TestDataFixture {
     configurationRepository.deleteAll()
     blueprintRepository.deleteAll()
     userRepository.deleteAll()
+  }
+
+  void populateReportTypes() {
+    reportTypeRepository.save(ReportTypeEntity.builder().name("DAM").build())
+    reportTypeRepository.save(ReportTypeEntity.builder().name("BTP").build())
   }
 
   void populateUsers() {
@@ -103,6 +114,7 @@ class TestDataFixture {
     def customAlarmBlueprint = blueprintRepository.save(createBlueprint(BlueprintType.ALARM, AlarmType.CUSTOM.toString()))
     CUSTOM_ALARM_BLUEPRINT_ID = customAlarmBlueprint.getId()
   }
+
   static SensorConfigurationEntity createSensorConfiguration(BlueprintEntity blueprint, String address) {
     return SensorConfigurationEntity.builder()
             .address(address)

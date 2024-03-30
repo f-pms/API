@@ -58,7 +58,6 @@ class AlarmResolverFunctionalSpec extends FunctionalTestSpec {
 
     then:
     Thread.sleep(ALLOWED_DELAY_SEC * 1000)
-    //TODO: should use entityManager.refresh()
     def theHistory = historyRepository.findById(history.getId()).get()
 
     theHistory.status == AlarmStatus.TRIGGERED || theHistory.status == AlarmStatus.SENT
@@ -75,7 +74,6 @@ class AlarmResolverFunctionalSpec extends FunctionalTestSpec {
 
     then:
     Thread.sleep(ALLOWED_DELAY_SEC * 1000)
-    //TODO: should use entityManager.refresh()
     def theHistory = historyRepository.findById(history.getId()).get()
 
     theHistory.status == AlarmStatus.SOLVED
@@ -92,7 +90,6 @@ class AlarmResolverFunctionalSpec extends FunctionalTestSpec {
 
     then:
     Thread.sleep(ALLOWED_DELAY_SEC * 1000)
-    //TODO: should use entityManager.refresh()
     def theHistory = historyRepository.findById(history.getId()).get()
 
     theHistory.status == AlarmStatus.SOLVED
