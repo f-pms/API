@@ -2,6 +2,7 @@ package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.request.SearchMultiDayChartCommand;
 import com.hbc.pms.core.api.controller.v1.response.MultiDayChartResponse;
+import com.hbc.pms.core.api.controller.v1.response.OneDayChartResponse;
 import com.hbc.pms.core.api.controller.v1.response.ReportResponse;
 import com.hbc.pms.core.api.service.report.ReportDownloaderService;
 import com.hbc.pms.core.api.service.report.ReportPersistenceService;
@@ -65,7 +66,7 @@ public class ReportController {
   }
 
   @GetMapping("/{id}/charts/one-day")
-  public ApiResponse<List<Map<String, Double>>> getOneDayChartFigures(@PathVariable Long id) {
+  public ApiResponse<OneDayChartResponse> getOneDayChartFigures(@PathVariable Long id) {
     return ApiResponse.success(reportService.getOneDayChartFigures(id));
   }
 
