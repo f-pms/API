@@ -37,6 +37,8 @@ public class ReportService {
   private final ReportRowPersistenceService reportRowPersistenceService;
   private final ReportTypePersistenceService reportTypePersistenceService;
 
+  private static final String SUM_SPECIFIC_PREFIX = "SUM_SPECIFIC_";
+
   public Report createReportByType(ReportType type) {
     return reportPersistenceService.create(
         Report.builder()
@@ -142,7 +144,13 @@ public class ReportService {
       case MULTI_LINE, STACKED_BAR ->
           reportsByTypes.forEach(
               (reportType, currentReports) -> {
-                var indicators = currentReports.get(0).getSums().get(0).keySet().stream().toList();
+                var indicators =
+                    currentReports.get(0).getSums().get(0).keySet().stream()
+                        .filter(
+                            indicator ->
+                                ChartConstant.COMMON_INDICATORS.contains(indicator)
+                                    || indicator.startsWith(SUM_SPECIFIC_PREFIX))
+                        .toList();
 
                 var reportChunks =
                     partitionReportsByTimeUnit(
