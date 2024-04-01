@@ -1,7 +1,5 @@
 package com.hbc.pms.core.api.service.report;
 
-
-
 import com.hbc.pms.core.api.config.report.ReportConfiguration;
 import com.hbc.pms.core.api.support.data.ReportExcelProcessor;
 import com.hbc.pms.core.model.Report;
@@ -70,14 +68,19 @@ public class ReportDownloaderService {
     return reports.stream()
         .map(
             report ->
-                Paths.get(reportConfiguration.getDir(), report.getType().getName(), processor.getFileName(report)))
+                Paths.get(
+                    reportConfiguration.getDir(),
+                    report.getType().getName(),
+                    processor.getFileName(report)))
         .filter(path -> path.toFile().exists())
         .toList();
   }
 
   private boolean notFoundPredicate(Report report) {
     var alias = report.getType().getName();
-    return !Paths.get(reportConfiguration.getDir(), alias, processor.getFileName(report)).toFile().exists();
+    return !Paths.get(reportConfiguration.getDir(), alias, processor.getFileName(report))
+        .toFile()
+        .exists();
   }
 
   private void generateReports(List<Long> ids) {
