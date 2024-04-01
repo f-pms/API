@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.service.report;
 
+import com.hbc.pms.core.api.config.report.ReportConfiguration;
 import com.hbc.pms.core.api.support.data.ReportExcelProcessor;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.criteria.ReportCriteria;
@@ -20,7 +21,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -33,9 +33,7 @@ public class ReportDownloaderService {
   private final ReportPersistenceService reportPersistenceService;
   private final ReportExcelProcessor processor;
   private final Executor executor = Executors.newFixedThreadPool(5);
-
-  @Value("${hbc.report.dir}")
-  private String reportDir;
+  private final ReportConfiguration reportConfiguration;
 
   public void download(List<Path> paths, HttpServletResponse response) {
     response.setContentType("application/zip");
@@ -70,14 +68,19 @@ public class ReportDownloaderService {
     return reports.stream()
         .map(
             report ->
-                Paths.get(reportDir, report.getType().getName(), processor.getFileName(report)))
+                Paths.get(
+                    reportConfiguration.getDir(),
+                    report.getType().getName(),
+                    processor.getFileName(report)))
         .filter(path -> path.toFile().exists())
         .toList();
   }
 
   private boolean notFoundPredicate(Report report) {
     var alias = report.getType().getName();
-    return !Paths.get(reportDir, alias, processor.getFileName(report)).toFile().exists();
+    return !Paths.get(reportConfiguration.getDir(), alias, processor.getFileName(report))
+        .toFile()
+        .exists();
   }
 
   private void generateReports(List<Long> ids) {

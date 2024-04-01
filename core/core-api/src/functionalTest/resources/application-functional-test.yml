@@ -4,6 +4,8 @@ spring:
 hbc:
   plc:
     url: mock:scraper
+  report:
+    enable-validation: false
 integration:
   datasource:
     core:

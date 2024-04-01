@@ -6,6 +6,7 @@ import com.hbc.pms.support.web.response.ApiResponse;
 import io.jsonwebtoken.JwtException;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
+@Slf4j
 public class RestControllerExceptionHandler {
 
   @ResponseBody
@@ -69,7 +71,7 @@ public class RestControllerExceptionHandler {
       return new ResponseEntity<>(
           ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
-
+    log.error(ex.getMessage(), ex); // keep stacktrace
     return new ResponseEntity<>(
         ApiResponse.error(ErrorType.DEFAULT_ERROR, ex.toString()),
         HttpStatus.INTERNAL_SERVER_ERROR);

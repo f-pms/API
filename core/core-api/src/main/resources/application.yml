@@ -37,6 +37,7 @@ hbc:
       secret-key: ${JWT_SECRET:ZGNtLXRoYW5nLW5hby1kZWNvZGUtY2FpLW5heS1uaGFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYQ==}
       expiration-time: ${JWT_EXPIRATION_TIME:86400000}
   report:
+    enable-validation: ${REPORT_VALIDATE:true}
     dir: ${REPORT_DIR:D:/reports}
 server:
   tomcat:

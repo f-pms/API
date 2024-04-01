@@ -19,6 +19,8 @@ hbc:
     password: ${MAIL_PASSWORD:RandomPassword}
     from: ${MAIL_FROM:PMS <pms@ohtgo.me>}
     subject: ${MAIL_SUBJECT:Alarm notification}
+  report:
+    enable-validation: false
 integration:
   datasource:
     core:
