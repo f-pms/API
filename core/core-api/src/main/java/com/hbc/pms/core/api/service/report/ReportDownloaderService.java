@@ -1,14 +1,9 @@
 package com.hbc.pms.core.api.service.report;
 
-import static com.hbc.pms.core.api.constant.ReportConstant.EXCEL_FILE;
-import static com.hbc.pms.core.api.util.DateTimeUtil.REPORT_DATE_TIME_FORMATTER;
-import static com.hbc.pms.core.api.util.DateTimeUtil.convertOffsetDateTimeToLocalDateTime;
-import static java.util.Objects.isNull;
-
+import com.hbc.pms.core.api.config.report.ReportConfiguration;
 import com.hbc.pms.core.api.support.data.ReportExcelProcessor;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.criteria.ReportCriteria;
-import com.hbc.pms.core.model.enums.ReportRowShift;
 import com.hbc.pms.support.web.error.CoreApiException;
 import com.hbc.pms.support.web.error.ErrorType;
 import io.vavr.control.Try;
@@ -18,7 +13,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -26,21 +20,20 @@ import java.util.concurrent.Executors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReportDownloaderService {
   private final ReportPersistenceService reportPersistenceService;
   private final ReportExcelProcessor processor;
   private final Executor executor = Executors.newFixedThreadPool(5);
-
-  @Value("${hbc.report.dir}")
-  private String reportDir;
+  private final ReportConfiguration reportConfiguration;
 
   public void download(List<Path> paths, HttpServletResponse response) {
     response.setContentType("application/zip");
@@ -71,64 +64,41 @@ public class ReportDownloaderService {
   public List<Path> getReportPaths(ReportCriteria criteria) {
     var reports = reportPersistenceService.getAll(criteria);
     var missingReports = reports.stream().filter(this::notFoundPredicate).toList();
-    generateReports(missingReports);
+    generateReports(missingReports.stream().map(Report::getId).toList());
     return reports.stream()
-        .map(report -> Paths.get(reportDir, report.getType().getName(), this.getFileName(report)))
+        .map(
+            report ->
+                Paths.get(
+                    reportConfiguration.getDir(),
+                    report.getType().getName(),
+                    processor.getFileName(report)))
         .filter(path -> path.toFile().exists())
         .toList();
   }
 
   private boolean notFoundPredicate(Report report) {
     var alias = report.getType().getName();
-    return !Paths.get(reportDir, alias, getFileName(report)).toFile().exists();
+    return !Paths.get(reportConfiguration.getDir(), alias, processor.getFileName(report))
+        .toFile()
+        .exists();
   }
 
-  private void generateReports(List<Report> reports) {
-    var futures = new ArrayList<CompletableFuture<?>>();
-    reports.forEach(
-        report ->
-            futures.add(
-                CompletableFuture.runAsync(() -> generateReport(report.getId()), executor)));
-    CompletableFuture.allOf(futures.toArray(CompletableFuture<?>[]::new)).join();
+  private void generateReports(List<Long> ids) {
+    var futures = ids.stream().map(this::generateReportAsync).toArray(CompletableFuture<?>[]::new);
+    CompletableFuture.allOf(futures).join();
+  }
+
+  private CompletableFuture<Void> generateReportAsync(Long id) {
+    return CompletableFuture.runAsync(() -> generateReport(id), executor);
   }
 
   private void generateReport(Long id) {
-    var report = reportPersistenceService.getByIdWithRows(id);
-    var alias = report.getType().getName();
-    var rows = report.getRows();
-
-    var workbook = Try.of(() -> processor.cloneWorkbook(report.getType().getName())).getOrNull();
-    if (isNull(workbook)) {
-      return;
-    }
-
-    var shift1Rows = rows.stream().filter(r -> r.getShift().equals(ReportRowShift.I)).toList();
-    var shift2Rows = rows.stream().filter(r -> r.getShift().equals(ReportRowShift.II)).toList();
-    var context1 =
-        ReportExcelProcessor.Context.builder()
-            .workbook(workbook)
-            .shift(ReportRowShift.I)
-            .rows(shift1Rows)
-            .build();
-    var context2 =
-        ReportExcelProcessor.Context.builder()
-            .workbook(workbook)
-            .shift(ReportRowShift.II)
-            .rows(shift2Rows)
-            .build();
-    var indicator1 = processor.getIndicatorsMap(context1);
-    var indicator2 = processor.getIndicatorsMap(context2);
-    processor.processSumsMap(context1, indicator1, report.getRecordingDate());
-    processor.processSumsMap(context2, indicator2, report.getRecordingDate());
-    processor.resetDevelopmentCells(context1, indicator1);
-    processor.resetDevelopmentCells(context2, indicator2);
-    processor.save(workbook, alias, getFileName(report));
-  }
-
-  private String getFileName(Report report) {
-    return String.format(
-        EXCEL_FILE,
-        REPORT_DATE_TIME_FORMATTER.format(
-            convertOffsetDateTimeToLocalDateTime(report.getRecordingDate())));
+    Try.run(
+        () -> {
+          var report = reportPersistenceService.getByIdWithRows(id);
+          var type = report.getType();
+          var rows = report.getRows();
+          processor.process(type, report, rows);
+        });
   }
 }

@@ -10,6 +10,7 @@ import com.hbc.pms.core.api.constant.ChartConstant;
 import com.hbc.pms.core.api.controller.v1.enums.ChartQueryType;
 import com.hbc.pms.core.api.controller.v1.request.SearchMultiDayChartCommand;
 import com.hbc.pms.core.api.controller.v1.response.MultiDayChartResponse;
+import com.hbc.pms.core.api.controller.v1.response.OneDayChartResponse;
 import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.ReportRow;
 import com.hbc.pms.core.model.ReportSchedule;
@@ -35,6 +36,8 @@ public class ReportService {
   private final ReportPersistenceService reportPersistenceService;
   private final ReportRowPersistenceService reportRowPersistenceService;
   private final ReportTypePersistenceService reportTypePersistenceService;
+
+  private static final String SUM_SPECIFIC_PREFIX = "SUM_SPECIFIC_";
 
   public Report createReportByType(ReportType type) {
     return reportPersistenceService.create(
@@ -94,9 +97,12 @@ public class ReportService {
             });
   }
 
-  public List<Map<String, Double>> getOneDayChartFigures(Long reportId) {
+  public OneDayChartResponse getOneDayChartFigures(Long reportId) {
     var report = reportPersistenceService.getById(reportId);
-    return report.getSums();
+    return OneDayChartResponse.builder()
+        .data(report.getSums())
+        .recordingDate(report.getRecordingDate())
+        .build();
   }
 
   public Map<String, Double> getMultiDayChartSummaryFigures(
@@ -138,7 +144,13 @@ public class ReportService {
       case MULTI_LINE, STACKED_BAR ->
           reportsByTypes.forEach(
               (reportType, currentReports) -> {
-                var indicators = currentReports.get(0).getSums().get(0).keySet().stream().toList();
+                var indicators =
+                    currentReports.get(0).getSums().get(0).keySet().stream()
+                        .filter(
+                            indicator ->
+                                ChartConstant.COMMON_INDICATORS.contains(indicator)
+                                    || indicator.startsWith(SUM_SPECIFIC_PREFIX))
+                        .toList();
 
                 var reportChunks =
                     partitionReportsByTimeUnit(
@@ -167,9 +179,45 @@ public class ReportService {
               });
     }
 
+    var missingDatesByType =
+        getMissingDatesInReportsGroupByType(
+            reportsByTypes, searchCommand.getStart(), searchCommand.getEnd());
     result.setData(chartData);
+    result.setMissingDates(missingDatesByType);
 
     return result;
+  }
+
+  private Map<String, List<OffsetDateTime>> getMissingDatesInReportsGroupByType(
+      Map<String, List<Report>> reportsByType, OffsetDateTime start, OffsetDateTime end) {
+    Map<String, List<OffsetDateTime>> missingDatesByType = new HashMap<>();
+
+    reportsByType.forEach(
+        (reportType, currentReports) -> {
+          OffsetDateTime currentDate = start;
+
+          var dates = new ArrayList<OffsetDateTime>();
+          while (currentDate.isBefore(end)) {
+            OffsetDateTime finalCurrentDate = currentDate;
+            boolean dateExistsInReports =
+                currentReports.stream()
+                    .anyMatch(
+                        report ->
+                            report
+                                .getRecordingDate()
+                                .toLocalDate()
+                                .isEqual(finalCurrentDate.toLocalDate()));
+
+            if (!dateExistsInReports) {
+              dates.add(currentDate);
+            }
+            currentDate = currentDate.plusDays(1);
+          }
+
+          missingDatesByType.put(reportType, dates);
+        });
+
+    return missingDatesByType;
   }
 
   private Map<String, List<Report>> groupReportsByType(List<Report> reports) {
