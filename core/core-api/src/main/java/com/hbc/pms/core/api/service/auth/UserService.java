@@ -53,7 +53,6 @@ public class UserService implements UserDetailsService {
     return userPersistenceService.update(toUpdate);
   }
 
-
   public void delete(Long userId) {
     User userToDelete = userPersistenceService.findById(userId);
     userValidationService.authorizeDelete(userToDelete);
