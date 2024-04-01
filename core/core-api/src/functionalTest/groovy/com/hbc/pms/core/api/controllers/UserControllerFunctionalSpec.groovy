@@ -2,6 +2,7 @@ package com.hbc.pms.core.api.controllers
 
 import com.hbc.pms.core.api.FunctionalTestSpec
 import com.hbc.pms.core.api.controller.v1.request.auth.CreateUserCommand
+import com.hbc.pms.core.api.controller.v1.request.auth.UpdateUserCommand
 import com.hbc.pms.core.model.User
 import com.hbc.pms.core.model.enums.Role
 import com.hbc.pms.integration.db.repository.UserRepository
@@ -69,6 +70,34 @@ class UserControllerFunctionalSpec extends FunctionalTestSpec {
     where:
     user         | expectedStatusCode
     "ADMIN_USER" | HttpStatus.BAD_REQUEST
+  }
+
+  def "#user self update user info - #expectedStatusCode"() {
+    given:
+    User userDetails = dataFixture."${user}"
+    def userId = userDetails.id
+    def updateCommand = UpdateUserCommand.builder()
+            .email("updated@gmail.com")
+            .fullName("Updated Full name")
+            .password("updated")
+            .build()
+
+    when: "Put update with the update command"
+    def response = restClient.put("$USER_PATH/$userId", updateCommand, userDetails, User)
+
+    then:
+    response.statusCode.value() == expectedStatusCode.value()
+    if (response.statusCode.value() == HttpStatus.OK.value()) {
+      def updatedUser = userRepository.findById(userId)
+      assert updatedUser.isPresent()
+      assert updatedUser.get().email == updateCommand.email
+      assert passwordEncoder.matches(updateCommand.password, updatedUser.get().password)
+      assert updatedUser.get().fullName == updateCommand.fullName
+    }
+    where:
+    user              | expectedStatusCode
+    "ADMIN_USER"      | HttpStatus.OK
+    "SUPERVISOR_USER" | HttpStatus.BAD_REQUEST
   }
 
 }

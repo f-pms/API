@@ -22,10 +22,11 @@ import com.hbc.pms.integration.db.repository.AlarmHistoryRepository
 import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.integration.db.repository.UserRepository
-import java.time.OffsetDateTime
-import java.util.concurrent.ThreadLocalRandom
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+
+import java.time.OffsetDateTime
+import java.util.concurrent.ThreadLocalRandom
 
 @Component
 class TestDataFixture {
@@ -107,6 +108,20 @@ class TestDataFixture {
     return SensorConfigurationEntity.builder()
             .address(address)
             .blueprint(blueprint)
+            .build()
+  }
+
+  static User createRandomUser(Role role = Role.ADMIN) {
+    String randomString = UUID.randomUUID().toString().replace("-", "")
+    String username = "user-" + randomString
+    String email = "email-" + randomString + "@example.com"
+    String fullName = "Full Name " + randomString
+    return User.builder()
+            .username(username)
+            .email(email)
+            .fullName(fullName)
+            .role(role)
+            .password("123")
             .build()
   }
 
