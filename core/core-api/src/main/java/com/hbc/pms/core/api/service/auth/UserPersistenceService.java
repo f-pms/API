@@ -52,6 +52,10 @@ public class UserPersistenceService extends AbstractPersistenceService<UserEntit
     return mapper.map(entity, User.class);
   }
 
+  public Optional<User> findByUsernameOptional(String username) {
+    return userRepository.findByUsername(username).map(entity -> mapToModel(entity, User.class));
+  }
+
   public User create(User userToCreate) {
     encodePassword(userToCreate);
     UserEntity entity = mapper.map(userToCreate, UserEntity.class);

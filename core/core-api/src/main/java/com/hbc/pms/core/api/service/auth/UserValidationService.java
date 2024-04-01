@@ -19,6 +19,23 @@ public class UserValidationService {
   private final PasswordEncoder passwordEncoder;
   private final UserPersistenceService userPersistenceService;
 
+  public void validateCreate(User userToCreate) {
+    verifyMailExist(userToCreate.getEmail());
+    verifyUsernameExist(userToCreate.getUsername());
+  }
+
+  private void verifyMailExist(String email) {
+    if (userPersistenceService.findByEmail(email).isPresent()) {
+      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, "Email already exists");
+    }
+  }
+
+  private void verifyUsernameExist(String username) {
+    if (userPersistenceService.findByUsernameOptional(username).isPresent()) {
+      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, "Username already exists");
+    }
+  }
+
   public void validateUpdateCommand(User toUpdate, UpdateUserCommand updateUserCommand) {
     validateUpdatePassword(toUpdate, updateUserCommand);
     validateEmail(toUpdate, updateUserCommand);
@@ -47,9 +64,7 @@ public class UserValidationService {
   public void validateEmail(User toUpdate, UpdateUserCommand updateUserCommand) {
     if (StringUtils.isNoneEmpty(updateUserCommand.getEmail())
         && isNotSelfEmail(toUpdate, updateUserCommand)) {
-      if (userPersistenceService.findByEmail(updateUserCommand.getEmail()).isPresent()) {
-        throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, "Email already exists");
-      }
+      verifyMailExist(updateUserCommand.getEmail());
     }
   }
 

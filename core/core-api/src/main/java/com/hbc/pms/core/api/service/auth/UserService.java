@@ -39,6 +39,7 @@ public class UserService implements UserDetailsService {
 
   @Transactional
   public User create(User userToCreate) {
+    userValidationService.validateCreate(userToCreate);
     return userPersistenceService.create(userToCreate);
   }
 
