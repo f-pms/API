@@ -179,9 +179,45 @@ public class ReportService {
               });
     }
 
+    var missingDatesByType =
+        getMissingDatesInReportsGroupByType(
+            reportsByTypes, searchCommand.getStart(), searchCommand.getEnd());
     result.setData(chartData);
+    result.setMissingDates(missingDatesByType);
 
     return result;
+  }
+
+  private Map<String, List<OffsetDateTime>> getMissingDatesInReportsGroupByType(
+      Map<String, List<Report>> reportsByType, OffsetDateTime start, OffsetDateTime end) {
+    Map<String, List<OffsetDateTime>> missingDatesByType = new HashMap<>();
+
+    reportsByType.forEach(
+        (reportType, currentReports) -> {
+          OffsetDateTime currentDate = start;
+
+          var dates = new ArrayList<OffsetDateTime>();
+          while (currentDate.isBefore(end)) {
+            OffsetDateTime finalCurrentDate = currentDate;
+            boolean dateExistsInReports =
+                currentReports.stream()
+                    .anyMatch(
+                        report ->
+                            report
+                                .getRecordingDate()
+                                .toLocalDate()
+                                .isEqual(finalCurrentDate.toLocalDate()));
+
+            if (!dateExistsInReports) {
+              dates.add(currentDate);
+            }
+            currentDate = currentDate.plusDays(1);
+          }
+
+          missingDatesByType.put(reportType, dates);
+        });
+
+    return missingDatesByType;
   }
 
   private Map<String, List<Report>> groupReportsByType(List<Report> reports) {
