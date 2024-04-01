@@ -1,9 +1,6 @@
 package com.hbc.pms.core.api.event;
 
 import static com.hbc.pms.core.api.constant.PlcConstant.REPORT_JOB_NAME;
-import static com.hbc.pms.core.api.constant.ReportConstant.EXCEL_FILE;
-import static com.hbc.pms.core.api.util.DateTimeUtil.REPORT_DATE_TIME_FORMATTER;
-import static com.hbc.pms.core.api.util.DateTimeUtil.convertOffsetDateTimeToLocalDateTime;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.hbc.pms.core.api.service.blueprint.BlueprintPersistenceService;
@@ -12,12 +9,10 @@ import com.hbc.pms.core.api.service.report.ReportService;
 import com.hbc.pms.core.api.support.data.ReportExcelProcessor;
 import com.hbc.pms.core.model.ReportSchedule;
 import com.hbc.pms.core.model.enums.BlueprintType;
-import com.hbc.pms.core.model.enums.ReportRowShift;
 import com.hbc.pms.plc.api.IoResponse;
 import com.hbc.pms.plc.api.PlcConnector;
 import com.hbc.pms.plc.api.scraper.HandlerContext;
 import io.vavr.control.Try;
-import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,44 +57,13 @@ public class ReportHandler implements RmsHandler {
     types.forEach(
         (type, schedulesOfType) -> {
           try {
-            var alias = type.getName();
-
             // save to database
             var report = reportService.createReportByType(type);
             var rows = reportService.createReportRows(response, report.getId(), schedulesOfType);
 
             // calculate sum
-            var workbook = processor.cloneWorkbook(type.getName());
-            var shift1Rows =
-                rows.stream().filter(r -> r.getShift().equals(ReportRowShift.I)).toList();
-            var shift2Rows =
-                rows.stream().filter(r -> r.getShift().equals(ReportRowShift.II)).toList();
-            var context1 =
-                ReportExcelProcessor.Context.builder()
-                    .workbook(workbook)
-                    .shift(ReportRowShift.I)
-                    .rows(shift1Rows)
-                    .build();
-            var context2 =
-                ReportExcelProcessor.Context.builder()
-                    .workbook(workbook)
-                    .shift(ReportRowShift.II)
-                    .rows(shift2Rows)
-                    .build();
-            var indicator1 = processor.getIndicatorsMap(context1);
-            var indicator2 = processor.getIndicatorsMap(context2);
-            var sums1 = processor.processSumsMap(context1, indicator1, report.getRecordingDate());
-            var sums2 = processor.processSumsMap(context2, indicator2, report.getRecordingDate());
-            processor.resetDevelopmentCells(context1, indicator1);
-            processor.resetDevelopmentCells(context2, indicator2);
-            reportService.updateSumJson(report, List.of(sums1, sums2));
-
-            var fileName =
-                String.format(
-                    EXCEL_FILE,
-                    REPORT_DATE_TIME_FORMATTER.format(
-                        convertOffsetDateTimeToLocalDateTime(report.getRecordingDate())));
-            processor.save(workbook, alias, fileName);
+            var sums = processor.process(type, report, rows);
+            reportService.updateSumJson(report, sums);
           } catch (Exception ex) {
             log.error("Failed to process daily report for type={}: {}", type, ex.getMessage());
           }
