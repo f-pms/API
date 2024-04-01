@@ -1,6 +1,6 @@
 package com.hbc.pms.core.api.support.data;
 
-import static com.hbc.pms.core.api.constant.ReportConstant.EXCEL_FILE;
+import static com.hbc.pms.core.api.util.DateTimeUtil.REPORT_DATE_TIME_FORMATTER;
 import static com.hbc.pms.core.api.util.DateTimeUtil.convertOffsetDateTimeToLocalDateTime;
 import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_1_PERIOD_1_END_TIME;
 import static com.hbc.pms.core.api.util.ElectricTimeUtil.SHIFT_1_PERIOD_1_START_TIME;
@@ -22,7 +22,9 @@ import static java.util.Objects.isNull;
 
 import com.hbc.pms.core.api.support.error.ReportExcelProcessorException;
 import com.hbc.pms.core.api.util.ElectricTimeUtil;
+import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.ReportRow;
+import com.hbc.pms.core.model.ReportType;
 import com.hbc.pms.core.model.enums.ReportRowShift;
 import io.vavr.control.Try;
 import java.io.FileOutputStream;
@@ -56,6 +58,8 @@ import org.springframework.stereotype.Component;
 public class ReportExcelProcessor {
   private static final String TEMPLATE_DIR_PATH = "excel-templates";
   private static final Pattern INDICATOR_PATTERN = Pattern.compile("\\((?<indicator>.*)\\)");
+  private static final String EXCEL_FILE = "%s.xlsx";
+
   private static final String SUM_PREFIX = "SUM_";
   private static final String SUM_SPECIFIC_PREFIX = SUM_PREFIX + "SPECIFIC_";
   private static final String IGNORE_POSTFIX = "__";
@@ -138,6 +142,32 @@ public class ReportExcelProcessor {
 
   public void close(XSSFWorkbook workbook) {
     Try.run(workbook::close);
+  }
+
+  public String getFileName(Report report) {
+    return String.format(
+        EXCEL_FILE,
+        REPORT_DATE_TIME_FORMATTER.format(
+            convertOffsetDateTimeToLocalDateTime(report.getRecordingDate())));
+  }
+
+  public List<Map<String, Double>> process(ReportType type, Report report, List<ReportRow> rows)
+      throws IOException, InvalidFormatException {
+    var workbook = cloneWorkbook(type.getName());
+    var shift1Rows = rows.stream().filter(r -> r.getShift().equals(ReportRowShift.I)).toList();
+    var shift2Rows = rows.stream().filter(r -> r.getShift().equals(ReportRowShift.II)).toList();
+    var context1 =
+        Context.builder().workbook(workbook).shift(ReportRowShift.I).rows(shift1Rows).build();
+    var context2 =
+        Context.builder().workbook(workbook).shift(ReportRowShift.II).rows(shift2Rows).build();
+    var indicator1 = getIndicatorsMap(context1);
+    var indicator2 = getIndicatorsMap(context2);
+    var sums1 = processSumsMap(context1, indicator1, report.getRecordingDate());
+    var sums2 = processSumsMap(context2, indicator2, report.getRecordingDate());
+    resetDevelopmentCells(context1, indicator1);
+    resetDevelopmentCells(context2, indicator2);
+    save(workbook, type.getName(), getFileName(report));
+    return List.of(sums1, sums2);
   }
 
   private void fillBaseValue(
