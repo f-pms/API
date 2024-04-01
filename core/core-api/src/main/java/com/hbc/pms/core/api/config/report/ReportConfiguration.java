@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class ReportConfiguration implements Validator {
   @NotNull private String dir;
+  @NotNull private boolean enableValidation;
 
   @Override
   public boolean supports(@NonNull Class<?> clazz) {
@@ -26,6 +27,7 @@ public class ReportConfiguration implements Validator {
   @Override
   public void validate(@NonNull Object target, @NonNull Errors errors) {
     ReportConfiguration config = (ReportConfiguration) target;
+    if (!config.enableValidation) return;
     if (!Files.exists(Paths.get(config.getDir()))) {
       errors.reject("dir", "Report directory doesn't exist");
     }
