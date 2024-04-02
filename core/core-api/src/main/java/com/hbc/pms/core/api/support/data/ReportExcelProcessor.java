@@ -43,6 +43,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.math3.util.Precision;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.util.CellAddress;
@@ -101,9 +102,8 @@ public class ReportExcelProcessor {
     return indicators;
   }
 
-  public Map<String, Double> processSumsMap(
-      Context context, Map<String, CellAddress> indicators, OffsetDateTime recordingDate) {
-    var localDateTime = convertOffsetDateTimeToLocalDateTime(recordingDate);
+  public Map<String, Double> processSumsMap(Context context, Map<String, CellAddress> indicators) {
+    var localDateTime = convertOffsetDateTimeToLocalDateTime(context.getRecordingDate());
     var dayOfWeek = localDateTime.getDayOfWeek();
 
     context.rows.forEach(row -> fillBaseValue(context, indicators, dayOfWeek, row));
@@ -154,18 +154,34 @@ public class ReportExcelProcessor {
   public List<Map<String, Double>> process(ReportType type, Report report, List<ReportRow> rows)
       throws IOException, InvalidFormatException {
     var workbook = cloneWorkbook(type.getName());
+
     var shift1Rows = rows.stream().filter(r -> r.getShift().equals(ReportRowShift.I)).toList();
     var shift2Rows = rows.stream().filter(r -> r.getShift().equals(ReportRowShift.II)).toList();
+
     var context1 =
-        Context.builder().workbook(workbook).shift(ReportRowShift.I).rows(shift1Rows).build();
+        Context.builder()
+            .workbook(workbook)
+            .shift(ReportRowShift.I)
+            .recordingDate(report.getRecordingDate())
+            .rows(shift1Rows)
+            .build();
     var context2 =
-        Context.builder().workbook(workbook).shift(ReportRowShift.II).rows(shift2Rows).build();
+        Context.builder()
+            .workbook(workbook)
+            .shift(ReportRowShift.II)
+            .recordingDate(report.getRecordingDate())
+            .rows(shift2Rows)
+            .build();
+
     var indicator1 = getIndicatorsMap(context1);
     var indicator2 = getIndicatorsMap(context2);
-    var sums1 = processSumsMap(context1, indicator1, report.getRecordingDate());
-    var sums2 = processSumsMap(context2, indicator2, report.getRecordingDate());
+
+    var sums1 = processSumsMap(context1, indicator1);
+    var sums2 = processSumsMap(context2, indicator2);
+
     resetDevelopmentCells(context1, indicator1);
     resetDevelopmentCells(context2, indicator2);
+
     save(workbook, type.getName(), getFileName(report));
     return List.of(sums1, sums2);
   }
@@ -181,7 +197,7 @@ public class ReportExcelProcessor {
                 + "_0_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    context.getShift().equals(ReportRowShift.I)
+                    context.isShift1()
                         ? SHIFT_1_PERIOD_1_START_TIME
                         : SHIFT_2_PERIOD_1_START_TIME)),
         row.getOldElectricValue());
@@ -192,9 +208,7 @@ public class ReportExcelProcessor {
                 + "_1_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    context.getShift().equals(ReportRowShift.I)
-                        ? SHIFT_1_PERIOD_1_END_TIME
-                        : SHIFT_2_PERIOD_1_END_TIME)),
+                    context.isShift1() ? SHIFT_1_PERIOD_1_END_TIME : SHIFT_2_PERIOD_1_END_TIME)),
         row.getNewElectricValue1());
 
     fill(
@@ -204,7 +218,7 @@ public class ReportExcelProcessor {
                 + "_2_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    context.getShift().equals(ReportRowShift.I)
+                    context.isShift1()
                         ? SHIFT_1_PERIOD_2_START_TIME
                         : SHIFT_2_PERIOD_2_START_TIME)),
         row.getNewElectricValue1());
@@ -215,9 +229,7 @@ public class ReportExcelProcessor {
                 + "_3_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    context.getShift().equals(ReportRowShift.I)
-                        ? SHIFT_1_PERIOD_2_END_TIME
-                        : SHIFT_2_PERIOD_2_END_TIME)),
+                    context.isShift1() ? SHIFT_1_PERIOD_2_END_TIME : SHIFT_2_PERIOD_2_END_TIME)),
         row.getNewElectricValue2());
 
     fill(
@@ -227,7 +239,7 @@ public class ReportExcelProcessor {
                 + "_4_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    context.getShift().equals(ReportRowShift.I)
+                    context.isShift1()
                         ? SHIFT_1_PERIOD_3_START_TIME
                         : SHIFT_2_PERIOD_3_START_TIME)),
         row.getNewElectricValue2());
@@ -238,9 +250,7 @@ public class ReportExcelProcessor {
                 + "_5_"
                 + ElectricTimeUtil.getTimeGroup(
                     dayOfWeek,
-                    context.getShift().equals(ReportRowShift.I)
-                        ? SHIFT_1_PERIOD_3_END_TIME
-                        : SHIFT_2_PERIOD_3_END_TIME)),
+                    context.isShift1() ? SHIFT_1_PERIOD_3_END_TIME : SHIFT_2_PERIOD_3_END_TIME)),
         row.getNewElectricValue3());
 
     fill(
@@ -249,8 +259,8 @@ public class ReportExcelProcessor {
             indicator
                 + "_6_"
                 + ElectricTimeUtil.getTimeGroup(
-                    dayOfWeek,
-                    context.getShift().equals(ReportRowShift.I)
+                    context.isShift1() ? dayOfWeek : dayOfWeek.plus(1),
+                    context.isShift1()
                         ? SHIFT_1_PERIOD_4_START_TIME
                         : SHIFT_2_PERIOD_4_START_TIME)),
         row.getNewElectricValue3());
@@ -260,10 +270,8 @@ public class ReportExcelProcessor {
             indicator
                 + "_7_"
                 + ElectricTimeUtil.getTimeGroup(
-                    dayOfWeek,
-                    context.getShift().equals(ReportRowShift.I)
-                        ? SHIFT_1_PERIOD_4_END_TIME
-                        : SHIFT_2_PERIOD_4_END_TIME)),
+                    context.isShift1() ? dayOfWeek : dayOfWeek.plus(1),
+                    context.isShift1() ? SHIFT_1_PERIOD_4_END_TIME : SHIFT_2_PERIOD_4_END_TIME)),
         row.getNewElectricValue4());
   }
 
@@ -297,14 +305,15 @@ public class ReportExcelProcessor {
   }
 
   private Optional<Double> getCellValue(XSSFSheet sheet, CellAddress address) {
+    final var DEFAULT_SCALE = 3;
     var cell = sheet.getRow(address.getRow()).getCell(address.getColumn());
     switch (cell.getCellType()) {
       case NUMERIC -> {
-        return Optional.of(cell.getNumericCellValue());
+        return Optional.of(Precision.round(cell.getNumericCellValue(), DEFAULT_SCALE));
       }
       case FORMULA -> {
         if (cell.getCachedFormulaResultType() == CellType.NUMERIC) {
-          return Optional.of(cell.getNumericCellValue());
+          return Optional.of(Precision.round(cell.getNumericCellValue(), DEFAULT_SCALE));
         }
       }
     }
@@ -326,10 +335,19 @@ public class ReportExcelProcessor {
   public static class Context {
     private XSSFWorkbook workbook;
     private ReportRowShift shift;
+    private OffsetDateTime recordingDate;
     private List<ReportRow> rows;
 
     public XSSFSheet getSheet() {
-      return workbook.getSheetAt(shift.equals(ReportRowShift.I) ? 0 : 1);
+      return workbook.getSheetAt(isShift1() ? 0 : 1);
+    }
+
+    public boolean isShift1() {
+      return shift.equals(ReportRowShift.I);
+    }
+
+    public boolean isShift2() {
+      return shift.equals(ReportRowShift.II);
     }
   }
 }
