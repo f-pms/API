@@ -1,6 +1,5 @@
 package com.hbc.pms.core.api.event;
 
-import static com.hbc.pms.core.api.constant.PlcConstant.REPORT_JOB_NAME;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.hbc.pms.core.api.service.blueprint.BlueprintPersistenceService;
@@ -13,6 +12,7 @@ import com.hbc.pms.plc.api.IoResponse;
 import com.hbc.pms.plc.api.PlcConnector;
 import com.hbc.pms.plc.api.scraper.HandlerContext;
 import io.vavr.control.Try;
+import java.time.OffsetDateTime;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +35,6 @@ public class ReportHandler implements RmsHandler {
 
   @Override
   public void handle(HandlerContext context, Map<String, IoResponse> response) {
-    if (!context.getJobName().equals(REPORT_JOB_NAME)) {
-      return;
-    }
-
     var reportAddresses =
         blueprintService.getAll().stream()
             .filter(blueprint -> blueprint.getType().equals(BlueprintType.REPORT))
@@ -57,8 +53,10 @@ public class ReportHandler implements RmsHandler {
     types.forEach(
         (type, schedulesOfType) -> {
           try {
+            var recordingDate = OffsetDateTime.now().minusDays(1); // it must be yesterday
+
             // save to database
-            var report = reportService.createReportByType(type);
+            var report = reportService.createReportByType(type, recordingDate);
             var rows = reportService.createReportRows(response, report.getId(), schedulesOfType);
 
             // calculate sum

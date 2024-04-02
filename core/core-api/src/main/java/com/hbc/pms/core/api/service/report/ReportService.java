@@ -39,11 +39,11 @@ public class ReportService {
 
   private static final String SUM_SPECIFIC_PREFIX = "SUM_SPECIFIC_";
 
-  public Report createReportByType(ReportType type) {
+  public Report createReportByType(ReportType type, OffsetDateTime recordingDate) {
     return reportPersistenceService.create(
         Report.builder()
             .type(ReportType.builder().id(type.getId()).build())
-            .recordingDate(OffsetDateTime.now())
+            .recordingDate(recordingDate)
             .build());
   }
 

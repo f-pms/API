@@ -12,15 +12,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class PlcMonitoringDataSource implements HbcScrapeJobDataSource {
+public class PlcDataSource implements HbcScrapeJobDataSource {
 
   private final BlueprintPersistenceService blueprintService;
 
   @Override
   public Map<String, String> getTags() {
-    var monitoringTypes = List.of(BlueprintType.MONITORING, BlueprintType.ALARM);
+    var types = List.of(BlueprintType.MONITORING, BlueprintType.ALARM, BlueprintType.REPORT);
     return blueprintService.getAll().stream()
-        .filter(blueprint -> monitoringTypes.contains(blueprint.getType()))
+        .filter(blueprint -> types.contains(blueprint.getType()))
         .flatMap(blueprint -> blueprint.getAddresses().stream())
         .collect(Collectors.toMap(Function.identity(), Function.identity(), (a1, a2) -> a1));
   }

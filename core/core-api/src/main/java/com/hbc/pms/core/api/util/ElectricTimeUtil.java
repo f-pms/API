@@ -31,7 +31,7 @@ public class ElectricTimeUtil {
       return isBetween(time, LocalTime.of(4, 0), LocalTime.of(22, 0)) ? "STANDARD" : "OFFPEAK";
     } else {
       // Weekday or Saturday
-      if (isBetween(time, LocalTime.of(6, 0), LocalTime.of(9, 30))) {
+      if (isBetween(time, LocalTime.of(4, 0), LocalTime.of(9, 30))) {
         return "STANDARD";
       } else if (isBetween(time, LocalTime.of(9, 30), LocalTime.of(11, 30))) {
         return "PEAK";
