@@ -8,6 +8,9 @@ import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.test.context.ActiveProfiles
 import spock.util.concurrent.PollingConditions
 
+
+import static com.hbc.pms.core.api.util.DateTimeUtil.VIETNAM_TIMEZONE
+
 @SpringBootTest(classes = [CoreApiApplication], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("functional-test")
 class FunctionalTestSpec extends AbstractFunctionalSpec {

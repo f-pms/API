@@ -1,6 +1,7 @@
 package com.hbc.pms.integration.db.repository;
 
 import com.hbc.pms.integration.db.entity.ReportEntity;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -11,4 +12,6 @@ public interface ReportRepository
     extends CrudRepository<ReportEntity, Long>, JpaSpecificationExecutor<ReportEntity> {
   @Query("SELECT r FROM ReportEntity r JOIN FETCH r.rows WHERE r.id = :id")
   Optional<ReportEntity> findByIdWithRows(@Param("id") Long id);
+
+  List<ReportEntity> findAllByType_Name(String name);
 }
