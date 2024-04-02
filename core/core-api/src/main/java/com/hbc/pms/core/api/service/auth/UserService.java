@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.service.auth;
 
 import com.hbc.pms.core.api.controller.v1.request.auth.QueryUserCommand;
+import com.hbc.pms.core.api.controller.v1.request.auth.UpdateUserCommand;
 import com.hbc.pms.core.model.User;
 import com.hbc.pms.support.web.pagination.QueryResult;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @AllArgsConstructor
@@ -35,14 +37,19 @@ public class UserService implements UserDetailsService {
     return userPersistenceService.findById(userId);
   }
 
+  @Transactional
   public User create(User userToCreate) {
+    userValidationService.validateCreate(userToCreate);
     return userPersistenceService.create(userToCreate);
   }
 
-  public User update(Long userId, User state) {
+  @Transactional
+  public User update(Long userId, UpdateUserCommand updateUserCommand) {
+    User toUpdate = userPersistenceService.findById(userId);
+    userValidationService.validateUpdateCommand(toUpdate, updateUserCommand);
+    User state = modelMapper.map(updateUserCommand, User.class);
     state.setId(userId);
     userValidationService.authorizeUpdate(state);
-    User toUpdate = userPersistenceService.findById(userId);
     modelMapper.map(state, toUpdate);
     return userPersistenceService.update(toUpdate);
   }

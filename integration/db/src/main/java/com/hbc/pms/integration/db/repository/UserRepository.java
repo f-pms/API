@@ -8,4 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface UserRepository
     extends CrudRepository<UserEntity, Long>, PagingAndSortingRepository<UserEntity, Long> {
   Optional<UserEntity> findByUsername(String username);
+
+  Optional<UserEntity> findByEmail(String email);
 }

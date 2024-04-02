@@ -4,6 +4,7 @@ import com.hbc.pms.core.api.constaint.RegexConstraints;
 import com.hbc.pms.core.model.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -13,6 +14,7 @@ import org.hibernate.validator.constraints.Length;
 public class CreateUserCommand {
   @NotNull
   @Length(min = 3, max = 50)
+  @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Field must contain only a-z, A-Z, 0-9 characters")
   private String username;
 
   @Length(min = 3, max = 30)

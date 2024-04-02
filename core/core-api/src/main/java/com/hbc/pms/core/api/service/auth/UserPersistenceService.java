@@ -8,6 +8,7 @@ import com.hbc.pms.integration.db.entity.UserEntity;
 import com.hbc.pms.integration.db.repository.UserRepository;
 import com.hbc.pms.support.web.error.CoreApiException;
 import com.hbc.pms.support.web.error.ErrorType;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,10 @@ public class UserPersistenceService extends AbstractPersistenceService<UserEntit
   public Page<User> query(Pageable pageable) {
     var page = userRepository.findAll(pageable);
     return page.map(entity -> mapToModel(entity, User.class));
+  }
+
+  public Optional<User> findByEmail(String email) {
+    return userRepository.findByEmail(email).map(entity -> mapToModel(entity, User.class));
   }
 
   public User findById(Long id) {
@@ -45,6 +50,10 @@ public class UserPersistenceService extends AbstractPersistenceService<UserEntit
             .orElseThrow(
                 () -> new UsernameNotFoundException("Can't found user with username:" + username));
     return mapper.map(entity, User.class);
+  }
+
+  public Optional<User> findByUsernameOptional(String username) {
+    return userRepository.findByUsername(username).map(entity -> mapToModel(entity, User.class));
   }
 
   public User create(User userToCreate) {
