@@ -1,0 +1,18 @@
+databaseChangeLog:
+- changeSet:
+    id: 1711904400000-1
+    author: HTG (manual)
+    changes:
+    - modifyDataType:
+        columnName: full_name
+        newDataType: nvarchar(255)
+        tableName: user
+- changeSet:
+    id: 1711904400000-2
+    author: HTG (manual)
+    changes:
+    - modifyDataType:
+        columnName: message
+        newDataType: nvarchar(255)
+        tableName: alarm_action
+
