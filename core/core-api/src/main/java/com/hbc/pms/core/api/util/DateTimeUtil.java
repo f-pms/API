@@ -12,8 +12,10 @@ import lombok.experimental.UtilityClass;
 public class DateTimeUtil {
   public static final DateTimeFormatter REPORT_DATE_TIME_FORMATTER =
       DateTimeFormatter.ofPattern("yyyy-MM-dd");
-  public static final ZoneId VIETNAM_ZONE_ID = ZoneId.of("Asia/Ho_Chi_Minh");
-  public static final TimeZone VIETNAM_TIMEZONE = TimeZone.getTimeZone("Asia/Ho_Chi_Minh");
+
+  public static final String VIETNAM_ZONE_STR = "Asia/Ho_Chi_Minh";
+  public static final ZoneId VIETNAM_ZONE_ID = ZoneId.of(VIETNAM_ZONE_STR);
+  public static final TimeZone VIETNAM_TIMEZONE = TimeZone.getTimeZone(VIETNAM_ZONE_STR);
 
   public static LocalDateTime convertOffsetDateTimeToLocalDateTime(OffsetDateTime offsetDateTime) {
     ZonedDateTime zoned = offsetDateTime.atZoneSameInstant(VIETNAM_ZONE_ID);
