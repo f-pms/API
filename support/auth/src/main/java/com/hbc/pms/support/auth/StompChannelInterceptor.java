@@ -35,7 +35,7 @@ public class StompChannelInterceptor implements ChannelInterceptor {
           AuthHeaderUtil.tryToExtractTokenFromHeader(
               accessor.getFirstNativeHeader(AUTHORIZATION_HEADER));
       if (tokenOptional.isPresent()) {
-        try{
+        try {
           String token = tokenOptional.get();
           String userEmail = jwtService.extractUsername(token);
           UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
@@ -46,11 +46,11 @@ public class StompChannelInterceptor implements ChannelInterceptor {
             accessor.setUser(authToken);
             isAuthenticated = true;
           }
-        }catch (Exception e){
+        } catch (Exception e) {
           log.warn("Error while trying to authenticate user: {}", e.getMessage());
         }
       }
-      if (!isAuthenticated){
+      if (!isAuthenticated) {
         throw new CoreApiException(ErrorType.FORBIDDEN_ERROR);
       }
     }
