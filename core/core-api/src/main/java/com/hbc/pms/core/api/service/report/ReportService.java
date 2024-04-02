@@ -182,20 +182,23 @@ public class ReportService {
               });
     }
 
-    var missingDatesByType =
-        getMissingDatesInReportsGroupByType(
-            reportsByTypes, searchCommand.getStart(), searchCommand.getEnd());
     result.setData(chartData);
-    result.setMissingDates(missingDatesByType);
 
     return result;
   }
 
-  private Map<String, List<OffsetDateTime>> getMissingDatesInReportsGroupByType(
-      Map<String, List<Report>> reportsByType, OffsetDateTime start, OffsetDateTime end) {
+  public Map<String, List<OffsetDateTime>> getMissingDatesInReportsGroupByType(
+      SearchMultiDayChartCommand searchCommand) {
+    var start = searchCommand.getStart();
+    var end = searchCommand.getEnd();
+    var reportCriteria = ReportCriteria.builder().startDate(start).endDate(end).build();
+
+    List<Report> reports = reportPersistenceService.getAll(reportCriteria).stream().toList();
+    Map<String, List<Report>> reportsByTypes = groupReportsByType(reports);
+
     Map<String, List<OffsetDateTime>> missingDatesByType = new HashMap<>();
 
-    reportsByType.forEach(
+    reportsByTypes.forEach(
         (reportType, currentReports) -> {
           OffsetDateTime currentDate = start;
 

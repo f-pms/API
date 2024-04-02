@@ -15,6 +15,7 @@ import com.hbc.pms.support.web.pagination.QueryResult;
 import com.hbc.pms.support.web.response.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -80,5 +81,11 @@ public class ReportController {
   public ApiResponse<MultiDayChartResponse> getMultiDayChartFigures(
       @Valid SearchMultiDayChartCommand searchCommand) {
     return ApiResponse.success(reportService.getMultiDayChartFigures(searchCommand));
+  }
+
+  @GetMapping("/charts/multi-day/missing-dates")
+  public ApiResponse<Map<String, List<OffsetDateTime>>> getMissingDates(
+      @Valid SearchMultiDayChartCommand searchCommand) {
+    return ApiResponse.success(reportService.getMissingDatesInReportsGroupByType(searchCommand));
   }
 }
