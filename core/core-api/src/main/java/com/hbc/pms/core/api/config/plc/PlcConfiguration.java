@@ -23,8 +23,7 @@ public class PlcConfiguration {
 
   @Bean
   CronScrapeJob hbcJob(
-      PlcDataSource plcDataSource,
-      com.hbc.pms.plc.api.PlcConfiguration plcConfiguration) {
+      PlcDataSource plcDataSource, com.hbc.pms.plc.api.PlcConfiguration plcConfiguration) {
     return HbcScrapeJob.builder()
         .jobName("hbc-processor")
         .plcConfiguration(plcConfiguration)
@@ -33,5 +32,4 @@ public class PlcConfiguration {
         .cron("*/1 * * * * *")
         .build();
   }
-
 }
