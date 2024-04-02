@@ -1,11 +1,12 @@
 package com.hbc.pms.core.api.controllers
 
 import com.hbc.pms.core.api.FunctionalTestSpec
+import com.hbc.pms.core.api.TestDataFixture
+import com.hbc.pms.core.api.constant.ChartConstant
 import com.hbc.pms.core.api.controller.v1.enums.ChartType
-import com.hbc.pms.core.api.controller.v1.request.SearchMultiDayChartCommand
+import com.hbc.pms.core.api.controller.v1.response.MultiDayChartResponse
 import com.hbc.pms.core.api.controller.v1.response.OneDayChartResponse
 import com.hbc.pms.core.api.service.report.ReportPersistenceService
-import com.hbc.pms.core.api.util.DateTimeUtil
 import com.hbc.pms.integration.db.repository.ReportRepository
 import com.hbc.pms.support.spock.test.RestClient
 import java.time.OffsetDateTime
@@ -49,31 +50,27 @@ class ReportControllerChartFunctionalTestSpec extends FunctionalTestSpec {
 
   def "Get multi day PIE chart figures - OK"() {
     given:
-    var start = OffsetDateTime.of(
-            2024, 03, 28, 0, 1, 0, 0,
-            ZoneOffset.of(DateTimeUtil.VIETNAM_ZONE_STR))
-
-    var end = OffsetDateTime.of(
-            2024, 03, 30, 0, 1, 0, 0,
-            ZoneOffset.of(DateTimeUtil.VIETNAM_ZONE_STR))
-    var searchChartCommand = SearchMultiDayChartCommand.builder()
-            .chartType(ChartType.PIE)
-            .start(start)
-            .end(end)
-            .build()
+    var dayNum = 4
+    var shiftNum = 2
+    var start = OffsetDateTime.of(2024, 3, 27, 1, 0, 0, 0, ZoneOffset.UTC)
+    var end = start.plusDays(dayNum).withHour(23).withMinute(59).withSecond(59)
 
     when:
     def response = restClient.get(
-            "${REPORT_PATH}/charts/multi-day",
+            "${REPORT_PATH}/charts/multi-day?start=${start}&end=${end}&chartType=${ChartType.PIE}",
             dataFixture.SUPERVISOR_USER,
-            OneDayChartResponse)
+            MultiDayChartResponse
+    )
 
     then:
     response.statusCode.is2xxSuccessful()
     with(response.body.data) {
-      it.data.size() == 2
+      it.labelSteps == null
+      it.data["DAM"][ChartConstant.SUM_TOTAL].get(0)
+              == TestDataFixture.DEFAULT_SUM_TOTAL * dayNum * shiftNum
+      it.data["BTP"][ChartConstant.SUM_TOTAL].get(0)
+              == TestDataFixture.DEFAULT_SUM_TOTAL * dayNum * shiftNum
     }
-
   }
 
   def "Get multi day MULTI_LINE or STACKED_BAR chart figures - OK"() {
