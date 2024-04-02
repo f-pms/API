@@ -1,7 +1,5 @@
 package com.hbc.pms.core.api.event;
 
-import static com.hbc.pms.core.api.constant.PlcConstant.MONITORING_JOB_NAME;
-
 import com.hbc.pms.core.api.service.WebSocketService;
 import com.hbc.pms.core.api.service.blueprint.BlueprintPersistenceService;
 import com.hbc.pms.core.api.support.data.DataProcessor;
@@ -24,10 +22,6 @@ public class MonitorHandler implements RmsHandler {
 
   @Override
   public void handle(HandlerContext context, Map<String, IoResponse> response) {
-    if (!context.getJobName().equals(MONITORING_JOB_NAME)) {
-      return;
-    }
-
     List<Blueprint> blueprintsToFetch =
         blueprintService.getAll().stream()
             .filter(blueprint -> blueprint.getType().equals(BlueprintType.MONITORING))

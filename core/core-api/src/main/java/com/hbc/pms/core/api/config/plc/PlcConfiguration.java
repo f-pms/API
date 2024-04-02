@@ -22,11 +22,11 @@ public class PlcConfiguration {
   }
 
   @Bean
-  CronScrapeJob monitoringJob(
-      PlcMonitoringDataSource plcDataSource,
+  CronScrapeJob hbcJob(
+      PlcDataSource plcDataSource,
       com.hbc.pms.plc.api.PlcConfiguration plcConfiguration) {
     return HbcScrapeJob.builder()
-        .jobName("monitoring-processor")
+        .jobName("hbc-processor")
         .plcConfiguration(plcConfiguration)
         .hbcScrapeJobDataSource(plcDataSource)
         .alias(DEVICE_NAME)
@@ -34,17 +34,4 @@ public class PlcConfiguration {
         .build();
   }
 
-  @Bean
-  CronScrapeJob reportJob(
-      PlcReportDataSource plcDataSource, com.hbc.pms.plc.api.PlcConfiguration plcConfiguration) {
-    return HbcScrapeJob.builder()
-        .jobName("report-processor")
-        .plcConfiguration(plcConfiguration)
-        .hbcScrapeJobDataSource(plcDataSource)
-        .alias(DEVICE_NAME)
-        // TODO: will update later, just keep it for testing purpose.
-        // TODO: Correct cron "0 0-5 6 * * *"
-        .cron("0 */1 * * * *")
-        .build();
-  }
 }

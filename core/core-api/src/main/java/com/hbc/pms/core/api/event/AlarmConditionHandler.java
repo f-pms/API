@@ -1,7 +1,5 @@
 package com.hbc.pms.core.api.event;
 
-import static com.hbc.pms.core.api.constant.PlcConstant.MONITORING_JOB_NAME;
-
 import com.hbc.pms.core.api.service.alarm.AlarmPersistenceService;
 import com.hbc.pms.core.api.service.alarm.AlarmService;
 import com.hbc.pms.core.api.support.data.AlarmStore;
@@ -22,10 +20,6 @@ public class AlarmConditionHandler implements RmsHandler {
 
   @Override
   public void handle(HandlerContext context, Map<String, IoResponse> response) {
-    if (!context.getJobName().equals(MONITORING_JOB_NAME)) {
-      return;
-    }
-
     var conditions = alarmPersistenceService.getAllConditions();
     var matchedConditions =
         conditions.stream()

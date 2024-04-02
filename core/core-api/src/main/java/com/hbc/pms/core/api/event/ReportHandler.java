@@ -1,6 +1,5 @@
 package com.hbc.pms.core.api.event;
 
-import static com.hbc.pms.core.api.constant.PlcConstant.REPORT_JOB_NAME;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.hbc.pms.core.api.service.blueprint.BlueprintPersistenceService;
@@ -35,10 +34,6 @@ public class ReportHandler implements RmsHandler {
 
   @Override
   public void handle(HandlerContext context, Map<String, IoResponse> response) {
-    if (!context.getJobName().equals(REPORT_JOB_NAME)) {
-      return;
-    }
-
     var reportAddresses =
         blueprintService.getAll().stream()
             .filter(blueprint -> blueprint.getType().equals(BlueprintType.REPORT))
