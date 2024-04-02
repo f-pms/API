@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.config.auth;
 
 import static com.hbc.pms.support.auth.AuthConstants.LOGIN_PATH;
+import static com.hbc.pms.support.auth.AuthConstants.WEBSOCKET_PATH;
 
 import com.hbc.pms.support.auth.JwtAuthFilter;
 import lombok.AllArgsConstructor;
@@ -29,7 +30,8 @@ public class SecurityConfig {
     "/swagger-ui/**",
     "/swagger-ui.html",
     "/v3/api-docs/**",
-    LOGIN_PATH
+    LOGIN_PATH,
+    WEBSOCKET_PATH
   };
   private final UserDetailsService userDetailsService;
   private final JwtAuthFilter jwtAuthFilter;
