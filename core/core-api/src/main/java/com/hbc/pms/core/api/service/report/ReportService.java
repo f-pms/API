@@ -144,55 +144,61 @@ public class ReportService {
       case MULTI_LINE, STACKED_BAR ->
           reportsByTypes.forEach(
               (reportType, currentReports) -> {
-                var indicators =
-                    currentReports.get(0).getSums().get(0).keySet().stream()
-                        .filter(
-                            indicator ->
-                                ChartConstant.COMMON_INDICATORS.contains(indicator)
-                                    || indicator.startsWith(SUM_SPECIFIC_PREFIX))
-                        .toList();
+                if (!currentReports.isEmpty()) {
+                  var indicators =
+                      currentReports.get(0).getSums().get(0).keySet().stream()
+                          .filter(
+                              indicator ->
+                                  ChartConstant.COMMON_INDICATORS.contains(indicator)
+                                      || indicator.startsWith(SUM_SPECIFIC_PREFIX))
+                          .toList();
 
-                var reportChunks =
-                    partitionReportsByTimeUnit(
-                        currentReports,
-                        searchCommand.getQueryType(),
-                        searchCommand.getStart(),
-                        searchCommand.getEnd());
+                  var reportChunks =
+                      partitionReportsByTimeUnit(
+                          currentReports,
+                          searchCommand.getQueryType(),
+                          searchCommand.getStart(),
+                          searchCommand.getEnd());
 
-                chartData.putIfAbsent(reportType, new HashMap<>());
+                  chartData.putIfAbsent(reportType, new HashMap<>());
 
-                var indicatorValuesMap = chartData.get(reportType);
+                  var indicatorValuesMap = chartData.get(reportType);
 
-                indicators.forEach(
-                    indicator -> indicatorValuesMap.putIfAbsent(indicator, new ArrayList<>()));
+                  indicators.forEach(
+                      indicator -> indicatorValuesMap.putIfAbsent(indicator, new ArrayList<>()));
 
-                reportChunks.forEach(
-                    (label, reportsChunk) -> {
-                      var aggregatedSum = aggregateSumByIndicators(reportsChunk, indicators);
+                  reportChunks.forEach(
+                      (label, reportsChunk) -> {
+                        var aggregatedSum = aggregateSumByIndicators(reportsChunk, indicators);
 
-                      indicatorValuesMap.forEach(
-                          (indicator, summedList) -> summedList.add(aggregatedSum.get(indicator)));
-                    });
+                        indicatorValuesMap.forEach(
+                            (indicator, summedList) ->
+                                summedList.add(aggregatedSum.get(indicator)));
+                      });
 
-                var labels = reportChunks.keySet().stream().toList();
-                result.setLabelSteps(labels);
+                  var labels = reportChunks.keySet().stream().toList();
+                  result.setLabelSteps(labels);
+                }
               });
     }
 
-    var missingDatesByType =
-        getMissingDatesInReportsGroupByType(
-            reportsByTypes, searchCommand.getStart(), searchCommand.getEnd());
     result.setData(chartData);
-    result.setMissingDates(missingDatesByType);
 
     return result;
   }
 
-  private Map<String, List<OffsetDateTime>> getMissingDatesInReportsGroupByType(
-      Map<String, List<Report>> reportsByType, OffsetDateTime start, OffsetDateTime end) {
+  public Map<String, List<OffsetDateTime>> getMissingDatesInReportsGroupByType(
+      SearchMultiDayChartCommand searchCommand) {
+    var start = searchCommand.getStart();
+    var end = searchCommand.getEnd();
+    var reportCriteria = ReportCriteria.builder().startDate(start).endDate(end).build();
+
+    List<Report> reports = reportPersistenceService.getAll(reportCriteria).stream().toList();
+    Map<String, List<Report>> reportsByTypes = groupReportsByType(reports);
+
     Map<String, List<OffsetDateTime>> missingDatesByType = new HashMap<>();
 
-    reportsByType.forEach(
+    reportsByTypes.forEach(
         (reportType, currentReports) -> {
           OffsetDateTime currentDate = start;
 
@@ -221,6 +227,12 @@ public class ReportService {
   }
 
   private Map<String, List<Report>> groupReportsByType(List<Report> reports) {
+    if (reports.isEmpty()) {
+      var reportTypes = reportTypePersistenceService.getAll();
+      return reportTypes.stream()
+          .collect(Collectors.toMap(ReportType::getName, reportType -> new ArrayList<>()));
+    }
+
     return reports.stream().collect(groupingBy(report -> report.getType().getName()));
   }
 
