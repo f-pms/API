@@ -118,11 +118,19 @@ class TestDataFixture {
   User ADMIN_USER
   User SUPERVISOR_USER
 
+  void populateOnce() {
+    populateReportTypes()
+    populate6YearsReports()
+  }
+
   void populate() {
     populateUsers()
     populateBlueprints()
-    populateReportTypes()
-    populate6YearsReports()
+  }
+
+  void cleanupOnce() {
+    reportRepository.deleteAll()
+    reportTypeRepository.deleteAll()
   }
 
   void cleanup() {
@@ -132,8 +140,6 @@ class TestDataFixture {
     configurationRepository.deleteAll()
     blueprintRepository.deleteAll()
     userRepository.deleteAll()
-    reportRepository.deleteAll()
-    reportTypeRepository.deleteAll()
   }
 
   void populate6YearsReports() {
