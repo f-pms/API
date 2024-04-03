@@ -1,14 +1,14 @@
 package com.hbc.pms.support.auth;
 
 import static com.hbc.pms.support.auth.AuthConstants.LOGIN_PATH;
+import static com.hbc.pms.support.auth.AuthConstants.WEBSOCKET_PATH;
+import static com.hbc.pms.support.auth.AuthHeaderUtil.tryToExtractToken;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -31,35 +31,22 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
   @Override
   protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
-    return new AntPathRequestMatcher(LOGIN_PATH).matches(request);
+    return new AntPathRequestMatcher(LOGIN_PATH).matches(request)
+        || new AntPathRequestMatcher(WEBSOCKET_PATH).matches(request);
   }
 
   @Override
   protected void doFilterInternal(
-      HttpServletRequest request,
+      @NonNull HttpServletRequest request,
       @NonNull HttpServletResponse response,
       @NonNull FilterChain filterChain)
       throws ServletException, IOException {
-    String jwt = null;
-    String userEmail;
-    Cookie[] cookies = request.getCookies();
-    final String authHeader = request.getHeader("Authorization");
-    if (authHeader != null && authHeader.startsWith("Bearer ")) {
-      jwt = authHeader.substring(7);
-    }
-    if (jwt == null && cookies != null) {
-      Optional<Cookie> authCookie =
-          Arrays.stream(cookies)
-              .filter(cookie -> cookie.getName().equals(AUTH_COOKIE_NAME))
-              .findFirst();
-      if (authCookie.isPresent()) {
-        jwt = authCookie.get().getValue();
-      }
-    }
+    Optional<String> jwtOptional = tryToExtractToken(request);
 
-    if (jwt != null) {
+    if (jwtOptional.isPresent()) {
       try {
-        userEmail = jwtService.extractUsername(jwt);
+        String jwt = jwtOptional.get();
+        String userEmail = jwtService.extractUsername(jwt);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
           UserDetails userDetails = this.userService.loadUserByUsername(userEmail);
           if (!jwtService.isTokenNotValid(jwt, userDetails)) {
