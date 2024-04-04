@@ -35,7 +35,6 @@ public class ReportEntity {
   @Column(length = 6500)
   private String sumJson;
 
-  @CreationTimestamp
   @Column(updatable = false)
   private OffsetDateTime recordingDate;
 
