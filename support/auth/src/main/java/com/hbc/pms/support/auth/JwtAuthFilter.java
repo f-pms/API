@@ -1,7 +1,5 @@
 package com.hbc.pms.support.auth;
 
-import static com.hbc.pms.support.auth.AuthConstants.LOGIN_PATH;
-import static com.hbc.pms.support.auth.AuthConstants.WEBSOCKET_PATH;
 import static com.hbc.pms.support.auth.AuthHeaderUtil.tryToExtractToken;
 
 import jakarta.servlet.FilterChain;
@@ -28,12 +26,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
   private final JwtService jwtService;
   private final UserDetailsService userService;
   private final HandlerExceptionResolver handlerExceptionResolver;
-
-  @Override
-  protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
-    return new AntPathRequestMatcher(LOGIN_PATH).matches(request)
-        || new AntPathRequestMatcher(WEBSOCKET_PATH).matches(request);
-  }
 
   @Override
   protected void doFilterInternal(
