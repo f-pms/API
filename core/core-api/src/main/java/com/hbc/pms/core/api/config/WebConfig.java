@@ -33,28 +33,29 @@ public class WebConfig implements WebMvcConfigurer {
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
+    var resolver =
+        new PathResourceResolver() {
+          @Override
+          protected Resource getResource(String path, Resource location)
+              throws IOException {
+            Resource requestedResource = location.createRelative(path);
+            return requestedResource.exists() && requestedResource.isReadable()
+                ? requestedResource
+                : new ClassPathResource("/ui/index.html");
+          }
+        };
     registry
         .addResourceHandler("/**/*")
         .addResourceLocations("classpath:/ui/")
         .resourceChain(true)
-        .addResolver(
-            new PathResourceResolver() {
-              @Override
-              protected Resource getResource(String resourcePath, Resource location)
-                  throws IOException {
-                Resource requestedResource = location.createRelative(resourcePath);
-                return requestedResource.exists() && requestedResource.isReadable()
-                    ? requestedResource
-                    : new ClassPathResource("/ui/index.html");
-              }
-            });
+        .addResolver(resolver);
   }
 
   @Bean
   ErrorViewResolver notFoundFallback() {
-    return (request, status, model) -> status == HttpStatus.NOT_FOUND
-        ? new ModelAndView("index.html", Collections.emptyMap(), HttpStatus.OK)
-        : null;
+    return (request, status, model) ->
+        status == HttpStatus.NOT_FOUND
+            ? new ModelAndView("index.html", Collections.emptyMap(), HttpStatus.OK)
+            : null;
   }
 }
