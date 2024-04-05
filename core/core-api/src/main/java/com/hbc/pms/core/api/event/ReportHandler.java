@@ -48,6 +48,8 @@ public class ReportHandler implements RmsHandler {
       return;
     }
 
+    Try.run(() -> plcConnector.write(checkerAddress.get(), new PlcBOOL(false)));
+
     var schedules = reportSchedulePersistenceService.getAll();
     var types = schedules.stream().collect(groupingBy(ReportSchedule::getType));
     types.forEach(
@@ -66,7 +68,5 @@ public class ReportHandler implements RmsHandler {
             log.error("Failed to process daily report for type={}: {}", type, ex.getMessage());
           }
         });
-
-    Try.run(() -> plcConnector.write(checkerAddress.get(), new PlcBOOL(false)));
   }
 }
