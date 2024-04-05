@@ -18,7 +18,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "report")
@@ -35,7 +34,6 @@ public class ReportEntity {
   @Column(length = 6500)
   private String sumJson;
 
-  @CreationTimestamp
   @Column(updatable = false)
   private OffsetDateTime recordingDate;
 
