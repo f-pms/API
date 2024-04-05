@@ -54,6 +54,9 @@ public class SecurityConfig {
                         .noneMatch(url -> matcher.match(apiPrefix + url, path));
                   })
               .authenticated();
+
+          // permit UI path and /websocket.
+          // websocket does not handle auth in here
           request.anyRequest().permitAll();
         });
     http.authenticationProvider(authenticationProvider())
