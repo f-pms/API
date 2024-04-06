@@ -36,8 +36,7 @@ public class WebConfig implements WebMvcConfigurer {
     var resolver =
         new PathResourceResolver() {
           @Override
-          protected Resource getResource(String path, Resource location)
-              throws IOException {
+          protected Resource getResource(String path, Resource location) throws IOException {
             Resource requestedResource = location.createRelative(path);
             return requestedResource.exists() && requestedResource.isReadable()
                 ? requestedResource
