@@ -44,7 +44,7 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
     def configCountBefore = configEntities.size()
 
     when:
-    def response = restClient.get("/sensor-configurations", dataFixture.ADMIN_USER, List<SensorConfigurationResponse>)
+    def response = restClient.get(SENSOR_CONFIG_PATH, dataFixture.ADMIN_USER, List<SensorConfigurationResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -63,7 +63,7 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
     def configCountBefore = configEntities.size()
 
     when:
-    def response = restClient.get("/sensor-configurations?blueprintType=MONITORING", dataFixture.ADMIN_USER, List<SensorConfigurationResponse>)
+    def response = restClient.get("$SENSOR_CONFIG_PATH?blueprintType=MONITORING", dataFixture.ADMIN_USER, List<SensorConfigurationResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -77,7 +77,7 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
   def "Get sensor configurations - By blueprintType and not found - OK with empty list"() {
     when:
     def response
-            = restClient.get("/sensor-configurations?blueprintType=Random", dataFixture.ADMIN_USER,
+            = restClient.get("$SENSOR_CONFIG_PATH?blueprintType=Random", dataFixture.ADMIN_USER,
             List<SensorConfigurationResponse>)
 
     then:
@@ -93,7 +93,7 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
     def configCountBefore = configEntities.size()
 
     when:
-    def response = restClient.get("/sensor-configurations?blueprintName=PREDEFINED", dataFixture.ADMIN_USER, List<SensorConfigurationResponse>)
+    def response = restClient.get("$SENSOR_CONFIG_PATH?blueprintName=PREDEFINED", dataFixture.ADMIN_USER, List<SensorConfigurationResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
@@ -107,7 +107,7 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
   def "Get sensor configurations - By blueprintName and not found - OK with empty list"() {
     when:
     def response
-            = restClient.get("/sensor-configurations?blueprintName=Random", dataFixture.ADMIN_USER,
+            = restClient.get("$SENSOR_CONFIG_PATH?blueprintName=Random", dataFixture.ADMIN_USER,
             List<SensorConfigurationResponse>)
 
     then:
@@ -124,7 +124,7 @@ class SensorConfigurationControllerFunctionalSpec extends FunctionalTestSpec {
 
     when:
     def response
-            = restClient.get("/sensor-configurations?blueprintType=ALARM&blueprintName=PREDEFINED", dataFixture.ADMIN_USER, List<BlueprintResponse>)
+            = restClient.get("$SENSOR_CONFIG_PATH?blueprintType=ALARM&blueprintName=PREDEFINED", dataFixture.ADMIN_USER, List<BlueprintResponse>)
 
     then:
     response.statusCode.is2xxSuccessful()
