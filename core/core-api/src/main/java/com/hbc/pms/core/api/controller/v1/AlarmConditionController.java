@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("alarm-conditions")
+@RequestMapping("${apiPrefix}/alarm-conditions")
 @RequiredArgsConstructor
 public class AlarmConditionController {
   private final ModelMapper mapper;

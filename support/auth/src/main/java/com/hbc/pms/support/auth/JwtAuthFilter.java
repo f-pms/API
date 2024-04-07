@@ -1,7 +1,5 @@
 package com.hbc.pms.support.auth;
 
-import static com.hbc.pms.support.auth.AuthConstants.LOGIN_PATH;
-import static com.hbc.pms.support.auth.AuthConstants.WEBSOCKET_PATH;
 import static com.hbc.pms.support.auth.AuthHeaderUtil.tryToExtractToken;
 
 import jakarta.servlet.FilterChain;
@@ -16,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -28,12 +25,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
   private final JwtService jwtService;
   private final UserDetailsService userService;
   private final HandlerExceptionResolver handlerExceptionResolver;
-
-  @Override
-  protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
-    return new AntPathRequestMatcher(LOGIN_PATH).matches(request)
-        || new AntPathRequestMatcher(WEBSOCKET_PATH).matches(request);
-  }
 
   @Override
   protected void doFilterInternal(

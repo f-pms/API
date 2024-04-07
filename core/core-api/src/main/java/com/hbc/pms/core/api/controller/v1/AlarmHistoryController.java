@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("alarm-histories")
+@RequestMapping("${apiPrefix}/alarm-histories")
 @RequiredArgsConstructor
 public class AlarmHistoryController {
   private final ModelMapper mapper;

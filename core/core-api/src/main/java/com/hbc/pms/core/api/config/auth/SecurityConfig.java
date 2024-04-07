@@ -1,10 +1,11 @@
 package com.hbc.pms.core.api.config.auth;
 
 import static com.hbc.pms.support.auth.AuthConstants.LOGIN_PATH;
-import static com.hbc.pms.support.auth.AuthConstants.WEBSOCKET_PATH;
 
 import com.hbc.pms.support.auth.JwtAuthFilter;
-import lombok.AllArgsConstructor;
+import java.util.Arrays;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -18,24 +19,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.util.AntPathMatcher;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig {
   private static final String[] WHITE_LIST_URLS = {
-    "/swagger-resources",
-    "/swagger-resources/**",
-    "/swagger-ui/**",
-    "/swagger-ui.html",
-    "/v3/api-docs/**",
-    LOGIN_PATH,
-    WEBSOCKET_PATH
+    "/swagger-resources**", "/swagger-ui**", "/v3/api-docs/**", LOGIN_PATH
   };
   private final UserDetailsService userDetailsService;
   private final JwtAuthFilter jwtAuthFilter;
   private final PasswordEncoder passwordEncoder;
+
+  @Value("${apiPrefix}")
+  private String apiPrefix;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,8 +42,22 @@ public class SecurityConfig {
     http.cors(Customizer.withDefaults());
     http.authorizeHttpRequests(
         request -> {
-          request.requestMatchers(WHITE_LIST_URLS).permitAll();
-          request.anyRequest().authenticated();
+          request
+              .requestMatchers(
+                  r -> {
+                    var path = r.getRequestURI();
+                    if (!path.startsWith(apiPrefix)) {
+                      return false;
+                    }
+                    var matcher = new AntPathMatcher();
+                    return Arrays.stream(WHITE_LIST_URLS)
+                        .noneMatch(url -> matcher.match(apiPrefix + url, path));
+                  })
+              .authenticated();
+
+          // permit UI path and /websocket.
+          // websocket does not handle auth in here
+          request.anyRequest().permitAll();
         });
     http.authenticationProvider(authenticationProvider())
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

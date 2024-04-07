@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("reports")
+@RequestMapping("${apiPrefix}/reports")
 @RequiredArgsConstructor
 public class ReportController {
   private final ModelMapper mapper;
