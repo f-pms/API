@@ -9,6 +9,8 @@ import com.hbc.pms.integration.db.specifications.ReportSpecification;
 import com.hbc.pms.support.web.error.CoreApiException;
 import com.hbc.pms.support.web.error.ErrorType;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +30,17 @@ public class ReportPersistenceService extends AbstractPersistenceService<ReportE
   public Collection<Report> getAll(ReportCriteria criteria) {
     var spec = new ReportSpecification(criteria);
     return mapToModel(reportRepository.findAll(spec), Report.class);
+  }
+
+  public Collection<Report> getAll() {
+    var entities = reportRepository.findAll();
+    return StreamSupport.stream(entities.spliterator(), false)
+        .map(entity -> mapper.map(entity, Report.class))
+        .toList();
+  }
+
+  public List<Report> getAllEmptySumJson() {
+    return mapToModel(reportRepository.findAllBySumJsonIsNullOrEmpty(), Report.class);
   }
 
   public Report getByIdWithRows(Long id) {
