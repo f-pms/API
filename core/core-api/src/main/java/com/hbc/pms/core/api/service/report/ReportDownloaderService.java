@@ -2,9 +2,11 @@ package com.hbc.pms.core.api.service.report;
 
 import com.hbc.pms.core.api.config.report.ReportConfiguration;
 import com.hbc.pms.core.api.support.data.ReportExcelProcessor;
+import com.hbc.pms.core.model.Report;
 import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.support.web.error.CoreApiException;
 import com.hbc.pms.support.web.error.ErrorType;
+import io.vavr.control.Try;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -12,6 +14,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +32,7 @@ import org.springframework.util.StreamUtils;
 public class ReportDownloaderService {
   private final ReportPersistenceService reportPersistenceService;
   private final ReportExcelProcessor processor;
-  private final ReportGenerationService reportGenerationService;
+  private final Executor executor = Executors.newFixedThreadPool(5);
   private final ReportConfiguration reportConfiguration;
 
   public void download(List<Path> paths, HttpServletResponse response) {
@@ -58,7 +63,8 @@ public class ReportDownloaderService {
 
   public List<Path> getReportPaths(ReportCriteria criteria) {
     var reports = reportPersistenceService.getAll(criteria);
-    reportGenerationService.generateMissingExcelFiles(reports);
+    var missingReports = reports.stream().filter(this::notFoundPredicate).toList();
+    generateReports(missingReports.stream().map(Report::getId).toList());
     return reports.stream()
         .map(
             report ->
@@ -68,5 +74,31 @@ public class ReportDownloaderService {
                     processor.getFileName(report)))
         .filter(path -> path.toFile().exists())
         .toList();
+  }
+
+  private boolean notFoundPredicate(Report report) {
+    var alias = report.getType().getName();
+    return !Paths.get(reportConfiguration.getDir(), alias, processor.getFileName(report))
+        .toFile()
+        .exists();
+  }
+
+  private void generateReports(List<Long> ids) {
+    var futures = ids.stream().map(this::generateReportAsync).toArray(CompletableFuture<?>[]::new);
+    CompletableFuture.allOf(futures).join();
+  }
+
+  private CompletableFuture<Void> generateReportAsync(Long id) {
+    return CompletableFuture.runAsync(() -> generateReport(id), executor);
+  }
+
+  private void generateReport(Long id) {
+    Try.run(
+        () -> {
+          var report = reportPersistenceService.getByIdWithRows(id);
+          var type = report.getType();
+          var rows = report.getRows();
+          processor.process(type, report, rows);
+        });
   }
 }
