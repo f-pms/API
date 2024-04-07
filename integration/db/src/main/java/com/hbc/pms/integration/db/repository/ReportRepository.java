@@ -14,7 +14,7 @@ public interface ReportRepository
   @Query("SELECT r FROM ReportEntity r JOIN FETCH r.rows WHERE r.id = :id")
   Optional<ReportEntity> findByIdWithRows(@Param("id") Long id);
 
-  @Query("SELECT y FROM ReportEntity y WHERE y.sumJson IS NULL OR y.sumJson = ''")
+  @Query("SELECT r FROM ReportEntity r WHERE r.sumJson IS NULL OR r.sumJson = ''")
   @EntityGraph(attributePaths = {"rows", "type"})
   List<ReportEntity> findAllBySumJsonIsNullOrEmpty();
 }
