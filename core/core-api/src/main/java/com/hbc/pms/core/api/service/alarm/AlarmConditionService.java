@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.service.alarm;
 
+import com.hbc.pms.core.api.constant.ErrorMessageConstant;
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.response.AlarmConditionResponse;
@@ -40,7 +41,7 @@ public class AlarmConditionService {
 
     if (updateCommand.getType() != existedCondition.getType()) {
       throw new CoreApiException(
-          ErrorType.BAD_REQUEST_ERROR, "Can not change Alarm Condition Type");
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.CANNOT_CHANGE_ALARM_CONDITION_TYPE);
     }
 
     mapper.map(updateCommand, existedCondition);

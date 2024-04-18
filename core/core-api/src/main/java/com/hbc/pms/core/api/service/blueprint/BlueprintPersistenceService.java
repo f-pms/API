@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.service.blueprint;
 
+import com.hbc.pms.core.api.constant.ErrorMessageConstant;
 import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
@@ -39,7 +40,7 @@ public class BlueprintPersistenceService {
   public Blueprint getById(Long id) {
     var oBlueprint = blueprintRepository.findById(id);
     if (oBlueprint.isEmpty()) {
-      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, "Blueprint not found with id: " + id);
+      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, ErrorMessageConstant.BLUEPRINT_NOT_FOUND + id);
     }
     return mapper.map(oBlueprint.get(), Blueprint.class);
   }

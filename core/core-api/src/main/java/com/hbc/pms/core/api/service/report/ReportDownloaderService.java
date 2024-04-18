@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.service.report;
 
 import com.hbc.pms.core.api.config.report.ReportConfiguration;
+import com.hbc.pms.core.api.constant.ErrorMessageConstant;
 import com.hbc.pms.core.api.support.data.ReportExcelProcessor;
 import com.hbc.pms.core.model.criteria.ReportCriteria;
 import com.hbc.pms.support.web.error.CoreApiException;
@@ -52,7 +53,7 @@ public class ReportDownloaderService {
       zipOutputStream.finish();
       zipOutputStream.close();
     } catch (IOException e) {
-      throw new CoreApiException(ErrorType.DEFAULT_ERROR, "Failed to download Excel files");
+      throw new CoreApiException(ErrorType.DEFAULT_ERROR, ErrorMessageConstant.DOWNLOAD_EXCEL_FILES_FAILDED);
     }
   }
 
