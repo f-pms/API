@@ -40,7 +40,7 @@ hbc:
       expiration-time: ${JWT_EXPIRATION_TIME:86400000}
   report:
     enable-validation: ${REPORT_VALIDATE:true}
-    dir: ${REPORT_DIR:C:/Personal/Projects/F-PMS/reports}
+    dir: ${REPORT_DIR:D:/reports}
 server:
   tomcat:
     max-connections: 20000
