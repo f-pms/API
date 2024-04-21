@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.Length;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CreateAlarmConditionCommand extends BaseAlarmConditionCommand {
   private Long sensorConfigurationId;
+
+  @Length(max = 255, message = "Max length of the message is 255")
   private String message;
+
   private List<AlarmActionCommand> actions;
 
   @Data
