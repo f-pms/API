@@ -63,6 +63,7 @@ public class ReportExcelProcessor {
 
   private static final String SUM_PREFIX = "SUM_";
   private static final String SUM_SPECIFIC_PREFIX = SUM_PREFIX + "SPECIFIC_";
+  private static final String FACTOR_PREFIX = "FACTOR_";
   private static final String IGNORE_POSTFIX = "__";
 
   @Value("${hbc.report.dir}")
@@ -114,6 +115,11 @@ public class ReportExcelProcessor {
     return getSumsMap(context.getSheet(), indicators);
   }
 
+  public Map<String, Double> processFactorsMap(
+      Context context, Map<String, CellAddress> indicators) {
+    return getFactorsMap(context.getSheet(), indicators);
+  }
+
   public void resetDevelopmentCells(Context context, Map<String, CellAddress> indicators) {
     indicators.forEach(
         (indicator, address) -> {
@@ -151,7 +157,7 @@ public class ReportExcelProcessor {
             convertOffsetDateTimeToLocalDateTime(report.getRecordingDate())));
   }
 
-  public List<Map<String, Double>> process(ReportType type, Report report, List<ReportRow> rows)
+  public Result process(ReportType type, Report report, List<ReportRow> rows)
       throws IOException, InvalidFormatException {
     var workbook = cloneWorkbook(type.getName());
 
@@ -179,11 +185,17 @@ public class ReportExcelProcessor {
     var sums1 = processSumsMap(context1, indicator1);
     var sums2 = processSumsMap(context2, indicator2);
 
+    var factors1 = processFactorsMap(context1, indicator1);
+    var factors2 = processFactorsMap(context2, indicator2);
+
     resetDevelopmentCells(context1, indicator1);
     resetDevelopmentCells(context2, indicator2);
 
     save(workbook, type.getName(), getFileName(report));
-    return List.of(sums1, sums2);
+    return Result.builder()
+        .sums(List.of(sums1, sums2))
+        .factors(List.of(factors1, factors2))
+        .build();
   }
 
   private void fillBaseValue(
@@ -304,6 +316,23 @@ public class ReportExcelProcessor {
     return sumsMap;
   }
 
+  private Map<String, Double> getFactorsMap(XSSFSheet sheet, Map<String, CellAddress> indicators) {
+    var factorsMap = new HashMap<String, Double>();
+    indicators.forEach(
+        (indicator, address) -> {
+          if (!indicator.startsWith(FACTOR_PREFIX)) {
+            return;
+          }
+
+          var oValue = getCellValue(sheet, address);
+          if (oValue.isEmpty()) {
+            return;
+          }
+          factorsMap.put(indicator, oValue.get());
+        });
+    return factorsMap;
+  }
+
   private Optional<Double> getCellValue(XSSFSheet sheet, CellAddress address) {
     final var DEFAULT_SCALE = 3;
     var cell = sheet.getRow(address.getRow()).getCell(address.getColumn());
@@ -349,5 +378,12 @@ public class ReportExcelProcessor {
     public boolean isShift2() {
       return shift.equals(ReportRowShift.II);
     }
+  }
+
+  @Builder
+  @Getter
+  public static class Result {
+    private List<Map<String, Double>> sums;
+    private List<Map<String, Double>> factors;
   }
 }

@@ -1,0 +1,12 @@
+databaseChangeLog:
+- changeSet:
+    id: 1713696043643-1
+    author: HTG (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: factor_json
+            type: varchar(6500)
+        tableName: report
+
