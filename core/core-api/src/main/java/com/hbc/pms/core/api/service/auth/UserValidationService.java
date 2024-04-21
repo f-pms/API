@@ -80,12 +80,12 @@ public class UserValidationService {
     }
     if (!verifyPasswordExistence(updateUserCommand)) {
       throw new CoreApiException(
-          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.BOTH_NEW_AND_OLD_PASSWORD_MUST_BE_PRESENT_OR_ABSENT);
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.BOTH_NEW_AND_OLD_PASS_MUST_BE_PRESENT_OR_ABSENT);
     }
     if (StringUtils.isNotEmpty(updateUserCommand.getOldPassword())
         && !verifyOldPasswordMatch(toUpdate, updateUserCommand)) {
       throw new CoreApiException(
-          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.CURRENT_PASSWORD_IS_NOT_CORRECT);
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.CURRENT_PASS_IS_NOT_CORRECT);
     }
   }
 

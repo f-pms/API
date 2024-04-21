@@ -102,7 +102,7 @@ class UserValidationServiceSpec extends Specification {
 
     then:
     def exception = thrown(CoreApiException)
-    exception.data == ErrorMessageConstant.CURRENT_PASSWORD_IS_NOT_CORRECT
+    exception.data == ErrorMessageConstant.CURRENT_PASS_IS_NOT_CORRECT
   }
 
 
