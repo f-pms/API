@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 public class Report {
   private Long id;
   private String sumJson;
+  private String factorJson;
   private OffsetDateTime recordingDate;
   private ReportType type;
   private List<ReportRow> rows;
@@ -26,6 +27,15 @@ public class Report {
     try {
       var mapper = new ObjectMapper();
       return mapper.readValue(sumJson, new TypeReference<>() {});
+    } catch (Exception ex) {
+      return List.of();
+    }
+  }
+
+  public List<Map<String, Double>> getFactors() {
+    try {
+      var mapper = new ObjectMapper();
+      return mapper.readValue(factorJson, new TypeReference<>() {});
     } catch (Exception ex) {
       return List.of();
     }

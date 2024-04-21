@@ -34,6 +34,9 @@ public class ReportEntity {
   @Column(length = 6500)
   private String sumJson;
 
+  @Column(length = 6500)
+  private String factorJson;
+
   @Column(updatable = false)
   private OffsetDateTime recordingDate;
 
