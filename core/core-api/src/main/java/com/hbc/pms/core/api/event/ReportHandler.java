@@ -62,8 +62,9 @@ public class ReportHandler implements RmsHandler {
             var rows = reportService.createReportRows(response, report.getId(), schedulesOfType);
 
             // calculate sum
-            var sums = processor.process(type, report, rows);
-            reportService.updateSumJson(report, sums);
+            var reportResult = processor.process(type, report, rows);
+            reportService.updateSumJson(report, reportResult.getSums());
+            reportService.updateFactorsJson(report, reportResult.getFactors());
           } catch (Exception ex) {
             log.error("Failed to process daily report for type={}: {}", type, ex.getMessage());
           }

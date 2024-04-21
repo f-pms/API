@@ -72,6 +72,12 @@ public class ReportService {
     reportPersistenceService.update(report.getId(), report);
   }
 
+  public void updateFactorsJson(Report report, List<Map<String, Double>> factors) {
+    var mapper = new ObjectMapper();
+    report.setFactorJson(Try.of(() -> mapper.writeValueAsString(factors)).getOrElse(""));
+    reportPersistenceService.update(report.getId(), report);
+  }
+
   private void createRowForPeriod(
       Map<String, IoResponse> response,
       ReportRow.ReportRowBuilder rowBuilder,

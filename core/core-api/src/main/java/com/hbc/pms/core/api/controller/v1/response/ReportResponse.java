@@ -18,6 +18,7 @@ public class ReportResponse {
   private OffsetDateTime recordingDate;
   private ReportType type;
   private List<Map<String, Double>> sums;
+  private List<Map<String, Double>> factors;
 
   @JsonIgnore private List<ReportRow> rows;
 
