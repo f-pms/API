@@ -323,8 +323,8 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
                     updateConfigRequest, dataFixture.ADMIN_USER, ApiResponse<Boolean>)
 
     then:
-    response.statusCode.is5xxServerError()
-    response.body.error["code"] == ErrorCode.E500.toString()
+    response.statusCode.is4xxClientError()
+    response.body.error["code"] == ErrorCode.E400.toString()
   }
 
   @PendingFeature
