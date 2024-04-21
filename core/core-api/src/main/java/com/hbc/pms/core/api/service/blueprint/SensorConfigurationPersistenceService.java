@@ -85,7 +85,7 @@ public class SensorConfigurationPersistenceService {
       if (!plcService.isTagExisted(address)) {
         throw new ValidationException(
             Collections.singletonList(
-                new ErrorMessage("Address " + address + " does not exist in the PLC")));
+                new ErrorMessage("Địa chỉ " + address + " không tồn tại trong PLC")));
       }
     }
 
