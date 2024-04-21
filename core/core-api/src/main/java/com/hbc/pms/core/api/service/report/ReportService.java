@@ -72,7 +72,7 @@ public class ReportService {
     reportPersistenceService.update(report.getId(), report);
   }
 
-  public void updateFactorsJson(Report report, List<Map<String, Double>> factors) {
+  public void updateFactorJson(Report report, List<Map<String, Double>> factors) {
     var mapper = new ObjectMapper();
     report.setFactorJson(Try.of(() -> mapper.writeValueAsString(factors)).getOrElse(""));
     reportPersistenceService.update(report.getId(), report);

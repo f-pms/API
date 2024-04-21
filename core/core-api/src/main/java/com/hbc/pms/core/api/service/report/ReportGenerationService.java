@@ -69,7 +69,7 @@ public class ReportGenerationService {
         reportPersistenceService.getById(
             report.getId()); // workaround to avoid changing existing code
     reportService.updateSumJson(reportWithoutRows, reportResult.getSums());
-    reportService.updateFactorsJson(reportWithoutRows, reportResult.getFactors());
+    reportService.updateFactorJson(reportWithoutRows, reportResult.getFactors());
     log.debug("Update sumJson for report: {}", report.getId());
   }
 
