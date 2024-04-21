@@ -40,7 +40,8 @@ public class BlueprintPersistenceService {
   public Blueprint getById(Long id) {
     var oBlueprint = blueprintRepository.findById(id);
     if (oBlueprint.isEmpty()) {
-      throw new CoreApiException(ErrorType.NOT_FOUND_ERROR, ErrorMessageConstant.BLUEPRINT_NOT_FOUND + id);
+      throw new CoreApiException(
+          ErrorType.NOT_FOUND_ERROR, ErrorMessageConstant.BLUEPRINT_NOT_FOUND + id);
     }
     return mapper.map(oBlueprint.get(), Blueprint.class);
   }

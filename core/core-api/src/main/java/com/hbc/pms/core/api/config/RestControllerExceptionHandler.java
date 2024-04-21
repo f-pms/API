@@ -71,7 +71,9 @@ public class RestControllerExceptionHandler {
       RuntimeException ex) {
     if (ex instanceof BadCredentialsException) {
       return new ResponseEntity<>(
-          ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.BAD_CREDENTIALS_EXCEPTION), HttpStatus.BAD_REQUEST);
+          ApiResponse.error(
+              ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.BAD_CREDENTIALS_EXCEPTION),
+          HttpStatus.BAD_REQUEST);
     }
     log.error(ex.getMessage(), ex); // keep stacktrace
     return new ResponseEntity<>(

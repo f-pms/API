@@ -33,7 +33,8 @@ public class UserValidationService {
 
   private void verifyUsernameExist(String username) {
     if (userPersistenceService.findByUsernameOptional(username).isPresent()) {
-      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.EXISTED_USERNAME);
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.EXISTED_USERNAME);
     }
   }
 
@@ -58,7 +59,8 @@ public class UserValidationService {
       return;
     }
     if (!authenticationFacade.getUserId().equals(state.getId().toString())) {
-      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.ONLY_UPDATE_YOUR_OWN_USER);
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.ONLY_UPDATE_YOUR_OWN_USER);
     }
   }
 
@@ -80,7 +82,8 @@ public class UserValidationService {
     }
     if (!verifyPasswordExistence(updateUserCommand)) {
       throw new CoreApiException(
-          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.BOTH_NEW_AND_OLD_PASS_MUST_BE_PRESENT_OR_ABSENT);
+          ErrorType.BAD_REQUEST_ERROR,
+          ErrorMessageConstant.BOTH_NEW_AND_OLD_PASS_MUST_BE_PRESENT_OR_ABSENT);
     }
     if (StringUtils.isNotEmpty(updateUserCommand.getOldPassword())
         && !verifyOldPasswordMatch(toUpdate, updateUserCommand)) {
@@ -91,7 +94,8 @@ public class UserValidationService {
 
   public void authorizeDelete(User user) {
     if (authenticationFacade.getUserId().equals(user.getId().toString())) {
-      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.YOU_CAN_NOT_DELETE_YOUR_OWN);
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.YOU_CAN_NOT_DELETE_YOUR_OWN);
     }
   }
 

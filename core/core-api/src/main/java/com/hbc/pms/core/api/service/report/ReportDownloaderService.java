@@ -53,7 +53,8 @@ public class ReportDownloaderService {
       zipOutputStream.finish();
       zipOutputStream.close();
     } catch (IOException e) {
-      throw new CoreApiException(ErrorType.DEFAULT_ERROR, ErrorMessageConstant.DOWNLOAD_EXCEL_FILES_FAILDED);
+      throw new CoreApiException(
+          ErrorType.DEFAULT_ERROR, ErrorMessageConstant.DOWNLOAD_EXCEL_FILES_FAILDED);
     }
   }
 

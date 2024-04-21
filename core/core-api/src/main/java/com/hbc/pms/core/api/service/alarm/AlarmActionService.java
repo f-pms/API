@@ -42,7 +42,8 @@ public class AlarmActionService {
     AlarmAction existedAction = alarmActionPersistenceService.getById(actionId);
 
     if (updatingAction.getType() != existedAction.getType()) {
-      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.CANNOT_CHANGE_ALARM_ACTION_TYPE);
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.CANNOT_CHANGE_ALARM_ACTION_TYPE);
     }
 
     mapper.map(updatingAction, existedAction);
