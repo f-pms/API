@@ -81,4 +81,20 @@ public class Plc4xConnector implements PlcConnector {
       throw new WritePlcException(ex.getMessage(), ex.getCause());
     }
   }
+
+  public PlcResponseCode getResponseCodeOfAddress(String address) {
+    try {
+      var connectionUrl =
+          scrapeConfiguration.getPlcConfiguration().getDeviceConnections().get(DEVICE_NAME);
+      var connection = cachedPlcConnectionManager.getConnection(connectionUrl);
+      var readRequest = connection.readRequestBuilder().addTagAddress(address, address).build();
+      var response = readRequest.execute().get();
+      var responseCode = response.getResponseCode(address);
+      log.info("ResponseStatus of {}: {}", address, responseCode.toString());
+      return responseCode;
+    } catch (Exception ex) {
+      log.error("Error while checking tag existence: {}", ex.getMessage());
+      return PlcResponseCode.INTERNAL_ERROR;
+    }
+  }
 }

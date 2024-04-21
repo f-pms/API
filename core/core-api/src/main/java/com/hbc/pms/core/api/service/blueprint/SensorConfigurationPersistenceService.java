@@ -12,13 +12,10 @@ import com.hbc.pms.integration.db.repository.SensorConfigurationRepository;
 import com.hbc.pms.plc.api.PlcConnector;
 import com.hbc.pms.support.web.error.CoreApiException;
 import com.hbc.pms.support.web.error.ErrorType;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.ValidationException;
-import org.modelmapper.spi.ErrorMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -82,10 +79,10 @@ public class SensorConfigurationPersistenceService {
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
     if (sensorConfiguration.getAddress() != null) {
       var address = sensorConfiguration.getAddress();
-      if (!plcService.isTagExisted(address)) {
-        throw new ValidationException(
-            Collections.singletonList(
-                new ErrorMessage("Address " + address + " does not exist in the PLC")));
+      if (plcService.isTagNotFound(address)) {
+        throw new CoreApiException(
+            ErrorType.BAD_REQUEST_ERROR,
+            "Địa chỉ " + address + " không hợp lệ hoặc không tồn tại trong PLC");
       }
     }
 
@@ -99,10 +96,10 @@ public class SensorConfigurationPersistenceService {
   public boolean update(Long blueprintId, SensorConfiguration sensorConfiguration) {
     if (sensorConfiguration.getAddress() != null) {
       var address = sensorConfiguration.getAddress();
-      if (!plcService.isTagExisted(address)) {
-        throw new ValidationException(
-            Collections.singletonList(
-                new ErrorMessage("Address " + address + " does not exist in the PLC")));
+      if (plcService.isTagNotFound(address)) {
+        throw new CoreApiException(
+            ErrorType.BAD_REQUEST_ERROR,
+            "Địa chỉ " + address + " không hợp lệ hoặc không tồn tại trong PLC");
       }
     }
 
