@@ -8,6 +8,7 @@ import io.jsonwebtoken.JwtException;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.MappingException;
 import org.modelmapper.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +35,9 @@ public class RestControllerExceptionHandler {
 
   @ResponseBody
   @ResponseStatus(org.springframework.http.HttpStatus.BAD_REQUEST)
-  @ExceptionHandler({ValidationException.class})
-  public ApiResponse<?> handleMapperException(ValidationException ex) {
-    return ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getErrorMessages());
+  @ExceptionHandler({ValidationException.class, MappingException.class})
+  public ApiResponse<RuntimeException> handleMapperException(Exception ex) {
+    return ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getMessage());
   }
 
   @ResponseBody
