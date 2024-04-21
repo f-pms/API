@@ -92,6 +92,9 @@ public class Plc4xConnector implements PlcConnector {
       var responseCode = response.getResponseCode(address);
       log.info("ResponseStatus of {}: {}", address, responseCode.toString());
       return responseCode;
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      return PlcResponseCode.INTERNAL_ERROR;
     } catch (Exception ex) {
       log.error("Error while checking tag existence: {}", ex.getMessage());
       return PlcResponseCode.INTERNAL_ERROR;
