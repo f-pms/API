@@ -124,7 +124,7 @@ class AlarmConditionControllerUpdateEndpointsFunctionalSpec extends FunctionalTe
     then:
     response.statusCode.is4xxClientError()
     response.body.error.code == ErrorCode.E404.toString()
-    response.body.error.data.containsIgnoreCase("Not found")
+    response.body.error.data.containsIgnoreCase("Không thể tìm thấy")
   }
 
   //TODO
