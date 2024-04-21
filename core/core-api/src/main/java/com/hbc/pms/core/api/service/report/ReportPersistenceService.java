@@ -39,6 +39,10 @@ public class ReportPersistenceService extends AbstractPersistenceService<ReportE
         .toList();
   }
 
+  public List<Report> getAllWithRows() {
+    return mapToModel(reportRepository.findAllWithRows(), Report.class);
+  }
+
   public List<Report> getAllEmptySumJson() {
     return mapToModel(reportRepository.findAllBySumJsonIsNullOrEmpty(), Report.class);
   }

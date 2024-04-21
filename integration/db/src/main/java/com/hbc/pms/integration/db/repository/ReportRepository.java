@@ -17,4 +17,8 @@ public interface ReportRepository
   @Query("SELECT r FROM ReportEntity r WHERE r.sumJson IS NULL OR r.sumJson = ''")
   @EntityGraph(attributePaths = {"rows", "type"})
   List<ReportEntity> findAllBySumJsonIsNullOrEmpty();
+
+  @Query("SELECT r FROM ReportEntity r ")
+  @EntityGraph(attributePaths = {"rows", "type"})
+  List<ReportEntity> findAllWithRows();
 }

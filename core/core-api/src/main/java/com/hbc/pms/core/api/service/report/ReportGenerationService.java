@@ -30,7 +30,7 @@ public class ReportGenerationService {
   private final Executor executor = Executors.newFixedThreadPool(5);
 
   public void generateAllJsons() {
-    generateJsons(reportPersistenceService.getAll().stream().toList());
+    generateJsons(reportPersistenceService.getAllWithRows());
   }
 
   public void generateJsons(List<Report> reports) {
