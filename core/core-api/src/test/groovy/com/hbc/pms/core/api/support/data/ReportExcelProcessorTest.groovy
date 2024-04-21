@@ -44,17 +44,17 @@ class ReportExcelProcessorTest extends Specification {
     )
 
     when:
-    var sums = processor.process(type, report, rows)
+    var result = processor.process(type, report, rows)
 
     then:
-    sums.get(0).get(ChartConstant.SUM_PEAK) == sumPeak0
-    sums.get(0).get(ChartConstant.SUM_OFFPEAK) == sumOffPeak0
-    sums.get(0).get(ChartConstant.SUM_STANDARD) == sumStandard0
-    sums.get(0).get(ChartConstant.SUM_TOTAL) == sumTotal0
-    sums.get(1).get(ChartConstant.SUM_PEAK) == sumPeak1
-    sums.get(1).get(ChartConstant.SUM_OFFPEAK) == sumOffPeak1
-    sums.get(1).get(ChartConstant.SUM_STANDARD) == sumStandard1
-    sums.get(1).get(ChartConstant.SUM_TOTAL) == sumTotal1
+    result.getSums().get(0).get(ChartConstant.SUM_PEAK) == sumPeak0
+    result.getSums().get(0).get(ChartConstant.SUM_OFFPEAK) == sumOffPeak0
+    result.getSums().get(0).get(ChartConstant.SUM_STANDARD) == sumStandard0
+    result.getSums().get(0).get(ChartConstant.SUM_TOTAL) == sumTotal0
+    result.getSums().get(1).get(ChartConstant.SUM_PEAK) == sumPeak1
+    result.getSums().get(1).get(ChartConstant.SUM_OFFPEAK) == sumOffPeak1
+    result.getSums().get(1).get(ChartConstant.SUM_STANDARD) == sumStandard1
+    result.getSums().get(1).get(ChartConstant.SUM_TOTAL) == sumTotal1
 
     where:
     typeName | day | sumPeak0 | sumOffPeak0 | sumStandard0 | sumTotal0 | sumPeak1 | sumOffPeak1 | sumStandard1 | sumTotal1
@@ -96,17 +96,17 @@ class ReportExcelProcessorTest extends Specification {
     )
 
     when:
-    var sums = processor.process(type, report, rows)
+    var result = processor.process(type, report, rows)
 
     then:
-    sums.get(0).get(ChartConstant.SUM_PEAK) == sumPeak0
-    sums.get(0).get(ChartConstant.SUM_OFFPEAK) == sumOffPeak0
-    sums.get(0).get(ChartConstant.SUM_STANDARD) == sumStandard0
-    sums.get(0).get(ChartConstant.SUM_TOTAL) == sumTotal0
-    sums.get(1).get(ChartConstant.SUM_PEAK) == sumPeak1
-    sums.get(1).get(ChartConstant.SUM_OFFPEAK) == sumOffPeak1
-    sums.get(1).get(ChartConstant.SUM_STANDARD) == sumStandard1
-    sums.get(1).get(ChartConstant.SUM_TOTAL) == sumTotal1
+    result.getSums().get(0).get(ChartConstant.SUM_PEAK) == sumPeak0
+    result.getSums().get(0).get(ChartConstant.SUM_OFFPEAK) == sumOffPeak0
+    result.getSums().get(0).get(ChartConstant.SUM_STANDARD) == sumStandard0
+    result.getSums().get(0).get(ChartConstant.SUM_TOTAL) == sumTotal0
+    result.getSums().get(1).get(ChartConstant.SUM_PEAK) == sumPeak1
+    result.getSums().get(1).get(ChartConstant.SUM_OFFPEAK) == sumOffPeak1
+    result.getSums().get(1).get(ChartConstant.SUM_STANDARD) == sumStandard1
+    result.getSums().get(1).get(ChartConstant.SUM_TOTAL) == sumTotal1
 
     where:
     typeName | day | sumPeak0 | sumOffPeak0 | sumStandard0 | sumTotal0 | sumPeak1 | sumOffPeak1 | sumStandard1 | sumTotal1

@@ -71,12 +71,13 @@ public class ReportGenerationService {
 
   @SneakyThrows
   public void generateSumJson(Report report) {
-    var sums = reportExcelProcessor.process(report.getType(), report, report.getRows());
+    var reportResult = reportExcelProcessor.process(report.getType(), report, report.getRows());
     log.debug("Saved excel file for report: {}", report.getId());
     var reportWithoutRows =
         reportPersistenceService.getById(
             report.getId()); // workaround to avoid changing existing code
-    reportService.updateSumJson(reportWithoutRows, sums);
+    reportService.updateSumJson(reportWithoutRows, reportResult.getSums());
+    reportService.updateFactorJson(reportWithoutRows, reportResult.getFactors());
     log.debug("Update sumJson for report: {}", report.getId());
   }
 
