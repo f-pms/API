@@ -35,7 +35,7 @@ public class RestControllerExceptionHandler {
   @ResponseBody
   @ResponseStatus(org.springframework.http.HttpStatus.BAD_REQUEST)
   @ExceptionHandler({ValidationException.class, MappingException.class})
-  public ApiResponse<?> handleMapperException(Exception ex) {
+  public ApiResponse<RuntimeException> handleMapperException(Exception ex) {
     return ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getMessage());
   }
 
