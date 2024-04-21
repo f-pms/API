@@ -33,7 +33,7 @@ dependencies {
 
 var driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
 var username = "sa"
-var password = "123456"
+var password = "P@ssw0rd000"
 var url = "jdbc:sqlserver://localhost:1433;trustServerCertificate=true;databaseName=F-PMS"
 
 tasks.register("setupDatabase") {
