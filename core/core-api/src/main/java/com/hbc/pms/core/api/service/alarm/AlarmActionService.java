@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.service.alarm;
 
+import com.hbc.pms.core.api.constant.ErrorMessageConstant;
 import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.support.web.error.CoreApiException;
@@ -22,14 +23,14 @@ public class AlarmActionService {
 
     if (alarmCondition == null) {
       throw new CoreApiException(
-          ErrorType.NOT_FOUND_ERROR, "Alarm Condition not found with id: " + conditionId);
+          ErrorType.NOT_FOUND_ERROR, ErrorMessageConstant.ALARM_CONDITION_NOT_FOUND + conditionId);
     }
 
     for (AlarmAction action : alarmCondition.getActions()) {
       if (action.getType().equals(updatingAction.getType())) {
         throw new CoreApiException(
             ErrorType.BAD_REQUEST_ERROR,
-            "Existed Alarm Action with type: " + updatingAction.getType());
+            ErrorMessageConstant.EXISTED_ALARM_ACTION_TYPE + updatingAction.getType());
       }
     }
 
@@ -41,7 +42,8 @@ public class AlarmActionService {
     AlarmAction existedAction = alarmActionPersistenceService.getById(actionId);
 
     if (updatingAction.getType() != existedAction.getType()) {
-      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, "Can not change Alarm Action Type");
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.CANNOT_CHANGE_ALARM_ACTION_TYPE);
     }
 
     mapper.map(updatingAction, existedAction);

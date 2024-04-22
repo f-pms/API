@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.config;
 
+import com.hbc.pms.core.api.constant.ErrorMessageConstant;
 import com.hbc.pms.support.web.error.CoreApiException;
 import com.hbc.pms.support.web.error.ErrorType;
 import com.hbc.pms.support.web.response.ApiResponse;
@@ -7,6 +8,7 @@ import io.jsonwebtoken.JwtException;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.MappingException;
 import org.modelmapper.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +35,9 @@ public class RestControllerExceptionHandler {
 
   @ResponseBody
   @ResponseStatus(org.springframework.http.HttpStatus.BAD_REQUEST)
-  @ExceptionHandler({ValidationException.class})
-  public ApiResponse<?> handleMapperException(ValidationException ex) {
-    return ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getErrorMessages());
+  @ExceptionHandler({ValidationException.class, MappingException.class})
+  public ApiResponse<RuntimeException> handleMapperException(Exception ex) {
+    return ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getMessage());
   }
 
   @ResponseBody
@@ -69,7 +71,9 @@ public class RestControllerExceptionHandler {
       RuntimeException ex) {
     if (ex instanceof BadCredentialsException) {
       return new ResponseEntity<>(
-          ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getMessage()), HttpStatus.BAD_REQUEST);
+          ApiResponse.error(
+              ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.BAD_CREDENTIALS_EXCEPTION),
+          HttpStatus.BAD_REQUEST);
     }
     log.error(ex.getMessage(), ex); // keep stacktrace
     return new ResponseEntity<>(

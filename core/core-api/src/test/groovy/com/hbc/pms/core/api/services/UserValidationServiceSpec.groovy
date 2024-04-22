@@ -1,6 +1,7 @@
 package com.hbc.pms.core.api.services
 
 import com.hbc.pms.core.api.TestDataFixture
+import com.hbc.pms.core.api.constant.ErrorMessageConstant
 import com.hbc.pms.core.api.controller.v1.request.auth.UpdateUserCommand
 import com.hbc.pms.core.api.service.auth.UserPersistenceService
 import com.hbc.pms.core.api.service.auth.UserValidationService
@@ -67,7 +68,7 @@ class UserValidationServiceSpec extends Specification {
 
     then: "Exception is thrown"
     def exception = thrown(CoreApiException)
-    exception.data == "Email already exists"
+    exception.data == ErrorMessageConstant.EXISTED_EMAIL
 
     where:
     user << [Role.ADMIN.name(), Role.SUPERVISOR.name()]
@@ -101,7 +102,7 @@ class UserValidationServiceSpec extends Specification {
 
     then:
     def exception = thrown(CoreApiException)
-    exception.data == "The current password is not correct"
+    exception.data == ErrorMessageConstant.CURRENT_PASS_IS_NOT_CORRECT
   }
 
 

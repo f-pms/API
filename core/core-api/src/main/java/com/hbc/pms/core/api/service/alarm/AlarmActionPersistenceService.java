@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.service.alarm;
 
+import com.hbc.pms.core.api.constant.ErrorMessageConstant;
 import com.hbc.pms.core.model.AlarmAction;
 import com.hbc.pms.integration.db.entity.AlarmActionEntity;
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity;
@@ -20,7 +21,7 @@ public class AlarmActionPersistenceService {
     var entity = alarmActionRepository.findById(id);
     if (entity.isEmpty()) {
       throw new CoreApiException(
-          ErrorType.NOT_FOUND_ERROR, "Alarm Action not found with id: " + id);
+          ErrorType.NOT_FOUND_ERROR, ErrorMessageConstant.ALARM_ACTION_NOT_FOUND + id);
     }
 
     return mapper.map(entity.get(), AlarmAction.class);
@@ -43,7 +44,7 @@ public class AlarmActionPersistenceService {
     var entity = alarmActionRepository.findById(id);
     if (entity.isEmpty()) {
       throw new CoreApiException(
-          ErrorType.NOT_FOUND_ERROR, "Alarm Action not found with id: " + id);
+          ErrorType.NOT_FOUND_ERROR, ErrorMessageConstant.ALARM_ACTION_NOT_FOUND + id);
     }
 
     entity.get().getCondition().getActions().removeIf(a -> a.getId().equals(id));
