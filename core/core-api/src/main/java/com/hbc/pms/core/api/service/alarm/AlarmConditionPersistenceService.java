@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.service.alarm;
 
+import com.hbc.pms.core.api.constant.ErrorMessageConstant;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.integration.db.entity.AlarmConditionEntity;
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository;
@@ -21,7 +22,7 @@ public class AlarmConditionPersistenceService {
     if (hasAttachedAlarm(alarmCondition.getSensorConfiguration().getId())) {
       throw new CoreApiException(
           ErrorType.BAD_REQUEST_ERROR,
-          "Existed Alarm Sensor Configuration with id: "
+          ErrorMessageConstant.EXISTED_ALARM_SENSOR_CONFIGURATION
               + alarmCondition.getSensorConfiguration().getId());
     }
 
@@ -44,7 +45,7 @@ public class AlarmConditionPersistenceService {
     var entity = alarmConditionRepository.findById(id);
     if (entity.isEmpty()) {
       throw new CoreApiException(
-          ErrorType.NOT_FOUND_ERROR, "Not found Alarm Condition with id: " + id);
+          ErrorType.NOT_FOUND_ERROR, ErrorMessageConstant.ALARM_CONDITION_NOT_FOUND + id);
     }
 
     alarmConditionRepository.delete(entity.get());
@@ -61,7 +62,7 @@ public class AlarmConditionPersistenceService {
     var oCondition = alarmConditionRepository.findById(id);
     if (oCondition.isEmpty()) {
       throw new CoreApiException(
-          ErrorType.NOT_FOUND_ERROR, "Not found Alarm Condition with id: " + id);
+          ErrorType.NOT_FOUND_ERROR, ErrorMessageConstant.ALARM_CONDITION_NOT_FOUND + id);
     }
 
     return mapper.map(oCondition.get(), AlarmCondition.class);

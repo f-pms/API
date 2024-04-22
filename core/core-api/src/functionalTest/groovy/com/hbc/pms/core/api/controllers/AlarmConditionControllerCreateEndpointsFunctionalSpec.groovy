@@ -178,7 +178,7 @@ class AlarmConditionControllerCreateEndpointsFunctionalSpec extends FunctionalTe
     then:
     response.statusCode.is4xxClientError()
     response.body.error["code"] == ErrorCode.E400.toString()
-    response.body.error["data"].containsIgnoreCase("Existed")
+    response.body.error["data"].containsIgnoreCase("Đã tồn tại")
     def conditionCountAfter = conditionRepository.findAll().size()
     conditionCountBefore == conditionCountAfter
   }

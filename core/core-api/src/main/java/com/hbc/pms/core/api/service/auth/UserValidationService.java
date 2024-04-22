@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.service.auth;
 
+import com.hbc.pms.core.api.constant.ErrorMessageConstant;
 import com.hbc.pms.core.api.controller.v1.request.auth.UpdateUserCommand;
 import com.hbc.pms.core.model.User;
 import com.hbc.pms.core.model.enums.Role;
@@ -26,13 +27,14 @@ public class UserValidationService {
 
   private void verifyMailExist(String email) {
     if (userPersistenceService.findByEmail(email).isPresent()) {
-      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, "Email already exists");
+      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.EXISTED_EMAIL);
     }
   }
 
   private void verifyUsernameExist(String username) {
     if (userPersistenceService.findByUsernameOptional(username).isPresent()) {
-      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, "Username already exists");
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.EXISTED_USERNAME);
     }
   }
 
@@ -57,7 +59,8 @@ public class UserValidationService {
       return;
     }
     if (!authenticationFacade.getUserId().equals(state.getId().toString())) {
-      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, "You can only update your own user");
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.ONLY_UPDATE_YOUR_OWN_USER);
     }
   }
 
@@ -79,18 +82,20 @@ public class UserValidationService {
     }
     if (!verifyPasswordExistence(updateUserCommand)) {
       throw new CoreApiException(
-          ErrorType.BAD_REQUEST_ERROR, "Both password and old password must be present or absent");
+          ErrorType.BAD_REQUEST_ERROR,
+          ErrorMessageConstant.BOTH_NEW_AND_OLD_PASS_MUST_BE_PRESENT_OR_ABSENT);
     }
     if (StringUtils.isNotEmpty(updateUserCommand.getOldPassword())
         && !verifyOldPasswordMatch(toUpdate, updateUserCommand)) {
       throw new CoreApiException(
-          ErrorType.BAD_REQUEST_ERROR, "The current password is not correct");
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.CURRENT_PASS_IS_NOT_CORRECT);
     }
   }
 
   public void authorizeDelete(User user) {
     if (authenticationFacade.getUserId().equals(user.getId().toString())) {
-      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, "You can't delete your own user");
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.YOU_CAN_NOT_DELETE_YOUR_OWN);
     }
   }
 

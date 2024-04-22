@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.config;
 
+import com.hbc.pms.core.api.constant.ErrorMessageConstant;
 import com.hbc.pms.support.web.error.CoreApiException;
 import com.hbc.pms.support.web.error.ErrorType;
 import com.hbc.pms.support.web.response.ApiResponse;
@@ -70,7 +71,9 @@ public class RestControllerExceptionHandler {
       RuntimeException ex) {
     if (ex instanceof BadCredentialsException) {
       return new ResponseEntity<>(
-          ApiResponse.error(ErrorType.BAD_REQUEST_ERROR, ex.getMessage()), HttpStatus.BAD_REQUEST);
+          ApiResponse.error(
+              ErrorType.BAD_REQUEST_ERROR, ErrorMessageConstant.BAD_CREDENTIALS_EXCEPTION),
+          HttpStatus.BAD_REQUEST);
     }
     log.error(ex.getMessage(), ex); // keep stacktrace
     return new ResponseEntity<>(

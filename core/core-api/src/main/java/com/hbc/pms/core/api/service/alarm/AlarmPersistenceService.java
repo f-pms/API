@@ -1,5 +1,6 @@
 package com.hbc.pms.core.api.service.alarm;
 
+import com.hbc.pms.core.api.constant.ErrorMessageConstant;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.AlarmHistory;
 import com.hbc.pms.core.model.enums.AlarmStatus;
@@ -36,7 +37,7 @@ public class AlarmPersistenceService {
     var oCondition = alarmConditionRepository.findById(id);
     if (oCondition.isEmpty()) {
       throw new CoreApiException(
-          ErrorType.NOT_FOUND_ERROR, "Alarm condition not found with id: " + id);
+          ErrorType.NOT_FOUND_ERROR, ErrorMessageConstant.ALARM_CONDITION_NOT_FOUND + id);
     }
     return mapper.map(oCondition.get(), AlarmCondition.class);
   }
