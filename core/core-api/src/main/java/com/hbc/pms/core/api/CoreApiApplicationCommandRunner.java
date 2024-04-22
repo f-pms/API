@@ -26,7 +26,7 @@ public class CoreApiApplicationCommandRunner implements CommandLineRunner {
       if (args.length > 0) {
         if (Arrays.asList(args).contains(MISSING_REPORT_JOB)) {
           log.info("Generating missing report");
-          reportGenerationService.generateMissingSumJson();
+          reportGenerationService.generateMissingJsons();
         }
         if (Arrays.asList(args).contains(GENERATE_ALL_JSONS)) {
           reportGenerationService.generateAllJsons();

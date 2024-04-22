@@ -33,6 +33,11 @@ public class ReportGenerationService {
     generateJsons(reportPersistenceService.getAllWithRows());
   }
 
+  public void generateMissingJsons() {
+    var reports = reportPersistenceService.getAllEmptyJsons();
+    generateJsons(reports);
+  }
+
   public void generateJsons(List<Report> reports) {
     final int totalReports = reports.size();
     log.info("Starting to process {} reports.", totalReports);
@@ -58,11 +63,6 @@ public class ReportGenerationService {
                         executor))
             .toList();
     CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
-  }
-
-  public void generateMissingSumJson() {
-    var reports = reportPersistenceService.getAllEmptySumJson();
-    generateJsons(reports);
   }
 
   @SneakyThrows
