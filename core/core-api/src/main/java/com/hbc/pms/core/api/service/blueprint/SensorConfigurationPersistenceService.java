@@ -77,14 +77,7 @@ public class SensorConfigurationPersistenceService {
   }
 
   public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
-    if (sensorConfiguration.getAddress() != null) {
-      var address = sensorConfiguration.getAddress();
-      if (plcService.isTagNotFound(address)) {
-        throw new CoreApiException(
-            ErrorType.BAD_REQUEST_ERROR,
-            "Địa chỉ " + address + " không hợp lệ hoặc không tồn tại trong PLC");
-      }
-    }
+    validateAddress(sensorConfiguration);
 
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
@@ -94,14 +87,7 @@ public class SensorConfigurationPersistenceService {
   }
 
   public boolean update(Long blueprintId, SensorConfiguration sensorConfiguration) {
-    if (sensorConfiguration.getAddress() != null) {
-      var address = sensorConfiguration.getAddress();
-      if (plcService.isTagNotFound(address)) {
-        throw new CoreApiException(
-            ErrorType.BAD_REQUEST_ERROR,
-            "Địa chỉ " + address + " không hợp lệ hoặc không tồn tại trong PLC");
-      }
-    }
+    validateAddress(sensorConfiguration);
 
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
@@ -117,6 +103,17 @@ public class SensorConfigurationPersistenceService {
     sensorConfigurationRepository.save(existedEntity);
     connector.updateScheduler();
     return true;
+  }
+
+  private void validateAddress(SensorConfiguration sensorConfiguration) {
+    if (sensorConfiguration.getAddress() != null) {
+      var address = sensorConfiguration.getAddress();
+      if (plcService.isTagNotFound(address)) {
+        throw new CoreApiException(
+            ErrorType.BAD_REQUEST_ERROR,
+            "Địa chỉ " + address + " không hợp lệ hoặc không tồn tại trong PLC");
+      }
+    }
   }
 
   public boolean delete(SensorConfiguration sensorConfiguration) {
