@@ -16,23 +16,25 @@ import org.springframework.stereotype.Component;
 @ConditionalOnProperty(name = "job", havingValue = "commandLineRunner")
 public class CoreApiApplicationCommandRunner implements CommandLineRunner {
   public static final String MISSING_REPORT_JOB = "MISSING_REPORT_JOB";
+  public static final String GENERATE_ALL_JSONS = "GENERATE_ALL_JSONS";
   private final ApplicationContext appContext;
   private final ReportGenerationService reportGenerationService;
 
   @Override
   public void run(String... args) {
     try {
-      if (args.length > 0 && Arrays.asList(args).contains(MISSING_REPORT_JOB)) {
-        generateMissingReport();
+      if (args.length > 0) {
+        if (Arrays.asList(args).contains(MISSING_REPORT_JOB)) {
+          log.info("Generating missing report");
+          reportGenerationService.generateMissingSumJson();
+        }
+        if (Arrays.asList(args).contains(GENERATE_ALL_JSONS)) {
+          reportGenerationService.generateAllJsons();
+        }
       }
     } catch (Exception e) {
       log.error("Error while running command line runner", e);
     }
     System.exit(SpringApplication.exit(appContext));
-  }
-
-  private void generateMissingReport() {
-    log.info("Generating missing report");
-    reportGenerationService.generateMissingSumJson();
   }
 }

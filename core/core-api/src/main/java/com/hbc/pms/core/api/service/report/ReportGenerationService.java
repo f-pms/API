@@ -29,8 +29,11 @@ public class ReportGenerationService {
 
   private final Executor executor = Executors.newFixedThreadPool(5);
 
-  public void generateMissingSumJson() {
-    var reports = reportPersistenceService.getAllEmptySumJson();
+  public void generateAllJsons() {
+    generateJsons(reportPersistenceService.getAllWithRows());
+  }
+
+  public void generateJsons(List<Report> reports) {
     final int totalReports = reports.size();
     log.info("Starting to process {} reports.", totalReports);
     AtomicInteger processedCount = new AtomicInteger();
@@ -55,6 +58,11 @@ public class ReportGenerationService {
                         executor))
             .toList();
     CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
+  }
+
+  public void generateMissingSumJson() {
+    var reports = reportPersistenceService.getAllEmptySumJson();
+    generateJsons(reports);
   }
 
   public void generateAllReportFiles() {
