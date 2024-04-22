@@ -52,7 +52,7 @@ public class ReportGenerationService {
                 report ->
                     CompletableFuture.runAsync(
                         () -> {
-                          generateSumJson(report);
+                          generateJsons(report);
                           processedCount.incrementAndGet();
                         },
                         executor))
@@ -65,12 +65,8 @@ public class ReportGenerationService {
     generateJsons(reports);
   }
 
-  public void generateAllReportFiles() {
-    generateReports(reportPersistenceService.getAll().stream().map(Report::getId).toList());
-  }
-
   @SneakyThrows
-  public void generateSumJson(Report report) {
+  public void generateJsons(Report report) {
     var reportResult = reportExcelProcessor.process(report.getType(), report, report.getRows());
     log.debug("Saved excel file for report: {}", report.getId());
     var reportWithoutRows =
@@ -78,12 +74,7 @@ public class ReportGenerationService {
             report.getId()); // workaround to avoid changing existing code
     reportService.updateSumJson(reportWithoutRows, reportResult.getSums());
     reportService.updateFactorJson(reportWithoutRows, reportResult.getFactors());
-    log.debug("Update sumJson for report: {}", report.getId());
-  }
-
-  public void generateMissingExcelFiles() {
-    var reports = reportPersistenceService.getAll();
-    generateMissingExcelFiles(reports);
+    log.debug("Update jsons for report: {}", report.getId());
   }
 
   public void generateMissingExcelFiles(Collection<Report> reportsToCheck) {
