@@ -11,4 +11,6 @@ public interface PlcConnector {
   void updateScheduler();
 
   PlcResponseCode write(String address, PlcIECValue<?> value) throws WritePlcException;
+
+  PlcResponseCode getResponseCodeOfAddress(String address);
 }
