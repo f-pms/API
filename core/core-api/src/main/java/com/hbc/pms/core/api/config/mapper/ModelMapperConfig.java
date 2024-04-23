@@ -1,5 +1,7 @@
 package com.hbc.pms.core.api.config.mapper;
 
+import static com.hbc.pms.core.api.constant.ErrorMessageConstant.INVALID_ADDRESS;
+
 import com.hbc.pms.core.api.controller.v1.request.CreateAlarmConditionCommand;
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.request.UpdateAlarmConditionCommand;
@@ -9,14 +11,14 @@ import com.hbc.pms.core.api.util.StringUtil;
 import com.hbc.pms.core.model.AlarmCondition;
 import com.hbc.pms.core.model.SensorConfiguration;
 import com.hbc.pms.core.model.User;
-import java.util.Collections;
+import com.hbc.pms.support.web.error.CoreApiException;
+import com.hbc.pms.support.web.error.ErrorType;
 import org.hibernate.collection.spi.PersistentCollection;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.ValidationException;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.ErrorMessage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -105,9 +107,9 @@ public class ModelMapperConfig {
                   c -> {
                     String address = c.getSource().toUpperCase();
                     if (StringUtil.isIncorrectPLCAddressFormat(address)) {
-                      throw new ValidationException(
-                          Collections.singletonList(
-                              new ErrorMessage("Invalid PLC " + "Address: " + address)));
+                      throw new CoreApiException(
+                          ErrorType.BAD_REQUEST_ERROR,
+                          String.format(INVALID_ADDRESS, address));
                     }
 
                     return address;
@@ -129,9 +131,9 @@ public class ModelMapperConfig {
                   c -> {
                     String address = c.getSource().toUpperCase();
                     if (StringUtil.isIncorrectPLCAddressFormat(address)) {
-                      throw new ValidationException(
-                          Collections.singletonList(
-                              new ErrorMessage("Invalid PLC " + "Address: " + address)));
+                      throw new CoreApiException(
+                          ErrorType.BAD_REQUEST_ERROR,
+                          String.format(INVALID_ADDRESS, address));
                     }
 
                     return address;
