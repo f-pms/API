@@ -130,7 +130,8 @@ public class SensorConfigurationPersistenceService {
     if (alarmConditionPersistenceService.hasAttachedAlarm(sensorToDelete.getId())) {
       throw new CoreApiException(
           ErrorType.BAD_REQUEST_ERROR,
-          "Không thể xoá địa chỉ biến đã được cài đặt cảnh báo, vui lòng vô hiệu hoá cảnh báo trước!");
+          "Không thể xoá địa chỉ biến đã được cài đặt cảnh báo, "
+              + "vui lòng vô hiệu hoá cảnh báo trước!");
     }
     sensorConfigurationRepository.deleteById(sensorToDelete.getId());
   }
