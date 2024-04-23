@@ -18,7 +18,7 @@ public class RootUserInitializer implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) {
-    if (userRepository.countAll() == 0) {
+    if (userRepository.count() == 0) {
       User userToCreate =
           User.builder()
               .email("admin@gmail.com")
