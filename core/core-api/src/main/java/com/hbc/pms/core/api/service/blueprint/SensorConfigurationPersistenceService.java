@@ -6,6 +6,7 @@ import com.hbc.pms.core.api.service.PlcService;
 import com.hbc.pms.core.api.service.alarm.AlarmConditionPersistenceService;
 import com.hbc.pms.core.model.Blueprint;
 import com.hbc.pms.core.model.SensorConfiguration;
+import com.hbc.pms.core.model.enums.BlueprintType;
 import com.hbc.pms.integration.db.entity.BlueprintEntity;
 import com.hbc.pms.integration.db.entity.SensorConfigurationEntity;
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository;
@@ -24,7 +25,7 @@ public class SensorConfigurationPersistenceService {
   private final PlcConnector connector;
 
   private static final String SENSOR_CONFIG_NOT_FOUND_LITERAL =
-      "Sensor configuration not found with id: ";
+      "Không tìm thấy cài đặt sensor với id: ";
   private final ModelMapper mapper;
   private final SensorConfigurationRepository sensorConfigurationRepository;
   private final AlarmConditionPersistenceService alarmConditionPersistenceService;
@@ -114,6 +115,24 @@ public class SensorConfigurationPersistenceService {
             "Địa chỉ " + address + " không hợp lệ hoặc không tồn tại trong PLC");
       }
     }
+  }
+
+  public void delete(Long blueprintId, Long id) {
+    var blueprint = getAssociatedBlueprint(id);
+    if (!blueprintId.equals(blueprint.getId())) {
+      throw new CoreApiException(ErrorType.BAD_REQUEST_ERROR, "Địa chỉ không thuộc về blueprint!");
+    }
+    if (blueprint.getType() != BlueprintType.ALARM) {
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR, "Chỉ cho phép xoá các địa chỉ ở tính năng cảnh báo!");
+    }
+    var sensorToDelete = get(id);
+    if (alarmConditionPersistenceService.hasAttachedAlarm(sensorToDelete.getId())) {
+      throw new CoreApiException(
+          ErrorType.BAD_REQUEST_ERROR,
+          "Không thể xoá địa chỉ biến đã được cài đặt cảnh báo, vui lòng vô hiệu hoá cảnh báo trước!");
+    }
+    sensorConfigurationRepository.deleteById(sensorToDelete.getId());
   }
 
   public boolean delete(SensorConfiguration sensorConfiguration) {
