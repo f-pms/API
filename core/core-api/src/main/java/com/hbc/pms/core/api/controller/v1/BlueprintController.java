@@ -16,6 +16,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -89,5 +90,13 @@ public class BlueprintController {
     sensorConfiguration.setId(sensorConfigurationId);
     var response = sensorConfigurationPersistenceService.update(blueprintId, sensorConfiguration);
     return ApiResponse.success(response);
+  }
+
+  @DeleteMapping("/{blueprintId}/sensor-configurations/{sensorConfigurationId}")
+  @PreAuthorize(HAS_ROLE_ADMIN)
+  public ApiResponse<Boolean> deleteSensorConfiguration(
+      @PathVariable Long blueprintId, @PathVariable Long sensorConfigurationId) {
+    sensorConfigurationPersistenceService.delete(blueprintId, sensorConfigurationId);
+    return ApiResponse.success(true);
   }
 }
