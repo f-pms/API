@@ -108,8 +108,7 @@ public class ModelMapperConfig {
                     String address = c.getSource().toUpperCase();
                     if (StringUtil.isIncorrectPLCAddressFormat(address)) {
                       throw new CoreApiException(
-                          ErrorType.BAD_REQUEST_ERROR,
-                          String.format(INVALID_ADDRESS, address));
+                          ErrorType.BAD_REQUEST_ERROR, String.format(INVALID_ADDRESS, address));
                     }
 
                     return address;
@@ -132,8 +131,7 @@ public class ModelMapperConfig {
                     String address = c.getSource().toUpperCase();
                     if (StringUtil.isIncorrectPLCAddressFormat(address)) {
                       throw new CoreApiException(
-                          ErrorType.BAD_REQUEST_ERROR,
-                          String.format(INVALID_ADDRESS, address));
+                          ErrorType.BAD_REQUEST_ERROR, String.format(INVALID_ADDRESS, address));
                     }
 
                     return address;
