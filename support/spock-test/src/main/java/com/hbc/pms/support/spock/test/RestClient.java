@@ -83,13 +83,13 @@ public class RestClient {
     return put(url, request, constructHeadersFromUser(userDetails), responseType);
   }
 
-  public void delete(String url, HttpHeaders headers) {
+  public ResponseEntity<Void> delete(String url, HttpHeaders headers) {
     HttpEntity<String> entity = new HttpEntity<>(headers);
-    restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
+    return restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
   }
 
-  public void delete(String url, UserDetails userDetails) {
-    delete(url, constructHeadersFromUser(userDetails));
+  public ResponseEntity<Void> delete(String url, UserDetails userDetails) {
+    return delete(url, constructHeadersFromUser(userDetails));
   }
 
   public void delete(String url) {

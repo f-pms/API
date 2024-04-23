@@ -5,16 +5,17 @@ import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationCommand
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse
+import com.hbc.pms.core.model.enums.AlarmType
 import com.hbc.pms.core.model.enums.BlueprintType
+import com.hbc.pms.integration.db.repository.AlarmConditionRepository
 import com.hbc.pms.integration.db.repository.BlueprintRepository
 import com.hbc.pms.integration.db.repository.SensorConfigurationRepository
 import com.hbc.pms.support.spock.test.RestClient
 import com.hbc.pms.support.web.error.ErrorCode
 import com.hbc.pms.support.web.response.ApiResponse
+import java.util.concurrent.ThreadLocalRandom
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.PendingFeature
-
-import java.util.concurrent.ThreadLocalRandom
 
 class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
   @Autowired
@@ -25,6 +26,9 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
 
   @Autowired
   SensorConfigurationRepository configurationRepository
+
+  @Autowired
+  AlarmConditionRepository alarmConditionRepository
 
   def "Get all blueprints - OK"() {
     given:
@@ -373,6 +377,43 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     then:
     response.statusCode.is4xxClientError()
     response.body.error["code"] == ErrorCode.E404.toString()
+  }
+
+  def "delete sensorConfig - Already attached to an alarm condition - Bad request"() {
+    given:
+    def blueprint
+            = blueprintRepository.findById(TestDataFixture.CUSTOM_ALARM_BLUEPRINT_ID).get()
+    def sensorConfig
+            = configurationRepository
+            .save(
+                    TestDataFixture.createSensorConfiguration(blueprint, TestDataFixture.PLC_ADDRESS_REAL_03)
+            )
+    alarmConditionRepository.save(TestDataFixture.createDefaultConditionEntity(AlarmType.CUSTOM, sensorConfig))
+    when: "Try to delete a sensor config that has already attached to an alarm condition"
+    def response = restClient
+            .delete(
+                    "$BLUEPRINT_PATH/$TestDataFixture.CUSTOM_ALARM_BLUEPRINT_ID/sensor-configurations/$sensorConfig.id",
+                    dataFixture.ADMIN_USER)
+    then: "The response code is 400"
+    response.statusCode.is4xxClientError()
+  }
+
+  def "delete sensorConfig - Success"() {
+    given:
+    def blueprint
+            = blueprintRepository.findById(TestDataFixture.CUSTOM_ALARM_BLUEPRINT_ID).get()
+    def sensorConfig
+            = configurationRepository
+            .save(
+                    TestDataFixture.createSensorConfiguration(blueprint, TestDataFixture.PLC_ADDRESS_REAL_03)
+            )
+    when:
+    def response = restClient
+            .delete(
+                    "$BLUEPRINT_PATH/$TestDataFixture.CUSTOM_ALARM_BLUEPRINT_ID/sensor-configurations/$sensorConfig.id",
+                    dataFixture.ADMIN_USER)
+    then: "The response code is 200"
+    response.statusCode.is2xxSuccessful()
   }
 
   def createSensorConfigurationRequest() {
