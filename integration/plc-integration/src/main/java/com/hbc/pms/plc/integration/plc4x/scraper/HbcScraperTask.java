@@ -156,7 +156,11 @@ public class HbcScraperTask implements ScraperTask {
         try {
           connection.close();
         } catch (Exception e) {
-          LOGGER.warn("Error on closing connection", e);
+          if (e.getMessage().equals("Error trying to return lease from invalid connection")){
+            LOGGER.debug("Error on closing connection", e);
+          }else{
+            LOGGER.warn("Error on closing connection", e);
+          }
         }
       }
     }
