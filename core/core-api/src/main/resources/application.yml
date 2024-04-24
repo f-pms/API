@@ -24,7 +24,7 @@ hbc:
     username: ${DEFAULT_USER_NAME:admin}
     password: ${DEFAULT_PASSWORD:123}
   plc:
-    url: ${PLC_ADDRESS:s7://hbc-plc.ohtgo.me}
+    url: ${PLC_ADDRESS:s7://54.254.92.98}
   origins: ${CORS_ORIGINS:http://localhost:5173}
   mail:
     host: ${MAIL_HOST:mail.smtp2go.com}
