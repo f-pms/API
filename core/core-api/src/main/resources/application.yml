@@ -29,9 +29,9 @@ hbc:
   mail:
     host: ${MAIL_HOST:mail.smtp2go.com}
     port: ${MAIL_PORT:2525}
-    username: ${MAIL_USERNAME:pms@ohtgo.me}
+    username: ${MAIL_USERNAME:rms@ohtgo.me}
     password: ${MAIL_PASSWORD:P@ssw0rd000}
-    from: ${MAIL_FROM:PMS <pms@ohtgo.me>}
+    from: ${MAIL_FROM:RMS <rms@ohtgo.me>}
     subject: ${MAIL_SUBJECT:Alarm notification}
   push:
     url: ${PUSH_URL:https://ntfy.ohtgo.me}
