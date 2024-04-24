@@ -20,6 +20,9 @@ spring:
       mail.smtp.starttls.enable: true
 
 hbc:
+  root:
+    username: ${DEFAULT_USER_NAME:admin}
+    password: ${DEFAULT_PASSWORD:123}
   plc:
     url: ${PLC_ADDRESS:s7://hbc-plc.ohtgo.me}
   origins: ${CORS_ORIGINS:http://localhost:5173}
