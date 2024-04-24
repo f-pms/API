@@ -2,7 +2,6 @@ package com.hbc.pms.core.api.controller.v1;
 
 import com.hbc.pms.core.api.controller.v1.response.AlarmHistoryResponse;
 import com.hbc.pms.core.api.service.alarm.AlarmHistoryService;
-import com.hbc.pms.core.api.service.alarm.AlarmPersistenceService;
 import com.hbc.pms.core.model.enums.AlarmStatus;
 import com.hbc.pms.support.web.response.ApiResponse;
 import java.util.List;
