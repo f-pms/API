@@ -79,7 +79,7 @@ class TestDataFixture {
 
   void populateUsers() {
     ADMIN_USER = userPersistenceService.create(User.builder()
-            .username("admin")
+            .username("testAdmin")
             .password("123")
             .email("admin@email.com")
             .fullName("Admin full name")
