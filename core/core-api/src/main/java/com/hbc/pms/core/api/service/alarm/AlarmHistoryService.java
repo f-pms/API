@@ -11,21 +11,22 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AlarmHistoryService {
-    private final ModelMapper mapper;
-    private final AlarmPersistenceService alarmPersistenceService;
-    private final SensorConfigurationPersistenceService sensorConfigurationPersistenceService;
+  private final ModelMapper mapper;
+  private final AlarmPersistenceService alarmPersistenceService;
+  private final SensorConfigurationPersistenceService sensorConfigurationPersistenceService;
 
-    public List<AlarmHistoryResponse> getAllHistoriesByStatus(AlarmStatus status) {
-        var histories = alarmPersistenceService.getAllHistoriesByStatus(status)
-                .stream().map(history -> mapper.map(history, AlarmHistoryResponse.class))
-                .toList();
-        histories.forEach(
-                history ->
-                        history.setBlueprint(
-                                mapper.map(
-                                        sensorConfigurationPersistenceService.getAssociatedBlueprint(
-                                                history.getCondition().getSensorConfiguration().getId()),
-                                        AlarmHistoryResponse.BlueprintForHistoryResponse.class)));
-        return histories;
-    }
+  public List<AlarmHistoryResponse> getAllHistoriesByStatus(AlarmStatus status) {
+    var histories =
+        alarmPersistenceService.getAllHistoriesByStatus(status).stream()
+            .map(history -> mapper.map(history, AlarmHistoryResponse.class))
+            .toList();
+    histories.forEach(
+        history ->
+            history.setBlueprint(
+                mapper.map(
+                    sensorConfigurationPersistenceService.getAssociatedBlueprint(
+                        history.getCondition().getSensorConfiguration().getId()),
+                    AlarmHistoryResponse.BlueprintForHistoryResponse.class)));
+    return histories;
+  }
 }
