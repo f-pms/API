@@ -5,6 +5,7 @@ import com.hbc.pms.core.api.TestDataFixture
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationCommand
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse
+import com.hbc.pms.core.api.controller.v1.response.SensorConfigurationResponse
 import com.hbc.pms.core.model.enums.AlarmType
 import com.hbc.pms.core.model.enums.BlueprintType
 import com.hbc.pms.integration.db.repository.AlarmConditionRepository
@@ -197,11 +198,11 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .post(
                     "$BLUEPRINT_PATH/$TestDataFixture.CUSTOM_ALARM_BLUEPRINT_ID/sensor-configurations", configRequest, dataFixture.ADMIN_USER,
-                    Boolean)
+                    SensorConfigurationResponse)
 
     then:
     response.statusCode.is2xxSuccessful()
-    response.body.data == true
+    response.body.data['address'] == TestDataFixture.PLC_ADDRESS_REAL_01
     def configCountAfter = configurationRepository.findAll().size()
     configCountBefore + 1 == configCountAfter
   }
@@ -228,11 +229,10 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .put(
                     "$BLUEPRINT_PATH/$TestDataFixture.MONITORING_BLUEPRINT_ID/sensor-configurations/$sensorConfig.id",
-                    updateConfigRequest, dataFixture.ADMIN_USER, Boolean)
+                    updateConfigRequest, dataFixture.ADMIN_USER, SensorConfigurationResponse)
 
     then:
     response.statusCode.is2xxSuccessful()
-    response.body.data == true
     def updatedConfig
             = configurationRepository.findById(sensorConfig.id).get()
     verifyAll(updatedConfig) {
@@ -260,11 +260,10 @@ class BlueprintControllerFunctionalSpec extends FunctionalTestSpec {
     def response = restClient
             .put(
                     "$BLUEPRINT_PATH/$TestDataFixture.MONITORING_BLUEPRINT_ID/sensor-configurations/$sensorConfig.id",
-                    updateConfigRequest, dataFixture.ADMIN_USER, Boolean)
+                    updateConfigRequest, dataFixture.ADMIN_USER, SensorConfigurationResponse)
 
     then:
     response.statusCode.is2xxSuccessful()
-    response.body.data == true
     def updatedConfig
             = configurationRepository.findById(sensorConfig.id).get()
     verifyAll(updatedConfig) {
