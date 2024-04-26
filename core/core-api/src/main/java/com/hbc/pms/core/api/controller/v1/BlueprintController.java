@@ -7,6 +7,7 @@ import com.hbc.pms.core.api.controller.v1.request.SearchBlueprintCommand;
 import com.hbc.pms.core.api.controller.v1.request.SensorConfigurationRequest;
 import com.hbc.pms.core.api.controller.v1.request.UpdateSensorConfigurationCommand;
 import com.hbc.pms.core.api.controller.v1.response.BlueprintResponse;
+import com.hbc.pms.core.api.controller.v1.response.SensorConfigurationResponse;
 import com.hbc.pms.core.api.service.blueprint.BlueprintPersistenceService;
 import com.hbc.pms.core.api.service.blueprint.SensorConfigurationPersistenceService;
 import com.hbc.pms.core.model.Blueprint;
@@ -72,23 +73,34 @@ public class BlueprintController {
 
   @PostMapping("/{blueprintId}/sensor-configurations")
   @PreAuthorize(HAS_ROLE_ADMIN)
-  public ApiResponse<Boolean> createSensorConfiguration(
+  public ApiResponse<SensorConfigurationResponse> createSensorConfiguration(
       @PathVariable Long blueprintId, @RequestBody SensorConfigurationRequest body) {
     var sensorConfiguration = mapper.map(body, SensorConfiguration.class);
-    var response = sensorConfigurationPersistenceService.create(blueprintId, sensorConfiguration);
+    var response =
+        mapper.map(
+            sensorConfigurationPersistenceService.create(blueprintId, sensorConfiguration),
+            SensorConfigurationResponse.class);
+    response.setAttachedToAlarm(
+        sensorConfigurationPersistenceService.isAttachedToAlarm(response.getId()));
+
     return ApiResponse.success(response);
   }
 
   @PutMapping("/{blueprintId}/sensor-configurations/{sensorConfigurationId}")
   @PreAuthorize(HAS_ROLE_ADMIN)
-  public ApiResponse<Boolean> updateSensorConfiguration(
+  public ApiResponse<SensorConfigurationResponse> updateSensorConfiguration(
       @PathVariable Long blueprintId,
       @PathVariable Long sensorConfigurationId,
       @RequestBody UpdateSensorConfigurationCommand body) {
     body.aggregatePlcAddress();
     var sensorConfiguration = mapper.map(body, SensorConfiguration.class);
     sensorConfiguration.setId(sensorConfigurationId);
-    var response = sensorConfigurationPersistenceService.update(blueprintId, sensorConfiguration);
+    var response =
+        mapper.map(
+            sensorConfigurationPersistenceService.update(blueprintId, sensorConfiguration),
+            SensorConfigurationResponse.class);
+    response.setAttachedToAlarm(
+        sensorConfigurationPersistenceService.isAttachedToAlarm(sensorConfigurationId));
     return ApiResponse.success(response);
   }
 
