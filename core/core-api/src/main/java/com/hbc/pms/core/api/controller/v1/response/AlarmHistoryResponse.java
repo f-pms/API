@@ -13,4 +13,13 @@ public class AlarmHistoryResponse {
   private OffsetDateTime sentAt;
   private OffsetDateTime solvedAt;
   private AlarmCondition condition;
+
+  private BlueprintForHistoryResponse blueprint;
+
+  @Data
+  public static class BlueprintForHistoryResponse {
+    private Long id;
+    private String name;
+    private String description;
+  }
 }

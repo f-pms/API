@@ -20,15 +20,18 @@ spring:
       mail.smtp.starttls.enable: true
 
 hbc:
+  root:
+    username: ${DEFAULT_USER_NAME:admin}
+    password: ${DEFAULT_PASSWORD:123}
   plc:
     url: ${PLC_ADDRESS:s7://hbc-plc.ohtgo.me}
   origins: ${CORS_ORIGINS:http://localhost:5173}
   mail:
     host: ${MAIL_HOST:mail.smtp2go.com}
     port: ${MAIL_PORT:2525}
-    username: ${MAIL_USERNAME:pms@ohtgo.me}
+    username: ${MAIL_USERNAME:rms@ohtgo.me}
     password: ${MAIL_PASSWORD:P@ssw0rd000}
-    from: ${MAIL_FROM:PMS <pms@ohtgo.me>}
+    from: ${MAIL_FROM:RMS <rms@ohtgo.me>}
     subject: ${MAIL_SUBJECT:Alarm notification}
   push:
     url: ${PUSH_URL:https://ntfy.ohtgo.me}
