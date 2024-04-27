@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ErrorMessageConstant {
   public static final String BAD_CREDENTIALS_EXCEPTION = "Tên đăng nhập hoặc mật khẩu không hợp lệ";
+  public static final String INVALID_ADDRESS =
+      "Địa chỉ %s không hợp lệ hoặc không tồn tại trong PLC";
   public static final String ALARM_CONDITION_NOT_FOUND =
       "Không thể tìm thấy điều kiện cảnh báo với id: ";
   public static final String ALARM_ACTION_NOT_FOUND =

@@ -77,17 +77,17 @@ public class SensorConfigurationPersistenceService {
     return mapper.map(entity.get().getBlueprint(), Blueprint.class);
   }
 
-  public boolean create(Long blueprintId, SensorConfiguration sensorConfiguration) {
+  public SensorConfiguration create(Long blueprintId, SensorConfiguration sensorConfiguration) {
     validateAddress(sensorConfiguration);
 
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
     entity.setBlueprint(BlueprintEntity.builder().id(blueprintId).build());
     sensorConfigurationRepository.save(entity);
     connector.updateScheduler();
-    return true;
+    return mapper.map(entity, SensorConfiguration.class);
   }
 
-  public boolean update(Long blueprintId, SensorConfiguration sensorConfiguration) {
+  public SensorConfiguration update(Long blueprintId, SensorConfiguration sensorConfiguration) {
     validateAddress(sensorConfiguration);
 
     var entity = mapper.map(sensorConfiguration, SensorConfigurationEntity.class);
@@ -101,9 +101,9 @@ public class SensorConfigurationPersistenceService {
 
     var existedEntity = oldConfig.get();
     existedEntity.setAddress(entity.getAddress());
-    sensorConfigurationRepository.save(existedEntity);
+    var newEntity = sensorConfigurationRepository.save(existedEntity);
     connector.updateScheduler();
-    return true;
+    return mapper.map(newEntity, SensorConfiguration.class);
   }
 
   private void validateAddress(SensorConfiguration sensorConfiguration) {
@@ -145,5 +145,14 @@ public class SensorConfigurationPersistenceService {
     }
     sensorConfigurationRepository.delete(oldConfig.get());
     return true;
+  }
+
+  public boolean isAttachedToAlarm(Long id) {
+    List<Long> attachedToAlarmIds =
+        alarmConditionPersistenceService.getAll().stream()
+            .map(e -> e.getSensorConfiguration().getId())
+            .toList();
+
+    return attachedToAlarmIds.contains(id);
   }
 }
